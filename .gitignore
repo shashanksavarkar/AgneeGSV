@@ -15,3 +15,5 @@ scratch/
 Thumbs.db
 .env
 .env.local
+.vercel
+.env*
