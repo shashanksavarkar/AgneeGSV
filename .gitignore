@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Testing & Reports
+playwright-report/
+test-results/
+
+# Scratch & Temporary
+scratch/
+*.log
+
+# OS & Environment
+.DS_Store
+Thumbs.db
+.env
+.env.local

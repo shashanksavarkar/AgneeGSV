@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agnee 2026 · Internal Design System & Style Guide</title>
+  <meta name="theme-color" content="#07050a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Creepster&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="festival.css">
+  <style>
+    .sg-container {
+      max-width: 1100px;
+      margin: 40px auto 100px;
+      padding: 0 24px;
+    }
+    .sg-header {
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 24px;
+    }
+    .sg-header h1 {
+      font-size: 32px;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .sg-header p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .sg-section {
+      margin-bottom: 56px;
+    }
+    .sg-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold-primary);
+      border-bottom: 1px solid rgba(224, 184, 96, 0.3);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .swatch-card {
+      padding: 14px;
+      border-radius: var(--radius-md);
+    }
+    .swatch-color {
+      height: 60px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .swatch-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .swatch-hex {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body style="background:#07050a; color:#fff;">
+  <div class="sg-container">
+    <div class="sg-header">
+      <span class="badge-state state-soon">Internal Documentation</span>
+      <h1>Agnee 2026 · Design System & Tokens</h1>
+      <p>Component library, typography hierarchy, and UI state guidelines for GSV's annual cultural fest.</p>
+    </div>
+
+    <!-- 1. Color Palette Tokens -->
+    <section class="sg-section">
+      <h2 class="sg-title">1. Color Palette Tokens</h2>
+      <div class="swatch-grid">
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#07050a"></div>
+          <div class="swatch-name">Background Base</div>
+          <div class="swatch-hex">#07050a</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#110c12"></div>
+          <div class="swatch-name">Background Surface</div>
+          <div class="swatch-hex">#110c12</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#ff7a1a"></div>
+          <div class="swatch-name">Pumpkin Primary</div>
+          <div class="swatch-hex">#ff7a1a</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#ffa23d"></div>
+          <div class="swatch-name">Pumpkin Glow / Hover</div>
+          <div class="swatch-hex">#ffa23d</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#b3141f"></div>
+          <div class="swatch-name">Blood Red Accent</div>
+          <div class="swatch-hex">#b3141f</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#7dffb0"></div>
+          <div class="swatch-name">Ghost-Fire Green</div>
+          <div class="swatch-hex">#7dffb0</div>
+        </div>
+        <div class="swatch-card glass-panel">
+          <div class="swatch-color" style="background:#7dffb0"></div>
+          <div class="swatch-name">Success / Open</div>
+          <div class="swatch-hex">#7dffb0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Typography Scale -->
+    <section class="sg-section">
+      <h2 class="sg-title">2. Typography Scale</h2>
+      <div class="glass-panel" style="padding: 24px;">
+        <h1 style="font-size: 42px; margin: 0 0 12px; color: #fff;">Display Title · 42px Bold</h1>
+        <h2 style="font-size: 32px; margin: 0 0 12px; color: #fff;">Section Title · 32px Bold</h2>
+        <h3 style="font-size: 24px; margin: 0 0 12px; color: #fff;">Card Heading · 24px SemiBold</h3>
+        <h4 style="font-size: 18px; margin: 0 0 12px; color: #fff;">Sub-Heading · 18px Medium</h4>
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 8px;">
+          Body Text (15px/1.6): Agnee brings together musical masterminds, street cyphers, theatrical storytelling, and classical traditions across Gati Shakti Vishwavidyalaya.
+        </p>
+        <small style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+          Monospace & Telemetry: T+0.0s · ALT: 120m · HDG: 045° · Asia/Kolkata
+        </small>
+      </div>
+    </section>
+
+    <!-- 3. Button Components & States -->
+    <section class="sg-section">
+      <h2 class="sg-title">3. Button Variants & Interactive States</h2>
+      <div class="component-row">
+        <button type="button" class="btn-primary btn-lg">Primary Large →</button>
+        <button type="button" class="btn-primary">Primary Standard</button>
+        <button type="button" class="btn-primary btn-sm">Primary Small</button>
+        <button type="button" class="btn-secondary">Secondary Glass</button>
+        <button type="button" class="btn-secondary btn-sm">Secondary Small</button>
+        <button type="button" class="btn-text-link">Text Action Link</button>
+      </div>
+      <div class="component-row">
+        <button type="button" class="btn-plan-toggle in-plan" aria-label="In Plan">
+          <span class="star-icon">★</span>
+        </button>
+        <button type="button" class="btn-plan-toggle" aria-label="Not in Plan">
+          <span class="star-icon">☆</span>
+        </button>
+        <span class="btn-plan-badge">
+          ★ My Plan <span class="plan-count">3</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- 4. Badges & State Indicators -->
+    <section class="sg-section">
+      <h2 class="sg-title">4. Status Badges & Category Chips</h2>
+      <div class="component-row">
+        <span class="badge-state state-open">Registration Open</span>
+        <span class="badge-state state-soon">Opening Soon</span>
+        <span class="badge-state state-closed">Closed</span>
+        <span class="badge-state state-soldout">Slots Full</span>
+      </div>
+      <div class="component-row">
+        <button type="button" class="category-chip active">🎸 Music</button>
+        <button type="button" class="category-chip">💃 Dance</button>
+        <button type="button" class="category-chip">🎭 Drama</button>
+        <button type="button" class="category-chip">✨ Fashion</button>
+        <button type="button" class="category-chip">🎨 Fine Arts</button>
+      </div>
+    </section>
+
+    <!-- 5. Navigation Links -->
+    <section class="sg-section">
+      <h2 class="sg-title">5. Quick Navigation</h2>
+      <a href="./index.html" class="btn-primary">Return to Main Agnee Website →</a>
+    </section>
+  </div>
+</body>
+</html>

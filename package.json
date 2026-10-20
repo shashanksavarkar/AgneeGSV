@@ -1,0 +1,26 @@
+{
+  "name": "agnee-2026",
+  "version": "1.0.0",
+  "description": "Agnee 2026 · Official Festival Website & 3D Campus Experience | Gati Shakti Vishwavidyalaya",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "lint": "npx eslint src/**/*.js",
+    "format": "npx prettier --write \"**/*.{js,json,css,html,md}\""
+  },
+  "keywords": [
+    "agnee",
+    "gsv",
+    "threejs",
+    "cultural-fest",
+    "vadodara"
+  ],
+  "author": "Agnee Web Team · Gati Shakti Vishwavidyalaya",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0"
+  }
+}
