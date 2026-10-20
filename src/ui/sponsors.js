@@ -11,7 +11,6 @@ export function renderSponsors(sponsorsData = { tiers: [] }) {
     <section class="section sponsors-section" id="sponsors" aria-labelledby="sponsorsHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">STRATEGIC ALLIANCES</span>
           <h2 class="section-title" id="sponsorsHeading">Sponsors & Industry Partners</h2>
         </div>
 

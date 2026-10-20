@@ -310,12 +310,12 @@ button{min-width:44px;min-height:44px;touch-action:manipulation;-webkit-tap-high
 .earth-ui{position:absolute;inset:0;z-index:30;pointer-events:none;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;transition:opacity .25s}.landing .earth-ui{opacity:0;pointer-events:none}.view:not(.landing) .earth-ui{opacity:1}
 .earth-mode .ovui,.earth-mode .bar,.earth-mode .stgui,.earth-mode .enterfest,.earth-mode .gcap,.earth-mode .live,.earth-mode .info,.earth-mode .agcard,.earth-mode .share-btn,.earth-mode .tbtn,.earth-mode .cin,.earth-mode .cin-hud,.earth-mode .ch,.earth-mode .sk{display:none!important}
 .earth-search{position:absolute;left:calc(var(--safe-left) + 14px);top:calc(var(--safe-top) + 14px);width:min(340px,calc(100% - 100px));pointer-events:auto;z-index:32}
-.earth-search .earth-search-icon{position:absolute;left:14px;top:10px;font-size:18px;color:#ff7a1a;line-height:1}
+.earth-search .earth-search-icon{z-index:1;pointer-events:none;position:absolute;left:14px;top:10px;font-size:18px;color:#ff7a1a;line-height:1}
 .earth-search input{width:100%;height:42px;padding:0 36px 0 38px;border:1px solid rgba(255,122,26,.3);border-radius:999px;outline:0;background:rgba(27,19,16,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;font:600 12px system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.45);transition:all .2s ease}
 .earth-search input::placeholder{color:rgba(255,255,255,.65)}
 .earth-search input:focus{border-color:rgba(255,122,26,.8);box-shadow:0 0 0 3px rgba(255,122,26,.18),0 8px 30px rgba(0,0,0,.5)}
-.earth-search button{position:absolute;right:4px;top:4px;width:34px;height:34px;border:0;background:transparent;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;display:grid;place-items:center}
-.earth-search button:hover{color:#fff}
+.earth-search>button{min-width:0;min-height:0;position:absolute;right:4px;top:4px;width:34px;height:34px;border:0;background:transparent;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;display:grid;place-items:center}
+.earth-search>button:hover{color:#fff}
 .earth-suggest{position:absolute;left:0;right:0;top:48px;display:grid;gap:3px;padding:8px;border:1px solid rgba(255,122,26,.25);border-radius:18px;background:rgba(27,19,16,.95);backdrop-filter:blur(22px);box-shadow:0 18px 45px rgba(0,0,0,.6)}
 .earth-suggest[hidden],.earth-suggest:empty{display:none!important}
 .earth-suggest button{display:grid;gap:2px;width:100%;padding:9px 12px;border:0;border-radius:10px;text-align:left;background:transparent;color:#fff;cursor:pointer;transition:background .15s}
@@ -354,7 +354,7 @@ button{min-width:44px;min-height:44px;touch-action:manipulation;-webkit-tap-high
 .earth-card-badge{font-size:11px;font-weight:700;color:var(--text-muted,rgba(255,255,255,.6))}
 .earth-place-card h2{margin:0 0 8px;color:#fff;font:800 22px/1.15 system-ui,sans-serif;letter-spacing:-.01em}
 .earth-place-card p{margin:0 0 14px;color:rgba(255,255,255,.82);font:400 13px/1.55 system-ui,sans-serif}
-.earth-card-close{position:absolute;right:14px;top:14px;width:30px;height:30px;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:all .2s}
+.earth-card-close{min-width:0;min-height:0;position:absolute;right:14px;top:14px;width:30px;height:30px;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:all .2s}
 .earth-card-close:hover{background:rgba(255,122,26,.2);border-color:#ff7a1a}
 .earth-card-actions{display:flex;gap:8px;flex-wrap:wrap}
 .earth-card-actions button{min-height:36px;padding:0 14px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font:700 11px system-ui,sans-serif;letter-spacing:.03em;cursor:pointer;transition:all .2s ease}

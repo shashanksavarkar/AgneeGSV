@@ -1,4 +1,4 @@
-// Line-up, Guests & Judges showcase with reveal states and strict placeholder compliance
+// Line-up, Guests & Judges: stage-style section (curtains + spotlights) with reveal states
 
 export function renderLineup(guests = []) {
   const mount = document.getElementById('lineup-mount');
@@ -6,33 +6,33 @@ export function renderLineup(guests = []) {
 
   mount.innerHTML = `
     <section class="section lineup-section" id="lineup" aria-labelledby="lineupHeading">
+      <span class="lu-curtain lu-curtain-l" aria-hidden="true"></span>
+      <span class="lu-curtain lu-curtain-r" aria-hidden="true"></span>
+      <span class="lu-beam lu-beam-l" aria-hidden="true"></span>
+      <span class="lu-beam lu-beam-r" aria-hidden="true"></span>
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">STAR NIGHTS & ADJUDICATORS</span>
+          <img class="sec-icon" src="assets/elements/mic.svg" alt="" aria-hidden="true">
           <h2 class="section-title" id="lineupHeading">Headliners & Renowned Guests</h2>
         </div>
 
-        <div class="lineup-grid">
+        <div class="lu-grid">
           ${guests.map(guest => `
-            <div class="lineup-card glass-panel" data-id="${guest.id}">
-              <div class="lineup-avatar-slot">
-                ${guest.photo ? `
-                  <img src="${guest.photo}" alt="${guest.name}" class="guest-img" width="120" height="120" loading="lazy">
-                ` : `
-                  <div class="guest-silhouette" aria-hidden="true">
-                    <span class="silhouette-icon">👤</span>
-                  </div>
-                `}
-                <span class="reveal-badge">${guest.revealState}</span>
+            <article class="lu-card" data-id="${guest.id}">
+              <span class="lu-bells" aria-hidden="true"></span>
+              <div class="lu-photo">
+                ${guest.photo
+                  ? `<img src="${guest.photo}" alt="${guest.name}" width="104" height="104" loading="lazy">`
+                  : `<span class="lu-ph" aria-hidden="true"><img src="assets/elements/mic.svg" alt=""></span>`}
+                <span class="lu-badge">${guest.revealState}</span>
               </div>
-
-              <div class="lineup-info">
-                <span class="guest-cat">${guest.category} · ${guest.day}</span>
-                <h3 class="guest-name">${guest.name}</h3>
-                <h4 class="guest-role">${guest.role}</h4>
-                <p class="guest-bio">${guest.bio}</p>
+              <div class="lu-info">
+                <span class="lu-cat">${guest.category} · ${guest.day}</span>
+                <h3 class="lu-name">${guest.name}</h3>
+                <h4 class="lu-role">${guest.role}</h4>
+                <p class="lu-bio">${guest.bio}</p>
               </div>
-            </div>
+            </article>
           `).join('')}
         </div>
       </div>

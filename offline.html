@@ -5,81 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Offline · Agnee 2026 | GSV Vadodara</title>
   <meta name="theme-color" content="#07050a">
+  <link rel="icon" type="image/webp" href="assets/logo.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Creepster&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="festival.css">
   <style>
-    .offline-page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 20px;
-      text-align: center;
-      background: radial-gradient(circle at 50% 40%, #2a1240, #07050a);
+    .off-wrap {
+      min-height: 100vh; display: grid; place-items: center; padding: 32px 20px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255, 122, 26, 0.18), transparent 55%), #07050a;
     }
-    .offline-card {
-      max-width: 580px;
-      padding: clamp(28px, 5vw, 48px);
+    .off-card {
+      position: relative; width: min(560px, 100%); overflow: hidden; padding: 40px 36px 0 44px;
+      border-radius: 14px; border: 1px solid #3a2a14;
+      background: linear-gradient(160deg, #1d1522 0%, #0e0a12 70%);
+      box-shadow: inset 0 1px 0 rgba(255, 220, 170, 0.1), 0 0 28px rgba(255, 122, 26, 0.18), 0 18px 40px rgba(0, 0, 0, 0.6);
     }
-    .offline-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-      display: block;
+    .off-card::before { /* accent spine */
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+      background: linear-gradient(180deg, #ffd27a, #ff7a1a 60%, #7a2a08);
     }
-    .offline-title {
-      font-size: clamp(24px, 4vw, 36px);
-      color: #fff;
-      margin: 0 0 14px;
+    .off-card::after { /* ghost word */
+      content: "OFF"; position: absolute; right: 12px; top: -18px;
+      font: 900 150px/1 'Cinzel Decorative', serif; color: rgba(255, 179, 71, 0.06); pointer-events: none;
     }
-    .offline-desc {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      margin: 0 0 24px;
+    .off-brand { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; }
+    .off-logo { width: 52px; height: 52px; object-fit: contain; }
+    .off-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      font: 800 11px/1 'Inter', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #ffb347;
     }
-    .offline-cached-box {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      text-align: left;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
+    .off-status::before {
+      content: ""; width: 9px; height: 9px; border-radius: 50%; background: #ff7a1a;
+      box-shadow: 0 0 0 0 rgba(255, 122, 26, 0.6); animation: off-pulse 1.8s infinite;
     }
-    .offline-cached-box h4 {
-      margin: 0 0 8px;
-      color: var(--gold-primary);
-      font-size: 14px;
+    @keyframes off-pulse { 70% { box-shadow: 0 0 0 10px rgba(255, 122, 26, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 122, 26, 0); } }
+    .off-title {
+      position: relative; z-index: 1; margin: 22px 0 10px;
+      font: 700 clamp(32px, 7vw, 44px)/1.05 'Cinzel Decorative', serif; text-transform: uppercase;
+      background: linear-gradient(180deg, #fff1d2, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
+    .off-desc { position: relative; z-index: 1; margin: 0 0 26px; font: italic 17px/1.5 'Spectral', serif; color: #c9b8a0; }
+    .off-list { position: relative; z-index: 1; margin: 0 0 28px; padding: 0; list-style: none; }
+    .off-list li {
+      display: flex; gap: 14px; align-items: baseline; padding: 11px 0;
+      font: 15px/1.45 'Spectral', serif; color: #eadfce; border-bottom: 1px dashed rgba(201, 160, 90, 0.25);
+    }
+    .off-list li:first-child { border-top: 1px dashed rgba(201, 160, 90, 0.25); }
+    .off-list b { flex: none; font: 800 12px 'Inter', sans-serif; letter-spacing: 0.1em; color: #ff7a1a; }
+    .off-foot {
+      position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin: 0 -36px 0 -44px; padding: 18px 36px 20px 44px; background: rgba(0, 0, 0, 0.32); border-top: 1px solid rgba(255, 190, 120, 0.15);
+    }
+    .off-foot small { font: 700 11px 'Inter', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #9c8d78; }
+    @media (max-width: 480px) { .off-card { padding: 32px 22px 0 30px; } .off-foot { margin: 0 -22px 0 -30px; padding: 16px 22px 18px 30px; } }
   </style>
 </head>
 <body>
-  <div class="offline-page-wrapper">
-    <div class="offline-card glass-panel">
-      <span class="offline-icon" aria-hidden="true">📡</span>
-      <h1 class="offline-title">You are currently offline</h1>
-      <p class="offline-desc">
-        It looks like your internet connection is unavailable. Don't worry, Agnee 2026 is built to work offline!
-      </p>
-
-      <div class="offline-cached-box">
-        <h4>⚡ Fest-Day Offline Mode</h4>
-        <p>• Your personal schedule plan and festival competition list remain accessible.</p>
-        <p>• Campus landmark directions from the Main Gate to the Oval Ground are saved locally.</p>
-        <p>• Once connection is restored, new announcements will automatically synchronize.</p>
+  <main class="off-wrap">
+    <section class="off-card" aria-labelledby="offTitle">
+      <div class="off-brand">
+        <img class="off-logo" src="assets/logo.webp" alt="Agnee 2026 logo">
+        <span class="off-status">No signal</span>
       </div>
 
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <button type="button" class="btn-primary" onclick="location.reload()">
-          Retry Connection
-        </button>
+      <h1 class="off-title" id="offTitle">You're offline</h1>
+      <p class="off-desc">Your connection dropped, but Agnee '26 keeps going. Here is what still works:</p>
+
+      <ul class="off-list">
+        <li><b>01</b><span>Pages you have already opened, including the event list and timeline.</span></li>
+        <li><b>02</b><span>Campus directions from the Main Gate to the Oval Ground, saved on your device.</span></li>
+        <li><b>03</b><span>New announcements load by themselves once you are back online.</span></li>
+      </ul>
+
+      <div class="off-foot">
+        <small>Agnee 2026 · GSV Vadodara</small>
+        <button type="button" class="btn-primary" onclick="location.reload()">Retry connection</button>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 </body>
 </html>

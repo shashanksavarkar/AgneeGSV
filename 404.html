@@ -5,65 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Page Not Found (404) · Agnee 2026 | GSV Vadodara</title>
   <meta name="theme-color" content="#07050a">
+  <link rel="icon" type="image/webp" href="/assets/logo.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Creepster&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="festival.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/festival.css">
   <style>
-    .notfound-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 20px;
-      text-align: center;
-      background: radial-gradient(circle at 50% 40%, #2a1240, #07050a);
+    .nf-wrap {
+      min-height: 100vh; display: grid; place-items: center; padding: 32px 20px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255, 122, 26, 0.18), transparent 55%), #07050a;
     }
-    .notfound-card {
-      max-width: 540px;
-      padding: clamp(28px, 5vw, 48px);
+    .nf-card {
+      position: relative; width: min(560px, 100%); overflow: hidden; padding: 40px 36px 0 44px;
+      border-radius: 14px; border: 1px solid #3a2a14;
+      background: linear-gradient(160deg, #1d1522 0%, #0e0a12 70%);
+      box-shadow: inset 0 1px 0 rgba(255, 220, 170, 0.1), 0 0 28px rgba(255, 122, 26, 0.18), 0 18px 40px rgba(0, 0, 0, 0.6);
     }
-    .notfound-code {
-      font-size: clamp(64px, 12vw, 96px);
-      font-weight: 900;
-      font-family: var(--font-mono);
-      color: var(--gold-primary);
-      line-height: 1;
-      margin: 0 0 12px;
-      text-shadow: 0 0 30px var(--gold-glow);
+    .nf-card::before { /* accent spine */
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+      background: linear-gradient(180deg, #ffd27a, #ff7a1a 60%, #7a2a08);
     }
-    .notfound-title {
-      font-size: clamp(22px, 3.5vw, 30px);
-      color: #fff;
-      margin: 0 0 14px;
+    .nf-code { /* giant ghost numeral */
+      position: absolute; right: 8px; top: -26px; z-index: 0; pointer-events: none;
+      font: 900 190px/1 'Cinzel Decorative', serif; color: rgba(255, 179, 71, 0.08);
     }
-    .notfound-desc {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      margin: 0 0 28px;
+    .nf-brand { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; }
+    .nf-logo { width: 52px; height: 52px; object-fit: contain; }
+    .nf-kicker { font: 800 11px/1 'Inter', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #ffb347; }
+    .nf-title {
+      position: relative; z-index: 1; margin: 22px 0 10px;
+      font: 700 clamp(32px, 7vw, 44px)/1.05 'Cinzel Decorative', serif; text-transform: uppercase;
+      background: linear-gradient(180deg, #fff1d2, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
+    .nf-desc { position: relative; z-index: 1; margin: 0 0 30px; font: italic 17px/1.5 'Spectral', serif; color: #c9b8a0; }
+    .nf-foot {
+      position: relative; z-index: 1; display: flex; gap: 12px; flex-wrap: wrap;
+      margin: 0 -36px 0 -44px; padding: 18px 36px 20px 44px; background: rgba(0, 0, 0, 0.32); border-top: 1px solid rgba(255, 190, 120, 0.15);
+    }
+    @media (max-width: 480px) { .nf-card { padding: 32px 22px 0 30px; } .nf-foot { margin: 0 -22px 0 -30px; padding: 16px 22px 18px 30px; } }
   </style>
 </head>
 <body>
-  <div class="notfound-wrapper">
-    <div class="notfound-card glass-panel">
-      <div class="notfound-code">404</div>
-      <h1 class="notfound-title">Lost on Campus?</h1>
-      <p class="notfound-desc">
-        The page or section you are looking for does not exist or has been relocated in the Agnee 2026 directory.
-      </p>
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <a href="./index.html#home" class="btn-primary">
-          Return to Festival Home
-        </a>
-        <a href="./index.html#map" class="btn-secondary">
-          Open 3D Campus Map
-        </a>
+  <main class="nf-wrap">
+    <section class="nf-card" aria-labelledby="nfTitle">
+      <span class="nf-code" aria-hidden="true">404</span>
+      <div class="nf-brand">
+        <img class="nf-logo" src="/assets/logo.webp" alt="Agnee 2026 logo">
+        <span class="nf-kicker">Error 404 · Page not found</span>
       </div>
-    </div>
-  </div>
+
+      <h1 class="nf-title" id="nfTitle">Lost on campus?</h1>
+      <p class="nf-desc">The page you are looking for does not exist or has moved. Let's get you back to the festival.</p>
+
+      <div class="nf-foot">
+        <a href="/index.html#home" class="btn-primary">Return to festival home</a>
+        <a href="/index.html#map" class="btn-secondary">Open 3D campus map</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

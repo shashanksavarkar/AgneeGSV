@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff7a1a"/>
+      <stop offset="0.6" stop-color="#ffb347"/>
+      <stop offset="1" stop-color="#fff1b8"/>
+    </linearGradient>
+    <linearGradient id="clay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb347"/>
+      <stop offset="0.5" stop-color="#e0661a"/>
+      <stop offset="1" stop-color="#8a3205"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 3C38 12 44 19 38 28c-2 3-8 3-10 0-6-9 0-16 4-25Z" fill="url(#flame)"/>
+  <path d="M32 15c3 5 5 8 2 12-1 1.500-3 1.500-4 0-3-4-1-7 2-12Z" fill="#fff6d6" opacity="0.85"/>
+  <rect x="30.500" y="28" width="3" height="6" rx="1.500" fill="#4a1d05"/>
+  <path d="M5 36h54c0 13-11 21-27 21S5 49 5 36Z" fill="url(#clay)"/>
+  <path d="M5 36h54" stroke="#ffd27a" stroke-width="2.500" stroke-linecap="round"/>
+  <path d="M12 41c4 7 12 11 20 11" stroke="#fff1b8" stroke-width="1.500" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="32" cy="46" r="2" fill="#ffd27a" opacity="0.8"/>
+  <circle cx="22" cy="44" r="1.300" fill="#ffd27a" opacity="0.7"/>
+  <circle cx="42" cy="44" r="1.300" fill="#ffd27a" opacity="0.7"/>
+  <ellipse cx="32" cy="59.500" rx="14" ry="2.500" fill="#8a3205"/>
+</svg>

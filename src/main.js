@@ -18,6 +18,7 @@ import { renderGallery } from './ui/gallery.js';
 import { renderTeam } from './ui/team.js';
 import { renderFaq } from './ui/faq.js';
 import { renderContact } from './ui/contact.js';
+import { renderDevelopers } from './ui/developers.js';
 import { renderFooter } from './ui/footer.js';
 import { renderToastContainer } from './ui/toast.js';
 import { initScrollRail } from './ui/scrollbar.js';
@@ -41,6 +42,7 @@ async function bootstrap() {
     renderTeam(data.team);
     renderFaq(data.faqs);
     renderContact(data.site);
+    renderDevelopers(data.developers);
     renderFooter(data.site);
     renderToastContainer();
     initScrollRail();
@@ -65,7 +67,8 @@ function initScrollReveals() {
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+      // Reveal on the way down; anything already scrolled past (above the viewport) is shown silently so scrolling back up never replays it
+      if (entry.isIntersecting || entry.boundingClientRect.bottom <= 0) {
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }

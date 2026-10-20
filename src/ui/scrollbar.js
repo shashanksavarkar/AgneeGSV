@@ -1,4 +1,4 @@
-// Custom page scrollbar: a slim rail with a pumpkin that rides down as you scroll; click or drag to scroll.
+// Custom page scrollbar: a slim rail with a knob that rides down as you scroll; click or drag to scroll.
 // Section ticks on the rail replace the header nav: hover for the name, click to jump.
 
 const SECTIONS = [['about', 'About'], ['events', 'Events'], ['schedule', 'Schedule'], ['map', 'Campus Map'], ['lineup', 'Line-up'], ['sponsors', 'Sponsors'], ['gallery', 'Gallery'], ['team', 'Team'], ['faq', 'FAQ'], ['contact', 'Contact']];
@@ -7,7 +7,7 @@ export function initScrollRail() {
   const rail = document.createElement('div');
   rail.className = 'scroll-rail';
   rail.setAttribute('aria-hidden', 'true');
-  rail.innerHTML = '<div class="scroll-rail-fill"></div><span class="scroll-rail-pumpkin">🎃</span>';
+  rail.innerHTML = '<div class="scroll-rail-fill"></div><span class="scroll-rail-knob"></span>';
   const marks = SECTIONS.map(([id, label]) => {
     const a = document.createElement('a');
     a.className = 'scroll-rail-mark';
@@ -19,13 +19,13 @@ export function initScrollRail() {
   });
   document.body.appendChild(rail);
   const fill = rail.firstChild;
-  const pumpkin = rail.lastChild;
+  const knob = rail.querySelector('.scroll-rail-knob');
 
   const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
 
   function update() {
     const pct = maxScroll() > 0 ? (scrollY / maxScroll()) * 100 : 0;
-    fill.style.height = pumpkin.style.top = `${pct}%`;
+    fill.style.height = knob.style.top = `${pct}%`;
     rail.hidden = maxScroll() <= 0;
     let current = null;
     for (const [a, id] of marks) {

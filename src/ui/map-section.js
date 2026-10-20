@@ -2,7 +2,6 @@
 
 import { store } from '../core/store.js';
 import { analytics } from '../core/analytics.js';
-import { openEventModal } from './events.js';
 
 let placesData = [];
 let eventsData = [];
@@ -19,7 +18,6 @@ export function renderMapSection(places = [], events = []) {
     <section class="section map-section" id="map" aria-labelledby="mapHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">SIGNATURE 3D EXPERIENCE</span>
           <h2 class="section-title" id="mapHeading">Explore the Venue & Campus</h2>
         </div>
 
@@ -91,47 +89,25 @@ export function renderMapSection(places = [], events = []) {
           </div>
         </div>
 
-        <!-- Venue Pins Quick Selector Bar -->
-        <div class="venue-pins-bar glass-panel" aria-label="Campus Landmarks Selector">
-          <div class="pins-header">
-            <span class="pins-badge">📍 CAMPUS HUBS & FESTIVAL ARENAS</span>
-            <span class="pins-hint">Click any venue below to navigate 3D camera</span>
-          </div>
-          <div class="pins-nav-wrapper">
-            <button type="button" class="pins-scroll-arrow left" id="btnPinsScrollLeft" title="Scroll left" aria-label="Scroll venues left">‹</button>
-            <div class="pins-scroll-list" id="pinsScrollList">
-              ${places.map(place => {
+        <!-- Venue quick selector -->
+        <div class="vp-bar" aria-label="Campus Landmarks Selector">
+          <div class="vp-nav">
+            <button type="button" class="vp-arrow" id="btnPinsScrollLeft" title="Scroll left" aria-label="Scroll venues left">‹</button>
+            <div class="vp-list" id="pinsScrollList">
+              ${places.map((place, i) => {
                 const isFest = place.id === 'oval-ground';
                 return `
-                  <button type="button" class="venue-pin-btn ${isFest ? 'active' : ''}" data-place-id="${place.id}" data-category="${place.category}">
-                    <span class="pin-dot cat-${place.category}"></span>
-                    <span class="pin-name">${place.name}</span>
-                    ${place.featured ? '<span class="pin-featured-badge">★ FEST</span>' : ''}
+                  <button type="button" class="venue-pin-btn vp-chip ${isFest ? 'active' : ''}" data-place-id="${place.id}" data-category="${place.category}">
+                    <span class="vp-no">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="vp-text"><b>${place.name}</b><small>${place.category}</small></span>
+                    ${place.featured ? '<span class="vp-fest">Fest</span>' : ''}
                   </button>
                 `;
               }).join('')}
             </div>
-            <button type="button" class="pins-scroll-arrow right" id="btnPinsScrollRight" title="Scroll right" aria-label="Scroll venues right">›</button>
+            <button type="button" class="vp-arrow" id="btnPinsScrollRight" title="Scroll right" aria-label="Scroll venues right">›</button>
           </div>
         </div>
-
-        <!-- Accessible Text-Based Alternative for Screen Readers & Low-Bandwidth -->
-        <details class="accessible-landmarks-details glass-panel">
-          <summary class="accessible-summary">
-            <strong>📋 Accessible Text Directory: Campus Landmarks & Walking Guide</strong>
-            <small>(Textual alternative to the 3D map for assistive technologies and offline access)</small>
-          </summary>
-          <div class="accessible-content-grid">
-            ${places.map(p => `
-              <div class="accessible-landmark-card">
-                <h4>${p.name} <span class="badge-cat">${p.category}</span></h4>
-                <p><strong>Description:</strong> ${p.description}</p>
-                <p><strong>Walking from Main Gate:</strong> ~${p.walkTimeMinutes} minutes</p>
-                <p><strong>Directions:</strong> ${p.directionsFromGate}</p>
-              </div>
-            `).join('')}
-          </div>
-        </details>
       </div>
     </section>
   `;

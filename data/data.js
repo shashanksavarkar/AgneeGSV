@@ -60,435 +60,166 @@ export const site = {
 
 export const events = [
   {
-    "id": "battle-of-the-bands",
-    "name": "Battle of the Bands",
-    "category": "Music",
-    "tagline": "Thunder on the Oval Stage",
-    "description": "The ultimate rock and fusion battle where college bands go head-to-head with blistering solos, original riffs, and stage-quaking energy.",
-    "teamSize": {
-      "min": 3,
-      "max": 8
-    },
-    "eligibility": "Open to all enrolled undergraduate and postgraduate college students with valid college ID.",
-    "rules": [
-      "Time limit: 20 minutes (including 5 minutes soundcheck). Exceeding the time limit incurs point deductions.",
-      "At least one original composition or a distinct fusion arrangement is strongly recommended.",
-      "Standard 5-piece drum kit and standard amplification provided. Bands must bring their own guitars, effect processors, cymbals, and auxiliary instruments.",
-      "No offensive, vulgar, or disparaging language permitted in performance lyrics."
-    ],
-    "judgingCriteria": [
-      "Originality & Arrangement (25%)",
-      "Technical Proficiency (25%)",
-      "Vocal & Instrumental Balance (25%)",
-      "Stage Presence & Crowd Engagement (25%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 2",
-      "time": "To be announced",
-      "venueId": "stage",
-      "venueName": "Main Stage (Oval Ground)"
-    },
-    "contacts": [
-      {
-        "name": "Event Coordinator",
-        "email": "music@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Bands",
-      "Live Music",
-      "Rock",
-      "Stage"
-    ],
-    "featured": true
-  },
-  {
-    "id": "nrityakala-solo-dance",
-    "name": "Nrityakala · Classical & Semi-Classical Solo",
-    "category": "Dance",
-    "tagline": "Elegance, Rhythm, and Soul",
-    "description": "Showcase classical Indian dance forms including Bharatanatyam, Kathak, Odissi, Kuchipudi, and Mohiniyattam, as well as nuanced semi-classical pieces.",
+    "id": "youth-parliament",
+    "name": "Youth Parliament",
+    "category": "Debate & Quiz Club GSV",
+    "tagline": "Debate. Decide. Govern.",
+    "description": "Pre-Agnee mock parliament where participants debate current issues in the house.",
     "teamSize": {
       "min": 1,
       "max": 1
     },
-    "eligibility": "College students with valid ID cards.",
-    "rules": [
-      "Time limit: 5 to 7 minutes.",
-      "Soundtrack must be submitted in MP3 format on a USB drive at least 2 hours before the event.",
-      "Traditional costumes, authentic bhavas, and mudras are evaluated.",
-      "Fire, glass, fluid, or hazardous props are strictly prohibited."
-    ],
-    "judgingCriteria": [
-      "Abhinaya & Expression (30%)",
-      "Taal & Laya / Rhythm (30%)",
-      "Choreography & Grace (25%)",
-      "Costume & Presentation (15%)"
-    ],
-    "prizes": "To be announced",
     "schedule": {
-      "day": "Day 1",
-      "time": "To be announced",
-      "venueId": "stage",
-      "venueName": "Main Stage (Oval Ground)"
+      "day": "Pre-Agnee",
+      "venueName": "To be announced"
     },
-    "contacts": [
-      {
-        "name": "Dance Coordinator",
-        "email": "dance@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
     "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Classical",
-      "Solo Dance",
-      "Tradition"
-    ],
-    "featured": true
-  },
-  {
-    "id": "step-up-street-dance",
-    "name": "Step Up · Street & Hip-Hop Crew Battle",
-    "category": "Dance",
-    "tagline": "Crews, Cyphers, and Clean Hits",
-    "description": "High-octane urban group dance competition featuring popping, locking, breaking, krumping, waacking, and contemporary commercial choreography.",
-    "teamSize": {
-      "min": 6,
-      "max": 20
-    },
-    "eligibility": "All college dance societies and verified collegiate crews.",
-    "rules": [
-      "Time limit: 8 to 12 minutes (including setup).",
-      "Crews will perform their prepared routine, followed by a sudden-death cypher round if scores are tied.",
-      "Props must be registered and cleared during technical briefing."
-    ],
-    "judgingCriteria": [
-      "Synchronization & Formation (30%)",
-      "Difficulty & Choreography (30%)",
-      "Energy & Musicality (25%)",
-      "Costume & Impact (15%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 2",
-      "time": "To be announced",
-      "venueId": "oval-ground",
-      "venueName": "Oval Ground Arena"
-    },
-    "contacts": [
-      {
-        "name": "Crew Coordinator",
-        "email": "dance@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Hip Hop",
-      "Crew Battle",
-      "High Energy"
-    ],
-    "featured": true
-  },
-  {
-    "id": "nukkad-natak",
-    "name": "Awaaz · Nukkad Natak (Street Play)",
-    "category": "Drama",
-    "tagline": "Voices that Stir the Conscience",
-    "description": "Traditional Indian street play competition bringing pressing socio-cultural themes to life with dholaks, gulal, synchronized chants, and piercing storytelling.",
-    "teamSize": {
-      "min": 8,
-      "max": 25
-    },
-    "eligibility": "College theatre societies and independent student troupes.",
-    "rules": [
-      "Time limit: 15 to 20 minutes from the first sound to final exit.",
-      "Acoustic instruments (dholak, dafli, manjira, flute) only. No electronic amplification.",
-      "Performance in circular / street format on open ground.",
-      "Must address social, environmental, or cultural realities with maturity."
-    ],
-    "judgingCriteria": [
-      "Social Relevance & Script (30%)",
-      "Vocal Projection & Chants (25%)",
-      "Acting & Coordination (25%)",
-      "Crowd Impact & Utilization of Space (20%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 1",
-      "time": "To be announced",
-      "venueId": "palace",
-      "venueName": "Palace Lawn"
-    },
-    "contacts": [
-      {
-        "name": "Drama Coordinator",
-        "email": "theatre@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Street Play",
-      "Theatre",
-      "Social Impact"
-    ],
-    "featured": true
-  },
-  {
-    "id": "vogue-fashion-walk",
-    "name": "Glamour & Heritage · The Runway",
-    "category": "Fashion",
-    "tagline": "Where Couture Meets Culture",
-    "description": "The flagship fashion walk celebrating thematic fusion, avant-garde silhouettes, and the rich textiles of Western India and beyond.",
-    "teamSize": {
-      "min": 8,
-      "max": 16
-    },
-    "eligibility": "College fashion societies and student modeling delegations.",
-    "rules": [
-      "Time limit: 10 to 14 minutes per team.",
-      "Each team must declare a narrative theme during briefing.",
-      "Music track and background visuals must be submitted 24 hours prior to technical walk-through.",
-      "Vulgarity or inappropriate display will lead to immediate disqualification."
-    ],
-    "judgingCriteria": [
-      "Theme Interpretation & Originality (30%)",
-      "Garment Design & Styling (30%)",
-      "Poise, Walk & Choreography (25%)",
-      "Visual Coordination (15%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 3",
-      "time": "To be announced",
-      "venueId": "stage",
-      "venueName": "Main Stage (Oval Ground)"
-    },
-    "contacts": [
-      {
-        "name": "Fashion Coordinator",
-        "email": "fashion@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Runway",
-      "Design",
-      "Fashion"
-    ],
-    "featured": true
-  },
-  {
-    "id": "canvas-art-marathon",
-    "name": "Rangshala · Live Canvas & Mural Painting",
-    "category": "Art & Design",
-    "tagline": "Splash Your Imagination",
-    "description": "On-spot creative painting competition on canvases and collaborative board murals reflecting the pulse of contemporary India.",
-    "teamSize": {
-      "min": 1,
-      "max": 3
-    },
-    "eligibility": "Open to all student artists and designers.",
-    "rules": [
-      "Duration: 3 hours.",
-      "Topic will be revealed on the spot 10 minutes prior to commencement.",
-      "Base drawing sheets / boards provided. Participants must bring their own colors, brushes, and mediums.",
-      "Digital devices are not permitted during the painting session."
-    ],
-    "judgingCriteria": [
-      "Creativity & Concept (35%)",
-      "Technique & Medium Handling (35%)",
-      "Composition & Finishing (30%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 1",
-      "time": "To be announced",
-      "venueId": "academic-block",
-      "venueName": "Academic Block Courtyard"
-    },
-    "contacts": [
-      {
-        "name": "Art Coordinator",
-        "email": "arts@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Live Painting",
-      "Fine Arts",
-      "Creative"
-    ],
-    "featured": false
-  },
-  {
-    "id": "parliamentary-debate",
-    "name": "Vimarsh · The Agnee Parliamentary Debate",
-    "category": "Literary",
-    "tagline": "Clash of Persuasion and Intellect",
-    "description": "Rigorous Asian Parliamentary style debate addressing modern policy, ethics, technology, and humanities with razor-sharp rebuttals.",
-    "teamSize": {
-      "min": 3,
-      "max": 3
-    },
-    "eligibility": "Undergraduate and postgraduate students.",
-    "rules": [
-      "Format: 3v3 Asian Parliamentary Debate (Government vs Opposition).",
-      "Preparation time: 20 minutes from motion release. Strict no-internet policy during prep.",
-      "Prime Minister and Leader of Opposition speeches: 6 minutes. POIs allowed between minutes 1 and 5."
-    ],
-    "judgingCriteria": [
-      "Matter / Logic & Evidence (40%)",
-      "Manner / Delivery & Rhetoric (40%)",
-      "Method / Structure & Rebuttals (20%)"
-    ],
-    "prizes": "To be announced",
-    "schedule": {
-      "day": "Day 2",
-      "time": "To be announced",
-      "venueId": "manthan",
-      "venueName": "Manthan Hall"
-    },
-    "contacts": [
-      {
-        "name": "Debate Coordinator",
-        "email": "literary@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
-    "registrationState": "soon",
-    "posterImage": "",
+    "posterImage": "assets/DNQ.jpeg",
     "tags": [
       "Debating",
-      "Public Speaking",
-      "Literary"
-    ],
-    "featured": false
+      "Pre-Agnee"
+    ]
   },
   {
-    "id": "cinecraft-short-film",
-    "name": "CineCraft · Short Film & Photo Story",
-    "category": "Photography/Film",
-    "tagline": "Frames that Speak a Thousand Words",
-    "description": "Film screening and photography contest showcasing cinematic narratives, campus vignettes, and visual journalism.",
+    "id": "battle-of-wits",
+    "name": "Battle of Wits",
+    "category": "Literary Club GSV",
+    "tagline": "The Ultimate Test of Wit",
+    "description": "Pre-Agnee quiz-style contest of general knowledge, logic and quick thinking.",
     "teamSize": {
       "min": 1,
-      "max": 5
+      "max": 4
     },
-    "eligibility": "College students with valid ID cards.",
-    "rules": [
-      "Short films must have a runtime of 3 to 10 minutes including credits.",
-      "Must have English subtitles if dialogue is in regional languages.",
-      "Original footage only; all soundtrack licenses must be cleared or creative-commons attributed.",
-      "Submissions accepted online up to 3 days prior to the festival."
-    ],
-    "judgingCriteria": [
-      "Storytelling & Script (35%)",
-      "Cinematography & Lighting (25%)",
-      "Sound & Editing (20%)",
-      "Directorial Vision (20%)"
-    ],
-    "prizes": "To be announced",
     "schedule": {
-      "day": "Day 3",
-      "time": "To be announced",
-      "venueId": "manthan",
-      "venueName": "Manthan Auditorium"
+      "day": "Pre-Agnee",
+      "venueName": "To be announced"
     },
-    "contacts": [
-      {
-        "name": "Media Coordinator",
-        "email": "media@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
     "registrationState": "soon",
     "posterImage": "",
     "tags": [
-      "Cinema",
-      "Photography",
-      "Documentary"
-    ],
-    "featured": false
+      "Quiz",
+      "Pre-Agnee"
+    ]
   },
   {
-    "id": "esports-arena",
-    "name": "Pixel Arena · Inter-College Esports Championship",
-    "category": "Gaming/Fun",
-    "tagline": "Click, Aim, Dominate",
-    "description": "High-intensity collegiate LAN tournament featuring premier competitive titles with live streaming and shoutcasting.",
+    "id": "brandwars",
+    "name": "Brandwars",
+    "category": "एधार्थ (Edhartha) - B Club GSV",
+    "tagline": "Pitch. Promote. Prevail.",
+    "description": "Pre-Agnee marketing showdown where teams battle it out to build and sell the best brand.",
     "teamSize": {
-      "min": 4,
-      "max": 5
+      "min": 1,
+      "max": 4
     },
-    "eligibility": "Verified college students.",
-    "rules": [
-      "Standard competitive map pool and tournament rulebook apply.",
-      "Zero tolerance for toxicity, hacking, scripts, or unsportsmanlike behavior.",
-      "Players must bring their own peripherals (headsets, mice, keyboards)."
-    ],
-    "judgingCriteria": [
-      "Match Victory Points & Bracket Elimination"
-    ],
-    "prizes": "To be announced",
     "schedule": {
-      "day": "Day 2",
-      "time": "To be announced",
-      "venueId": "academic-block",
-      "venueName": "Academic Block Lab Zone"
+      "day": "Pre-Agnee",
+      "venueName": "To be announced"
     },
-    "contacts": [
-      {
-        "name": "Gaming Coordinator",
-        "email": "gaming@gsv.ac.in",
-        "phone": "To be announced"
-      }
-    ],
+    "registrationState": "soon",
+    "posterImage": "assets/BCLUB.jpeg",
+    "tags": [
+      "Marketing",
+      "Pre-Agnee"
+    ]
+  },
+  {
+    "id": "sur-sangram",
+    "name": "Sur Sangram",
+    "category": "Malhaar",
+    "tagline": "The Battle of Melodies",
+    "description": "Pre-Agnee singing contest celebrating voices from across the campus.",
+    "teamSize": {
+      "min": 1,
+      "max": 4
+    },
+    "schedule": {
+      "day": "Pre-Agnee",
+      "venueName": "To be announced"
+    },
     "registrationState": "soon",
     "posterImage": "",
     "tags": [
-      "Esports",
-      "LAN",
-      "Gaming"
-    ],
-    "featured": false
+      "Singing",
+      "Pre-Agnee"
+    ]
+  },
+  {
+    "id": "treasure-hunt",
+    "name": "Treasure Hunt",
+    "category": "Media & Tech Club GSV",
+    "tagline": "Follow the Clues",
+    "description": "Pre-Agnee campus-wide treasure hunt of riddles, clues and teamwork.",
+    "teamSize": {
+      "min": 1,
+      "max": 4
+    },
+    "schedule": {
+      "day": "Pre-Agnee",
+      "venueName": "To be announced"
+    },
+    "registrationState": "soon",
+    "posterImage": "",
+    "tags": [
+      "Adventure",
+      "Pre-Agnee"
+    ]
   }
 ];
 
-// Timeline section: two cards side by side. Edit the events lists here (plain event names).
+// Timeline section: the Performances card.
 export const schedule = {
-  "phases": [
-    {
-      "name": "Pre-Agnee",
-      "events": [
-        "Battle of Wits",
-        "Sursangram",
-        "Youth Parliament",
-        "Treasure Hunt",
-        "Muscle Mania"
-      ]
-    },
-    {
-      "name": "Agnee",
-      "events": [
-        "To Be Announce!"
-      ]
-    }
+  // Performances program, in running order; each inner list is one block of the show; mins is the slot length in minutes
+  "program": [
+    [
+      { "time": "17:30", "mins": "5", "name": "WELCOME ADDRESS" },
+      { "time": "17:35", "mins": "5", "name": "LAMP LIGHTING" },
+      { "time": "17:40", "mins": "15", "name": "VICE CHANCELLOR’S ADDRESS" },
+      { "time": "17:55", "mins": "10", "name": "WELCOMING OF GUESTS" }
+    ],
+    [
+      { "time": "18:05", "mins": "15", "name": "MALHAAR - CLASSICAL" },
+      { "time": "18:20", "mins": "30", "name": "DRAMA + NRITYA - CLASSICAL" },
+      { "time": "18:50", "mins": "20-25", "name": "FASHION SHOW - CLASSICAL" }
+    ],
+    [
+      { "time": "19:15", "mins": "15", "name": "MALHAAR - BOLLYWOOD" },
+      { "time": "19:30", "mins": "20", "name": "NRITYA - FOLK" },
+      { "time": "19:35", "mins": "5", "name": "STUDENT FELICITATION" },
+      { "time": "19:40", "mins": "20", "name": "DRAMA - COURT ROOM" }
+    ],
+    [
+      { "time": "20:00", "mins": "10", "name": "NRITYA - REELS" },
+      { "time": "20:10", "mins": "20", "name": "MALHAAR - ROCK" }
+    ],
+    [
+      { "time": "20:30", "mins": "5", "name": "INDEPENDENT PERFORMANCE - HARDIK" },
+      { "time": "20:35", "mins": "20-25", "name": "FASHION SHOW - WESTERN" }
+    ],
+    [
+      { "time": "21:10", "mins": "", "name": "DJ NIGHT" }
+    ]
   ]
 };
+
+// Developers section above the footer. Add one object per person; link/github are optional.
+export const developers = [
+  {
+    "name": "Ravi Panchal",
+    "github": "https://github.com/ravixpanchal"
+  },
+  {
+    "name": "Rishav Kumar",
+    "github": "https://github.com/rishavgsv"
+  },
+  {
+    "name": "Shashank Savarkar",
+    "github": "https://github.com/shashanksavarkar"
+  },
+  {
+    "name": "Abhinav Kesarwani",
+    "github": "https://github.com/"
+  }
+];
 
 export const guests = [
   {
@@ -541,7 +272,7 @@ export const sponsors = {
     {
       "tierName": "Sponsored By",
       "tierKey": "title",
-      "description": "Premier festival naming rights and nationwide co-branding across all digital and on-ground collateral.",
+      "description": "",
       "sponsors": [
         {
           "name": "State Bank of India",
@@ -553,7 +284,7 @@ export const sponsors = {
     {
       "tierName": "Sponsored By",
       "tierKey": "powered-by",
-      "description": "Co-presenting partner with high-visibility main stage and arena engagement zones.",
+      "description": "",
       "sponsors": [
         {
           "name": "Union Bank of India",

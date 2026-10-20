@@ -11,7 +11,6 @@ export function renderTeam(teamData = { coreTeam: [], facultyAdvisors: [] }) {
     <section class="section team-section" id="team" aria-labelledby="teamHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">THE ARCHITECTS OF AGNEE</span>
           <h2 class="section-title" id="teamHeading">Organizing Committee</h2>
         </div>
 

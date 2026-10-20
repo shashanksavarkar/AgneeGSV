@@ -37,7 +37,6 @@ const DICTIONARY = {
       allCategories: 'All Categories',
       allDays: 'All Days',
       filterOpenOnly: 'Open Registrations Only',
-      viewRules: 'View Rules & Details',
       addToPlan: 'Add to Plan',
       inPlan: 'In My Plan',
       registerNow: 'Register',

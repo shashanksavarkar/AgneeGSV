@@ -14,7 +14,6 @@ export function renderContact(siteData = {}) {
     <section class="section contact-section" id="contact" aria-labelledby="contactHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">GET IN TOUCH</span>
           <h2 class="section-title" id="contactHeading">Contact & Inquiries</h2>
         </div>
 

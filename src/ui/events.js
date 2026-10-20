@@ -1,9 +1,6 @@
-// Events discovery hub with category filters, debounced search, day tabs, and modal bottom sheet
+// Events discovery hub with category filters, debounced search, day tabs, and cards
 
 import { store } from '../core/store.js';
-import { router } from '../core/router.js';
-import { analytics } from '../core/analytics.js';
-import { generateEventICS, downloadICSFile } from '../core/ics-export.js';
 import { t } from '../core/i18n.js';
 
 let cachedEvents = [];
@@ -20,7 +17,7 @@ export function renderEvents(events = []) {
     <section class="section events-section" id="events" aria-labelledby="eventsHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">DISCOVER & PARTICIPATE</span>
+          <img class="sec-icon" src="assets/elements/mask.svg" alt="" aria-hidden="true">
           <h2 class="section-title" id="eventsHeading">${t('events.title')}</h2>
           <p class="section-subtitle">${t('events.subtitle')}</p>
         </div>
@@ -87,21 +84,6 @@ export function renderEvents(events = []) {
         </div>
       </div>
     </section>
-
-    <!-- Event Detail Modal / Bottom Sheet -->
-    <div class="modal-backdrop" id="eventModalBackdrop" aria-hidden="true"></div>
-    <div class="event-modal-container" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="modalEventTitle" hidden>
-      <div class="modal-header">
-        <div class="modal-badge-group">
-          <span class="badge-category" id="modalCategory">Category</span>
-          <span class="badge-state" id="modalRegState">Status</span>
-        </div>
-        <button type="button" class="modal-close-btn" id="eventModalCloseBtn" aria-label="Close event details">✕</button>
-      </div>
-      <div class="modal-body" id="eventModalBody">
-        <!-- Injected via openEventModal -->
-      </div>
-    </div>
   `;
 
   setupEventsInteractions();
@@ -206,27 +188,6 @@ function setupEventsInteractions() {
 
   resetBtn?.addEventListener('click', handleReset);
   emptyResetBtn?.addEventListener('click', handleReset);
-
-  // Modal close handlers
-  const modalBackdrop = document.getElementById('eventModalBackdrop');
-  const modalCloseBtn = document.getElementById('eventModalCloseBtn');
-  modalBackdrop?.addEventListener('click', closeEventModal);
-  modalCloseBtn?.addEventListener('click', closeEventModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const modal = document.getElementById('eventModal');
-      if (modal && !modal.hidden) closeEventModal();
-    }
-  });
-
-  // Listen for external URL route parameter e.g. #event/battle-of-the-bands
-  router.subscribe((route, params) => {
-    if (route === 'events' && params?.id) {
-      const ev = cachedEvents.find(e => e.id === params.id);
-      if (ev) openEventModal(ev);
-    }
-  });
 }
 
 function applyFiltersAndRender() {
@@ -255,7 +216,7 @@ function applyFiltersAndRender() {
     return true;
   });
 
-  const shown = isFiltered ? filtered : filtered.slice(0, 6);
+  const shown = filtered;
 
   if (countLabel) {
     countLabel.textContent = `Showing ${shown.length} of ${cachedEvents.length} competitions`;
@@ -269,216 +230,29 @@ function applyFiltersAndRender() {
 
   if (emptyState) emptyState.hidden = true;
 
-  grid.innerHTML = shown.map(ev => renderEventCard(ev)).join('');
-
-  // Attach card event listeners
-  grid.querySelectorAll('.event-card').forEach(card => {
-    const eventId = card.dataset.id;
-    const ev = cachedEvents.find(e => e.id === eventId);
-    if (!ev) return;
-
-    card.querySelector('.btn-card-detail')?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openEventModal(ev);
-    });
-
-    // Whole card click also opens detail
-    card.addEventListener('click', () => {
-      openEventModal(ev);
-    });
-  });
+  grid.innerHTML = shown.map((ev, i) => renderEventCard(ev, i)).join('');
 }
 
-function renderEventCard(ev) {
-  const stateBadge = getStateBadge(ev.registrationState);
+function renderEventCard(ev, i) {
   const teamText = ev.teamSize.min === ev.teamSize.max 
     ? (ev.teamSize.min === 1 ? 'Solo' : `${ev.teamSize.min} Members`) 
     : `${ev.teamSize.min}–${ev.teamSize.max} Members`;
 
   return `
-    <article class="event-card glass-panel" data-id="${ev.id}" tabindex="0" aria-label="${ev.name}">
-      <div class="card-top">
-        <span class="card-category-tag">${ev.category}</span>
-        ${stateBadge}
-      </div>
+    <article class="event-card" data-id="${ev.id}" data-no="${String(i + 1).padStart(2, '0')}" aria-label="${ev.name}">
+      ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
+      <span class="ev-club">${ev.category}</span>
 
       <div class="card-main">
         <h3 class="event-card-title">${ev.name}</h3>
         <p class="event-card-tagline">${ev.tagline || ''}</p>
       </div>
 
-      <div class="event-card-meta">
-        <div class="meta-row">
-          <span class="meta-icon" aria-hidden="true">👥</span>
-          <span>${teamText}</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-icon" aria-hidden="true">📍</span>
-          <span>${ev.schedule?.venueName || 'Venue TBA'}</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-icon" aria-hidden="true">⏱</span>
-          <span>${ev.schedule?.day || 'Day TBA'}</span>
-        </div>
-      </div>
-
-      <div class="event-card-actions">
-        <button type="button" class="btn-secondary btn-sm btn-card-detail">
-          ${t('events.viewRules')}
-        </button>
-      </div>
+      <dl class="ev-stats">
+        <div><dt>Team</dt><dd>${teamText}</dd></div>
+        <div><dt>Venue</dt><dd>${ev.schedule?.venueName || 'Venue TBA'}</dd></div>
+        <div><dt>When</dt><dd>${ev.schedule?.day || 'Day TBA'}</dd></div>
+      </dl>
     </article>
   `;
-}
-
-function getStateBadge(state) {
-  switch (state) {
-    case 'open':
-      return `<span class="badge-state state-open">Registration Open</span>`;
-    case 'soon':
-      return `<span class="badge-state state-soon">Opening Soon</span>`;
-    case 'closed':
-      return `<span class="badge-state state-closed">Closed</span>`;
-    case 'sold_out':
-      return `<span class="badge-state state-soldout">Slots Full</span>`;
-    default:
-      return `<span class="badge-state state-soon">Announcing Soon</span>`;
-  }
-}
-
-export function openEventModal(ev) {
-  analytics.trackEventView(ev.id, ev.name);
-  const modal = document.getElementById('eventModal');
-  const backdrop = document.getElementById('eventModalBackdrop');
-  const body = document.getElementById('eventModalBody');
-  const catEl = document.getElementById('modalCategory');
-  const stateEl = document.getElementById('modalRegState');
-  if (!modal || !body) return;
-
-  if (catEl) catEl.textContent = ev.category;
-  if (stateEl) {
-    stateEl.className = 'badge-state ' + (ev.registrationState === 'open' ? 'state-open' : 'state-soon');
-    stateEl.textContent = ev.registrationState === 'open' ? 'Registration Open' : 'Opening Soon';
-  }
-
-  const teamText = ev.teamSize.min === ev.teamSize.max 
-    ? (ev.teamSize.min === 1 ? 'Solo' : `${ev.teamSize.min} Members`) 
-    : `${ev.teamSize.min} to ${ev.teamSize.max} Members`;
-
-  body.innerHTML = `
-    <h2 class="modal-title" id="modalEventTitle">${ev.name}</h2>
-    <p class="modal-tagline">${ev.tagline || ''}</p>
-    <p class="modal-description">${ev.description || ''}</p>
-
-    <div class="modal-meta-grid">
-      <div class="modal-meta-card">
-        <span class="label">${t('events.teamSizeLabel')}</span>
-        <span class="val">${teamText}</span>
-      </div>
-      <div class="modal-meta-card">
-        <span class="label">Schedule Slot</span>
-        <span class="val">${ev.schedule?.day || 'TBA'} · ${ev.schedule?.time || 'Timing TBA'}</span>
-      </div>
-      <div class="modal-meta-card">
-        <span class="label">Venue</span>
-        <span class="val">${ev.schedule?.venueName || 'Venue TBA'}</span>
-      </div>
-      <div class="modal-meta-card">
-        <span class="label">${t('events.prizesLabel')}</span>
-        <span class="val">${ev.prizes || t('common.tba')}</span>
-      </div>
-    </div>
-
-    <!-- Eligibility -->
-    <div class="modal-section">
-      <h3 class="section-sub">${t('events.eligibilityLabel')}</h3>
-      <p class="text-sm">${ev.eligibility || 'Open to all enrolled college and university students with valid ID.'}</p>
-    </div>
-
-    <!-- Rules & Regulations List -->
-    <div class="modal-section">
-      <h3 class="section-sub">Rules & Guidelines</h3>
-      <ul class="rules-list">
-        ${(ev.rules || []).map(r => `<li>${r}</li>`).join('')}
-      </ul>
-    </div>
-
-    <!-- Judging Criteria -->
-    ${(ev.judgingCriteria && ev.judgingCriteria.length > 0) ? `
-      <div class="modal-section">
-        <h3 class="section-sub">Judging Criteria</h3>
-        <ul class="criteria-list">
-          ${ev.judgingCriteria.map(c => `<li>${c}</li>`).join('')}
-        </ul>
-      </div>
-    ` : ''}
-
-    <!-- Modal Action Buttons -->
-    <div class="modal-actions-footer">
-      <button type="button" class="btn-secondary" id="modalShowMapBtn">
-        🗺 ${t('events.showOnMap')}
-      </button>
-
-      <button type="button" class="btn-secondary" id="modalExportIcsBtn">
-        📅 Calendar (.ics)
-      </button>
-
-      <button type="button" class="btn-secondary" id="modalShareBtn">
-        ↗ ${t('common.share')}
-      </button>
-
-      ${ev.registrationLink ? `<a href="${ev.registrationLink}" target="_blank" rel="noopener noreferrer" class="btn-primary" id="modalRegBtn">${ev.registrationState === 'open' ? 'Register on Portal' : 'Register (Opening Soon)'}</a>` : ''}
-    </div>
-  `;
-
-  // Attach modal action listeners
-  const showMapBtn = document.getElementById('modalShowMapBtn');
-  showMapBtn?.addEventListener('click', () => {
-    closeEventModal();
-    // Navigate to 3D map with venue focus
-    const venueId = ev.schedule?.venueId || 'stage';
-    location.hash = `map?place=${venueId}`;
-    window.dispatchEvent(new CustomEvent('agnee:fly-to-place', { detail: { placeId: venueId } }));
-  });
-
-  const exportIcsBtn = document.getElementById('modalExportIcsBtn');
-  exportIcsBtn?.addEventListener('click', () => {
-    const icsContent = generateEventICS(ev);
-    downloadICSFile(icsContent, `agnee2026-${ev.id}.ics`);
-    analytics.trackICSDownload('single_event');
-    store.showToast('Calendar (.ics) downloaded!');
-  });
-
-  const shareBtn = document.getElementById('modalShareBtn');
-  shareBtn?.addEventListener('click', () => {
-    const shareUrl = `${location.origin}${location.pathname}#events/${ev.id}`;
-    if (navigator.share) {
-      navigator.share({
-        title: `Agnee 2026: ${ev.name}`,
-        text: `${ev.tagline || ev.name} at Agnee 2026, GSV Vadodara`,
-        url: shareUrl
-      }).catch(() => {});
-    } else {
-      navigator.clipboard?.writeText(shareUrl);
-      store.showToast(t('common.copied'));
-    }
-    analytics.trackShare('event_modal', shareUrl);
-  });
-
-  // Display modal
-  modal.hidden = false;
-  backdrop.classList.add('on');
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-export function closeEventModal() {
-  const modal = document.getElementById('eventModal');
-  const backdrop = document.getElementById('eventModalBackdrop');
-  if (!modal) return;
-
-  modal.classList.remove('open');
-  backdrop?.classList.remove('on');
-  document.body.style.overflow = '';
-  modal.hidden = true;
 }

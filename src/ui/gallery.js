@@ -8,7 +8,6 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
     <section class="section gallery-section" id="gallery" aria-labelledby="galleryHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">MOMENTS & MEMORIES</span>
           <h2 class="section-title" id="galleryHeading">Festival Gallery & Aftermovie</h2>
         </div>
 
@@ -102,10 +101,6 @@ function renderRow(items, key, dir) {
                   </div>`}
               <button type="button" class="gallery-view" ${copy ? 'tabindex="-1"' : ''} aria-label="View ${item.title}">VIEW</button>
             </div>
-            <figcaption class="gallery-caption">
-              <span class="item-tag">${item.tag}</span>
-              <h4 class="item-title">${item.title}</h4>
-            </figcaption>
           </figure>`).join('')).join('')}
       </div>
     </div>`;

@@ -29,6 +29,8 @@ const STATIC_ASSETS = [
   './src/ui/team.js',
   './src/ui/faq.js',
   './src/ui/contact.js',
+  './src/ui/developers.js',
+  './src/ui/particles.js',
   './src/ui/footer.js',
   './src/ui/toast.js',
   './src/ui/social-icons.js',

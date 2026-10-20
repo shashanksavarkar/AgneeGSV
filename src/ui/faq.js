@@ -9,7 +9,6 @@ export function renderFaq(faqs = []) {
     <section class="section faq-section" id="faq" aria-labelledby="faqHeading">
       <div class="container">
         <div class="section-header">
-          <span class="section-kicker">QUESTIONS & ANSWERS</span>
           <h2 class="section-title" id="faqHeading">Frequently Asked Questions</h2>
         </div>
 

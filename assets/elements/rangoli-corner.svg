@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <g stroke="#ffb347" stroke-width="1.200" stroke-linecap="round">
+    <path d="M22 0A22 22 0 0 1 0 22" />
+    <path d="M46 0A46 46 0 0 1 0 46" />
+    <path d="M74 0A74 74 0 0 1 0 74" />
+    <path d="M104 0A104 104 0 0 1 0 104" />
+    <path d="M136 0A136 136 0 0 1 0 136" />
+    <path transform="rotate(7.5)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(20.0)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(32.5)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(45.0)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(57.5)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(70.0)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(82.5)" d="M26 0C30.8 -6 37.2 -6 42 0C37.2 6 30.8 6 26 0Z" />
+    <path transform="rotate(9)" d="M50 0C56.6 -8 65.4 -8 72 0C65.4 8 56.6 8 50 0Z" />
+    <path transform="rotate(27)" d="M50 0C56.6 -8 65.4 -8 72 0C65.4 8 56.6 8 50 0Z" />
+    <path transform="rotate(45)" d="M50 0C56.6 -8 65.4 -8 72 0C65.4 8 56.6 8 50 0Z" />
+    <path transform="rotate(63)" d="M50 0C56.6 -8 65.4 -8 72 0C65.4 8 56.6 8 50 0Z" />
+    <path transform="rotate(81)" d="M50 0C56.6 -8 65.4 -8 72 0C65.4 8 56.6 8 50 0Z" />
+    <circle cx="117.7" cy="8.2" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="115.3" cy="24.9" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="110.6" cy="41.1" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="103.6" cy="56.5" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="94.5" cy="70.7" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="83.4" cy="83.4" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="70.7" cy="94.5" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="56.5" cy="103.6" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="41.1" cy="110.6" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="24.9" cy="115.3" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="8.2" cy="117.7" r="2.600" fill="#ffb347" stroke="none"/>
+    <circle cx="88.5" cy="9.3" r="4.500" />
+    <circle cx="84.8" cy="26.9" r="4.500" />
+    <circle cx="77.7" cy="43.4" r="4.500" />
+    <circle cx="67.4" cy="58.2" r="4.500" />
+    <circle cx="54.3" cy="70.5" r="4.500" />
+    <circle cx="39.0" cy="80.0" r="4.500" />
+    <circle cx="22.1" cy="86.2" r="4.500" />
+    <circle cx="4.3" cy="88.9" r="4.500" />
+    <path transform="translate(147.4 12.9) rotate(95.0)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(142.8 38.8) rotate(105.2)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(133.7 63.5) rotate(115.4)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(120.3 86.2) rotate(125.6)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(103.2 106.1) rotate(135.8)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(82.8 122.7) rotate(146.0)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(59.7 135.4) rotate(156.2)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(34.8 143.9) rotate(166.4)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <path transform="translate(8.8 147.7) rotate(176.6)" d="M-5 0Q0 -9 5 0Q0 -3 -5 0Z" fill="#ffb347" />
+    <circle cx="0" cy="0" r="9" fill="#ffb347" stroke="none" opacity="0.8"/>
+  </g>
+</svg>

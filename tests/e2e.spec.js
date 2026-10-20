@@ -46,26 +46,17 @@ test.describe('Agnee 2026 Core Suite', () => {
     await searchInput.fill('Battle');
     await page.waitForTimeout(300); // debounce
 
-    await expect(page.locator('.event-card-title').filter({ hasText: 'Battle of the Bands' })).toBeVisible();
+    await expect(page.locator('.event-card-title').filter({ hasText: 'Battle of Wits' })).toBeVisible();
 
     // Clear search
     await page.locator('#eventSearchClear').click();
     await page.waitForTimeout(300);
-
-    // Click an event card to open the detail modal
-    await eventCards.first().click();
-    const modal = page.locator('#eventModal');
-    await expect(modal).toBeVisible();
-    await expect(page.locator('#modalEventTitle')).toBeVisible();
-
-    // Close modal via Escape key
-    await page.keyboard.press('Escape');
-    await expect(modal).toBeHidden();
   });
 
-  test('Schedule: Pre-Agnee and Agnee cards display', async ({ page }) => {
+  test('Schedule: single Performances card', async ({ page }) => {
     await page.goto('/#schedule');
-    await expect(page.locator('.phase-card')).toHaveCount(2);
+    await expect(page.locator('.phase-card')).toHaveCount(1);
+    await expect(page.locator('.phase-events li').first()).toBeVisible();
   });
 
   test('3D Campus Map: launch button and directions drawer', async ({ page }) => {

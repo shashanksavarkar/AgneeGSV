@@ -57,7 +57,22 @@ class Router {
   }
 
   init() {
+    // On reload keep the reader where they were instead of jumping to the hash section / top
+    const KEY = 'agnee-scrollY';
+    history.scrollRestoration = 'manual';
+    addEventListener('scroll', () => { try { sessionStorage.setItem(KEY, scrollY); } catch {} }, { passive: true });
+
+    let y = 0;
+    try { y = performance.getEntriesByType('navigation')[0]?.type === 'reload' ? Number(sessionStorage.getItem(KEY)) || 0 : 0; } catch {}
+
+    this.restoring = y > 0;
     this.handleHashChange();
+    this.restoring = false;
+    if (y > 0) {
+      const restore = () => scrollTo({ top: y, behavior: 'instant' });
+      restore();
+      addEventListener('load', restore, { once: true }); // images/fonts can change page height
+    }
   }
 
   subscribe(fn) {
@@ -128,6 +143,7 @@ class Router {
   }
 
   scrollToSection(route) {
+    if (this.restoring) return;
     if (route === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
