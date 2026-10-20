@@ -368,8 +368,8 @@ button{min-width:44px;min-height:44px;touch-action:manipulation;-webkit-tap-high
   :root{--space:12px}
   .earth-search{left:12px;top:calc(var(--safe-top) + 12px);width:calc(100% - 106px)}
   .earth-search input{height:46px;border-radius:15px;font-size:12px}
-  .earth-actions{right:10px;top:calc(var(--safe-top) + 72px);gap:5px}
-  .earth-actions button{width:42px;height:42px;border-radius:13px;font-size:16px}
+  .earth-actions{left:10px;right:10px;top:calc(var(--safe-top) + 72px);gap:2px;justify-content:space-between;padding:4px}
+  .earth-actions button{flex:1 1 0;min-width:0;width:auto;height:42px;padding:0;border-radius:13px;font-size:16px}
   .earth-actions button span{display:none}
   .earth-actions button[data-earth-compass]{position:absolute;right:0;top:-58px;width:44px;height:44px;border-radius:50%}
   .earth-layers{right:10px;top:122px;width:min(300px,calc(100% - 20px));padding:12px 14px}

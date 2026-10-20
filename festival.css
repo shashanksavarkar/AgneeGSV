@@ -4271,7 +4271,9 @@ body.on-hero .mobile-bottom-dock { transform: translateY(130%); }
 .site-header, .mobile-drawer, .mobile-drawer-backdrop, .mobile-bottom-dock { display: none !important; }
 :root { --header-height: 0px; --dock-height: 0px; }
 .scroll-rail { top: 24px; }
-.scroll-rail-mark.active::after { opacity: 1; color: #1a0c02; background: #ff7a1a; border-color: #ffd9a0; }
+.scroll-rail-mark.active::after { color: #1a0c02; background: #ff7a1a; border-color: #ffd9a0; }
+.scroll-rail.awake .scroll-rail-mark.active::after, .scroll-rail:hover .scroll-rail-mark.active::after { opacity: 1; }
+.scroll-rail-mark.active::after { transition: opacity 0.4s; }
 @media (max-width: 768px) {
   .scroll-rail { width: 14px; right: 4px; bottom: 24px; }
   .scroll-rail-mark { height: 10px; margin-top: -5px; }

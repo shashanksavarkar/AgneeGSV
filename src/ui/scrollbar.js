@@ -23,7 +23,15 @@ export function initScrollRail() {
 
   const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
 
+  let idle;
+  function wake() {
+    rail.classList.add('awake');
+    clearTimeout(idle);
+    idle = setTimeout(() => rail.classList.remove('awake'), 2000);
+  }
+
   function update() {
+    wake();
     const pct = maxScroll() > 0 ? (scrollY / maxScroll()) * 100 : 0;
     fill.style.height = knob.style.top = `${pct}%`;
     rail.hidden = maxScroll() <= 0;
