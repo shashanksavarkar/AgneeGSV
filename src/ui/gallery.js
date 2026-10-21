@@ -8,20 +8,19 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
     <section class="section gallery-section" id="gallery" aria-labelledby="galleryHeading">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title" id="galleryHeading">Festival Gallery & Aftermovie</h2>
+          <h2 class="section-title" id="galleryHeading">Gallery</h2>
         </div>
 
         <!-- Privacy-Friendly Click-to-Load Video Showcase -->
         <div class="aftermovie-container glass-panel">
           <div class="video-placeholder" id="videoPlaceholderSlot">
             <div class="video-overlay-content">
-              <span class="video-badge">AFTERMOVIE REEL</span>
-              <h3 class="video-title">Agnee Festival Experience Teaser</h3>
-              <p class="video-desc">Click below to load the festival teaser. No external trackers or cookies are loaded until you play.</p>
+              <span class="video-badge">Aftermovie Reel</span>
               <button type="button" class="btn-play-video" id="btnPlayVideo" aria-label="Play festival teaser video">
                 <span class="play-icon" aria-hidden="true">▶</span>
-                <span class="play-text">Load & Watch Video</span>
               </button>
+              <h3 class="video-title">Agnee Festival Experience Teaser</h3>
+              <p class="video-desc">Tap play to watch. Nothing from YouTube loads until you do.</p>
             </div>
           </div>
           <div class="video-embed-frame" id="videoEmbedFrame" hidden></div>
@@ -35,7 +34,6 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
         <dialog class="gallery-lightbox" id="galleryLightbox" aria-label="Gallery image">
           <button type="button" class="lightbox-close" aria-label="Close">✕</button>
           <div class="lightbox-art" id="lightboxArt"></div>
-          <p class="lightbox-caption" id="lightboxCaption"></p>
         </dialog>
       </div>
     </section>
@@ -52,7 +50,6 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
     art.innerHTML = src
       ? `<img src="${src}" alt="${title}">`
       : `<span class="ambient-tag">${tag}</span><span class="ambient-num">0${+item.dataset.index + 1}</span>`;
-    box.querySelector('#lightboxCaption').textContent = title;
     box.showModal();
   });
   box.addEventListener('click', (e) => { if (e.target === box || e.target.closest('.lightbox-close')) box.close(); });

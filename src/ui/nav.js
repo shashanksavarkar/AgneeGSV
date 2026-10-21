@@ -7,7 +7,7 @@ export function renderNavbar(siteData = {}) {
   const navContainer = document.getElementById('navbar-mount');
   if (!navContainer) return;
 
-  const wordmarkSrc = window.WMURI || '';
+  const wordmarkSrc = window.WMURI || 'assets/logo.webp';
 
   navContainer.innerHTML = `
     <header class="site-header" role="banner">

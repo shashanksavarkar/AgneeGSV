@@ -15,6 +15,7 @@ import { renderLineup } from './ui/lineup.js';
 import { renderMapSection } from './ui/map-section.js';
 import { renderSponsors } from './ui/sponsors.js';
 import { renderGallery } from './ui/gallery.js';
+import { renderMerch } from './ui/merch.js';
 import { renderTeam } from './ui/team.js';
 import { renderFaq } from './ui/faq.js';
 import { renderContact } from './ui/contact.js';
@@ -39,12 +40,15 @@ async function bootstrap() {
     renderLineup(data.guests);
     renderSponsors(data.sponsors);
     renderGallery(data.gallery);
+    renderMerch(data.merch);
     renderTeam(data.team);
     renderFaq(data.faqs);
-    renderContact(data.site);
+    renderContact(data.site, data.events);
     renderDevelopers(data.developers);
     renderFooter(data.site);
     renderToastContainer();
+    // Rangoli in each section's bottom-left corner (the top-right one is .section::after)
+    document.querySelectorAll('.section').forEach(sec => sec.insertAdjacentHTML('beforeend', '<span class="rangoli-bl" aria-hidden="true"></span>'));
     initScrollRail();
 
     // 4. Initialize client-side router

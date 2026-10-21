@@ -112,7 +112,7 @@ class Store {
 
   // --- Toast notifications ---
   showToast(message, type = 'info', duration = 3000) {
-    this.state.toast = { message, type, id: Date.now() };
+    this.state.toast = { message, type, duration, id: Date.now() };
     this.notify('toast');
     setTimeout(() => {
       if (this.state.toast?.message === message) {

@@ -1,7 +1,7 @@
 // Custom page scrollbar: a slim rail with a knob that rides down as you scroll; click or drag to scroll.
 // Section ticks on the rail replace the header nav: hover for the name, click to jump.
 
-const SECTIONS = [['about', 'About'], ['events', 'Events'], ['schedule', 'Schedule'], ['map', 'Campus Map'], ['lineup', 'Line-up'], ['sponsors', 'Sponsors'], ['gallery', 'Gallery'], ['team', 'Team'], ['faq', 'FAQ'], ['contact', 'Contact']];
+const SECTIONS = [['about', 'About'], ['events', 'Events'], ['schedule', 'Schedule'], ['map', 'Campus Map'], ['lineup', 'Line-up'], ['sponsors', 'Sponsors'], ['gallery', 'Gallery'], ['merch', 'Merch'], ['team', 'Team'], ['faq', 'FAQ'], ['contact', 'Contact']];
 
 export function initScrollRail() {
   const rail = document.createElement('div');

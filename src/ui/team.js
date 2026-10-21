@@ -21,7 +21,7 @@ export function renderTeam(teamData = { coreTeam: [], facultyAdvisors: [] }) {
             ${faculty.map(f => `
               <div class="team-card glass-panel">
                 <div class="team-avatar-slot" aria-hidden="true">
-                  <span class="avatar-initials">${f.name.split(' ').map(n => n[0]).join('')}</span>
+                  ${f.avatar ? `<img class="avatar-img" src="${f.avatar}" alt="">` : `<span class="avatar-initials">${f.name.split(' ').map(n => n[0]).join('')}</span>`}
                 </div>
                 <div class="team-info">
                   <h4 class="member-name">${f.name}</h4>
@@ -41,7 +41,7 @@ export function renderTeam(teamData = { coreTeam: [], facultyAdvisors: [] }) {
             ${core.map(m => `
               <div class="team-card glass-panel">
                 <div class="team-avatar-slot" aria-hidden="true">
-                  <span class="avatar-initials">${m.name.split(' ').map(n => n[0]).join('')}</span>
+                  ${m.avatar ? `<img class="avatar-img" src="${m.avatar}" alt="">` : `<span class="avatar-initials">${m.name.split(' ').map(n => n[0]).join('')}</span>`}
                 </div>
                 <div class="team-info">
                   <span class="member-team-badge">${m.team}</span>

@@ -1,6 +1,6 @@
 // Agnee 2026 Service Worker: offline caching & network-first updates for festival shell
 
-const CACHE_NAME = 'agnee-2026-v11';
+const CACHE_NAME = 'agnee-2026-v72';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -26,6 +26,7 @@ const STATIC_ASSETS = [
   './src/ui/map-section.js',
   './src/ui/sponsors.js',
   './src/ui/gallery.js',
+  './src/ui/merch.js',
   './src/ui/team.js',
   './src/ui/faq.js',
   './src/ui/contact.js',

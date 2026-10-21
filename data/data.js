@@ -60,109 +60,113 @@ export const site = {
 
 export const events = [
   {
-    "id": "youth-parliament",
-    "name": "Youth Parliament",
-    "category": "Debate & Quiz Club GSV",
-    "tagline": "Debate. Decide. Govern.",
-    "description": "Pre-Agnee mock parliament where participants debate current issues in the house.",
-    "teamSize": {
-      "min": 1,
-      "max": 1
+    id: 'youth-parliament',
+    name: 'Youth Parliament',
+    category: 'Debate & Quiz Club GSV',
+    tagline: 'Debate. Decide. Govern.',
+    description: 'Pre-Agnee mock parliament where participants debate current issues in the house.',
+    teamSize: {
+      min: 1,
+      max: 1
     },
-    "schedule": {
-      "day": "Pre-Agnee",
-      "venueName": "To be announced"
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
     },
-    "registrationState": "soon",
-    "posterImage": "assets/DNQ.jpeg",
-    "tags": [
-      "Debating",
-      "Pre-Agnee"
-    ]
+    registrationState: 'soon',
+    posterImage: 'assets/DNQ.webp',
+    tags: ['Debating', 'Pre-Agnee']
   },
   {
-    "id": "battle-of-wits",
-    "name": "Battle of Wits",
-    "category": "Literary Club GSV",
-    "tagline": "The Ultimate Test of Wit",
-    "description": "Pre-Agnee quiz-style contest of general knowledge, logic and quick thinking.",
-    "teamSize": {
-      "min": 1,
-      "max": 4
+    id: 'muscle-mania',
+    name: 'Muscle Mania',
+    category: 'Sports Committee GSV',
+    tagline: 'Strength. Stamina. Spotlight.',
+    description: 'Pre-Agnee fitness showdown where participants show off their strength and stamina.',
+    teamSize: {
+      min: 1,
+      max: 1
     },
-    "schedule": {
-      "day": "Pre-Agnee",
-      "venueName": "To be announced"
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
     },
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Quiz",
-      "Pre-Agnee"
-    ]
+    registrationState: 'soon',
+    posterImage: '',
+    tags: ['Fitness', 'Pre-Agnee']
   },
   {
-    "id": "brandwars",
-    "name": "Brandwars",
-    "category": "एधार्थ (Edhartha) - B Club GSV",
-    "tagline": "Pitch. Promote. Prevail.",
-    "description": "Pre-Agnee marketing showdown where teams battle it out to build and sell the best brand.",
-    "teamSize": {
-      "min": 1,
-      "max": 4
+    id: 'battle-of-wits',
+    name: 'Battle of Wits',
+    category: 'Literary Club GSV',
+    tagline: 'The Ultimate Test of Wit',
+    description: 'Pre-Agnee quiz-style contest of general knowledge, logic and quick thinking.',
+    teamSize: {
+      min: 1,
+      max: 4
     },
-    "schedule": {
-      "day": "Pre-Agnee",
-      "venueName": "To be announced"
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
     },
-    "registrationState": "soon",
-    "posterImage": "assets/BCLUB.jpeg",
-    "tags": [
-      "Marketing",
-      "Pre-Agnee"
-    ]
+    registrationState: 'soon',
+    posterImage: 'assets/LC.webp',
+    tags: ['Quiz', 'Pre-Agnee']
   },
   {
-    "id": "sur-sangram",
-    "name": "Sur Sangram",
-    "category": "Malhaar",
-    "tagline": "The Battle of Melodies",
-    "description": "Pre-Agnee singing contest celebrating voices from across the campus.",
-    "teamSize": {
-      "min": 1,
-      "max": 4
+    id: 'brandwars',
+    name: 'Brandwars',
+    category: 'एधार्थ (Edhartha) - B Club GSV',
+    tagline: 'Pitch. Promote. Prevail.',
+    description:
+      'Pre-Agnee marketing showdown where teams battle it out to build and sell the best brand.',
+    teamSize: {
+      min: 2,
+      max: 2
     },
-    "schedule": {
-      "day": "Pre-Agnee",
-      "venueName": "To be announced"
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
     },
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Singing",
-      "Pre-Agnee"
-    ]
+    registrationState: 'soon',
+    posterImage: 'assets/BCLUB.webp',
+    tags: ['Marketing', 'Pre-Agnee']
   },
   {
-    "id": "treasure-hunt",
-    "name": "Treasure Hunt",
-    "category": "Media & Tech Club GSV",
-    "tagline": "Follow the Clues",
-    "description": "Pre-Agnee campus-wide treasure hunt of riddles, clues and teamwork.",
-    "teamSize": {
-      "min": 1,
-      "max": 4
+    id: 'sur-sangram',
+    name: 'Sur Sangram',
+    category: 'Malhaar Music Club GSV',
+    tagline: 'The Battle of Melodies',
+    description: 'Pre-Agnee singing contest celebrating voices from across the campus.',
+    teamSize: {
+      min: 1,
+      max: 4
     },
-    "schedule": {
-      "day": "Pre-Agnee",
-      "venueName": "To be announced"
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
     },
-    "registrationState": "soon",
-    "posterImage": "",
-    "tags": [
-      "Adventure",
-      "Pre-Agnee"
-    ]
+    registrationState: 'soon',
+    posterImage: '',
+    tags: ['Singing', 'Pre-Agnee']
+  },
+  {
+    id: 'treasure-hunt',
+    name: 'Treasure Hunt',
+    category: 'Media & Tech Club GSV',
+    tagline: 'Follow the Clues',
+    description: 'Pre-Agnee campus-wide treasure hunt of riddles, clues and teamwork.',
+    teamSize: {
+      min: 1,
+      max: 4
+    },
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'To be announced'
+    },
+    registrationState: 'soon',
+    posterImage: '',
+    tags: ['Adventure', 'Pre-Agnee']
   }
 ];
 
@@ -209,57 +213,57 @@ export const developers = [
   },
   {
     "name": "Rishav Kumar",
+    "avatar": "assets/rishav.webp",
     "github": "https://github.com/rishavgsv"
   },
   {
     "name": "Shashank Savarkar",
+    "avatar": "assets/shashank.webp",
     "github": "https://github.com/shashanksavarkar"
   },
   {
     "name": "Abhinav Kesarwani",
+    "avatar": "assets/abhinav.webp",
     "github": "https://github.com/"
   }
+];
+
+// buyUrl: link to the order form / payment page. Leave it empty until sales open.
+export const merch = [
+  { id: 'tshirt', name: 'Inferno Red', price: '₹409/-', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'hoodie', name: 'Eclipse Black', price: '₹409/-', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'tote', name: 'Ethereal White', price: '₹409/-', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
 ];
 
 export const guests = [
   {
     "id": "guest-proshow-day1",
     "name": "To be announced",
-    "role": "Cultural Night Artist",
-    "category": "Pro-Show",
-    "day": "Day 1",
+    "role": "",
+    "category": "",
+    "day": "",
     "revealState": "Reveal soon",
-    "bio": "A celebrated performer will take the Agnee 2026 Main Stage. Name and profile will be revealed closer to the festival dates.",
+    "bio": "",
     "photo": ""
   },
   {
     "id": "guest-rocknight-day2",
     "name": "To be announced",
-    "role": "Rock / Fusion Headliner",
-    "category": "Star Night",
-    "day": "Day 2",
+    "role": "",
+    "category": "",
+    "day": "",
     "revealState": "Reveal soon",
-    "bio": "Electrifying headlining band for the Agnee 2026 Star Night. Artist reveal campaign launching soon on our official channels.",
+    "bio": "",
     "photo": ""
   },
   {
     "id": "guest-finale-day3",
     "name": "To be announced",
-    "role": "EDM / Finale Headliner",
-    "category": "Grand Finale",
-    "day": "Day 3",
-    "revealState": "Reveal soon",
-    "bio": "High-octane electronic music producer and performer to close Agnee 2026 in thunderous style.",
-    "photo": ""
-  },
-  {
-    "id": "judge-dance",
-    "name": "To be announced",
-    "role": "Chief Dance Adjudicator",
-    "category": "Judge",
-    "day": "Day 1 & 2",
-    "revealState": "Reveal soon",
-    "bio": "Distinguished choreographer and performing artist presiding over classical and street dance competitions.",
+    "role": "",
+    "category": "",
+    "day": "",
+    "revealState": "Reveal Soon",
+    "bio": "",
     "photo": ""
   }
 ];
@@ -276,7 +280,7 @@ export const sponsors = {
       "sponsors": [
         {
           "name": "State Bank of India",
-          "logo": "assets/State_Bank_of_India-removebg-preview.png",
+          "logo": "assets/State_Bank_of_India-removebg-preview.webp",
           "website": "https://sbi.co.in"
         }
       ]
@@ -288,7 +292,7 @@ export const sponsors = {
       "sponsors": [
         {
           "name": "Union Bank of India",
-          "logo": "assets/Union_Bank_of_India_Logo-removebg-preview.png",
+          "logo": "assets/Union_Bank_of_India_Logo-removebg-preview.webp",
           "website": "https://www.unionbankofindia.co.in"
         }
       ]
@@ -297,51 +301,72 @@ export const sponsors = {
 };
 
 export const team = {
-  "facultyAdvisors": [
+  facultyAdvisors: [
     {
-      "name": "Faculty Coordinator",
-      "role": "Dean / Faculty Advisor, Student Affairs",
-      "department": "Gati Shakti Vishwavidyalaya",
-      "email": "student.cell@gsv.ac.in",
-      "avatar": ""
+      name: 'Dr. R. Edwin Raj',
+      role: "Dean (Students' Welfare)",
+      // "department": "Gati Shakti Vishwavidyalaya",
+      email: 'dean.sw@gsv.ac.in',
+      avatar: 'assets/edwin_sir.webp'
     },
     {
-      "name": "Faculty Co-Advisor",
-      "role": "Cultural Committee Advisor",
-      "department": "Gati Shakti Vishwavidyalaya",
-      "email": "student.cell@gsv.ac.in",
-      "avatar": ""
+      name: 'Dr. Ram Upadhyay',
+      role: 'Faculty In-Charge',
+      // "department": "Gati Shakti Vishwavidyalaya",
+      email: 'ram.upadhyay@gsv.ac.in',
+      avatar: 'assets/ram_sir.webp'
     }
   ],
-  "coreTeam": [
+  coreTeam: [
     {
-      "name": "Himanshu Kumar",
-      "role": "Overall Coordinator",
-      "team": "President - Student Cell GSV",
-      "email": "himanshu.yadav_btech23@gsv.ac.in",
-      "avatar": ""
+      name: 'Himanshu Kumar',
+      role: 'Overall Coordinator',
+      team: 'President - Student Cell GSV',
+      email: 'himanshu.yadav_btech23@gsv.ac.in',
+      avatar: 'assets/himanshu.webp'
     },
     {
-      "name": "Risahv Kumar",
-      "role": "Overall Coordinator",
-      "team": "Vice-President",
-      "email": "rishav.kumar_btech23@gsv.ac.in",
-      "avatar": ""
+      name: 'Risahv Kumar',
+      role: 'Overall Coordinator',
+      team: 'Vice-President',
+      email: 'rishav.kumar_btech23@gsv.ac.in',
+      avatar: 'assets/rishav.webp'
     },
     {
-      "name": "Atulya Bharat",
-      "role": "Tech Lead",
-      "team": "Technical Secretary",
-      "email": "atulya.bharat_btech24@gsv.ac.in",
-      "avatar": ""
+      name: 'Soumya Banerjee',
+      role: 'Overall Coordinator',
+      team: 'External Secretary',
+      email: 'soumya.banerjee_btech23@gsv.ac.in',
+      avatar: ''
     },
     {
-      "name": "Harshit Verma",
-      "role": "Cultural Lead",
-      "team": "Cultural Secretary",
-      "email": "harshit.verma_btech24@gsv.ac.in",
-      "avatar": ""
+      name: 'Ananya Kasaudhan',
+      role: '',
+      team: 'External Secretary',
+      email: 'ananya.kasaudhan_btech24@gsv.ac.in',
+      avatar: ''
     },
+    {
+      name: 'Atulya Bharat',
+      role: 'Tech Lead',
+      team: 'Technical Secretary',
+      email: 'atulya.bharat_btech24@gsv.ac.in',
+      avatar: 'assets/atulya.webp'
+    },
+    {
+      name: 'Harshit Verma',
+      role: 'Cultural Lead',
+      team: 'Cultural Secretary',
+      email: 'harshit.verma_btech24@gsv.ac.in',
+      avatar: 'assets/harshit.webp'
+    },
+    {
+      name: 'Rupesh Kumar',
+      role: '',
+      team: 'Sports Secretary',
+      email: 'rupesh.kumar_btech24@gsv.ac.in',
+      avatar: ''
+    }
   ]
 };
 
@@ -360,11 +385,6 @@ export const faqs = [
     "category": "Competitions",
     "question": "What are the eligibility criteria for participating in competitions?",
     "answer": "Participants must be enrolled college/university students with a valid college identity card. Specific rules, team size limits, and submission guidelines are listed on each event card in the Events section."
-  },
-  {
-    "category": "Stay & Travel",
-    "question": "Is accommodation provided for outstation participants?",
-    "answer": "Limited on-campus / partner accommodation will be arranged for registered outstation teams on a first-come, first-served basis. Detailed accommodation guidelines and nominal booking details will be announced with the registration portal."
   },
   {
     "category": "Stay & Travel",

@@ -15,7 +15,7 @@ export function renderFooter(siteData = {}) {
       <div class="container">
         <div class="ft-band">
           <a href="#home" class="ft-brand" aria-label="Agnee 2026 Home">
-            <img class="ft-logo" src="assets/logo1.webp" alt="Agnee 2026" loading="lazy">
+            <img class="ft-logo" src="assets/logo.webp" alt="Agnee 2026" loading="lazy">
             <p class="ft-tagline">The flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Celebrating innovation, rhythm, and artistic expression.</p>
           </a>
           <div class="ft-social">
@@ -64,7 +64,7 @@ export function renderFooter(siteData = {}) {
           <p class="ft-copy">© 2026 Agnee · Gati Shakti Vishwavidyalaya, Vadodara. All rights reserved.<span>Designed & Built with passion by the Agnee Web & Creative Tech Team</span></p>
         </div>
       </div>
-      <div class="ft-rangoli" aria-hidden="true"><img src="assets/logo1.webp" alt="" loading="lazy"></div>
+      <div class="ft-rangoli" aria-hidden="true"><img src="assets/logo.webp" alt="" loading="lazy"></div>
     </footer>
 
     <!-- Policy dialog -->

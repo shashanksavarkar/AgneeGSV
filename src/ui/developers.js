@@ -20,7 +20,7 @@ export function renderDevelopers(developers = []) {
           ${developers.map((d, i) => `
             <article class="dev-pass" data-no="${String(i + 1).padStart(2, '0')}">
               <span class="dev-slot" aria-hidden="true"></span>
-              <div class="dev-ring"><span>${d.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</span></div>
+              <div class="dev-ring">${d.avatar ? `<img src="${d.avatar}" alt="${d.name}" loading="lazy">` : `<span>${d.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}</span>`}</div>
               <h3 class="dev-name">${d.name}</h3>
               ${d.role ? `<span class="dev-role">${d.role}</span>` : ''}
               <div class="dev-foot">

@@ -8,8 +8,6 @@ export function renderLineup(guests = []) {
     <section class="section lineup-section" id="lineup" aria-labelledby="lineupHeading">
       <span class="lu-curtain lu-curtain-l" aria-hidden="true"></span>
       <span class="lu-curtain lu-curtain-r" aria-hidden="true"></span>
-      <span class="lu-beam lu-beam-l" aria-hidden="true"></span>
-      <span class="lu-beam lu-beam-r" aria-hidden="true"></span>
       <div class="container">
         <div class="section-header">
           <img class="sec-icon" src="assets/elements/mic.svg" alt="" aria-hidden="true">
@@ -17,7 +15,7 @@ export function renderLineup(guests = []) {
         </div>
 
         <div class="lu-grid">
-          ${guests.map(guest => `
+          ${guests.filter(g => g.category.toLowerCase() !== 'judge').map(guest => `
             <article class="lu-card" data-id="${guest.id}">
               <span class="lu-bells" aria-hidden="true"></span>
               <div class="lu-photo">

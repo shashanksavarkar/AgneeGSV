@@ -6,7 +6,7 @@ export function renderHero() {
   const heroContainer = document.getElementById('hero-mount');
   if (!heroContainer) return;
 
-  const wordmarkSrc = window.WMURI || '';
+  const wordmarkSrc = window.WMURI || 'assets/logo.webp';
 
   heroContainer.innerHTML = `
     <section class="hero-section" id="home" aria-label="Agnee 2026">

@@ -33,6 +33,10 @@ const ROUTE_META = {
     title: 'Gallery & Aftermovie · Agnee 2026',
     desc: 'Relive the festival energy, stage spectacles, and campus moments from Agnee at GSV.'
   },
+  'merch': {
+    title: 'Official Merchandise · Agnee 2026',
+    desc: 'Official Agnee 2026 merchandise from Gati Shakti Vishwavidyalaya, Vadodara.'
+  },
   'team': {
     title: 'Organizing Team · Agnee 2026',
     desc: 'The student coordinators, fest secretariat, and faculty leadership behind Agnee 2026.'
