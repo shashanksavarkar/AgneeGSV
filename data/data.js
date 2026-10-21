@@ -7,14 +7,14 @@ export const site = {
   "institutionShort": "GSV",
   "location": "Vadodara, Gujarat, India",
   "venue": "Oval Ground, Gati Shakti Vishwavidyalaya Campus, Vadodara",
-  "dates": "To be announced",
+  "dates": "Agnee Week: 26-31 October 2026 · Pre-Agnee: 30 October · Agnee: 31 October",
   "datesConfigured": null,
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
   "description": "Agnee is the flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Bringing together talents in music, dance, theater, literature, art, and creative expression from across India.",
   "announcements": [
     {
       "id": "ann-1",
-      "text": "Agnee 2026 dates and theme announcement coming soon! Stay tuned.",
+      "text": "Agnee Week starts 26 October. Pre-Agnee on 30 October, Agnee on 31 October!",
       "badge": "Update",
       "link": "#about"
     },
@@ -337,14 +337,14 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'External Secretary',
       email: 'soumya.banerjee_btech23@gsv.ac.in',
-      avatar: ''
+      avatar: 'assets/soumya.webp'
     },
     {
       name: 'Ananya Kasaudhan',
       role: '',
       team: 'External Secretary',
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
-      avatar: ''
+      avatar: 'assets/ananya.webp'
     },
     {
       name: 'Atulya Bharat',
@@ -379,7 +379,7 @@ export const faqs = [
   {
     "category": "General",
     "question": "When and where will Agnee 2026 take place?",
-    "answer": "Agnee 2026 will be held at the Gati Shakti Vishwavidyalaya campus in Vadodara, Gujarat. Exact dates are currently To be announced and will be shared on this website and our official social handles once finalized."
+    "answer": "Agnee 2026 will be held at the Gati Shakti Vishwavidyalaya campus in Vadodara, Gujarat. Agnee Week runs from 26 to 31 October 2026, with Pre-Agnee on 30 October and the main Agnee day on 31 October."
   },
   {
     "category": "Competitions",
