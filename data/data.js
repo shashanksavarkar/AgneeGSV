@@ -209,6 +209,7 @@ export const schedule = {
 export const developers = [
   {
     "name": "Ravi Panchal",
+    "avatar": "assets/ravi.webp",
     "github": "https://github.com/ravixpanchal"
   },
   {
@@ -230,9 +231,9 @@ export const developers = [
 
 // buyUrl: link to the order form / payment page. Leave it empty until sales open.
 export const merch = [
-  { id: 'tshirt', name: 'Inferno Red', price: '₹409/-', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'hoodie', name: 'Eclipse Black', price: '₹409/-', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'tote', name: 'Ethereal White', price: '₹409/-', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
+  { id: 'tshirt', name: 'Inferno Red', price: '₹499/- + Extra Delivery Charges', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'hoodie', name: 'Eclipse Black', price: '₹499/- + Extra Delivery Charges', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'tote', name: 'Ethereal White', price: '₹499/- + Extra Delivery Charges', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
 ];
 
 export const guests = [
@@ -365,7 +366,7 @@ export const team = {
       role: '',
       team: 'Sports Secretary',
       email: 'rupesh.kumar_btech24@gsv.ac.in',
-      avatar: ''
+      avatar: 'assets/rupesh.webp'
     }
   ]
 };

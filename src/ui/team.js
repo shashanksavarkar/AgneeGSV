@@ -26,7 +26,7 @@ export function renderTeam(teamData = { coreTeam: [], facultyAdvisors: [] }) {
                 <div class="team-info">
                   <h4 class="member-name">${f.name}</h4>
                   <span class="member-role">${f.role}</span>
-                  <span class="member-dept">${f.department}</span>
+                  ${f.department ? `<span class="member-dept">${f.department}</span>` : ''}
                   ${f.email ? `<a href="mailto:${f.email}" class="member-email">${f.email}</a>` : ''}
                 </div>
               </div>
