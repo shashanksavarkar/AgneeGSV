@@ -2,51 +2,51 @@
 
 const ROUTE_META = {
   'home': {
-    title: 'Agnee 2026 · Campus in 3D | Gati Shakti Vishwavidyalaya',
+    title: "Agnee'26 | Gati Shakti Vishwavidyalaya",
     desc: 'The official website of Agnee 2026, the annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Explore the 3D campus, events, and festival lineup.'
   },
   'about': {
-    title: 'About Agnee 2026 & GSV | Cultural Fest',
+    title: "About Agnee'26 & GSV | Cultural Fest",
     desc: 'Learn about Agnee 2026, the spirit of creative expression at Gati Shakti Vishwavidyalaya, Vadodara.'
   },
   'events': {
-    title: 'Events & Competitions · Agnee 2026',
+    title: "Events & Competitions · Agnee'26",
     desc: 'Discover competitions across Music, Dance, Drama, Fine Arts, Fashion, Literary, and Gaming at Agnee 2026.'
   },
   'schedule': {
-    title: 'Festival Schedule & Timeline · Agnee 2026',
+    title: "Festival Schedule & Timeline · Agnee'26",
     desc: 'Day-wise timeline, stage tracks, and live event indicators for Agnee 2026 at Gati Shakti Vishwavidyalaya.'
   },
   'lineup': {
-    title: 'Line-up & Judges · Agnee 2026',
+    title: "Line-up & Judges · Agnee'26",
     desc: 'Celebrity pro-show artists, performance guests, and competitive judges for Agnee 2026.'
   },
   'map': {
-    title: 'Explore the Venue · 3D Campus Map · Agnee 2026',
+    title: "Explore the Venue · 3D Campus Map · Agnee'26",
     desc: 'Interactive 3D campus map of Gati Shakti Vishwavidyalaya, Vadodara. Explore landmarks, Oval Ground festival arena, and walking directions.'
   },
   'sponsors': {
-    title: 'Sponsors & Corporate Partners · Agnee 2026',
+    title: "Sponsors & Corporate Partners · Agnee'26",
     desc: 'Our valued festival sponsors, partners, and corporate allies powering Agnee 2026 at GSV Vadodara.'
   },
   'gallery': {
-    title: 'Gallery & Aftermovie · Agnee 2026',
+    title: "Gallery & Aftermovie · Agnee'26",
     desc: 'Relive the festival energy, stage spectacles, and campus moments from Agnee at GSV.'
   },
   'merch': {
-    title: 'Official Merchandise · Agnee 2026',
+    title: "Official Merchandise · Agnee'26",
     desc: 'Official Agnee 2026 merchandise from Gati Shakti Vishwavidyalaya, Vadodara.'
   },
   'team': {
-    title: 'Organizing Team · Agnee 2026',
+    title: "Organizing Team · Agnee'26",
     desc: 'The student coordinators, fest secretariat, and faculty leadership behind Agnee 2026.'
   },
   'faq': {
-    title: 'Frequently Asked Questions · Agnee 2026',
+    title: "Frequently Asked Questions · Agnee'26",
     desc: 'Answers regarding participation, eligibility, passes, accommodation, and campus rules for Agnee 2026.'
   },
   'contact': {
-    title: 'Contact & Inquiries · Agnee 2026',
+    title: "Contact & Inquiries · Agnee'26",
     desc: 'Get in touch with the Agnee 2026 secretariat, events team, and sponsorship desk.'
   }
 };

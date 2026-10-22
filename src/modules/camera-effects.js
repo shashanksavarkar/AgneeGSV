@@ -21,7 +21,7 @@ function setOn(b){[bFree,bTop,bHos,bOval].forEach(x=>x.classList.toggle('on',x==
 const shareBtn=document.getElementById('shareBtn');
 shareBtn?.addEventListener('click',async()=>{
  if(navigator.vibrate)navigator.vibrate(10);
- const share={title:'Agnee 2026 · Campus in 3D',text:'Explore the Agnee 2026 campus in 3D.',url:location.href};
+ const share={title:"Agnee'26 | Gati Shakti Vishwavidyalaya",text:"Explore the Agnee'26 campus in 3D.",url:location.href};
  try{if(navigator.share)await navigator.share(share);else{await navigator.clipboard.writeText(location.href);shareBtn.querySelector('span').textContent='Copied';setTimeout(()=>shareBtn.querySelector('span').textContent='Share',1600);}}
  catch(error){if(error.name!=='AbortError')console.warn('Share unavailable',error);}
 });

@@ -11,7 +11,7 @@ test.describe('Agnee 2026 Core Suite', () => {
     await page.goto('/');
 
     // Check title and brand wordmark
-    await expect(page).toHaveTitle(/Agnee 2026/);
+    await expect(page).toHaveTitle(/Agnee'26/);
     const wordmark = page.locator('.hero-wordmark-img');
     await expect(wordmark).toBeVisible();
 
