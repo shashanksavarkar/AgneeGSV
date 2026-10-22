@@ -1231,7 +1231,11 @@ cyl(0.3, 1.8, 0x555a60, -6.2, 0.9, 3.6, EGG);
 bx(0.22, 4.2, 0.22, 0xffffff, -6.2, 3.9, 3.6, EGG);
 [2.9, 4.1, 5.3].forEach((y) => bx(0.25, 0.7, 0.25, 0xd33, -6.2, y, 3.6, EGG));
 // flag pole with waving tricolour
-cyl(0.25, 18, 0xdddddd, -15, 9, 6.5, EGG);
+// flag stands on the forecourt in front of the proposed hostel (map px 590,84)
+const FLG = new THREE.Group();
+FLG.position.set(590 - W / 2, 0, 84 - H / 2);
+scene.add(FLG);
+cyl(0.25, 18, 0xdddddd, 0, 9, 0, FLG);
 const efc = document.createElement('canvas');
 efc.width = 96;
 efc.height = 64;
@@ -1259,8 +1263,8 @@ const flagM = new THREE.Mesh(
   new THREE.PlaneGeometry(5, 3.3, 14, 1),
   new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(efc), side: THREE.DoubleSide })
 );
-flagM.position.set(-15 + 2.6, 16.2, 6.5);
-EGG.add(flagM);
+flagM.position.set(2.6, 16.2, 0);
+FLG.add(flagM);
 const efp = flagM.geometry.attributes.position,
   efb = Float32Array.from(efp.array);
 function gateAnim(t) {
@@ -1271,8 +1275,8 @@ function gateAnim(t) {
   efp.needsUpdate = true;
 }
 // ---- Premium pass: P_sky dome, day/dusk P_look, traffic, cloud shadows, lamp P_pools, info card
-let dusk = 0,
-  duskT = 0;
+let dusk = 1,
+  duskT = 1;
 const P_tmp = new THREE.Color();
 const P_LK = {
   day: {
@@ -1288,15 +1292,15 @@ const P_LK = {
     sp: [-260, 380, 200]
   },
   dusk: {
-    top: 0x1b2152,
-    hor: 0xf59a62,
-    fog: 0x7a6f8f,
-    sun: 0xff9a62,
-    si: 0.55,
-    hs: 0x7480bd,
-    hg: 0x44394f,
-    hi: 0.42,
-    gt: 0x8d93c4,
+    top: 0x07050a,
+    hor: 0x5a2a14,
+    fog: 0x120d18,
+    sun: 0xff9d5c,
+    si: 0.5,
+    hs: 0x6a5a92,
+    hg: 0x2a1f26,
+    hi: 0.5,
+    gt: 0x6f6b92,
     sp: [-380, 150, 150]
   }
 };
@@ -1340,12 +1344,13 @@ function P_look(k) {
   mx(D.hg, N.hg, hemi.groundColor);
   hemi.intensity = lerp(D.hi, N.hi, k);
   mx(D.gt, N.gt, ground.material.color);
-  apron.material.color.setHex(0x7f8b72).multiplyScalar(lerp(1, 0.5, k));
+  apron.material.color.setHex(0x7f8b72).multiplyScalar(lerp(1, 0.3, k));
   terr.material.color.copy(ground.material.color);
   P_pools.material.opacity = k * 0.6;
   lhalo.material.opacity = k * 0.95;
   lcone.material.opacity = k * 0.5;
   lhd.material.color.setHex(0x8c929a).lerp(P_tmp.setHex(0xfff0b0), k);
+  LIT.forEach((m) => (m.emissiveIntensity = k * 1.1));
 }
 // lamp light P_pools (glow at dusk)
 const P_pools = new THREE.InstancedMesh(
@@ -1529,7 +1534,7 @@ function premiumAnim(t) {
 // day / dusk switch + building info card
 const P_tb = document.createElement('button');
 P_tb.className = 'tbtn';
-P_tb.textContent = '☾ Dusk';
+P_tb.textContent = '☀ Day';
 P_tb.onclick = () => {
   duskT = duskT ? 0 : 1;
   AF.touched = true;
@@ -1574,7 +1579,7 @@ P_inf.querySelector('button').onclick = () => {
   mode = 'explore';
   setOn(bFree);
 };
-P_look(0);
+P_look(dusk);
 // ---- Agnee highlight: sky beams, pulsing ground rings, glowing "way to Agnee" path from the main gate, banner
 OV.updateMatrixWorld(true);
 const agGeo = () => {

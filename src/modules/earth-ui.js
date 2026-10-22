@@ -6,7 +6,7 @@ const EARTH_DEFAULT_LAYERS = {
   trees: true,
   crowd: true,
   fest: true,
-  dusk: false,
+  dusk: true,
   lite: false
 };
 const EARTH_LAYER_LABELS = {

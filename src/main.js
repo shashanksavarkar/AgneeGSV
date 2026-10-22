@@ -19,7 +19,6 @@ import { renderMerch } from './ui/merch.js';
 import { renderTeam } from './ui/team.js';
 import { renderFaq } from './ui/faq.js';
 import { renderContact } from './ui/contact.js';
-import { renderDevelopers } from './ui/developers.js';
 import { renderFooter } from './ui/footer.js';
 import { renderToastContainer } from './ui/toast.js';
 import { initScrollRail } from './ui/scrollbar.js';
@@ -44,7 +43,6 @@ async function bootstrap() {
     renderTeam(data.team);
     renderFaq(data.faqs);
     renderContact(data.site, data.events);
-    renderDevelopers(data.developers);
     renderFooter(data.site);
     renderToastContainer();
     // Rangoli in each section's bottom-left corner (the top-right one is .section::after)

@@ -15,21 +15,21 @@ export function renderMapSection(places = [], events = []) {
   if (!mount) return;
 
   // COMING SOON: delete this block (and uncomment boot.js in index.html) to restore the full map below.
-  mount.innerHTML = `
-    <section class="section map-section" id="map" aria-labelledby="mapHeading">
-      <div class="container">
-        <div class="soon" role="group" aria-labelledby="mapHeading">
-          <div class="soon-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></b></div>
-          <h2 class="soon-title" id="mapHeading">
-            <span>AGNEE'26 Interactive Experience</span>
-            <em>Coming Soon</em>
-          </h2>
-          <p class="soon-line">Something is being built in the dark. Not everything is meant to be seen yet.</p>
-        </div>
-      </div>
-    </section>
-  `;
-  return;
+  // mount.innerHTML = `
+  //   <section class="section map-section" id="map" aria-labelledby="mapHeading">
+  //     <div class="container">
+  //       <div class="soon" role="group" aria-labelledby="mapHeading">
+  //         <div class="soon-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></b></div>
+  //         <h2 class="soon-title" id="mapHeading">
+  //           <span>AGNEE'26 Interactive Experience</span>
+  //           <em>Coming Soon</em>
+  //         </h2>
+  //         <p class="soon-line">Something is being built in the dark. Not everything is meant to be seen yet.</p>
+  //       </div>
+  //     </div>
+  //   </section>
+  // `;
+  // return;
 
   mount.innerHTML = `
     <section class="section map-section" id="map" aria-labelledby="mapHeading">

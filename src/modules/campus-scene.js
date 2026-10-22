@@ -146,6 +146,77 @@ g.fillStyle = 'rgba(255,255,255,.25)';
 ].forEach(([a, b]) => g.fillRect(a, b, 20, 8));
 g.fillStyle = '#c9c1b1';
 g.fillRect(0, 56, 64, 8);
+// Night windows: LITMAP maps a diffuse texture to its emissive twin; LIT holds the materials whose glow follows dusk (see P_look).
+const LIT = [],
+  LITMAP = new Map(),
+  BUMPMAP = new Map(),
+  WALLMAT = new Map();
+function litTex(c) {
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  t.anisotropy = 4;
+  return t;
+}
+// Derive a warm emissive window map from a diffuse canvas: dark, non-red pixels (glass, arches) light up per cell.
+function litFromCanvas(c) {
+  const w = c.width,
+    h = c.height,
+    s = c.getContext('2d').getImageData(0, 0, w, h).data,
+    o = document.createElement('canvas');
+  o.width = w;
+  o.height = h;
+  const g = o.getContext('2d'),
+    im = g.createImageData(w, h),
+    d = im.data;
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const i = (y * w + x) * 4,
+        l = (s[i] + s[i + 1] + s[i + 2]) / 3;
+      if (l > 30 && l < 112 && s[i] - s[i + 2] < 38) {
+        const cell = (Math.imul(x >> 3, 73856093) ^ Math.imul(y >> 4, 19349663)) >>> 0;
+        if (cell % 100 < 68) {
+          const k = 0.55 + (0.45 * ((cell >> 8) % 100)) / 100;
+          d[i] = 255 * k;
+          d[i + 1] = 172 * k;
+          d[i + 2] = 80 * k;
+          d[i + 3] = 255;
+        }
+      }
+    }
+  g.putImageData(im, 0, 0);
+  return o;
+}
+// One shared wall material per texture + repeat; it carries the emissive window map and relief when they exist.
+function litMat(base, rep) {
+  const key = base.uuid + rep.join();
+  let m = WALLMAT.get(key);
+  if (!m) {
+    const wt = base.clone();
+    wt.needsUpdate = true;
+    wt.repeat.set(...rep);
+    m = new THREE.MeshStandardMaterial({
+      map: wt,
+      roughness: 0.84,
+      metalness: 0.04,
+      envMap: ENV,
+      envMapIntensity: 0.3,
+      bumpMap: BUMPMAP.get(base) || wt,
+      bumpScale: BUMPMAP.has(base) ? 1.4 : 0.5,
+      side: THREE.DoubleSide
+    });
+    const lm = LITMAP.get(base);
+    if (lm) {
+      m.emissive.setHex(0xffffff);
+      m.emissiveMap = lm;
+      m.emissiveIntensity = 0;
+      LIT.push(m);
+    }
+    WALLMAT.set(key, m);
+  }
+  return m;
+}
+// 512px facade: recessed windows with frames, sills, slab bands and streaking; also paints the night-window (emissive) and relief (bump) maps.
 function facadeTexture({
   base = '#ddd6c8',
   accent = '#51697c',
@@ -153,10 +224,18 @@ function facadeTexture({
   seed = 17,
   windows = true
 } = {}) {
-  const c = document.createElement('canvas');
-  c.width = 256;
-  c.height = 256;
-  const g = c.getContext('2d');
+  const mkc = () => {
+    const c = document.createElement('canvas');
+    c.width = c.height = 512;
+    return c;
+  };
+  const c = mkc(),
+    ec = mkc(),
+    bc = mkc();
+  const g = c.getContext('2d'),
+    eg = ec.getContext('2d'),
+    bg = bc.getContext('2d');
+  [g, eg, bg].forEach((x) => x.scale(2, 2));
   let q = seed | 0;
   const rnd = () => {
     q = (q * 1664525 + 1013904223) >>> 0;
@@ -164,14 +243,25 @@ function facadeTexture({
   };
   g.fillStyle = base;
   g.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 3800; i++) {
-    const v = rnd() < 0.52 ? 'rgba(255,255,255,' : 'rgba(40,35,30,';
-    g.fillStyle = v + (0.025 + rnd() * 0.075) + ')';
-    const s = 0.35 + rnd() * 1.8;
+  eg.fillStyle = '#000';
+  eg.fillRect(0, 0, 256, 256);
+  bg.fillStyle = '#808080';
+  bg.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 7000; i++) {
+    g.fillStyle = (rnd() < 0.52 ? 'rgba(255,255,255,' : 'rgba(40,35,30,') + (0.025 + rnd() * 0.075) + ')';
+    const s = 0.3 + rnd() * 1.5;
     g.fillRect(rnd() * 256, rnd() * 256, s, s);
   }
-  g.fillStyle = 'rgba(80,65,50,.14)';
-  for (let y = 0; y < 256; y += 32 + rnd() * 10) g.fillRect(0, y, 256, 1 + rnd() * 1.4);
+  // slab bands between floors
+  for (let row = 0; row <= 5; row++) {
+    const y = 8 + row * 40 - 5;
+    g.fillStyle = trim;
+    g.fillRect(0, y, 256, 3);
+    g.fillStyle = 'rgba(30,24,18,.28)';
+    g.fillRect(0, y + 3, 256, 1.4);
+    bg.fillStyle = '#b4b4b4';
+    bg.fillRect(0, y, 256, 3);
+  }
   g.fillStyle = trim;
   g.fillRect(0, 239, 256, 17);
   g.fillRect(0, 0, 256, 7);
@@ -180,16 +270,55 @@ function facadeTexture({
       for (let col = 0; col < 6; col++) {
         const x = 17 + col * 43 + (row % 2) * 4,
           y = 18 + row * 40;
-        g.fillStyle = 'rgba(38,48,58,.22)';
+        // staining below the sill
+        const st = g.createLinearGradient(0, y + 23, 0, y + 40);
+        st.addColorStop(0, 'rgba(45,38,30,.16)');
+        st.addColorStop(1, 'rgba(45,38,30,0)');
+        g.fillStyle = st;
+        g.fillRect(x + 1, y + 23, 17, 17);
+        // surround and recess
+        g.fillStyle = 'rgba(255,250,240,.32)';
         g.fillRect(x - 3, y - 3, 25, 27);
-        g.fillStyle = accent;
-        g.fillRect(x, y, 19, 21);
-        g.fillStyle = 'rgba(215,233,238,.72)';
-        g.fillRect(x + 2, y + 2, 7, 16);
-        g.fillStyle = 'rgba(255,255,255,.18)';
-        g.fillRect(x + 11, y + 2, 6, 16);
-        g.fillStyle = 'rgba(66,55,45,.45)';
-        g.fillRect(x - 2, y + 21, 23, 2);
+        g.fillStyle = 'rgba(20,16,12,.55)';
+        g.fillRect(x - 1, y - 1, 21, 23);
+        const gl = g.createLinearGradient(x, y, x + 19, y + 21);
+        gl.addColorStop(0, '#9fb4c2');
+        gl.addColorStop(0.45, accent);
+        gl.addColorStop(1, '#1d2a36');
+        g.fillStyle = gl;
+        g.fillRect(x + 1, y + 2, 17, 19);
+        g.fillStyle = 'rgba(235,245,250,.38)';
+        g.beginPath();
+        g.moveTo(x + 1, y + 2);
+        g.lineTo(x + 9, y + 2);
+        g.lineTo(x + 1, y + 14);
+        g.fill();
+        g.fillStyle = 'rgba(14,18,22,.7)';
+        g.fillRect(x + 9, y + 2, 1.2, 19);
+        g.fillRect(x + 1, y + 11, 17, 1);
+        g.fillStyle = trim;
+        g.fillRect(x - 3, y + 21, 25, 3);
+        g.fillStyle = 'rgba(20,16,12,.4)';
+        g.fillRect(x - 3, y + 24, 25, 1.2);
+        // relief: raised surround, deep recess, raised sill
+        bg.fillStyle = '#c8c8c8';
+        bg.fillRect(x - 3, y - 3, 25, 27);
+        bg.fillStyle = '#101010';
+        bg.fillRect(x, y + 1, 19, 20);
+        bg.fillStyle = '#d8d8d8';
+        bg.fillRect(x - 3, y + 21, 25, 3);
+        // lit window
+        if (rnd() < 0.62) {
+          const k = 0.6 + rnd() * 0.4,
+            lg = eg.createLinearGradient(0, y, 0, y + 21);
+          lg.addColorStop(0, `rgb(${255 * k | 0},${200 * k | 0},${120 * k | 0})`);
+          lg.addColorStop(1, `rgb(${255 * k | 0},${150 * k | 0},${64 * k | 0})`);
+          eg.fillStyle = lg;
+          eg.fillRect(x + 1, y + 2, 17, 19);
+          eg.fillStyle = '#000';
+          eg.fillRect(x + 9, y + 2, 1.2, 19);
+          if (rnd() < 0.4) eg.fillRect(x + 1, y + 2, 17, 5 + rnd() * 6);
+        }
       }
   }
   const shade = g.createLinearGradient(0, 0, 256, 0);
@@ -202,22 +331,79 @@ function facadeTexture({
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.encoding = THREE.sRGBEncoding;
-  t.anisotropy = 4;
+  t.anisotropy = 8;
+  if (windows) {
+    LITMAP.set(t, litTex(ec));
+    BUMPMAP.set(t, litTex(bc));
+  }
   return t;
 }
 const wallBase = facadeTexture({ base: '#ddd6c8', accent: '#51697c', trim: '#c9c1b1', seed: 17 });
-const roofMat = new THREE.MeshLambertMaterial({ map: tex });
+// Small night-sky environment so metals, glass and walls pick up a warm horizon sheen.
+const ENV = (() => {
+  const es = new THREE.Scene(),
+    sg = new THREE.SphereGeometry(50, 24, 16),
+    pos = sg.attributes.position,
+    col = [],
+    top = new THREE.Color(0x120d1c),
+    hor = new THREE.Color(0xff9a5c),
+    cc = new THREE.Color();
+  for (let i = 0; i < pos.count; i++) {
+    const h = Math.max(0, pos.getY(i) / 50);
+    cc.copy(hor).lerp(top, Math.pow(h, 0.5));
+    col.push(cc.r, cc.g, cc.b);
+  }
+  sg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+  es.add(new THREE.Mesh(sg, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide })));
+  const pm = new THREE.PMREMGenerator(renderer),
+    t = pm.fromScene(es, 0.04).texture;
+  pm.dispose();
+  return t;
+})();
+// Roofs: tiled concrete / gravel (UVs are in map pixels, 1 tile = 10 units) instead of the aerial photo.
+const roofT = (() => {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d');
+  g.fillStyle = '#c4bfb6';
+  g.fillRect(0, 0, 256, 256);
+  let q = 91;
+  const r = () => ((q = (q * 16807) % 2147483647) / 2147483647);
+  for (let i = 0; i < 9000; i++) {
+    g.fillStyle = (r() < 0.5 ? 'rgba(255,255,255,' : 'rgba(30,26,22,') + (0.04 + r() * 0.1) + ')';
+    g.fillRect(r() * 256, r() * 256, 0.6 + r() * 1.6, 0.6 + r() * 1.6);
+  }
+  g.strokeStyle = 'rgba(40,34,28,.32)';
+  g.lineWidth = 1.2;
+  for (let i = 0; i <= 256; i += 128) {
+    g.beginPath();
+    g.moveTo(i, 0);
+    g.lineTo(i, 256);
+    g.moveTo(0, i);
+    g.lineTo(256, i);
+    g.stroke();
+  }
+  for (let i = 0; i < 7; i++) {
+    g.fillStyle = 'rgba(30,26,22,.07)';
+    g.fillRect(r() * 200, r() * 200, 30 + r() * 50, 20 + r() * 40);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  t.anisotropy = 8;
+  t.repeat.set(0.1, 0.1);
+  return t;
+})();
+const ROOFMAT = new Map();
+const roofMatFor = (col) => {
+  let m = ROOFMAT.get(col);
+  if (!m) ROOFMAT.set(col, (m = new THREE.MeshLambertMaterial({ color: col, map: roofT, side: THREE.DoubleSide })));
+  return m;
+};
+const roofMat = roofMatFor(0x8a847c);
 
 // ---- buildings (pixel boxes on the photo: x0,y0,x1,y1,height)
-const BUILDINGS = [
-  [258, 34, 312, 52, 14],
-  [408, 66, 492, 88, 12],
-  [428, 354, 466, 428, 22],
-  [466, 360, 526, 408, 18],
-  [412, 124, 442, 160, 12],
-  [264, 300, 302, 326, 8],
-  [308, 314, 336, 342, 8]
-];
+const BUILDINGS = []; // superseded by the real footprints in GEO (see the footprints section below)
 const blds = [];
 function addB(x0, y0, x1, y1, h, delay) {
   const w = x1 - x0,
@@ -229,12 +415,12 @@ function addB(x0, y0, x1, y1, h, delay) {
     p = geo.attributes.position,
     n = geo.attributes.normal;
   for (let i = 0; i < p.count; i++)
-    if (n.getY(i) > 0.5) uv.setXY(i, (cxp + p.getX(i)) / W, 1 - (cyp + p.getZ(i)) / H);
+    if (n.getY(i) > 0.5) uv.setXY(i, cxp + p.getX(i), cyp + p.getZ(i));
   geo.translate(0, h / 2, 0);
-  const wt = wallBase.clone();
-  wt.needsUpdate = true;
-  wt.repeat.set(Math.max(1, Math.round(Math.max(w, d) / 16)), Math.max(1, Math.round(h / 9)));
-  const wall = new THREE.MeshLambertMaterial({ map: wt });
+  const wall = litMat(wallBase, [
+    Math.max(1, Math.round(Math.max(w, d) / 16)),
+    Math.max(1, Math.round(h / 9))
+  ]);
   const m = new THREE.Mesh(geo, [wall, wall, roofMat, wall, wall, wall]);
   m.position.set(cxp - W / 2, 0, cyp - H / 2);
   m.castShadow = m.receiveShadow = true;
@@ -262,20 +448,27 @@ function mk(pts, h, col, edge, delay, holes, strips, base, rep) {
   const P = (a) => a.map(([x, z]) => new THREE.Vector2(x - W / 2, -(z - H / 2)));
   const sh = new THREE.Shape(P(pts));
   (holes || []).forEach((a) => sh.holes.push(new THREE.Path(P(a))));
-  const geo = new THREE.ExtrudeGeometry(sh, { depth: h, bevelEnabled: false });
+  // chamfered roof edge (bevelOffset keeps the footprint exact); the sharp-edged twin feeds the accent outline
+  const geo = new THREE.ExtrudeGeometry(sh, {
+    depth: h,
+    bevelEnabled: true,
+    bevelThickness: 0.35,
+    bevelSize: 0.3,
+    bevelOffset: -0.3,
+    bevelSegments: 2
+  });
   geo.rotateX(-Math.PI / 2);
-  const wt = (base || hostelBase).clone();
-  wt.needsUpdate = true;
-  wt.repeat.set(...(rep || [1 / 14, 1 / 3.15]));
+  geo.translate(0, -0.35, 0);
+  const eg = new THREE.ExtrudeGeometry(sh, { depth: h, bevelEnabled: false }).rotateX(-Math.PI / 2);
   const m = new THREE.Mesh(geo, [
-    new THREE.MeshLambertMaterial({ color: col }),
-    new THREE.MeshLambertMaterial({ map: wt })
+    roofMatFor(col),
+    litMat(base || hostelBase, rep || [1 / 14, 1 / 3.15])
   ]);
   m.castShadow = m.receiveShadow = true;
   m.scale.y = RM ? 1 : 0.001;
   m.add(
     new THREE.LineSegments(
-      new THREE.EdgesGeometry(geo, 40),
+      new THREE.EdgesGeometry(eg, 40),
       new THREE.LineBasicMaterial({ color: edge })
     )
   );
@@ -475,6 +668,7 @@ ag.fillRect(0, 60, 64, 4);
 const atiBase = new THREE.CanvasTexture(ac);
 atiBase.wrapS = atiBase.wrapT = THREE.RepeatWrapping;
 atiBase.encoding = THREE.sRGBEncoding;
+LITMAP.set(atiBase, litTex(litFromCanvas(ac)));
 atiBase.anisotropy = 4;
 const atiM = mk(
   [
@@ -571,6 +765,7 @@ function tx(draw) {
   T.wrapS = T.wrapT = THREE.RepeatWrapping;
   T.encoding = THREE.sRGBEncoding;
   T.anisotropy = 4;
+  LITMAP.set(T, litTex(litFromCanvas(c)));
   return T;
 }
 const brick = tx((g) => {
@@ -1841,27 +2036,46 @@ scene.add(lamp, larm, lhd, lcone, lhalo);
 // houses
 let seed = 7;
 const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-function houseOK(x, y) {
-  if (nearRoad(x, y, 6)) return false;
-  if (Math.hypot(x - 716, y - 360) < 38) return false;
-  const [r, gg, b] = lumAt(x, y);
-  const l = (r + gg + b) / 3;
-  return l > 118 && Math.max(r, gg, b) - Math.min(r, gg, b) < 48 && rnd() < 0.88;
+// Real building footprints (Overture, registered to the photo). The hand-built landmarks keep their own models, so skip anything inside them.
+const HAND = [
+  [609, 132, 669, 164],
+  [610, 80, 686, 121],
+  [506, 56, 555, 105],
+  [451, 244, 541, 310],
+  [474, 133, 549, 183],
+  [322, 158, 360, 220],
+  [322, 40, 392, 93],
+  [418, 184, 452, 218]
+];
+const FOOT = [];
+const hash2 = (x, y) => {
+  const v = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+  return v - Math.floor(v);
+};
+function addPoly(pts, h, delay, base) {
+  const sh = new THREE.Shape(pts.map(([x, y]) => new THREE.Vector2(x - W / 2, -(y - H / 2))));
+  const geo = new THREE.ExtrudeGeometry(sh, { depth: h, bevelEnabled: false });
+  geo.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(geo, [roofMatFor(0x8a847c), litMat(base, [1 / 16, 1 / 9])]);
+  m.castShadow = m.receiveShadow = true;
+  m.scale.y = RM ? 1 : 0.001;
+  scene.add(m);
+  blds.push({ m, d: delay });
 }
-for (let x = 576; x < 742; x += 21)
-  for (let y = 208; y < 424; y += 21)
-    if (houseOK(x, y)) {
-      const s = 14 + rnd() * 3;
-      addB(x - s / 2, y - s / 2, x + s / 2, y + s / 2, 7 + rnd() * 13, 1.6 + rnd() * 1.6);
-    }
-for (let x = 150; x < 420; x += 22)
-  for (let y = 372; y < 426; y += 22) {
-    const rx = ((y - 90) * 125) / 340;
-    if (x > rx + 18 && houseOK(x, y)) {
-      const s = 13 + rnd() * 3;
-      addB(x - s / 2, y - s / 2, x + s / 2, y + s / 2, 6 + rnd() * 8, 1.6 + rnd() * 1.6);
-    }
-  }
+GEO.b.forEach(([gh, ...f]) => {
+  const pts = [];
+  for (let i = 0; i < f.length; i += 2) pts.push([f[i], f[i + 1]]);
+  const xs = pts.map((q) => q[0]),
+    ys = pts.map((q) => q[1]),
+    cxp = (Math.min(...xs) + Math.max(...xs)) / 2,
+    cyp = (Math.min(...ys) + Math.max(...ys)) / 2;
+  FOOT.push([Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]);
+  if (HAND.some((b) => cxp > b[0] - 3 && cxp < b[2] + 3 && cyp > b[1] - 3 && cyp < b[3] + 3)) return;
+  const r = hash2(cxp, cyp),
+    area = (Math.max(...xs) - Math.min(...xs)) * (Math.max(...ys) - Math.min(...ys)),
+    h = gh === 6 ? 7 + r * 8 + (area > 700 ? 4 : 0) : gh * 0.92;
+  addPoly(pts, h, 1.2 + (cxp / W) * 1.8 + r * 0.6, r < 0.5 ? wallBase : hostelBase);
+});
 
 // ---- trees from the green pixels
 const inB = (x, y) =>
@@ -1874,12 +2088,11 @@ const inB = (x, y) =>
   (x > 316 && x < 398 && y > 34 && y < 98) ||
   (x > 412 && x < 458 && y > 178 && y < 236);
 const spots = [];
-for (let i = 0; i < 9000 && spots.length < 750; i++) {
-  const x = rnd() * W,
-    y = rnd() * H,
-    [r, gg, b] = lumAt(x, y);
-  if (gg > r + 5 && gg > b + 4 && r + gg + b < 340 && !inB(x, y)) spots.push([x, y, r, gg, b]);
-}
+GEO.t.forEach(([x, y, cd]) => {
+  if (x >= W || y >= H || inB(x, y) || FOOT.some((f) => x > f[0] && x < f[2] && y > f[1] && y < f[3])) return;
+  const [r, gg, b] = lumAt(x, y);
+  spots.push([x, y, r, gg, b, cd]);
+});
 const hsh = (x, y, z) => {
   const v = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453;
   return v - Math.floor(v);
@@ -1954,7 +2167,7 @@ let si = 0;
   const cr = new THREE.InstancedMesh(geo, leafM, G.length),
     tk = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.42, 0.8, 1, 6), trM, G.length);
   G.forEach((s, i) => {
-    const sz = (3.6 + rnd() * 4.2) * (hs > 1 ? 0.85 : 1),
+    const sz = (s[5] ? clamp(s[5] * 0.42, 3.4, 8.5) : 3.6 + rnd() * 4.2) * (hs > 1 ? 0.85 : 1),
       th = sz * 1.35,
       sx = sz * (0.9 + rnd() * 0.3),
       sy = sz * (0.85 + rnd() * 0.35) * (hs > 1 ? 1.1 : 1);
@@ -2006,7 +2219,7 @@ scene.add(sdw);
 
 // ---- school pin
 const pin = new THREE.Group();
-const body = new THREE.MeshLambertMaterial({ color: 0x2f4858 });
+const body = new THREE.MeshLambertMaterial({ color: 0xff7a1a, emissive: 0x9a3a00 });
 const cone = new THREE.Mesh(new THREE.ConeGeometry(5, 12, 16), body);
 cone.rotation.x = Math.PI;
 cone.position.y = 6;
@@ -2029,7 +2242,7 @@ const rings = [0, 1].map(() => {
   const r = new THREE.Mesh(
     new THREE.RingGeometry(0.92, 1, 64),
     new THREE.MeshBasicMaterial({
-      color: 0x3b6fe0,
+      color: 0xff7a1a,
       transparent: true,
       side: THREE.DoubleSide,
       depthWrite: false

@@ -92,7 +92,7 @@ export const events = [
       venueName: 'To be announced'
     },
     registrationState: 'soon',
-    posterImage: '',
+    posterImage: 'assets/muscle-mania.webp',
     tags: ['Fitness', 'Pre-Agnee']
   },
   {
@@ -205,30 +205,6 @@ export const schedule = {
   ]
 };
 
-// Developers section above the footer. Add one object per person; link/github are optional.
-export const developers = [
-  {
-    "name": "Ravi Panchal",
-    "avatar": "assets/ravi.webp",
-    "github": "https://github.com/ravixpanchal"
-  },
-  {
-    "name": "Rishav Kumar",
-    "avatar": "assets/rishav.webp",
-    "github": "https://github.com/rishavgsv"
-  },
-  {
-    "name": "Shashank Savarkar",
-    "avatar": "assets/shashank.webp",
-    "github": "https://github.com/shashanksavarkar"
-  },
-  {
-    "name": "Abhinav Kesarwani",
-    "avatar": "assets/abhinav.webp",
-    "github": "https://github.com/"
-  }
-];
-
 // buyUrl: link to the order form / payment page. Leave it empty until sales open.
 export const merch = [
   { id: 'tshirt', name: 'Inferno Red', price: '₹499/- + Extra Delivery Charges', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
@@ -308,6 +284,7 @@ export const team = {
       role: "Dean (Students' Welfare)",
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'dean.sw@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/edwin_sir.webp'
     },
     {
@@ -315,8 +292,15 @@ export const team = {
       role: 'Faculty In-Charge',
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'ram.upadhyay@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/ram_sir.webp'
     }
+  ],
+  creativeTeam: [
+    { name: 'Ravi Panchal', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
+    { name: 'Rishav Kumar', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
+    { name: 'Shashank Savarkar', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
+    { name: 'Abhinav Kesarwani', role: '', team: 'Creative Team', email: '', linkedin: '', github: '', avatar: 'assets/abhinav.webp' }
   ],
   coreTeam: [
     {
@@ -324,6 +308,7 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'President - Student Cell GSV',
       email: 'himanshu.yadav_btech23@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/himanshu.webp'
     },
     {
@@ -331,6 +316,7 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'Vice-President',
       email: 'rishav.kumar_btech23@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/rishav.webp'
     },
     {
@@ -338,6 +324,7 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'External Secretary',
       email: 'soumya.banerjee_btech23@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/soumya.webp'
     },
     {
@@ -345,6 +332,7 @@ export const team = {
       role: '',
       team: 'External Secretary',
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/ananya.webp'
     },
     {
@@ -352,6 +340,7 @@ export const team = {
       role: 'Tech Lead',
       team: 'Technical Secretary',
       email: 'atulya.bharat_btech24@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/atulya.webp'
     },
     {
@@ -359,6 +348,7 @@ export const team = {
       role: 'Cultural Lead',
       team: 'Cultural Secretary',
       email: 'harshit.verma_btech24@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/harshit.webp'
     },
     {
@@ -366,6 +356,7 @@ export const team = {
       role: '',
       team: 'Sports Secretary',
       email: 'rupesh.kumar_btech24@gsv.ac.in',
+      linkedin: '',
       avatar: 'assets/rupesh.webp'
     }
   ]

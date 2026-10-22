@@ -1,5 +1,6 @@
 const MODULES = [
   'modules/runtime-context.js',
+  'modules/campus-geo.js',
   'modules/campus-scene.js',
   'modules/festival-scene.js',
   'modules/camera-effects.js',

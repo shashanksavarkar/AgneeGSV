@@ -1874,6 +1874,7 @@ body {
   gap: 20px;
 }
 .team-card {
+  position: relative;
   padding: 24px;
   text-align: center;
   display: flex;
@@ -4235,9 +4236,9 @@ body.on-hero .mobile-bottom-dock { transform: translateY(130%); }
 .dev-role { position: relative; margin: -16px 0 22px; font: 800 11px var(--font-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-primary); }
 .dev-foot { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; width: calc(100% + 40px); margin: auto -20px 0; padding: 12px 20px; background: rgba(0, 0, 0, 0.34); border-top: 1px dashed rgba(201, 160, 90, 0.35); }
 .dev-tag { font: 800 10px var(--font-sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
-.dev-links { display: flex; gap: 8px; }
-.dev-link { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #1a0c02; background: linear-gradient(145deg, var(--brass-1), var(--brass-2)); border: 1px solid #000; transition: transform 0.2s, box-shadow 0.2s; }
-.dev-link:hover { transform: scale(1.12); box-shadow: 0 0 14px rgba(255, 122, 26, 0.6); }
+.member-links { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; }
+.member-link { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #1a0c02; background: linear-gradient(145deg, var(--brass-1), var(--brass-2)); border: 1px solid #000; transition: transform 0.2s, box-shadow 0.2s; }
+.member-link:hover { transform: scale(1.12); box-shadow: 0 0 14px rgba(255, 122, 26, 0.6); }
 
 /* Sponsor logos sit on a light plate so transparent brand marks stay legible on the dark card */
 .sponsor-logo-box:has(.sponsor-logo) {
@@ -4638,6 +4639,10 @@ main > div:nth-of-type(even) > .section > .container::before { left: auto; right
 .core-grid .team-card:nth-child(3) { grid-column: 16 / span 6; }
 .core-grid .team-card:nth-child(-n+3) { padding: 24px; }
 .core-grid .team-card { padding: 22px 14px; }
+.creative-grid { grid-template-columns: repeat(4, 1fr); gap: 16px 24px; align-items: stretch; }
+.creative-grid .team-card { padding: 22px 14px; }
+@media (max-width: 900px) { .creative-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (max-width: 480px) { .creative-grid { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .core-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .core-grid .team-card, .core-grid .team-card:nth-child(n) { grid-column: auto; } }
 @media (max-width: 480px) { .core-grid { grid-template-columns: 1fr; } }
 .faculty-grid .team-card { flex: 0 1 280px; }
