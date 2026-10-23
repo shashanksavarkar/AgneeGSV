@@ -63,9 +63,20 @@ const PLACES = [
     id: 'atithi-hostel',
     name: 'Atithi Hostel',
     category: 'hostel',
-    position: { x: 516 - W / 2, y: 5.0, z: 106 - H / 2 },
-    description: 'Atithi Hostel, courtyard residence with south entrance porch and pillars.',
-    pose: { distance: 48, tilt: 0.15, heading: 0 },
+    position: { x: 516 - W / 2, y: 5.5, z: 105.8 - H / 2 },
+    description:
+      'Atithi Hostel featuring the iconic 2-story entrance portico with classical pillars, triangular pediment, bilingual signage, and forecourt.',
+    pose: { distance: 29, tilt: 0.11, heading: 0 },
+    featured: true
+  },
+  {
+    id: 'mehman-hostel',
+    name: "Mehman Boy's Hostel",
+    category: 'hostel',
+    position: { x: 293.8 - W / 2, y: 3.6, z: 51.5 - H / 2 },
+    description:
+      "Mehman Boy's Hostel, 3-story student residence situated before GSV Academic Block, featuring private room balconies, entrance canopy portico, enquiry office, and shaded forecourt.",
+    pose: { distance: 26, tilt: 0.07, heading: 0.60 },
     featured: true
   },
   {

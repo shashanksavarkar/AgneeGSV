@@ -985,28 +985,50 @@ const nhLampMat = new THREE.MeshLambertMaterial({ color: 0x1a1c20 });
 });
 // Atithi hostel (existing, near the main road): white block, red-brown trim, 5 floors, courtyard
 const ac = document.createElement('canvas');
-ac.width = ac.height = 64;
+ac.width = ac.height = 128;
 const ag = ac.getContext('2d');
-ag.fillStyle = '#f3f0e9';
-ag.fillRect(0, 0, 64, 64);
-[8, 40].forEach((x) => {
+ag.fillStyle = '#f5f2eb';
+ag.fillRect(0, 0, 128, 128);
+
+// Fine stucco texture grain
+ag.fillStyle = 'rgba(0,0,0,0.025)';
+for (let py = 0; py < 128; py += 4) {
+  for (let px = 0; px < 128; px += 4) {
+    if ((px + py) % 8 === 0) ag.fillRect(px, py, 2, 2);
+  }
+}
+
+// Windows with terracotta frame, white inner frame, and keystone tab matching photo
+[14, 78].forEach((x) => {
+  // Terracotta outer frame
   ag.fillStyle = '#a8483e';
-  ag.fillRect(x - 2, 9, 22, 28);
-  ag.fillStyle = '#f3f0e9';
-  ag.fillRect(x, 11, 18, 24);
-  ag.fillStyle = '#5f7184';
-  ag.fillRect(x + 2, 13, 14, 20);
-  ag.fillStyle = '#f3f0e9';
-  ag.fillRect(x + 8, 13, 2, 20);
-  ag.fillRect(x + 2, 22, 14, 2);
+  ag.fillRect(x - 4, 14, 44, 56);
+  // Top keystone / tab accent
+  ag.fillRect(x + 15, 8, 6, 8);
+  // White inner sash
+  ag.fillStyle = '#f5f2eb';
+  ag.fillRect(x, 18, 36, 48);
+  // Glass pane
+  ag.fillStyle = '#4c5e70';
+  ag.fillRect(x + 4, 22, 28, 40);
+  // White mullions
+  ag.fillStyle = '#f5f2eb';
+  ag.fillRect(x + 17, 22, 2, 40);
+  ag.fillRect(x + 4, 41, 28, 2);
 });
-ag.fillStyle = '#b9a99a';
-ag.fillRect(0, 60, 64, 4);
+
+// Terracotta string course molding below floor
+ag.fillStyle = '#a8483e';
+ag.fillRect(0, 120, 128, 8);
+ag.fillStyle = '#8f372d';
+ag.fillRect(0, 126, 128, 2);
+
 const atiBase = new THREE.CanvasTexture(ac);
 atiBase.wrapS = atiBase.wrapT = THREE.RepeatWrapping;
 atiBase.encoding = THREE.sRGBEncoding;
 LITMAP.set(atiBase, litTex(litFromCanvas(ac)));
 atiBase.anisotropy = 4;
+
 const atiM = mk(
   [
     [506, 56],
@@ -1029,19 +1051,8 @@ const atiM = mk(
   [],
   atiBase
 );
-const trim = new THREE.MeshLambertMaterial({ color: 0xa8483e });
-const apo = new THREE.Mesh(
-  new THREE.BoxGeometry(13, 5, 2),
-  new THREE.MeshLambertMaterial({ color: 0xefe8dc })
-);
-apo.position.set(516 - W / 2, 2.5, 106 - H / 2);
-apo.castShadow = true;
-atiM.add(apo);
-[510.2, 521.8].forEach((x) => {
-  const pl = new THREE.Mesh(new THREE.BoxGeometry(1.4, 10, 1.4), trim);
-  pl.position.set(x - W / 2, 5, 106.7 - H / 2);
-  atiM.add(pl);
-});
+
+// Rooftop water storage tanks
 [
   [549, 61],
   [512, 99]
@@ -1053,25 +1064,573 @@ atiM.add(apo);
   tk.position.set(x - W / 2, 17.5, z - H / 2);
   atiM.add(tk);
 });
-const ac2 = document.createElement('canvas');
-ac2.width = 256;
-ac2.height = 48;
-const ag2 = ac2.getContext('2d');
-ag2.fillStyle = '#f3f0e9';
-ag2.fillRect(0, 0, 256, 48);
-ag2.fillStyle = '#8a2f2a';
-ag2.font = '700 28px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
-ag2.textAlign = 'center';
-ag2.textBaseline = 'middle';
-ag2.fillText('अतिथि   ATITHI', 128, 26);
-const atx = new THREE.CanvasTexture(ac2);
-atx.encoding = THREE.sRGBEncoding;
-const asg = new THREE.Mesh(
-  new THREE.PlaneGeometry(14, 2.6),
-  new THREE.MeshBasicMaterial({ map: atx })
+
+// ==========================================
+// ATITHI ENTRANCE GATE & FAÇADE (FROM PHOTO)
+// ==========================================
+const atiWallMat = new THREE.MeshLambertMaterial({ color: 0xf4f0e6 });
+const atiTrimMat = new THREE.MeshLambertMaterial({ color: 0xa8483e });
+const atiDarkTrimMat = new THREE.MeshLambertMaterial({ color: 0x7c261d });
+const atiPillarMat = new THREE.MeshLambertMaterial({ color: 0xf3eedb });
+const atiGlassDoorMat = new THREE.MeshLambertMaterial({ color: 0x1b232c });
+const atiWhiteFrame = new THREE.MeshLambertMaterial({ color: 0xf0f3f6 });
+const atiStepMat = new THREE.MeshLambertMaterial({ color: 0x4f6071 });
+const atiSteelMat = new THREE.MeshLambertMaterial({ color: 0xdbe2e8 });
+const atiPalmMat = new THREE.MeshLambertMaterial({ color: 0x3d7025 });
+const atiTrunkMat = new THREE.MeshLambertMaterial({ color: 0x4a3726 });
+const atiPlanterMat = new THREE.MeshLambertMaterial({ color: 0x22262b });
+
+// 1. Recessed Entrance Vestibule & Portal Walls
+const atiBackWall = new THREE.Mesh(
+  new THREE.BoxGeometry(14.0, 8.5, 0.22),
+  atiWallMat
 );
-asg.position.set(516 - W / 2, 10.5, 105.15 - H / 2);
-atiM.add(asg);
+atiBackWall.position.set(516 - W / 2, 4.25, 105.08 - H / 2);
+atiM.add(atiBackWall);
+
+// Side vestibule return walls
+[
+  [509.05, 105.7],
+  [522.95, 105.7]
+].forEach(([rx, rz]) => {
+  const rw = new THREE.Mesh(new THREE.BoxGeometry(0.22, 8.5, 1.35), atiWallMat);
+  rw.position.set(rx - W / 2, 4.25, rz - H / 2);
+  atiM.add(rw);
+});
+
+// Porch ceiling with soffit spotlights
+const atiCeiling = new THREE.Mesh(
+  new THREE.BoxGeometry(14.0, 0.35, 1.45),
+  atiWallMat
+);
+atiCeiling.position.set(516 - W / 2, 8.45, 105.7 - H / 2);
+atiM.add(atiCeiling);
+
+const atiCeilLightMat = new THREE.MeshBasicMaterial({ color: 0xfffae8 });
+[511.5, 514.5, 517.5, 520.5].forEach((lx) => {
+  const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.05, 12), atiCeilLightMat);
+  spot.position.set(lx - W / 2, 8.35, 105.7 - H / 2);
+  atiM.add(spot);
+});
+
+// Porch floor / landing platform
+const atiPorchDeck = new THREE.Mesh(
+  new THREE.BoxGeometry(14.0, 0.85, 1.45),
+  atiStepMat
+);
+atiPorchDeck.position.set(516 - W / 2, 0.425, 105.7 - H / 2);
+atiPorchDeck.receiveShadow = true;
+atiM.add(atiPorchDeck);
+
+// 2. Rusticated Banded Quoin Pilasters (Left & Right Flanks)
+[509.4, 522.6].forEach((px) => {
+  // Stack of 14 alternating horizontal bands matching the real photo
+  for (let b = 0; b < 14; b++) {
+    const isTerracotta = b % 2 === 0;
+    const bandH = 0.58;
+    const band = new THREE.Mesh(
+      new THREE.BoxGeometry(1.22, bandH - 0.04, 1.38),
+      isTerracotta ? atiTrimMat : atiWallMat
+    );
+    band.position.set(px - W / 2, 0.29 + b * bandH, 105.7 - H / 2);
+    band.castShadow = true;
+    atiM.add(band);
+  }
+});
+
+// 3. Classical Base Pedestals (Left & Right)
+[
+  [511.6, 105.8],
+  [520.4, 105.8]
+].forEach(([pedX, pedZ]) => {
+  // Plinth block
+  const plinth = new THREE.Mesh(new THREE.BoxGeometry(2.35, 2.15, 1.65), atiWallMat);
+  plinth.position.set(pedX - W / 2, 1.075, pedZ - H / 2);
+  plinth.castShadow = true;
+  atiM.add(plinth);
+
+  // Terracotta recessed panel trim on front face
+  const panel = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.65, 0.06), atiTrimMat);
+  panel.position.set(pedX - W / 2, 1.075, pedZ + 0.84 - H / 2);
+  atiM.add(panel);
+
+  const innerPanel = new THREE.Mesh(new THREE.BoxGeometry(1.65, 1.35, 0.08), atiWallMat);
+  innerPanel.position.set(pedX - W / 2, 1.075, pedZ + 0.85 - H / 2);
+  atiM.add(innerPanel);
+
+  // Stepped terracotta cap cornice
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(2.55, 0.22, 1.8), atiTrimMat);
+  cap.position.set(pedX - W / 2, 2.26, pedZ - H / 2);
+  cap.castShadow = true;
+  atiM.add(cap);
+
+  const subCap = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.1, 1.7), atiWallMat);
+  subCap.position.set(pedX - W / 2, 2.4, pedZ - H / 2);
+  atiM.add(subCap);
+});
+
+// 4. Four Grand Classical Cylindrical Columns
+[
+  511.0, 512.2, // Left column pair
+  519.8, 521.0  // Right column pair
+].forEach((colX) => {
+  const colZ = 105.8;
+
+  // Base collar molding (torus)
+  const baseTorus = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.28, 0.32, 0.14, 16),
+    atiPillarMat
+  );
+  baseTorus.position.set(colX - W / 2, 2.52, colZ - H / 2);
+  atiM.add(baseTorus);
+
+  // Column shaft
+  const shaft = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.22, 0.24, 5.75, 18),
+    atiPillarMat
+  );
+  shaft.position.set(colX - W / 2, 5.45, colZ - H / 2);
+  shaft.castShadow = true;
+  atiM.add(shaft);
+
+  // Capital molding (echinus)
+  const capital = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.23, 0.18, 16),
+    atiPillarMat
+  );
+  capital.position.set(colX - W / 2, 8.35, colZ - H / 2);
+  atiM.add(capital);
+
+  // Square abacus cap block
+  const abacus = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.1, 0.62), atiPillarMat);
+  abacus.position.set(colX - W / 2, 8.45, colZ - H / 2);
+  atiM.add(abacus);
+});
+
+// 5. Central Entrance Doorway with Classical Triangular Pediment Portico
+const doorFrame = new THREE.Mesh(
+  new THREE.BoxGeometry(3.35, 4.15, 0.12),
+  atiWhiteFrame
+);
+doorFrame.position.set(516 - W / 2, 2.92, 105.15 - H / 2);
+atiM.add(doorFrame);
+
+const glassDoor = new THREE.Mesh(
+  new THREE.BoxGeometry(3.1, 3.9, 0.08),
+  atiGlassDoorMat
+);
+glassDoor.position.set(516 - W / 2, 2.92, 105.17 - H / 2);
+atiM.add(glassDoor);
+
+// Door center split mullion and push handles
+const doorMullion = new THREE.Mesh(new THREE.BoxGeometry(0.08, 3.9, 0.1), atiWhiteFrame);
+doorMullion.position.set(516 - W / 2, 2.92, 105.18 - H / 2);
+atiM.add(doorMullion);
+
+[515.75, 516.25].forEach((hx) => {
+  const handle = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.9, 0.06), atiSteelMat);
+  handle.position.set(hx - W / 2, 2.8, 105.23 - H / 2);
+  atiM.add(handle);
+});
+
+// Pilasters framing the door
+[514.25, 517.75].forEach((px) => {
+  const pil = new THREE.Mesh(new THREE.BoxGeometry(0.35, 4.25, 0.18), atiTrimMat);
+  pil.position.set(px - W / 2, 2.97, 105.18 - H / 2);
+  atiM.add(pil);
+});
+
+// Horizontal pediment entablature beam
+const pedBeam = new THREE.Mesh(new THREE.BoxGeometry(4.45, 0.24, 0.65), atiTrimMat);
+pedBeam.position.set(516 - W / 2, 5.12, 105.3 - H / 2);
+atiM.add(pedBeam);
+
+const pedCornice = new THREE.Mesh(new THREE.BoxGeometry(4.65, 0.14, 0.75), atiWallMat);
+pedCornice.position.set(516 - W / 2, 5.28, 105.32 - H / 2);
+atiM.add(pedCornice);
+
+// Triangular Pediment Gable
+const triShape = new THREE.Shape();
+triShape.moveTo(-2.3, 0);
+triShape.lineTo(2.3, 0);
+triShape.lineTo(0, 0.92);
+triShape.closePath();
+const pedGableGeo = new THREE.ExtrudeGeometry(triShape, { depth: 0.45, bevelEnabled: false });
+const pedGable = new THREE.Mesh(pedGableGeo, atiWallMat);
+pedGable.position.set(516 - W / 2, 5.35, 105.08 - H / 2);
+atiM.add(pedGable);
+
+// Terracotta sloped raking cornice trim along triangular pediment
+[-1, 1].forEach((dir) => {
+  const rake = new THREE.Mesh(new THREE.BoxGeometry(2.65, 0.14, 0.52), atiTrimMat);
+  rake.position.set(516 + dir * 1.15 - W / 2, 5.82, 105.3 - H / 2);
+  rake.rotation.z = -dir * 0.38;
+  atiM.add(rake);
+});
+
+// Central Circular University Crest / Emblem above pediment
+const atiSealDisc = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.72, 0.72, 0.1, 28),
+  atiDarkTrimMat
+);
+atiSealDisc.rotation.x = Math.PI / 2;
+atiSealDisc.position.set(516 - W / 2, 6.72, 105.16 - H / 2);
+atiM.add(atiSealDisc);
+
+const atiSealRing = new THREE.Mesh(
+  new THREE.TorusGeometry(0.72, 0.05, 8, 28),
+  new THREE.MeshLambertMaterial({ color: 0xd4af37 }) // Gold rim
+);
+atiSealRing.position.set(516 - W / 2, 6.72, 105.21 - H / 2);
+atiM.add(atiSealRing);
+
+// Upper interior windows flanking the seal
+[513.2, 518.8].forEach((wx) => {
+  const winFrame = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.08), atiTrimMat);
+  winFrame.position.set(wx - W / 2, 6.72, 105.15 - H / 2);
+  atiM.add(winFrame);
+
+  const winGlass = new THREE.Mesh(new THREE.BoxGeometry(1.36, 1.96, 0.09), atiGlassDoorMat);
+  winGlass.position.set(wx - W / 2, 6.72, 105.16 - H / 2);
+  atiM.add(winGlass);
+});
+
+// 6. Grand Architrave Beam spanning above columns
+const atiBeam = new THREE.Mesh(
+  new THREE.BoxGeometry(15.2, 0.75, 1.55),
+  atiWallMat
+);
+atiBeam.position.set(516 - W / 2, 8.85, 105.7 - H / 2);
+atiBeam.castShadow = true;
+atiM.add(atiBeam);
+
+const atiBeamLowerFrieze = new THREE.Mesh(
+  new THREE.BoxGeometry(15.0, 0.14, 1.58),
+  atiTrimMat
+);
+atiBeamLowerFrieze.position.set(516 - W / 2, 8.44, 105.7 - H / 2);
+atiM.add(atiBeamLowerFrieze);
+
+const atiBeamUpperCornice = new THREE.Mesh(
+  new THREE.BoxGeometry(15.45, 0.22, 1.7),
+  atiTrimMat
+);
+atiBeamUpperCornice.position.set(516 - W / 2, 9.32, 105.7 - H / 2);
+atiM.add(atiBeamUpperCornice);
+
+// 7. Authentic Dual Mounted Signboards ("अतिथि" and "ATITHI")
+// A) Hindi Signboard: "अतिथि"
+const cAtithiHi = document.createElement('canvas');
+cAtithiHi.width = 512;
+cAtithiHi.height = 256;
+const gHi = cAtithiHi.getContext('2d');
+gHi.fillStyle = '#f6f2ea';
+var tAtithiHi = new THREE.CanvasTexture(cAtithiHi);
+tAtithiHi.encoding = THREE.sRGBEncoding;
+
+function renderAtithiPlaques() {
+  if (typeof gHi === 'undefined' || !gHi) return;
+  gHi.fillStyle = '#f6f2ea';
+  gHi.fillRect(0, 0, 512, 256);
+  gHi.lineWidth = 14;
+  gHi.strokeStyle = '#94362b';
+  gHi.strokeRect(7, 7, 498, 242);
+  gHi.lineWidth = 4;
+  gHi.strokeStyle = '#c47d72';
+  gHi.strokeRect(20, 20, 472, 216);
+  gHi.fillStyle = '#7a2016';
+  gHi.font = '800 120px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+  gHi.textAlign = 'center';
+  gHi.textBaseline = 'middle';
+  gHi.shadowColor = 'rgba(0,0,0,0.25)';
+  gHi.shadowBlur = 6;
+  gHi.shadowOffsetX = 3;
+  gHi.shadowOffsetY = 3;
+  gHi.fillText('अतिथि', 256, 128);
+  if (typeof tAtithiHi !== 'undefined' && tAtithiHi) {
+    tAtithiHi.needsUpdate = true;
+  }
+}
+renderAtithiPlaques();
+
+if (document.fonts) {
+  if (document.fonts.load) {
+    document.fonts.load('800 120px "Noto Sans Devanagari"').then(() => {
+      renderAtithiPlaques();
+    }).catch(() => {});
+  }
+  if (document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      renderAtithiPlaques();
+    });
+  }
+}
+setTimeout(renderAtithiPlaques, 400);
+setTimeout(renderAtithiPlaques, 1200);
+
+const meshHiSign = new THREE.Mesh(
+  new THREE.PlaneGeometry(4.35, 1.75),
+  new THREE.MeshBasicMaterial({ map: tAtithiHi })
+);
+meshHiSign.position.set(512.9 - W / 2, 10.35, 105.2 - H / 2);
+atiM.add(meshHiSign);
+
+// Backing panel for Hindi plaque
+const backHiSign = new THREE.Mesh(new THREE.BoxGeometry(4.5, 1.9, 0.12), atiTrimMat);
+backHiSign.position.set(512.9 - W / 2, 10.35, 105.12 - H / 2);
+atiM.add(backHiSign);
+
+// B) English Signboard: "ATITHI"
+const cAtithiEn = document.createElement('canvas');
+cAtithiEn.width = 512;
+cAtithiEn.height = 256;
+const gEn = cAtithiEn.getContext('2d');
+gEn.fillStyle = '#f6f2ea';
+gEn.fillRect(0, 0, 512, 256);
+
+// Terracotta molded border on plaque
+gEn.lineWidth = 14;
+gEn.strokeStyle = '#94362b';
+gEn.strokeRect(7, 7, 498, 242);
+gEn.lineWidth = 4;
+gEn.strokeStyle = '#c47d72';
+gEn.strokeRect(20, 20, 472, 216);
+
+// Crisp Latin text: 'ATITHI'
+gEn.fillStyle = '#7a2016';
+gEn.font = '900 110px "Inter","Roboto","Montserrat",sans-serif';
+gEn.textAlign = 'center';
+gEn.textBaseline = 'middle';
+gEn.shadowColor = 'rgba(0,0,0,0.25)';
+gEn.shadowBlur = 6;
+gEn.shadowOffsetX = 3;
+gEn.shadowOffsetY = 3;
+gEn.fillText('ATITHI', 256, 128);
+
+const tAtithiEn = new THREE.CanvasTexture(cAtithiEn);
+tAtithiEn.encoding = THREE.sRGBEncoding;
+
+const meshEnSign = new THREE.Mesh(
+  new THREE.PlaneGeometry(4.35, 1.75),
+  new THREE.MeshBasicMaterial({ map: tAtithiEn })
+);
+meshEnSign.position.set(519.1 - W / 2, 10.35, 105.2 - H / 2);
+atiM.add(meshEnSign);
+
+// Backing panel for English plaque
+const backEnSign = new THREE.Mesh(new THREE.BoxGeometry(4.5, 1.9, 0.12), atiTrimMat);
+backEnSign.position.set(519.1 - W / 2, 10.35, 105.12 - H / 2);
+atiM.add(backEnSign);
+
+// 8. 3D Windows on Upper Floors (Floor 2, 3, 4) directly matching photo
+// Helper to create detailed window with terracotta surround and keystone
+function mkFaçadeWin(wx, wy, wz) {
+  const grp = new THREE.Group();
+  // Terracotta surround
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(3.2, 2.5, 0.16), atiTrimMat);
+  grp.add(frame);
+  // Top keystone tab
+  const key = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.45, 0.22), atiTrimMat);
+  key.position.set(0, 1.35, 0.02);
+  grp.add(key);
+  // White inner sash
+  const inner = new THREE.Mesh(new THREE.BoxGeometry(2.7, 2.0, 0.18), atiWhiteFrame);
+  grp.add(inner);
+  // Glass pane
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.7, 0.2), atiGlassDoorMat);
+  grp.add(glass);
+  // Center mullions
+  const vert = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.7, 0.22), atiWhiteFrame);
+  grp.add(vert);
+  const horiz = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.22), atiWhiteFrame);
+  grp.add(horiz);
+
+  grp.position.set(wx - W / 2, wy, wz - H / 2);
+  atiM.add(grp);
+}
+
+// Windows directly above the signboards on 2nd floor (y = 13.2)
+mkFaçadeWin(512.9, 13.2, 105.12);
+mkFaçadeWin(519.1, 13.2, 105.12);
+
+// Flanking windows on 1st & 2nd floors
+mkFaçadeWin(507.0, 7.8, 105.12);
+mkFaçadeWin(507.0, 13.2, 105.12);
+mkFaçadeWin(525.0, 7.8, 105.12);
+mkFaçadeWin(525.0, 13.2, 105.12);
+
+// 9. Central Entrance Steps (Blue-Grey Granite Stone Tiers)
+const stepTiers = [
+  { y: 0.72, z: 106.4, w: 6.2 },
+  { y: 0.54, z: 107.0, w: 6.4 },
+  { y: 0.36, z: 107.6, w: 6.6 },
+  { y: 0.18, z: 108.2, w: 6.8 },
+  { y: 0.06, z: 108.8, w: 7.0 }
+];
+stepTiers.forEach((st) => {
+  const step = new THREE.Mesh(
+    new THREE.BoxGeometry(st.w, 0.19, 0.65),
+    atiStepMat
+  );
+  step.position.set(516 - W / 2, st.y, st.z - H / 2);
+  step.receiveShadow = true;
+  atiM.add(step);
+});
+
+// 10. Accessible Ramp with Stainless Steel Railings (Left Side of Steps)
+// Sloped ramp deck from driveway up to the porch landing
+const rampDeck = new THREE.Mesh(
+  new THREE.BoxGeometry(2.6, 0.22, 3.2),
+  atiStepMat
+);
+rampDeck.position.set(510.8 - W / 2, 0.44, 107.4 - H / 2);
+rampDeck.rotation.x = 0.24; // Sloping downwards towards driveway
+rampDeck.receiveShadow = true;
+atiM.add(rampDeck);
+
+// Curved stainless steel safety handrails
+const rampRailMat = atiSteelMat;
+[0.85, 0.45].forEach((railH) => {
+  const railOuter = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.035, 0.035, 3.4, 8),
+    rampRailMat
+  );
+  railOuter.position.set(509.6 - W / 2, 0.44 + railH, 107.4 - H / 2);
+  railOuter.rotation.x = Math.PI / 2 + 0.24;
+  atiM.add(railOuter);
+});
+
+// Vertical handrail support stanchions along ramp
+[106.0, 106.9, 107.8, 108.7].forEach((rz) => {
+  const progress = (rz - 106.0) / 2.7;
+  const baseH = 0.85 - progress * 0.75;
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.9, 8), rampRailMat);
+  post.position.set(509.6 - W / 2, baseH + 0.45, rz - H / 2);
+  atiM.add(post);
+});
+
+// Small stainless steel bollards at foot of central stairs
+[514.8, 517.2].forEach((bx) => {
+  const bollard = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.75, 12), atiSteelMat);
+  bollard.position.set(bx - W / 2, 0.38, 109.1 - H / 2);
+  atiM.add(bollard);
+  const cap = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 10), atiSteelMat);
+  cap.position.set(bx - W / 2, 0.76, 109.1 - H / 2);
+  atiM.add(cap);
+});
+
+// 11. Potted Fan Palm Trees (Matching Photo)
+function mkAtithiPalm(px, pz, scale = 1.0) {
+  const grp = new THREE.Group();
+  // Planter pot
+  const pot = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.35 * scale, 0.28 * scale, 0.55 * scale, 12),
+    atiPlanterMat
+  );
+  pot.position.y = 0.28 * scale;
+  pot.castShadow = true;
+  grp.add(pot);
+
+  // Short palm trunk
+  const trunk = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.09 * scale, 0.12 * scale, 0.6 * scale, 8),
+    atiTrunkMat
+  );
+  trunk.position.y = 0.65 * scale;
+  grp.add(trunk);
+
+  // Radial fan palm fronds curving outward
+  const frondAngles = [0, 0.75, 1.5, 2.3, 3.1, 3.9, 4.7, 5.5];
+  frondAngles.forEach((ang) => {
+    const frond = new THREE.Mesh(
+      new THREE.ConeGeometry(0.38 * scale, 1.25 * scale, 5),
+      atiPalmMat
+    );
+    frond.position.set(Math.sin(ang) * 0.45 * scale, 1.15 * scale, Math.cos(ang) * 0.45 * scale);
+    frond.rotation.x = Math.cos(ang) * 0.65;
+    frond.rotation.z = -Math.sin(ang) * 0.65;
+    frond.castShadow = true;
+    grp.add(frond);
+  });
+
+  grp.position.set(px - W / 2, 0, pz - H / 2);
+  atiM.add(grp);
+}
+
+// Four potted palms flanking the entrance elements
+mkAtithiPalm(508.8, 109.8, 1.1);  // In front of ramp entrance
+mkAtithiPalm(512.4, 107.5, 0.95); // Beside left pedestal
+mkAtithiPalm(519.6, 107.5, 0.95); // Beside right pedestal
+mkAtithiPalm(524.4, 109.4, 1.05); // Right forecourt
+
+// 12. Parked Scooters / Two-Wheelers along the driveway curb (as seen in photo)
+function mkAtithiScooter(sx, sz, rotY = 0) {
+  const scGrp = new THREE.Group();
+  const bodyMat = new THREE.MeshLambertMaterial({ color: 0x1f242b });
+  const seatMat = new THREE.MeshLambertMaterial({ color: 0x121417 });
+  const tireMat = new THREE.MeshLambertMaterial({ color: 0x0a0a0a });
+
+  // Body chassis
+  const chassis = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.4, 1.2), bodyMat);
+  chassis.position.y = 0.45;
+  scGrp.add(chassis);
+
+  // Seat
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.12, 0.65), seatMat);
+  seat.position.set(0, 0.68, -0.15);
+  scGrp.add(seat);
+
+  // Front shield & apron
+  const frontApron = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.65, 0.22), bodyMat);
+  frontApron.position.set(0, 0.62, 0.45);
+  scGrp.add(frontApron);
+
+  // Handlebar
+  const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.65, 8), atiSteelMat);
+  bar.rotation.z = Math.PI / 2;
+  bar.position.set(0, 0.92, 0.42);
+  scGrp.add(bar);
+
+  // Wheels
+  [0.38, -0.42].forEach((wz) => {
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.12, 12), tireMat);
+    wheel.rotation.z = Math.PI / 2;
+    wheel.position.set(0, 0.2, wz);
+    scGrp.add(wheel);
+  });
+
+  scGrp.rotation.y = rotY;
+  scGrp.position.set(sx - W / 2, 0, sz - H / 2);
+  atiM.add(scGrp);
+}
+
+mkAtithiScooter(521.8, 110.0, 0.2);
+mkAtithiScooter(523.2, 110.2, 0.15);
+
+// 13. Blue GSV Directional Sign Stand in forecourt
+const atiBlueSignMat = new THREE.MeshLambertMaterial({ color: 0x1a4875 });
+const atiSignBoard = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.08), atiBlueSignMat);
+atiSignBoard.position.set(518.2 - W / 2, 0.75, 109.3 - H / 2);
+atiM.add(atiSignBoard);
+
+[-0.45, 0.45].forEach((spX) => {
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.75, 8), atiSteelMat);
+  post.position.set(518.2 + spX - W / 2, 0.38, 109.3 - H / 2);
+  atiM.add(post);
+});
+
+// 14. Alternating Green-and-White Painted Road Curb
+const curbMatGreen = new THREE.MeshLambertMaterial({ color: 0x2e7d32 });
+const curbMatWhite = new THREE.MeshLambertMaterial({ color: 0xf5f5f5 });
+for (let ci = 0; ci < 16; ci++) {
+  const isG = ci % 2 === 0;
+  const curbSegment = new THREE.Mesh(
+    new THREE.BoxGeometry(1.2, 0.18, 0.35),
+    isG ? curbMatGreen : curbMatWhite
+  );
+  curbSegment.position.set(508.5 + ci * 1.25 - W / 2, 0.09, 110.6 - H / 2);
+  atiM.add(curbSegment);
+}
 // proposed blocks from the master plan (orange = proposed)
 function tx(draw) {
   const c = document.createElement('canvas');
@@ -3061,6 +3620,485 @@ labM.add(ls);
   scene.add(rajabaug);
 })();
 
+// ==========================================
+// MEHMAN BOY'S HOSTEL (BEFORE GSV ACADBLOCK)
+// ==========================================
+const cMeh = document.createElement('canvas');
+cMeh.width = cMeh.height = 128;
+const gMeh = cMeh.getContext('2d');
+gMeh.fillStyle = '#dfa86c'; // Warm sandy ochre stucco from photos
+gMeh.fillRect(0, 0, 128, 128);
+
+// Plaster texture grain & subtle stippling
+gMeh.fillStyle = 'rgba(0,0,0,0.03)';
+for (let py = 0; py < 128; py += 4) {
+  for (let px = 0; px < 128; px += 4) {
+    if ((px * 3 + py * 7) % 11 === 0) gMeh.fillRect(px, py, 2, 2);
+  }
+}
+
+// Windows with ochre reveals, crisp white frames & glass
+[14, 76].forEach((wx) => {
+  // Reveal shadow
+  gMeh.fillStyle = '#b8824a';
+  gMeh.fillRect(wx - 2, 18, 42, 54);
+  // White outer frame
+  gMeh.fillStyle = '#f5f7fa';
+  gMeh.fillRect(wx, 20, 38, 50);
+  // Glass pane
+  gMeh.fillStyle = '#3c4e5e';
+  gMeh.fillRect(wx + 3, 23, 32, 44);
+  // White window sash mullions
+  gMeh.fillStyle = '#f5f7fa';
+  gMeh.fillRect(wx + 18, 23, 2, 44);
+  gMeh.fillRect(wx + 3, 44, 32, 2);
+});
+
+// Floor dividing grooves
+gMeh.fillStyle = '#9e6b36';
+gMeh.fillRect(0, 0, 128, 3);
+gMeh.fillRect(0, 125, 128, 3);
+
+const mehBase = new THREE.CanvasTexture(cMeh);
+mehBase.wrapS = mehBase.wrapT = THREE.RepeatWrapping;
+mehBase.encoding = THREE.sRGBEncoding;
+LITMAP.set(mehBase, litTex(litFromCanvas(cMeh)));
+mehBase.anisotropy = 4;
+
+// Main 3-story building block (G + 2 floors, height 11.2)
+const mehM = mk(
+  [
+    [264, 37],
+    [287, 48],
+    [294, 51],
+    [308, 64],
+    [307, 35]
+  ],
+  11.2,
+  0xd0a369,
+  0xa3743e,
+  1.8,
+  [],
+  [],
+  mehBase
+);
+
+// Materials for Mehman Hostel architectural details
+const mehWallMat = new THREE.MeshLambertMaterial({ color: 0xdfa86c });
+const mehAccentMat = new THREE.MeshLambertMaterial({ color: 0xd49b5c });
+const mehRailingMat = new THREE.MeshLambertMaterial({ color: 0xd6dee2 });
+const mehGlassMat = new THREE.MeshLambertMaterial({ color: 0x1d242d });
+const mehWhiteFrame = new THREE.MeshLambertMaterial({ color: 0xf5f7fa });
+const mehBlueSignMat = new THREE.MeshLambertMaterial({ color: 0x0d47a1 });
+const mehOrangeSignMat = new THREE.MeshLambertMaterial({ color: 0xe65100 });
+const mehTreeTrunkMat = new THREE.MeshLambertMaterial({ color: 0x4a3622 });
+const mehTreeWhiteMat = new THREE.MeshLambertMaterial({ color: 0xf4f4f4 });
+const mehTreeBandMat = new THREE.MeshLambertMaterial({ color: 0x8a2f26 });
+const mehFoliageMat = new THREE.MeshLambertMaterial({ color: 0x3d7025 });
+
+// 1. Cantilevered Balconies & Verandas along West & East Wings
+function mkBalconyBay(bx, bz, rotY, hasLaundry = false, laundryCol = 0x2266bb) {
+  const bay = new THREE.Group();
+
+  // 3 levels of balconies (Ground floor veranda, 1st floor, 2nd floor)
+  [0.55, 4.15, 7.75].forEach((floorY, flIdx) => {
+    // Balcony cantilevered floor slab
+    const floorSlab = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.22, 1.45), mehWallMat);
+    floorSlab.position.set(0, floorY, 0.72);
+    bay.add(floorSlab);
+
+    // Front ochre parapet wall base
+    const frontWall = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.55, 0.12), mehWallMat);
+    frontWall.position.set(0, floorY + 0.38, 1.4);
+    bay.add(frontWall);
+
+    // Side parapet walls
+    [-2.05, 2.05].forEach((sx) => {
+      const sideWall = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.95, 1.35), mehWallMat);
+      sideWall.position.set(sx, floorY + 0.58, 0.72);
+      bay.add(sideWall);
+    });
+
+    // Horizontal stainless steel / metal safety railings
+    [0.72, 0.92, 1.08].forEach((rh) => {
+      const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 4.1, 8), mehRailingMat);
+      rail.rotation.z = Math.PI / 2;
+      rail.position.set(0, floorY + rh, 1.4);
+      bay.add(rail);
+    });
+
+    // Recessed white sliding glass door & window behind balcony
+    const doorUnit = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.4, 0.08), mehWhiteFrame);
+    doorUnit.position.set(0, floorY + 1.45, 0.05);
+    bay.add(doorUnit);
+
+    const doorGlass = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.1, 0.1), mehGlassMat);
+    doorGlass.position.set(0, floorY + 1.45, 0.06);
+    bay.add(doorGlass);
+
+    // Student clothes drying line on selected balconies (seen in photo)
+    if (hasLaundry && flIdx === 1) {
+      const line = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 3.2, 6), mehRailingMat);
+      line.rotation.z = Math.PI / 2;
+      line.position.set(0, floorY + 1.65, 0.9);
+      bay.add(line);
+
+      const cloth = new THREE.Mesh(
+        new THREE.BoxGeometry(0.75, 0.65, 0.04),
+        new THREE.MeshLambertMaterial({ color: laundryCol })
+      );
+      cloth.position.set(-0.5, floorY + 1.3, 0.9);
+      bay.add(cloth);
+
+      const cloth2 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.65, 0.55, 0.04),
+        new THREE.MeshLambertMaterial({ color: 0xf5f5f5 })
+      );
+      cloth2.position.set(0.6, floorY + 1.35, 0.9);
+      bay.add(cloth2);
+    }
+  });
+
+  // Vertical structural dividing pier / column
+  const pier = new THREE.Mesh(new THREE.BoxGeometry(0.42, 11.5, 1.55), mehAccentMat);
+  pier.position.set(2.2, 5.75, 0.72);
+  pier.castShadow = true;
+  bay.add(pier);
+
+  bay.rotation.y = rotY;
+  bay.position.set(bx - W / 2, 0, bz - H / 2);
+  mehM.add(bay);
+}
+
+// West Wing Balcony Bays (Wall from 264, 37 to 287, 48 - angle ~ 0.44 rad)
+const wAngle = 0.44;
+mkBalconyBay(268.0, 38.8, wAngle, true, 0x1976d2);
+mkBalconyBay(273.5, 41.5, wAngle, false);
+mkBalconyBay(279.0, 44.1, wAngle, true, 0xd32f2f);
+mkBalconyBay(284.5, 46.8, wAngle, false);
+
+// East Wing Balcony Bays (Wall from 294, 51 to 308, 64 - angle ~ 0.75 rad)
+const eAngle = 0.75;
+mkBalconyBay(299.0, 55.6, eAngle, true, 0x388e3c);
+mkBalconyBay(303.5, 59.8, eAngle, false);
+mkBalconyBay(307.0, 63.1, eAngle, true, 0xf57c00);
+
+// 2. Main Entrance Canopy with Dual-Color Bilingual Signboard (Image 1)
+const canX = 293.8, canZ = 51.5, canRot = 0.60;
+const canopyGroup = new THREE.Group();
+
+// Projecting canopy roof slab
+const canSlab = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.38, 2.8), mehWallMat);
+canSlab.position.set(0, 3.65, 1.4);
+canSlab.castShadow = true;
+canopyGroup.add(canSlab);
+
+// White underside soffit
+const canSoffit = new THREE.Mesh(new THREE.BoxGeometry(5.2, 0.08, 2.6), mehWhiteFrame);
+canSoffit.position.set(0, 3.44, 1.4);
+canopyGroup.add(canSoffit);
+
+// Canopy support pillars in front
+[-2.4, 2.4].forEach((px) => {
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 3.65, 12), mehWhiteFrame);
+  post.position.set(px, 1.825, 2.6);
+  post.castShadow = true;
+  canopyGroup.add(post);
+});
+
+// Bilingual Canopy Fascia Signboard (Orange + Blue)
+const cCanSign = document.createElement('canvas');
+cCanSign.width = 512;
+cCanSign.height = 128;
+const gCanSign = cCanSign.getContext('2d');
+
+// Left half: Orange section (Devanagari)
+gCanSign.fillStyle = '#e65100';
+gCanSign.fillRect(0, 0, 256, 128);
+gCanSign.fillStyle = '#ffffff';
+gCanSign.font = '700 30px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+gCanSign.textAlign = 'center';
+gCanSign.textBaseline = 'middle';
+gCanSign.fillText('गति शक्ति विश्वविद्यालय', 128, 64);
+
+// Right half: Royal Blue section (GSV HOSTEL)
+gCanSign.fillStyle = '#0d47a1';
+gCanSign.fillRect(256, 0, 256, 128);
+gCanSign.fillStyle = '#ffffff';
+gCanSign.font = '900 48px "Inter","Roboto","Montserrat",sans-serif';
+gCanSign.textAlign = 'center';
+gCanSign.textBaseline = 'middle';
+gCanSign.fillText('GSV HOSTEL', 384, 64);
+
+// Gold center divider & border
+gCanSign.lineWidth = 6;
+gCanSign.strokeStyle = '#ffd54f';
+gCanSign.strokeRect(3, 3, 506, 122);
+gCanSign.beginPath();
+gCanSign.moveTo(256, 0);
+gCanSign.lineTo(256, 128);
+gCanSign.stroke();
+
+const tCanSign = new THREE.CanvasTexture(cCanSign);
+tCanSign.encoding = THREE.sRGBEncoding;
+
+const canSignMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(5.2, 0.95),
+  new THREE.MeshBasicMaterial({ map: tCanSign })
+);
+canSignMesh.position.set(0, 3.65, 2.82);
+canopyGroup.add(canSignMesh);
+
+// Ground floor glass entrance door under canopy
+const canDoor = new THREE.Mesh(new THREE.BoxGeometry(3.2, 3.2, 0.1), mehWhiteFrame);
+canDoor.position.set(0, 1.6, 0.1);
+canopyGroup.add(canDoor);
+
+const canDoorGlass = new THREE.Mesh(new THREE.BoxGeometry(2.9, 2.9, 0.12), mehGlassMat);
+canDoorGlass.position.set(0, 1.6, 0.11);
+canopyGroup.add(canDoorGlass);
+
+canopyGroup.rotation.y = canRot;
+canopyGroup.position.set(canX - W / 2, 0, canZ - H / 2);
+mehM.add(canopyGroup);
+
+// 3. Large Foreground "Hostel & Enquiry Office" Signboard (Image 2)
+const cEnq = document.createElement('canvas');
+cEnq.width = 512;
+cEnq.height = 280;
+const gEnq = cEnq.getContext('2d');
+
+gEnq.fillStyle = '#0d47a1'; // Deep royal blue
+gEnq.fillRect(0, 0, 512, 280);
+
+// Crisp white double border
+gEnq.lineWidth = 10;
+gEnq.strokeStyle = '#ffffff';
+gEnq.strokeRect(8, 8, 496, 264);
+gEnq.lineWidth = 2;
+gEnq.strokeStyle = 'rgba(255,255,255,0.6)';
+gEnq.strokeRect(18, 18, 476, 244);
+
+// Bilingual text matching Image 2 exactly
+gEnq.fillStyle = '#ffffff';
+gEnq.textAlign = 'center';
+gEnq.textBaseline = 'middle';
+
+gEnq.font = '700 38px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+gEnq.fillText('गति शक्ति विश्वविद्यालय', 256, 62);
+
+gEnq.font = '700 36px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+gEnq.fillText('छात्रावास एवं पूछताछ कार्यालय', 256, 130);
+
+gEnq.font = '800 38px "Inter","Roboto","Montserrat",sans-serif';
+gEnq.fillText('Hostel & Enquiry Office', 256, 206);
+
+const tEnq = new THREE.CanvasTexture(cEnq);
+tEnq.encoding = THREE.sRGBEncoding;
+
+const enqSignMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(3.6, 2.0),
+  new THREE.MeshBasicMaterial({ map: tEnq })
+);
+enqSignMesh.position.set(291.5 - W / 2, 1.7, 58.5 - H / 2);
+enqSignMesh.rotation.y = 0.60;
+mehM.add(enqSignMesh);
+
+const enqBackPlate = new THREE.Mesh(
+  new THREE.BoxGeometry(3.7, 2.1, 0.1),
+  new THREE.MeshLambertMaterial({ color: 0x093070 })
+);
+enqBackPlate.position.set(291.5 - W / 2, 1.7, 58.45 - H / 2);
+enqBackPlate.rotation.y = 0.60;
+mehM.add(enqBackPlate);
+
+// Stainless steel support posts with spherical ball finials (Image 2)
+[-1.75, 1.75].forEach((px) => {
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 2.3, 12), atiSteelMat);
+  const rotatedX = px * Math.cos(0.60);
+  const rotatedZ = -px * Math.sin(0.60);
+  post.position.set(291.5 + rotatedX - W / 2, 1.15, 58.5 + rotatedZ - H / 2);
+  mehM.add(post);
+
+  // Shiny sphere finial on top of each post
+  const finial = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 12), atiSteelMat);
+  finial.position.set(291.5 + rotatedX - W / 2, 2.34, 58.5 + rotatedZ - H / 2);
+  mehM.add(finial);
+});
+
+// 4. Student Bicycles Parked Near Entrance (Image 1)
+function mkStudentBicycle(bx, bz, rotY, frameCol = 0xcc2222) {
+  const bGrp = new THREE.Group();
+  const tireMat = new THREE.MeshLambertMaterial({ color: 0x111111 });
+  const fMat = new THREE.MeshLambertMaterial({ color: frameCol });
+
+  // Two wheels with tires
+  [-0.45, 0.45].forEach((wx) => {
+    const tire = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.025, 8, 16), tireMat);
+    tire.position.set(wx, 0.28, 0);
+    bGrp.add(tire);
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.06, 8), atiSteelMat);
+    hub.rotation.x = Math.PI / 2;
+    hub.position.set(wx, 0.28, 0);
+    bGrp.add(hub);
+  });
+
+  // Diamond bike frame
+  const crossBar = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.85, 6), fMat);
+  crossBar.rotation.z = Math.PI / 2;
+  crossBar.position.set(0, 0.52, 0);
+  bGrp.add(crossBar);
+
+  const downTube = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.65, 6), fMat);
+  downTube.rotation.z = -0.7;
+  downTube.position.set(0.18, 0.38, 0);
+  bGrp.add(downTube);
+
+  const seatStay = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.65, 6), fMat);
+  seatStay.rotation.z = 0.65;
+  seatStay.position.set(-0.2, 0.42, 0);
+  bGrp.add(seatStay);
+
+  // Handlebars
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.25, 6), atiSteelMat);
+  stem.position.set(0.42, 0.62, 0);
+  bGrp.add(stem);
+  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.45, 6), atiSteelMat);
+  handle.rotation.x = Math.PI / 2;
+  handle.position.set(0.42, 0.74, 0);
+  bGrp.add(handle);
+
+  // Saddle / seat
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.05, 0.12), tireMat);
+  seat.position.set(-0.15, 0.62, 0);
+  bGrp.add(seat);
+
+  bGrp.rotation.y = rotY;
+  bGrp.position.set(bx - W / 2, 0, bz - H / 2);
+  mehM.add(bGrp);
+}
+
+mkStudentBicycle(296.8, 56.5, 0.8, 0x1565c0); // Blue bike
+mkStudentBicycle(297.8, 57.2, 0.7, 0xd32f2f); // Red bike
+mkStudentBicycle(298.6, 58.0, 0.9, 0x2e7d32); // Green bike
+
+// 5. Mature Shade Trees with Whitewashed & Red Painted Lower Trunks (Image 1)
+function mkMehmanTree(tx, tz, trunkH = 4.2, crownR = 3.2) {
+  const tGrp = new THREE.Group();
+
+  // Painted white base (0 to 1.3m)
+  const baseTrunk = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.38, 0.44, 1.3, 10),
+    mehTreeWhiteMat
+  );
+  baseTrunk.position.y = 0.65;
+  baseTrunk.castShadow = true;
+  tGrp.add(baseTrunk);
+
+  // Terracotta / red band (1.3 to 1.6m)
+  const bandTrunk = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.36, 0.38, 0.3, 10),
+    mehTreeBandMat
+  );
+  bandTrunk.position.y = 1.45;
+  tGrp.add(bandTrunk);
+
+  // Dark bark upper trunk
+  const upperTrunk = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 0.36, trunkH - 1.6, 10),
+    mehTreeTrunkMat
+  );
+  upperTrunk.position.y = 1.6 + (trunkH - 1.6) / 2;
+  upperTrunk.castShadow = true;
+  tGrp.add(upperTrunk);
+
+  // Leafy spreading canopy
+  [
+    [0, trunkH + 1.2, 0, crownR],
+    [-crownR * 0.4, trunkH + 0.8, crownR * 0.35, crownR * 0.75],
+    [crownR * 0.45, trunkH + 0.9, -crownR * 0.3, crownR * 0.78],
+    [0, trunkH + 2.0, crownR * 0.25, crownR * 0.65]
+  ].forEach(([lx, ly, lz, lr]) => {
+    const leaf = new THREE.Mesh(new THREE.IcosahedronGeometry(lr, 1), mehFoliageMat);
+    leaf.position.set(lx, ly, lz);
+    leaf.castShadow = true;
+    tGrp.add(leaf);
+  });
+
+  tGrp.position.set(tx - W / 2, 0, tz - H / 2);
+  mehM.add(tGrp);
+}
+
+mkMehmanTree(276.0, 48.0, 6.8, 3.6);
+mkMehmanTree(314.0, 60.0, 7.2, 4.0);
+mkMehmanTree(264.0, 39.0, 6.4, 3.4);
+
+// 6. Flowering Shrubs (Hibiscus) & Curving Interlocking Paver Path
+function mkFlowerBush(bx, bz, r = 0.85) {
+  const bGrp = new THREE.Group();
+  const bush = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 1), mehFoliageMat);
+  bush.position.y = r * 0.8;
+  bush.castShadow = true;
+  bGrp.add(bush);
+
+  // Red hibiscus flowers
+  const flowerMat = new THREE.MeshLambertMaterial({ color: 0xd32f2f });
+  for (let f = 0; f < 5; f++) {
+    const fl = new THREE.Mesh(new THREE.SphereGeometry(0.12, 6, 6), flowerMat);
+    const fa = (f / 5) * Math.PI * 2;
+    fl.position.set(Math.sin(fa) * r * 0.75, r * 0.9 + (f % 2) * 0.2, Math.cos(fa) * r * 0.75);
+    bGrp.add(fl);
+  }
+
+  bGrp.position.set(bx - W / 2, 0, bz - H / 2);
+  mehM.add(bGrp);
+}
+
+mkFlowerBush(289.5, 59.5, 0.75);
+mkFlowerBush(293.5, 61.2, 0.85);
+mkFlowerBush(298.0, 62.8, 0.9);
+mkFlowerBush(284.0, 54.5, 0.8);
+
+// Paved forecourt walkway
+flat(284, 50, 304, 62, 0.28, 0xd8ceb8);
+
+// 7. Rooftop Features (Water tanks, stair cabin, perimeter railing)
+[
+  [278, 40],
+  [302, 44]
+].forEach(([rx, rz]) => {
+  const tank = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.8, 1.8, 2.4, 12),
+    new THREE.MeshLambertMaterial({ color: 0xf0f0f0 })
+  );
+  tank.position.set(rx - W / 2, 12.4, rz - H / 2);
+  mehM.add(tank);
+});
+
+const stairCabin = new THREE.Mesh(new THREE.BoxGeometry(4.2, 2.4, 3.8), mehWallMat);
+stairCabin.position.set(292 - W / 2, 12.4, 42 - H / 2);
+mehM.add(stairCabin);
+
+// Continuous roof perimeter safety railing
+[
+  [264, 37, 287, 48],
+  [287, 48, 294, 51],
+  [294, 51, 308, 64],
+  [308, 64, 307, 35],
+  [307, 35, 264, 37]
+].forEach(([x1, z1, x2, z2]) => {
+  const len = Math.hypot(x2 - x1, z2 - z1);
+  const ang = Math.atan2(z2 - z1, x2 - x1);
+  const midX = (x1 + x2) / 2;
+  const midZ = (z1 + z2) / 2;
+
+  const topRail = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, len, 8), mehRailingMat);
+  topRail.rotation.z = Math.PI / 2;
+  topRail.rotation.y = -ang;
+  topRail.position.set(midX - W / 2, 11.85, midZ - H / 2);
+  mehM.add(topRail);
+});
+
 // ============================================================================
 // Gati Shakti Vishwavidyalaya — Central Academic Block
 // Faithfully modeled from the physical architectural scale model:
@@ -4538,6 +5576,7 @@ let seed = 7;
 const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 // Real building footprints (Overture, registered to the photo). The hand-built landmarks keep their own models, so skip anything inside them.
 const HAND = [
+  [260, 32, 312, 68], // Mehman Boy's Hostel (before GSV Acadblock)
   [609, 132, 669, 164],
   [610, 80, 686, 121],
   [506, 56, 555, 105],
@@ -4582,6 +5621,7 @@ GEO.b.forEach(([gh, ...f]) => {
 
 // ---- trees from the green pixels (with enhanced road clearance & obstacle exclusion)
 const inB = (x, y) =>
+  (x > 260 && x < 312 && y > 32 && y < 68) || // Mehman Boy's Hostel (building & forecourt)
   nearRoad(x, y, 6.0) ||
   BUILDINGS.some((b) => x > b[0] - 6 && x < b[2] + 6 && y > b[1] - 6 && y < b[3] + 6) ||
   (x > 390 && x < 505 && y > 48 && y < 128) || // Sabhagrah & Pahune Hostel (forecourt & entrance)

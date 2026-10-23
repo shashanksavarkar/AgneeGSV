@@ -12,7 +12,7 @@ const MODULES = [
 async function loadApplication() {
   try {
     const sources = await Promise.all(MODULES.map(async path => {
-      const response = await fetch(`src/${path}`);
+      const response = await fetch(`src/${path}?v=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`Unable to load ${path} (${response.status})`);
       return response.text();
     }));

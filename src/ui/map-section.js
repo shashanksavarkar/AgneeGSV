@@ -53,7 +53,8 @@ export function renderMapSection(places = [], events = []) {
               <div class="tag a" id="t13">Pahune Hostel</div>
               <div class="tag r" id="t3">Current hostel (NHSRCL)</div>
               <div class="tag g" id="t4">Proposed hostel block</div>
-              <div class="tag a" id="t5">Atithi hostel</div>
+              <div class="tag a" id="t5">Atithi hostel</div>
+              <div class="tag a" id="t15">Mehman Boy's Hostel</div>
               <div class="tag o" id="t6">Proposed laboratory block</div>
               <div class="tag o" id="t7">Proposed academic block</div>
               <div class="tag" id="t8">Pratap Vilas Palace</div>
