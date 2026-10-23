@@ -176,7 +176,7 @@ body {
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.glass-panel:hover {
+.glass-panel:not(.team-card):not(.sponsor-card):hover {
   border-color: var(--border-glass-gold);
 }
 
@@ -2669,7 +2669,7 @@ body {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
-.glass-panel:hover {
+.glass-panel:not(.team-card):not(.sponsor-card):hover {
   border-color: var(--brass-3);
   box-shadow: var(--bevel), var(--shadow-md), 0 0 18px rgba(255, 122, 26, 0.18);
 }
@@ -4530,7 +4530,6 @@ main > div:nth-of-type(even) > .section > .container::before { left: auto; right
 .lu-card::before { top: calc(var(--s) * -1); left: calc(var(--s) * -1); animation: rangoli-cw 90s linear infinite; }
 .lu-card::after { bottom: calc(var(--s) * -1); right: calc(var(--s) * -1); animation: rangoli-ccw 90s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .lu-card::before, .lu-card::after { animation: none; } }
-.lu-card:hover { transform: translateY(-6px); border-color: var(--gold-primary); box-shadow: 0 0 26px rgba(255, 122, 26, 0.3), 0 18px 34px rgba(0, 0, 0, 0.6); }
 .lu-bells { position: absolute; right: 18px; top: 0; width: 22px; height: 80px; pointer-events: none; transform-origin: 50% 0; background: url("assets/elements/ghungroo.svg") top center / contain no-repeat; animation: lu-bells 4s ease-in-out infinite; }
 .lu-card:nth-child(even) .lu-bells { animation-delay: -2s; }
 @keyframes lu-bells { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
@@ -4541,9 +4540,10 @@ main > div:nth-of-type(even) > .section > .container::before { left: auto; right
 .lu-info { position: relative; z-index: 1; flex: 1; min-width: 0; }
 .lu-badge { position: absolute; left: 50%; bottom: -14px; transform: translateX(-50%); padding: 4px 12px; border-radius: 999px; white-space: nowrap; font: 800 10px var(--font-sans); letter-spacing: 0.12em; text-transform: uppercase; color: #1a0c02; background: linear-gradient(145deg, #ffd27a, #ff7a1a); border: 1px solid #000; }
 .lu-cat { position: relative; display: block; font: 800 11px var(--font-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-primary); }
-.lu-name { position: relative; margin: 10px 0 4px; font: 700 24px/1.15 var(--font-heading); text-transform: uppercase; background: linear-gradient(180deg, #fff1d2, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lu-name { position: relative; margin: 10px 0 4px; font: 700 clamp(15px, 1.3vw, 24px)/1.15 var(--font-heading); white-space: nowrap; text-transform: uppercase; background: linear-gradient(180deg, #fff1d2, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lu-role { position: relative; margin: 0 0 12px; font: italic 15px var(--font-body); color: var(--text-secondary); font-weight: 400; }
 .lu-bio { position: relative; margin: 0; font: 15px/1.6 var(--font-body); color: #d9ccb8; }
+.lu-card[data-id="UBI"] .lu-bio { white-space: nowrap; font-size: clamp(10px, 1.15vw, 14px); } /* ponytail: UBI bios only; long SBI bios can't fit one line */
 
 /* ==========================================================================
    Venue selector: numbered chips on a dark panel (diya title, round arrows)
@@ -4801,7 +4801,6 @@ a.merch-buy:active { transform: translateY(3px); box-shadow: 0 1px 0 #6b2a05; }
   .merch-card { flex-basis: 360px; }
   .merch-info .merch-price { white-space: nowrap; letter-spacing: 0.08em; }
 }
-.merch-card:hover { border-color: rgba(255, 179, 71, 0.6); }
 .merch-badge { left: auto; right: 14px; }
 .merch-modal { position: fixed; inset: 0; margin: auto; width: min(92vw, 440px); max-height: 92vh; overflow: auto; padding: 0; border-radius: 22px; border: 1px solid rgba(255, 179, 71, 0.4); background: linear-gradient(170deg, #1d1522, #0e0a12 75%); color: #f5ead8; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); }
 .merch-modal::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(3px); }

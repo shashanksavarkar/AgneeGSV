@@ -104,7 +104,7 @@ export const events = [
     },
     schedule: {
       day: 'Pre-Agnee',
-      venueName: 'Prastuti (in front of Darshan)'
+      venueName: 'Prastuti'
     },
     posterImage: 'assets/treasure-hunt.webp',
     tags: ['Adventure', 'Pre-Agnee']
@@ -148,17 +148,17 @@ export const events = [
     id: 'sur-sangram',
     name: 'Sur Sangram',
     category: 'Malhaar Music Club GSV',
-    tagline: 'The Battle of Melodies',
-    description: 'Pre-Agnee singing contest celebrating voices from across the campus.',
+    tagline: 'You know your music? ',
+    description: 'Sur Sangraam is a high-energy musical trivia showdown where teams battle through song-guessing challenges, music quizzes, and a mystery round to claim victory.',
     teamSize: {
-      min: 1,
+      min: 4,
       max: 4
     },
     schedule: {
-      day: 'Pre-Agnee',
+      day: 'Pre-Agnee Week',
       venueName: 'To be announced'
     },
-    posterImage: '',
+    posterImage: 'assets/sur-sangram.webp',
     tags: ['Singing', 'Pre-Agnee']
   },
 ];
@@ -211,6 +211,12 @@ export const guests = [
     "name": "",
     "category": "",
     "bio": ""
+  },
+  {
+    "id": "TOP",
+    "name": "Mr. Guest Name",
+    "category": "",
+    "bio": "Designation, Organisation"
   },
   {
     "id": "SBI",
