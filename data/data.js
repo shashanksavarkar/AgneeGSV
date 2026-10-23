@@ -386,7 +386,7 @@ export const faqs = [
 // Gallery marquee. top scrolls right-to-left, bottom scrolls left-to-right.
 // Put the photo path in src (e.g. "assets/gallery/stage.webp"); while src is "" a coloured placeholder tile is shown.
 export const gallery = {
-  trailerId: 'FFECeziDu30', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
+  trailerId: 'Vlz_zyzHYcw', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
   top: [
     { title: "Oval Ground Stage at Dusk", tag: "Stage", color: "#5b1a8f", src: "/assets/1.webp" },
     { title: "Street Theatre (Nukkad Natak)", tag: "Culture", color: "#d6246e", src: "/assets/2.webp" },
