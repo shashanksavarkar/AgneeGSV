@@ -93,20 +93,37 @@ export const events = [
     tags: ['Fitness', 'Pre-Agnee']
   },
   {
+    id: 'treasure-hunt',
+    name: 'Treasure Hunt',
+    category: 'Media & Tech Club GSV',
+    tagline: 'One Campus. Countless Clues. One Treasure.',
+    description: 'Crack riddles, uncover hidden clues across campus, and race against rival teams to claim the treasure!',
+    teamSize: {
+      min: 4,
+      max: 4
+    },
+    schedule: {
+      day: 'Pre-Agnee',
+      venueName: 'Prastuti (in front of Darshan)'
+    },
+    posterImage: 'assets/treasure-hunt.webp',
+    tags: ['Adventure', 'Pre-Agnee']
+  },
+  {
     id: 'battle-of-wits',
     name: 'Battle of Wits',
     category: 'Literary Club GSV',
-    tagline: 'The Ultimate Test of Wit',
-    description: 'Pre-Agnee quiz-style contest of general knowledge, logic and quick thinking.',
+    tagline: 'Rattle your hits, Because it\'s, Battle of Wits',
+    description: 'A three-round team Pop Culture event that will test your squad\'s Ball knowledge on topics ranging from Nostalgic Shows and Brain Rot memes to current affairs \& sports and challenge your mates to solve mind-boggling puzzles and act out your fantasies, crowning the ultimate champion of the Battle of Wits!',
     teamSize: {
       min: 1,
       max: 4
     },
     schedule: {
-      day: 'Pre-Agnee',
-      venueName: 'To be announced'
+      day: 'Agnee',
+      venueName: 'Multi Purpose Hall'
     },
-    posterImage: 'assets/LC.webp',
+    posterImage: 'assets/bow.webp',
     tags: ['Quiz', 'Pre-Agnee']
   },
   {
@@ -144,23 +161,6 @@ export const events = [
     posterImage: '',
     tags: ['Singing', 'Pre-Agnee']
   },
-  {
-    id: 'treasure-hunt',
-    name: 'Treasure Hunt',
-    category: 'Media & Tech Club GSV',
-    tagline: 'Follow the Clues',
-    description: 'Pre-Agnee campus-wide treasure hunt of riddles, clues and teamwork.',
-    teamSize: {
-      min: 1,
-      max: 4
-    },
-    schedule: {
-      day: 'Pre-Agnee',
-      venueName: 'To be announced'
-    },
-    posterImage: '',
-    tags: ['Adventure', 'Pre-Agnee']
-  }
 ];
 
 // Timeline section: the Performances card.
@@ -208,33 +208,50 @@ export const merch = [
 export const guests = [
   {
     "id": "guest-proshow-day1",
-    "name": "To be announced",
-    "role": "",
+    "name": "",
     "category": "",
-    "day": "",
-    "revealState": "Reveal soon",
-    "bio": "",
-    "photo": ""
+    "bio": ""
   },
   {
-    "id": "guest-rocknight-day2",
-    "name": "To be announced",
-    "role": "",
+    "id": "SBI",
+    "name": "Mr. Saleem Ahmad",
     "category": "",
-    "day": "",
-    "revealState": "Reveal soon",
-    "bio": "",
-    "photo": ""
+    "bio": "Deputy General Manager (B&O), SBI, Vadodara Administrative Office"
   },
   {
-    "id": "guest-finale-day3",
-    "name": "To be announced",
-    "role": "",
+    "id": "SBI",
+    "name": "Mr. Neeraj Kumar Sinha",
     "category": "",
-    "day": "",
-    "revealState": "Reveal Soon",
-    "bio": "",
-    "photo": ""
+    "bio": "AGM, SBI, Regional Business Office-1, Vadodara "
+  },
+  {
+    "id": "SBI",
+    "name": "Ms. Meenakshi Sinha",
+    "category": "",
+    "bio": "AGM, Deposit & VAS, Vadodara Administrative Office"
+  },
+  {
+    "id": "SBI",
+    "name": "Mr. Vikash Kumar",
+    "category": "",
+    "bio": "Chief Manager, Lalbaug, Vadodara"
+  },  {
+    "id": "UBI",
+    "name": "Mr.Aashish Suwalka ",
+    "category": "",
+    "bio": "Regional Head, Union Bank of India"
+  },
+  {
+    "id": "UBI",
+    "name": "Mr. Samir Ranjan Mishra",
+    "category": "",
+    "bio": "Dy. Regional Head, Union Bank of India"
+  },
+  {
+    "id": "UBI",
+    "name": "Mr. Manish Kumar",
+    "category": "",
+    "bio": "Dy. Regional Head, Union Bank of India"
   }
 ];
 
@@ -287,6 +304,14 @@ export const team = {
       email: 'ram.upadhyay@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ram-krishna-upadhyay-13767b2b8/',
       avatar: 'assets/ram_sir.webp'
+    },
+    {
+      name: 'Dr. Prasiddh K Trivedi',
+      role: 'Faculty In-Charge',
+      // "department": "Gati Shakti Vishwavidyalaya",
+      email: 'prasiddh.trivedi@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/prasiddh-trivedi-2b212a3b/',
+      avatar: 'assets/prasiddh_sir.webp'
     }
   ],
   creativeTeam: [
@@ -313,8 +338,25 @@ export const team = {
       avatar: 'assets/rishav.webp'
     },
     {
-      name: 'Soumya Banerjee',
+      name: 'Atulya Bharat',
+      role: 'Tech Lead',
+      team: 'Overall Coordinator',
+      email: 'atulya.bharat_btech24@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/atulyabharat/',
+      avatar: 'assets/atulya.webp'
+    },
+    {
+      name: 'Harshit Verma',
       role: 'Overall Coordinator',
+      team: 'Cultural Secretary',
+      email: 'harshit.verma_btech24@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/harshit-verma-1a6558418/',
+      avatar: 'assets/harshit.webp'
+    },
+    ,
+    {
+      name: 'Soumya Banerjee',
+      role: 'Media \& Publicity',
       team: 'External Secretary',
       email: 'soumya.banerjee_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/soumya04banerjee/',
@@ -322,27 +364,11 @@ export const team = {
     },
     {
       name: 'Ananya Kasaudhan',
-      role: '',
+      role: 'Media \& Publicity',
       team: 'External Secretary',
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ananya-kasaudhan-617531328/',
       avatar: 'assets/ananya.webp'
-    },
-    {
-      name: 'Atulya Bharat',
-      role: 'Tech Lead',
-      team: 'Technical Secretary',
-      email: 'atulya.bharat_btech24@gsv.ac.in',
-      linkedin: 'https://www.linkedin.com/in/atulyabharat/',
-      avatar: 'assets/atulya.webp'
-    },
-    {
-      name: 'Harshit Verma',
-      role: 'Cultural Lead',
-      team: 'Cultural Secretary',
-      email: 'harshit.verma_btech24@gsv.ac.in',
-      linkedin: 'https://www.linkedin.com/in/harshit-verma-1a6558418/',
-      avatar: 'assets/harshit.webp'
     },
     {
       name: 'Rupesh Kumar',

@@ -82,6 +82,11 @@ export function renderEvents(events = []) {
           <p>${t('events.emptyState')}</p>
           <button type="button" class="btn-secondary" id="emptyResetBtn">Clear Filters</button>
         </div>
+
+        <dialog class="event-modal" id="eventModal" aria-label="Event details">
+          <button type="button" class="event-modal-close" aria-label="Close">&times;</button>
+          <div class="event-modal-body" tabindex="-1" autofocus></div>
+        </dialog>
       </div>
     </section>
   `;
@@ -188,6 +193,23 @@ function setupEventsInteractions() {
 
   resetBtn?.addEventListener('click', handleReset);
   emptyResetBtn?.addEventListener('click', handleReset);
+
+  // Click (or Enter/Space on) a card to open its details in a modal
+  const modal = document.getElementById('eventModal');
+  const grid = document.getElementById('eventsGrid');
+  const openEvent = (card) => {
+    const ev = card && cachedEvents.find(e => e.id === card.dataset.id);
+    if (!ev || !modal) return;
+    modal.querySelector('.event-modal-body').innerHTML = renderEventModal(ev);
+    modal.showModal();
+  };
+  grid?.addEventListener('click', (e) => openEvent(e.target.closest('.event-card')));
+  grid?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    openEvent(e.target.closest('.event-card'));
+  });
+  modal?.addEventListener('click', (e) => { if (e.target === modal || e.target.closest('.event-modal-close')) modal.close(); });
 }
 
 function applyFiltersAndRender() {
@@ -232,14 +254,34 @@ function applyFiltersAndRender() {
   grid.innerHTML = shown.map((ev, i) => renderEventCard(ev, i)).join('');
 }
 
-function renderEventCard(ev, i) {
-  const { min, max } = ev.teamSize;
-  const teamText = !min ? 'TBA'
+function teamLabel({ min, max }) {
+  return !min ? 'TBA'
     : min === max ? (min === 1 ? 'Solo' : `${min} Members`)
     : `${min}–${max} Members`;
+}
+
+function renderEventModal(ev) {
+  const day = ev.schedule?.day || 'TBA';
+  return `
+    ${ev.posterImage ? `<img class="event-modal-poster" src="${ev.posterImage}" alt="${ev.name} poster">` : `<div class="event-modal-poster event-modal-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
+    <div class="event-modal-info">
+      <span class="ev-club">${ev.category}</span>
+      <h3 class="event-modal-name">${ev.name}</h3>
+      ${ev.tagline ? `<p class="event-modal-tagline">${ev.tagline}</p>` : ''}
+      <p class="event-modal-desc">${ev.description}</p>
+      <dl class="event-modal-stats">
+        <div><dt>Day</dt><dd>${day}</dd></div>
+        <div><dt>Team</dt><dd>${teamLabel(ev.teamSize)}</dd></div>
+        <div><dt>Venue</dt><dd>${ev.schedule?.venueName || 'Venue TBA'}</dd></div>
+      </dl>
+    </div>`;
+}
+
+function renderEventCard(ev, i) {
+  const teamText = teamLabel(ev.teamSize);
 
   return `
-    <article class="event-card" data-id="${ev.id}" aria-label="${ev.name}">
+    <article class="event-card" data-id="${ev.id}" aria-label="${ev.name}" role="button" tabindex="0">
       ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
       <span class="ev-day">${ev.schedule?.day || 'Day TBA'}</span>
 
