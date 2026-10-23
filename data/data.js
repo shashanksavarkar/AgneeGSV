@@ -130,16 +130,16 @@ export const events = [
     id: 'brandwars',
     name: 'Brandwars',
     category: 'एधार्थ (Edhartha) - B Club GSV',
-    tagline: 'Pitch. Promote. Prevail.',
+    tagline: 'Build. Battle. Brand.',
     description:
-      'Pre-Agnee marketing showdown where teams battle it out to build and sell the best brand.',
+      'Transform a Brand , sell a vision, outsmart the competition and prove your brand-building skills.',
     teamSize: {
       min: 2,
       max: 2
     },
     schedule: {
       day: 'Pre-Agnee',
-      venueName: 'To be announced'
+      venueName: 'Manthan'
     },
     posterImage: 'assets/BCLUB.webp',
     tags: ['Marketing', 'Pre-Agnee']
@@ -155,7 +155,7 @@ export const events = [
       max: 4
     },
     schedule: {
-      day: 'Pre-Agnee Week',
+      day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
     posterImage: 'assets/sur-sangram.webp',

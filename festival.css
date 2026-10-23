@@ -5850,6 +5850,41 @@ body.on-hero .scroll-rail {
   filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 22px rgba(255, 122, 26, 0.55));
 }
 
+/* Big countdown in the clear sky above the dome */
+.hero-ignite {
+  position: absolute;
+  z-index: 3;
+  top: clamp(24px, 6vh, 64px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.hero-ignite .ft-ignite-label {
+  margin-bottom: 14px;
+  font-size: clamp(14px, 1.6vw, 22px);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+.hero-ignite .ft-ignite-row {
+  gap: clamp(8px, 1.4vw, 18px);
+}
+.hero-ignite .ft-ignite-row span {
+  min-width: clamp(64px, 9vw, 128px);
+  padding: clamp(10px, 1.6vw, 20px) 6px clamp(8px, 1.2vw, 14px);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.hero-ignite .ft-ignite-row small {
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+.hero-ignite .ft-ignite-row b {
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85), 0 0 12px rgba(255, 150, 40, 0.8);
+  font-size: clamp(30px, 5.2vw, 76px);
+}
+.hero-ignite .ft-ignite-row small {
+  font-size: clamp(9px, 1vw, 13px);
+}
+
 /* Navbar + mobile dock stay hidden over the hero */
 .site-header,
 .mobile-bottom-dock {
@@ -6290,7 +6325,7 @@ body.on-hero .mobile-bottom-dock {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin-top: 22px;
+  margin-top: 0;
   padding: 0 0 var(--dock-height);
   background:
     radial-gradient(ellipse at 50% 0%, rgba(255, 122, 26, 0.14), transparent 60%), #07050a;
@@ -6382,6 +6417,67 @@ body.on-hero .mobile-bottom-dock {
   grid-template-columns: 1fr 1fr 1.15fr;
   gap: 28px;
   padding: 32px 0 40px;
+}
+@media (max-width: 1000px) {
+  .ft-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .ft-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.ft-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.ft-ignite {
+  text-align: center;
+}
+.ft-ignite-label {
+  display: block;
+  margin-bottom: 10px;
+  font: 700 13px var(--font-heading);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+}
+.ft-ignite-row {
+  display: flex;
+  gap: 10px;
+}
+.ft-ignite-row span {
+  display: grid;
+  min-width: 62px;
+  padding: 10px 6px 8px;
+  border-radius: 12px;
+  border: 1px solid #3a2a14;
+  background: linear-gradient(180deg, #2a1608, #0e0a12);
+  box-shadow: 0 0 16px rgba(255, 122, 26, 0.25);
+}
+.ft-ignite-row b {
+  font: 700 26px/1 var(--font-heading);
+  font-variant-numeric: tabular-nums;
+  color: #ffd27a;
+  text-shadow: 0 0 10px rgba(255, 150, 40, 0.8);
+}
+.ft-ignite-row small {
+  margin-top: 5px;
+  font: 600 10px var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.ft-top {
+  font: 600 13px var(--font-sans);
+  color: var(--gold-primary);
+  text-decoration: none;
+}
+.ft-top:hover {
+  color: #fff;
 }
 .ft-title {
   margin: 0 0 14px;
@@ -6721,6 +6817,9 @@ body.on-hero .mobile-bottom-dock {
   left: calc(var(--s) * -1);
   animation: rangoli-cw 90s linear infinite;
 } /* bottom-left, clockwise */
+.contact-section .rangoli-bl {
+  bottom: calc(var(--s) * -1);
+} /* centre exactly on the bottom edge so it meets the footer as a clean quarter circle, not a sliver-cut one */
 @media (prefers-reduced-motion: reduce) {
   .section::after,
   .rangoli-bl {
@@ -9261,3 +9360,243 @@ textarea {
 img.skel { background: linear-gradient(100deg, #1d1522 30%, #3a2a3c 50%, #1d1522 70%) 0 0 / 250% 100%; animation: skel-shimmer 1.3s linear infinite; color: transparent; }
 @keyframes skel-shimmer { to { background-position: -150% 0; } }
 @media (prefers-reduced-motion: reduce) { img.skel { animation: none; } }
+
+/* ==========================================================================
+   Mobile pass: keep content clear of the scroll rail, tighten About, Gallery, Team
+   ========================================================================== */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 30px;
+  } /* right side leaves room for the fixed scroll rail */
+  .scroll-rail-mark::after {
+    display: none;
+  } /* the hover/active section badge sits on top of the content on touch screens */
+
+  /* About */
+  .ab-card {
+    padding: 26px 20px 22px 26px;
+  }
+  .ab-diya {
+    right: 14px;
+    top: 14px;
+    width: 36px;
+    height: 36px;
+  }
+  .ab-label {
+    margin-right: 44px;
+  }
+  .ab-title {
+    margin: 12px 0;
+    font-size: 24px;
+  }
+  .ab-body {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .ab-tags li {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+
+  /* Gallery */
+  .aftermovie-container {
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+  }
+  .video-placeholder {
+    min-height: 0;
+    padding: 16px;
+  }
+  .video-title {
+    font-size: 20px;
+  }
+  .video-desc {
+    font-size: 13px;
+  }
+
+  /* Team */
+  .subgroup-title {
+    display: block;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+  .faculty-grid .team-card {
+    flex-basis: 100%;
+  }
+}
+
+/* Section titles: centred, wrap onto balanced lines like the About title, never shrink to fit one line */
+.section-title,
+#about .section-title {
+  white-space: normal;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+}
+@media (max-width: 600px) {
+  .section-title,
+  #about .section-title {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+}
+
+/* Mobile pass 2: schedule, line-up, merch proportions */
+@media (max-width: 768px) {
+  .phase-card {
+    padding: 22px 18px 18px;
+  }
+  .phase-title {
+    font-size: 26px;
+  }
+  .phase-events li {
+    gap: 10px;
+    font-size: 15px;
+  }
+  .phase-time {
+    min-width: 46px;
+    font-size: 13px;
+  }
+
+  .lineup-section > .container {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 30px;
+  }
+  .lu-card {
+    padding: 48px 18px 26px 24px;
+  }
+  .lu-name {
+    font-size: 17px;
+    white-space: normal;
+    text-wrap: balance;
+  }
+  .lu-card[data-id='UBI'] .lu-bio {
+    white-space: normal;
+    font-size: 14px;
+  }
+
+  .merch-card {
+    flex-basis: 100%;
+  }
+}
+
+/* Modals: size to their content, never taller than the screen, scroll inside when short (landscape phones) */
+.gallery-lightbox {
+  width: fit-content;
+  min-width: min(300px, 92vw);
+  max-width: min(92vw, 760px);
+  max-height: 94dvh;
+  box-sizing: border-box;
+}
+.lightbox-art {
+  aspect-ratio: auto;
+  min-height: 200px;
+}
+.lightbox-art img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(94dvh - 32px);
+  margin: auto;
+  object-fit: contain;
+}
+.event-modal,
+.merch-modal {
+  max-height: 92dvh;
+  overscroll-behavior: contain;
+}
+.merch-modal {
+  overflow: auto;
+}
+.merch-modal-art img {
+  max-height: min(58vh, 58dvh);
+}
+@media (max-height: 520px) {
+  .merch-modal-art img {
+    max-height: 40dvh;
+  }
+  .lg-dialog {
+    max-height: calc(100dvh - 24px);
+  }
+}
+@media (max-width: 480px) {
+  .event-modal,
+  .merch-modal {
+    width: calc(100vw - 28px);
+    border-radius: 18px;
+  }
+  .event-modal-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Running text is justified; hyphenation stops big gaps on narrow screens. Titles, labels and short captions stay as they are. */
+.ab-body,
+.faq-answer-text,
+.event-modal-desc,
+.lg-points li,
+.ft-tagline,
+.ct-sub,
+.poster-desc,
+.tier-desc,
+.banner-text,
+.video-desc,
+.dir-text,
+.section-subtitle,
+.soon-line {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Justified text: better line breaks, tighter gaps on phones */
+.ab-body,
+.faq-answer-text,
+.event-modal-desc,
+.lg-points li,
+.ft-tagline,
+.ct-sub,
+.poster-desc,
+.tier-desc,
+.banner-text,
+.video-desc,
+.dir-text,
+.section-subtitle,
+.soon-line {
+  text-wrap: pretty;
+}
+@media (max-width: 480px) {
+  .ab-body {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .lu-card {
+    padding-right: 34px;
+  }
+  .lu-name {
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+  .phase-card::before,
+  .phase-card::after {
+    opacity: 0.25;
+  }
+}
+
+/* Hero video stays pinned; every following section scrolls up over it */
+#hero-mount {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
+main > div:not(#hero-mount) {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-dark);
+}

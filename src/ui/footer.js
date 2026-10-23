@@ -18,8 +18,10 @@ export function renderFooter(siteData = {}) {
             <img class="ft-logo" src="assets/logo.webp" alt="Agnee 2026" loading="lazy">
             <p class="ft-tagline">The flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Celebrating innovation, rhythm, and artistic expression.</p>
           </a>
-          <div class="ft-social">
+          <div class="ft-actions">
+            <div class="ft-social">
             ${socials.map(s => `<a href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${s.platform}">${socialIcon(s.platform)}</a>`).join('')}
+            </div>
           </div>
         </div>
 
@@ -50,7 +52,8 @@ export function renderFooter(siteData = {}) {
             <address class="ft-address">
               <strong>Gati Shakti Vishwavidyalaya</strong>
               Lalbaug, Vadodara, Gujarat 390004, India<br>
-              <a href="mailto:student.cell@gsv.ac.in">student.cell@gsv.ac.in</a>
+              <a href="mailto:student.cell@gsv.ac.in">student.cell@gsv.ac.in</a><br>
+              <a href="https://www.google.com/maps/search/?api=1&query=Gati+Shakti+Vishwavidyalaya+Vadodara" target="_blank" rel="noopener noreferrer">Get directions</a>
             </address>
           </div>
         </div>
@@ -61,6 +64,7 @@ export function renderFooter(siteData = {}) {
             <button type="button" id="linkTermsModal">Terms of Participation</button>
             <button type="button" id="linkCodeOfConduct">Code of Conduct</button>
           </div>
+          <a href="#home" class="ft-top">Back to top ↑</a>
           <p class="ft-copy">© 2026 Agnee · Gati Shakti Vishwavidyalaya, Vadodara. All rights reserved.<span>Designed & Built with passion by the Agnee Web & Creative Tech Team</span></p>
         </div>
       </div>

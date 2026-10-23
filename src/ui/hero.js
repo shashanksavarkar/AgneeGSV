@@ -1,6 +1,7 @@
 // Hero: full-bleed background video with the Agnee wordmark centred on it
 
 import { particleField } from './particles.js';
+import { igniteHtml, startIgnite } from './countdown.js';
 
 export function renderHero() {
   const heroContainer = document.getElementById('hero-mount');
@@ -15,6 +16,8 @@ export function renderHero() {
 
       ${particleField('petals', 14)}
 
+      ${igniteHtml('ft-ignite hero-ignite')}
+
       <div class="hero-content">
       <img class="hero-wordmark-img" src="${wordmarkSrc}" alt="Agnee 2026" width="620" height="150" fetchpriority="high">
       </div>
@@ -22,6 +25,8 @@ export function renderHero() {
       <button type="button" class="hero-trailer-btn" id="btnWatchTrailer"><span aria-hidden="true">▶</span> Watch Agnee'26 Trailer</button>
     </section>
   `;
+
+  startIgnite(heroContainer.querySelector('.hero-ignite'));
 
   // Jump to the gallery and start the trailer (the click counts as the gesture browsers need for autoplay)
   document.getElementById('btnWatchTrailer').addEventListener('click', () => {
