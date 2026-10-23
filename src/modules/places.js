@@ -98,6 +98,15 @@ const PLACES = [
     featured: true
   },
   {
+    id: 'rajabaug',
+    name: 'Rajabaug (Pre-Agnee Stalls)',
+    category: 'festival',
+    position: { x: 256 - W / 2, y: 0, z: 189 - H / 2 },
+    description: 'Historic royal palace gardens hosting the Pre-Agnee Fun Carnival with 10 interactive fun stalls, central performance arena, and western fountain plaza.',
+    pose: { distance: 85, tilt: 0.22, heading: Math.PI / 2 },
+    featured: true
+  },
+  {
     id: 'manthan',
     name: 'Manthan',
     category: 'landmark',

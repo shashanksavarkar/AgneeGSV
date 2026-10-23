@@ -182,6 +182,24 @@ export const places = [
     "featured": true
   },
   {
+    "id": "rajabaug",
+    "name": "Rajabaug (Pre-Agnee Stalls)",
+    "category": "Festival",
+    "mapCoords": {
+      "x": 256,
+      "y": 189
+    },
+    "walkTimeMinutes": 3,
+    "description": "Historic royal palace gardens hosting the Pre-Agnee Fun Carnival with 10 interactive fun stalls (carnival games, VR, merch, food), central open-air performance arena, and western fountain plaza.",
+    "directionsFromGate": "Follow the central avenue south to Pratap Vilas Palace; the Rajabaug carnival gateway is directly across the road on the west (~230 metres).",
+    "pose": {
+      "distance": 85,
+      "tilt": 0.22,
+      "heading": 1.57
+    },
+    "featured": true
+  },
+  {
     "id": "manthan",
     "name": "Manthan Building",
     "category": "Landmark",
