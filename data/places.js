@@ -6,16 +6,16 @@ export const places = [
     "name": "Main Gate",
     "category": "Entrance",
     "mapCoords": {
-      "x": 357,
-      "y": 90
+      "x": 577,
+      "y": 46
     },
     "walkTimeMinutes": 0,
-    "description": "Main campus entrance and primary security checkpoint. All participants and visitors arrive here. Registration verification and guest reception desks are located at this point.",
-    "directionsFromGate": "Starting point. Proceed south along the central avenue towards Academic Block and the Palace.",
+    "description": "Main campus entrance and primary security checkpoint. Features the iconic bilingual university archway, guard cabins, and reception gate.",
+    "directionsFromGate": "Starting point. Proceed through the main archway along the campus road towards the Academic Block and Palaces.",
     "pose": {
-      "distance": 85,
-      "tilt": 0.16,
-      "heading": 0
+      "distance": 52,
+      "tilt": 0.14,
+      "heading": 3.0
     },
     "featured": true
   },
@@ -25,14 +25,14 @@ export const places = [
     "category": "Academic",
     "mapCoords": {
       "x": 357,
-      "y": 66
+      "y": 90.5
     },
     "walkTimeMinutes": 2,
-    "description": "The primary academic building of Gati Shakti Vishwavidyalaya featuring domed architecture, seminar halls, lecture theatres, and computing laboratories.",
+    "description": "The primary academic building of Gati Shakti Vishwavidyalaya featuring its grand triple-arched entrance portico, university crest, and landmark dome.",
     "directionsFromGate": "Straight ahead from Main Gate, approximately 120 metres south along the tree-lined avenue.",
     "pose": {
-      "distance": 105,
-      "tilt": 0.2,
+      "distance": 54,
+      "tilt": 0.15,
       "heading": 0
     },
     "featured": true
@@ -42,16 +42,16 @@ export const places = [
     "name": "Current Hostel (NHSRCL)",
     "category": "Hostel",
     "mapCoords": {
-      "x": 639,
+      "x": 605,
       "y": 148
     },
     "walkTimeMinutes": 5,
-    "description": "Student residential courtyard block equipped with amenities, dining mess, and recreation common rooms.",
+    "description": "High Speed Rail Training Institute (NHSRCL) hostel and facility featuring the iconic entrance portico canopy with bilingual signage, cascading steps, and landscaped forecourt.",
     "directionsFromGate": "Take the eastern perimeter road branching left past Atithi hostel; approx. 350 metres walk.",
     "pose": {
-      "distance": 92,
-      "tilt": 0.18,
-      "heading": 1.57
+      "distance": 44,
+      "tilt": 0.08,
+      "heading": -1.5708
     },
     "featured": true
   },
@@ -60,33 +60,69 @@ export const places = [
     "name": "Proposed Hostel Block",
     "category": "Hostel",
     "mapCoords": {
-      "x": 654,
-      "y": 121
+      "x": 606.5,
+      "y": 100
     },
     "walkTimeMinutes": 6,
-    "description": "Planned multi-wing residential complex as part of the expanding GSV master plan.",
-    "directionsFromGate": "Situated in the eastern residential sector beyond the current hostel block.",
+    "description": "Planned multi-wing residential complex as part of the expanding GSV master plan, with an entrance portico canopy on the west corridor.",
+    "directionsFromGate": "Situated in the eastern residential sector along the inner campus road.",
     "pose": {
-      "distance": 110,
-      "tilt": 0.2,
-      "heading": 3.14
+      "distance": 54,
+      "tilt": 0.16,
+      "heading": -1.57
     },
     "featured": false
+  },
+  {
+    "id": "sabhagrah",
+    "name": "Sardar Patel Sabhagrah",
+    "category": "Auditorium",
+    "mapCoords": {
+      "x": 425,
+      "y": 86.5
+    },
+    "walkTimeMinutes": 3,
+    "description": "Sardar Patel Sabhagriha, the university auditorium and conference hall equipped for keynotes, cultural programs, and academic ceremonies.",
+    "directionsFromGate": "Follow the avenue south past Academic Block, then turn east along the campus arterial road.",
+    "pose": {
+      "distance": 48,
+      "tilt": 0.15,
+      "heading": 0
+    },
+    "featured": true
+  },
+  {
+    "id": "pahune-hostel",
+    "name": "Pahune Hostel",
+    "category": "Hostel",
+    "mapCoords": {
+      "x": 476,
+      "y": 90
+    },
+    "walkTimeMinutes": 4,
+    "description": "Pahune Hostel and Recreation Hall, featuring student residential quarters and a prominent central recreation pavilion.",
+    "directionsFromGate": "Continue east along the main arterial road past Sabhagrah, located immediately before Atithi Hostel.",
+    "pose": {
+      "distance": 48,
+      "tilt": 0.15,
+      "heading": 0
+    },
+    "featured": true
   },
   {
     "id": "atithi-hostel",
     "name": "Atithi Hostel",
     "category": "Hostel",
     "mapCoords": {
-      "x": 530.5,
-      "y": 80.5
+      "x": 516,
+      "y": 106
     },
     "walkTimeMinutes": 3,
-    "description": "Guest and delegate residence near the campus arterial road, providing hospitality for judges, VIPs, and external faculty.",
+    "description": "Guest and delegate residence near the campus arterial road, providing hospitality for judges, VIPs, and external faculty with south-facing entrance.",
     "directionsFromGate": "Head east along the inner loop road from the academic sector.",
     "pose": {
-      "distance": 82,
-      "tilt": 0.18,
+      "distance": 48,
+      "tilt": 0.15,
       "heading": 0
     },
     "featured": true
@@ -97,14 +133,14 @@ export const places = [
     "category": "Academic",
     "mapCoords": {
       "x": 511.5,
-      "y": 158
+      "y": 131.5
     },
     "walkTimeMinutes": 4,
-    "description": "Future multi-disciplinary testing and research facility with planned rooftop solar canopy.",
+    "description": "Future multi-disciplinary testing and research facility featuring grand north entrance archway and rooftop solar canopy.",
     "directionsFromGate": "South-east quadrant near the academic expansion corridor.",
     "pose": {
-      "distance": 100,
-      "tilt": 0.2,
+      "distance": 50,
+      "tilt": 0.15,
       "heading": 3.14
     },
     "featured": false
@@ -114,16 +150,16 @@ export const places = [
     "name": "Proposed Academic Block",
     "category": "Academic",
     "mapCoords": {
-      "x": 496,
-      "y": 277
+      "x": 481,
+      "y": 274.5
     },
     "walkTimeMinutes": 5,
-    "description": "Future academic expansion wing outlined in the master plan for transport and logistics disciplines.",
+    "description": "Future academic expansion wing outlined in the master plan with a grand entrance arch and stepped courtyard plaza.",
     "directionsFromGate": "South corridor past Manthan building.",
     "pose": {
-      "distance": 108,
-      "tilt": 0.2,
-      "heading": 3.14
+      "distance": 52,
+      "tilt": 0.15,
+      "heading": 0
     },
     "featured": false
   },
@@ -132,15 +168,15 @@ export const places = [
     "name": "Pratap Vilas Palace",
     "category": "Landmark",
     "mapCoords": {
-      "x": 341,
+      "x": 320,
       "y": 189
     },
     "walkTimeMinutes": 3,
-    "description": "Historic heritage palace of Vadodara, featuring neoclassical architecture, manicured lawns, and stately columns. Hosts outdoor drama, photography, and ceremonial gatherings.",
+    "description": "Historic heritage palace of Vadodara, featuring neoclassical architecture, stately columns, and grand steps overlooking the central lawn.",
     "directionsFromGate": "Follow the main central avenue south for 220 metres; the palace overlooks the grand central lawn.",
     "pose": {
-      "distance": 105,
-      "tilt": 0.18,
+      "distance": 52,
+      "tilt": 0.15,
       "heading": -1.57
     },
     "featured": true
@@ -151,14 +187,14 @@ export const places = [
     "category": "Landmark",
     "mapCoords": {
       "x": 435,
-      "y": 201
+      "y": 183.6
     },
     "walkTimeMinutes": 4,
-    "description": "Sandstone heritage building with an iconic dome and portico, housing executive seminar halls and festival debating/literary competitions.",
+    "description": "Sandstone heritage building with an iconic dome, pediment porch, and maroon columns housing executive seminar halls.",
     "directionsFromGate": "Take the fork south-east from the palace lawn; approx. 280 metres.",
     "pose": {
-      "distance": 78,
-      "tilt": 0.18,
+      "distance": 48,
+      "tilt": 0.15,
       "heading": 3.14
     },
     "featured": true
@@ -168,15 +204,15 @@ export const places = [
     "name": "Oval Ground (Festival Arena)",
     "category": "Festival",
     "mapCoords": {
-      "x": 240,
-      "y": 270
+      "x": 271.5,
+      "y": 238.5
     },
     "walkTimeMinutes": 4,
-    "description": "The beating heart of Agnee 2026. The expansive Oval Ground hosts the main concert stage, student crowd zones, festival stalls, and open-air battle cyphers.",
+    "description": "The beating heart of Agnee 2026. The expansive Oval Ground hosts the main concert stage, crowd zones, and festival stalls, entered through the Agnee welcome gate.",
     "directionsFromGate": "Walk south past the palace, then veer south-west along the path directly entering the festival arena gate; approx. 320 metres (4 minutes walking).",
     "pose": {
-      "distance": 125,
-      "tilt": 0.24,
+      "distance": 54,
+      "tilt": 0.16,
       "heading": 0.785
     },
     "featured": true
@@ -186,8 +222,8 @@ export const places = [
     "name": "Main Stage (Oval Ground)",
     "category": "Festival",
     "mapCoords": {
-      "x": 210,
-      "y": 270
+      "x": 218.8,
+      "y": 291.2
     },
     "walkTimeMinutes": 5,
     "description": "The massive Agnee concert stage at the west rim of the Oval Ground, featuring high-output line arrays, dynamic LED screens, and moving head lighting rigs.",
@@ -195,7 +231,7 @@ export const places = [
     "pose": {
       "distance": 48,
       "tilt": 0.12,
-      "heading": 1.57
+      "heading": 2.35
     },
     "featured": true
   },
@@ -204,16 +240,16 @@ export const places = [
     "name": "Festival Stalls & Flea",
     "category": "Festival",
     "mapCoords": {
-      "x": 265,
-      "y": 270
+      "x": 259.1,
+      "y": 250.9
     },
     "walkTimeMinutes": 4,
     "description": "Food court, creative artisan stalls, merchandise counters, interactive games, and student entrepreneur kiosks bordering the Oval Ground.",
     "directionsFromGate": "East promenade of the Oval Ground; approx. 300 metres.",
     "pose": {
-      "distance": 58,
+      "distance": 42,
       "tilt": 0.14,
-      "heading": -1.57
+      "heading": -0.785
     },
     "featured": false
   },
@@ -229,7 +265,7 @@ export const places = [
     "description": "Interactive brand experience zone and sponsor installation wall overlooking the north entrance to the Oval Ground.",
     "directionsFromGate": "North rim of the Oval Ground; approx. 290 metres.",
     "pose": {
-      "distance": 62,
+      "distance": 44,
       "tilt": 0.12,
       "heading": 0
     },

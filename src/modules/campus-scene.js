@@ -1,4 +1,4 @@
-﻿// ---- texture (erase the baked-in 2D icons)
+// ---- texture (erase the baked-in 2D icons)
 const cv = document.createElement('canvas');
 cv.width = W;
 cv.height = H;
@@ -84,7 +84,7 @@ const terr = (() => {
   const g = c.getContext('2d');
   try {
     g.filter = 'blur(2px)';
-  } catch (e) {}
+  } catch (e) { }
   for (let i = -1; i <= 1; i++)
     for (let j = -1; j <= 1; j++) {
       g.save();
@@ -613,39 +613,376 @@ scene.add(can);
   cl.position.set(x - W / 2, 3.5, z - H / 2);
   scene.add(cl);
 });
-flat(588, 128, 607, 166, 0.25, 0x5f9a45);
-flat(590, 141, 607, 152, 0.35, 0xc9b8a2);
-const stone = new THREE.MeshLambertMaterial({ color: 0xd8c7b0 });
-const porch = new THREE.Mesh(new THREE.BoxGeometry(5, 5.5, 13), stone);
-porch.position.set(606.5 - W / 2, 2.75, 146.5 - H / 2);
-porch.castShadow = true;
-redM.add(porch);
-for (let i = 0; i < 3; i++) {
-  const hh = 1.8 - i * 0.6,
-    s = new THREE.Mesh(new THREE.BoxGeometry(2.2, hh, 13), stone);
-  s.position.set(602.9 - 2.2 * i - W / 2, hh / 2, 146.5 - H / 2);
-  scene.add(s);
+// ---- NHSRCL (High Speed Rail Training Institute) authentic entrance, portico, signage and forecourt
+flat(580, 126, 608.2, 142.5, 0.28, 0x487d32); // North forecourt lawn
+flat(580, 153.5, 608.2, 170, 0.28, 0x487d32); // South forecourt lawn
+flat(576, 142.5, 601.5, 153.5, 0.32, 0xd8cfbe); // Central paved pedestrian approach
+flat(579.5, 142, 601.5, 142.6, 0.34, 0x823b2c); // Terracotta lawn edging
+flat(579.5, 153.4, 601.5, 154, 0.34, 0x823b2c); // Terracotta lawn edging
+
+// Materials
+const nhSandstone = new THREE.MeshLambertMaterial({ color: 0xd6ccb9 });
+const nhMaroon = new THREE.MeshLambertMaterial({ color: 0x701824 });
+const nhWhite = new THREE.MeshLambertMaterial({ color: 0xf5f1e8 });
+const nhDarkMetal = new THREE.MeshLambertMaterial({ color: 0x22262d });
+const nhGlass = new THREE.MeshLambertMaterial({ color: 0x1f364a, transparent: true, opacity: 0.85 });
+const nhTerra = new THREE.MeshLambertMaterial({ color: 0x933d31 });
+
+// 1. Entrance Plinth and Cascading Terraced Steps
+const nhPlinth = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.5, 17.6), nhSandstone);
+nhPlinth.position.set(605.4 - W / 2, 0.25, 148 - H / 2);
+nhPlinth.castShadow = nhPlinth.receiveShadow = true;
+redM.add(nhPlinth);
+
+// 3 Terraced low steps descending to the approach walkway
+[
+  [16.8, 0.36, 0.8, 601.4, 0.18],
+  [16.4, 0.24, 0.8, 600.6, 0.12],
+  [16.0, 0.12, 0.8, 599.8, 0.06]
+].forEach(([w, h, d, x, y]) => {
+  const step = new THREE.Mesh(new THREE.BoxGeometry(d, h, w), nhSandstone);
+  step.position.set(x - W / 2, y, 148 - H / 2);
+  step.castShadow = step.receiveShadow = true;
+  redM.add(step);
+});
+
+// 2. Grand Entrance Canopy Portico ("HIGH SPEED RAIL TRAINING INSTITUTE")
+const nhCanopy = new THREE.Mesh(new THREE.BoxGeometry(7.2, 1.15, 17.0), nhMaroon);
+nhCanopy.position.set(605.4 - W / 2, 4.75, 148 - H / 2);
+nhCanopy.castShadow = true;
+redM.add(nhCanopy);
+
+// White coping / trims on canopy
+const nhCanopyTop = new THREE.Mesh(new THREE.BoxGeometry(7.4, 0.16, 17.2), nhWhite);
+nhCanopyTop.position.set(605.4 - W / 2, 5.38, 148 - H / 2);
+redM.add(nhCanopyTop);
+
+const nhCanopyBot = new THREE.Mesh(new THREE.BoxGeometry(7.3, 0.12, 17.1), nhWhite);
+nhCanopyBot.position.set(605.4 - W / 2, 4.14, 148 - H / 2);
+redM.add(nhCanopyBot);
+
+// Canopy soffit (underside ceiling) with warm recessed lights
+const nhSoffit = new THREE.Mesh(new THREE.PlaneGeometry(16.8, 7.0), new THREE.MeshLambertMaterial({ color: 0xf0ebe1 }));
+nhSoffit.rotation.x = Math.PI / 2;
+nhSoffit.position.set(605.4 - W / 2, 4.12, 148 - H / 2);
+redM.add(nhSoffit);
+
+// Recessed ceiling light fixtures
+const nhLightMat = new THREE.MeshBasicMaterial({ color: 0xfff3da });
+for (let lx = 603; lx <= 607; lx += 2) {
+  for (let lz = 142; lz <= 154; lz += 3) {
+    const dl = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.08, 10), nhLightMat);
+    dl.position.set(lx - W / 2, 4.12, lz - H / 2);
+    redM.add(dl);
+  }
 }
-const sc = document.createElement('canvas');
-sc.width = 512;
-sc.height = 64;
-const sg = sc.getContext('2d');
-sg.fillStyle = '#7a1f2b';
-sg.fillRect(0, 0, 512, 64);
-sg.fillStyle = '#fff';
-sg.font = '700 34px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
-sg.textAlign = 'center';
-sg.textBaseline = 'middle';
-sg.fillText('हाई स्पीड रेल प्रशिक्षण संस्थान', 256, 34);
-const stx = new THREE.CanvasTexture(sc);
-stx.encoding = THREE.sRGBEncoding;
-const sign = new THREE.Mesh(
-  new THREE.PlaneGeometry(36, 4.5),
-  new THREE.MeshBasicMaterial({ map: stx })
+
+// Canopy Front Fascia Signboard: "HIGH SPEED RAIL TRAINING INSTITUTE"
+const nhEngC = document.createElement('canvas');
+nhEngC.width = 1024;
+nhEngC.height = 128;
+const nhEg = nhEngC.getContext('2d');
+nhEg.fillStyle = '#701824';
+nhEg.fillRect(0, 0, 1024, 128);
+nhEg.fillStyle = '#ffffff';
+nhEg.fillRect(0, 0, 1024, 6);
+nhEg.fillRect(0, 122, 1024, 6);
+nhEg.font = '700 46px "Arial", "Trebuchet MS", sans-serif';
+nhEg.textAlign = 'center';
+nhEg.textBaseline = 'middle';
+nhEg.letterSpacing = '1px';
+nhEg.fillText('HIGH SPEED RAIL TRAINING INSTITUTE', 512, 64);
+const nhEngTx = new THREE.CanvasTexture(nhEngC);
+nhEngTx.encoding = THREE.sRGBEncoding;
+
+const nhCanopyFront = new THREE.Mesh(
+  new THREE.PlaneGeometry(17.0, 1.15),
+  new THREE.MeshBasicMaterial({ map: nhEngTx })
 );
-sign.position.set(608.6 - W / 2, 16.5, 146.8 - H / 2);
-sign.rotation.y = -Math.PI / 2;
-redM.add(sign);
+nhCanopyFront.position.set(601.76 - W / 2, 4.75, 148 - H / 2);
+nhCanopyFront.rotation.y = -Math.PI / 2;
+redM.add(nhCanopyFront);
+
+// Return fascia on north and south sides of canopy
+[-8.5, 8.5].forEach((dz) => {
+  const sidePlate = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 1.15), new THREE.MeshLambertMaterial({ color: 0x701824 }));
+  sidePlate.position.set(605.4 - W / 2, 4.75, 148 + dz - H / 2);
+  sidePlate.rotation.y = dz > 0 ? 0 : Math.PI;
+  redM.add(sidePlate);
+});
+
+// Robust square support columns under canopy
+[
+  [602.4, 141.2],
+  [602.4, 154.8],
+  [605.2, 141.2],
+  [605.2, 154.8]
+].forEach(([cx, cz]) => {
+  const col = new THREE.Mesh(new THREE.BoxGeometry(0.65, 4.2, 0.65), nhSandstone);
+  col.position.set(cx - W / 2, 2.1, cz - H / 2);
+  col.castShadow = true;
+  redM.add(col);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.25, 0.85), nhSandstone);
+  cap.position.set(cx - W / 2, 4.1, cz - H / 2);
+  redM.add(cap);
+});
+
+// 3. Recessed Ground Floor Glass Lobby & Entrance Doors
+const nhGlassWall = new THREE.Mesh(new THREE.PlaneGeometry(16.4, 3.8), nhGlass);
+nhGlassWall.position.set(608.6 - W / 2, 2.4, 148 - H / 2);
+nhGlassWall.rotation.y = -Math.PI / 2;
+redM.add(nhGlassWall);
+
+// Warm interior lobby illumination backing
+const nhLobbyGlow = new THREE.Mesh(
+  new THREE.PlaneGeometry(16.0, 3.6),
+  new THREE.MeshBasicMaterial({ color: 0xf5dfb5 })
+);
+nhLobbyGlow.position.set(608.8 - W / 2, 2.4, 148 - H / 2);
+nhLobbyGlow.rotation.y = -Math.PI / 2;
+redM.add(nhLobbyGlow);
+
+// Double automatic sliding glass doors frame in the center
+const nhDoorFrame = new THREE.Mesh(
+  new THREE.PlaneGeometry(4.2, 2.6),
+  new THREE.MeshLambertMaterial({ color: 0x14181f })
+);
+nhDoorFrame.position.set(608.55 - W / 2, 1.8, 148 - H / 2);
+nhDoorFrame.rotation.y = -Math.PI / 2;
+redM.add(nhDoorFrame);
+
+// Door glass panes
+const nhDoorGlass = new THREE.Mesh(
+  new THREE.PlaneGeometry(3.6, 2.3),
+  new THREE.MeshBasicMaterial({ color: 0x3d5a73 })
+);
+nhDoorGlass.position.set(608.53 - W / 2, 1.8, 148 - H / 2);
+nhDoorGlass.rotation.y = -Math.PI / 2;
+redM.add(nhDoorGlass);
+
+// 4. Forecourt Monument / Signage Stone in front of Entrance
+const nhMonuBase = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.15, 5.6), new THREE.MeshLambertMaterial({ color: 0x22242a }));
+nhMonuBase.position.set(598.0 - W / 2, 0.58, 148 - H / 2);
+nhMonuBase.castShadow = true;
+redM.add(nhMonuBase);
+
+// Monument plaque facing approaching visitors (West)
+const nhMonuC = document.createElement('canvas');
+nhMonuC.width = 512;
+nhMonuC.height = 128;
+const nhMg = nhMonuC.getContext('2d');
+nhMg.fillStyle = '#1c1f24';
+nhMg.fillRect(0, 0, 512, 128);
+nhMg.strokeStyle = '#d4af37';
+nhMg.lineWidth = 4;
+nhMg.strokeRect(6, 6, 500, 116);
+nhMg.fillStyle = '#ffffff';
+nhMg.font = '700 28px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+nhMg.textAlign = 'center';
+nhMg.textBaseline = 'middle';
+nhMg.fillText('हाई स्पीड रेल प्रशिक्षण संस्थान', 256, 38);
+nhMg.fillStyle = '#e8d5a8';
+nhMg.font = '700 20px "Arial", sans-serif';
+nhMg.fillText('HIGH SPEED RAIL TRAINING INSTITUTE', 256, 84);
+const nhMonuTx = new THREE.CanvasTexture(nhMonuC);
+nhMonuTx.encoding = THREE.sRGBEncoding;
+
+const nhMonuPlaque = new THREE.Mesh(
+  new THREE.PlaneGeometry(5.4, 1.05),
+  new THREE.MeshBasicMaterial({ map: nhMonuTx })
+);
+nhMonuPlaque.position.set(597.26 - W / 2, 0.62, 148 - H / 2);
+nhMonuPlaque.rotation.y = -Math.PI / 2;
+redM.add(nhMonuPlaque);
+
+// Low planter box & shrubbery around the monument plinth
+const nhPlanter = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.35, 6.4), nhTerra);
+nhPlanter.position.set(598.0 - W / 2, 0.18, 148 - H / 2);
+redM.add(nhPlanter);
+
+// 5. Twin Corner Pylons (North & South) with Arched Niches matching Image 1 & 2
+[
+  [134.7, 'north'],
+  [161.3, 'south']
+].forEach(([pz]) => {
+  // Sandstone pylon body
+  const pylon = new THREE.Mesh(new THREE.BoxGeometry(1.2, 22.2, 5.2), nhSandstone);
+  pylon.position.set(608.5 - W / 2, 11.1, pz - H / 2);
+  pylon.castShadow = true;
+  redM.add(pylon);
+
+  // Top arched relief crown (Y = 20.8)
+  const archPanel = new THREE.Mesh(new THREE.BoxGeometry(1.25, 2.4, 2.2), nhTerra);
+  archPanel.position.set(608.45 - W / 2, 20.6, pz - H / 2);
+  redM.add(archPanel);
+
+  // Arched top cylinder niche
+  const archCurve = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.1, 1.1, 1.25, 16, 1, false, 0, Math.PI),
+    nhTerra
+  );
+  archCurve.rotation.z = Math.PI / 2;
+  archCurve.position.set(608.45 - W / 2, 21.8, pz - H / 2);
+  redM.add(archCurve);
+
+  // Vertically stacked window frames with terracotta architraves
+  for (let wy = 3.6; wy <= 18.0; wy += 3.6) {
+    const winFrame = new THREE.Mesh(new THREE.BoxGeometry(1.26, 2.0, 1.4), nhTerra);
+    winFrame.position.set(608.45 - W / 2, wy, pz - H / 2);
+    redM.add(winFrame);
+    const winGlass = new THREE.Mesh(new THREE.BoxGeometry(1.28, 1.6, 1.0), nhGlass);
+    winGlass.position.set(608.45 - W / 2, wy, pz - H / 2);
+    redM.add(winGlass);
+  }
+});
+
+// 6. Upper Floor Balconies and Decorative Lattice (Jali) Screen Pilasters (Floors 1 to 5)
+// Jali screen canvas texture with diamond lattice pattern
+const jaliC = document.createElement('canvas');
+jaliC.width = 64;
+jaliC.height = 128;
+const jg = jaliC.getContext('2d');
+jg.fillStyle = '#f2ede4';
+jg.fillRect(0, 0, 64, 128);
+jg.fillStyle = '#3a342c';
+for (let jy = 8; jy < 128; jy += 16) {
+  for (let jx = (jy % 32 === 0 ? 8 : 24); jx < 64; jx += 32) {
+    jg.beginPath();
+    jg.moveTo(jx, jy - 6);
+    jg.lineTo(jx + 7, jy);
+    jg.lineTo(jx, jy + 6);
+    jg.lineTo(jx - 7, jy);
+    jg.closePath();
+    jg.fill();
+  }
+}
+const jaliTx = new THREE.CanvasTexture(jaliC);
+jaliTx.wrapS = jaliTx.wrapT = THREE.RepeatWrapping;
+jaliTx.repeat.set(1, 4);
+jaliTx.encoding = THREE.sRGBEncoding;
+const jaliMat = new THREE.MeshLambertMaterial({ map: jaliTx });
+
+// 4 Decorative vertical lattice columns dividing window bays
+[141.2, 145.7, 150.3, 154.8].forEach((jz) => {
+  const pilaster = new THREE.Mesh(new THREE.BoxGeometry(0.85, 15.6, 0.7), jaliMat);
+  pilaster.position.set(608.4 - W / 2, 13.2, jz - H / 2);
+  pilaster.castShadow = true;
+  redM.add(pilaster);
+});
+
+// Balcony floor ledges and railings on upper floors
+for (let by = 5.4; by <= 19.0; by += 3.4) {
+  // Cantilevered balcony slab
+  const balcSlab = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.25, 21.4), nhWhite);
+  balcSlab.position.set(608.35 - W / 2, by, 148 - H / 2);
+  redM.add(balcSlab);
+
+  // Horizontal balcony railing
+  const balcRail = new THREE.Mesh(
+    new THREE.BoxGeometry(0.08, 0.75, 21.2),
+    new THREE.MeshLambertMaterial({ color: 0x3e4a57 })
+  );
+  balcRail.position.set(607.95 - W / 2, by + 0.5, 148 - H / 2);
+  redM.add(balcRail);
+}
+
+// 7. Top Roof Signboard Crown: "हाई स्पीड रेल प्रशिक्षण संस्थान" with Logo
+const nhTopC = document.createElement('canvas');
+nhTopC.width = 1024;
+nhTopC.height = 128;
+const nhTg = nhTopC.getContext('2d');
+nhTg.fillStyle = '#701824';
+nhTg.fillRect(0, 0, 1024, 128);
+nhTg.fillStyle = '#ffffff';
+nhTg.fillRect(0, 0, 1024, 5);
+nhTg.fillRect(0, 123, 1024, 5);
+
+// Logo badge on the left
+nhTg.fillStyle = '#ffffff';
+nhTg.beginPath();
+nhTg.roundRect ? nhTg.roundRect(28, 20, 96, 88, 14) : nhTg.fillRect(28, 20, 96, 88);
+nhTg.fill();
+// High speed train graphic in logo
+nhTg.fillStyle = '#16448e';
+nhTg.beginPath();
+nhTg.moveTo(42, 68);
+nhTg.lineTo(105, 52);
+nhTg.lineTo(110, 68);
+nhTg.lineTo(75, 78);
+nhTg.closePath();
+nhTg.fill();
+nhTg.fillStyle = '#2277c2';
+nhTg.fillRect(52, 74, 56, 6);
+
+// Hindi Devanagari text
+nhTg.fillStyle = '#ffffff';
+nhTg.font = '700 50px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+nhTg.textAlign = 'center';
+nhTg.textBaseline = 'middle';
+nhTg.fillText('हाई स्पीड रेल प्रशिक्षण संस्थान', 560, 64);
+
+const nhTopTx = new THREE.CanvasTexture(nhTopC);
+nhTopTx.encoding = THREE.sRGBEncoding;
+
+const nhTopSign = new THREE.Mesh(
+  new THREE.PlaneGeometry(21.4, 2.7),
+  new THREE.MeshBasicMaterial({ map: nhTopTx })
+);
+nhTopSign.position.set(608.4 - W / 2, 22.1, 148 - H / 2);
+nhTopSign.rotation.y = -Math.PI / 2;
+redM.add(nhTopSign);
+
+// White stone cornice crowning top signboard
+const nhTopCornice = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.45, 22.0), nhWhite);
+nhTopCornice.position.set(608.5 - W / 2, 23.6, 148 - H / 2);
+redM.add(nhTopCornice);
+
+// 8. Forecourt Landscaping: Conical Golden Cypresses & Black Streetlamps matching Image 1 & 2
+const nhCypressMat = new THREE.MeshLambertMaterial({ color: 0x6ca32a });
+const nhTrunkMat = new THREE.MeshLambertMaterial({ color: 0x4a3622 });
+
+// Conical cypress topiaries along the forecourt lawn
+[
+  [599.5, 137.5, 2.4, 0.75],
+  [596.5, 135.5, 2.2, 0.7],
+  [593.5, 134.0, 2.0, 0.65],
+  [599.5, 158.5, 2.4, 0.75],
+  [596.5, 160.5, 2.2, 0.7],
+  [593.5, 162.0, 2.0, 0.65],
+  [598.0, 144.2, 1.8, 0.6],
+  [598.0, 151.8, 1.8, 0.6]
+].forEach(([tx, tz, th, tr]) => {
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.14, 0.6, 6), nhTrunkMat);
+  trunk.position.set(tx - W / 2, 0.3, tz - H / 2);
+  scene.add(trunk);
+
+  const foliage = new THREE.Mesh(new THREE.ConeGeometry(tr, th, 8), nhCypressMat);
+  foliage.position.set(tx - W / 2, 0.5 + th / 2, tz - H / 2);
+  foliage.castShadow = true;
+  scene.add(foliage);
+});
+
+// Sleek black light posts flanking entrance approach
+const nhLampMat = new THREE.MeshLambertMaterial({ color: 0x1a1c20 });
+[
+  [582.0, 139.5],
+  [582.0, 156.5],
+  [592.0, 139.5],
+  [592.0, 156.5]
+].forEach(([lx, lz]) => {
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 4.2, 8), nhLampMat);
+  pole.position.set(lx - W / 2, 2.1, lz - H / 2);
+  pole.castShadow = true;
+  scene.add(pole);
+
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.25, 0.45), nhLampMat);
+  head.position.set(lx - W / 2, 4.3, lz - H / 2);
+  scene.add(head);
+
+  const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.14, 8, 8), nhLightMat);
+  bulb.position.set(lx - W / 2, 4.15, lz - H / 2);
+  scene.add(bulb);
+});
 // Atithi hostel (existing, near the main road): white block, red-brown trim, 5 floors, courtyard
 const ac = document.createElement('canvas');
 ac.width = ac.height = 64;
@@ -768,6 +1105,393 @@ function tx(draw) {
   LITMAP.set(T, litTex(litFromCanvas(c)));
   return T;
 }
+
+// ============================================================================
+// Sardar Patel Sabhagrah (Auditorium & Conference Hall)
+// ============================================================================
+const sabT = tx((g) => {
+  g.fillStyle = '#f5eee2';
+  g.fillRect(0, 0, 64, 64);
+  [8, 38].forEach((x) => {
+    // Window surround / trim
+    g.fillStyle = '#ffffff';
+    g.fillRect(x - 2, 8, 18, 24);
+    // Dark glazing
+    g.fillStyle = '#3c4e5e';
+    g.fillRect(x, 10, 14, 20);
+    // White window mullions
+    g.fillStyle = '#ffffff';
+    g.fillRect(x + 6, 10, 2, 20);
+    g.fillRect(x, 19, 14, 2);
+
+    // Ground floor window
+    g.fillStyle = '#ffffff';
+    g.fillRect(x - 2, 38, 18, 20);
+    g.fillStyle = '#3c4e5e';
+    g.fillRect(x, 40, 14, 16);
+    g.fillStyle = '#ffffff';
+    g.fillRect(x + 6, 40, 2, 16);
+    g.fillRect(x, 47, 14, 2);
+  });
+  // Plinth and upper cornice bands
+  g.fillStyle = '#dfd2bc';
+  g.fillRect(0, 34, 64, 3);
+  g.fillStyle = '#d0c3ad';
+  g.fillRect(0, 60, 64, 4);
+});
+
+// Sabhagrah Main Auditorium Hall
+const sabM = mk(
+  [
+    [404, 56],
+    [446, 56],
+    [446, 82],
+    [404, 82]
+  ],
+  10.5,
+  0xd0c9be,
+  0xd4a040,
+  1.6,
+  [],
+  [],
+  sabT,
+  [1 / 14, 1 / 5.2]
+);
+
+// East side stepped annex (seen in satellite view)
+const sabAnnex = mk(
+  [
+    [446, 62],
+    [451, 62],
+    [451, 82],
+    [446, 82]
+  ],
+  8.5,
+  0xd0c9be,
+  0xd4a040,
+  1.7,
+  [],
+  [],
+  sabT,
+  [1 / 10, 1 / 4.2]
+);
+
+// Grand Art-Deco Entrance Pavilion (center of South facade)
+const sabPorch = mk(
+  [
+    [419, 82],
+    [431, 82],
+    [431, 86.5],
+    [419, 86.5]
+  ],
+  12.2,
+  0xd8d1c4,
+  0xd4a040,
+  1.65,
+  [],
+  [],
+  sabT,
+  [1 / 12, 1 / 6]
+);
+
+// Art Deco stepped crown on the roof parapet
+const sabCream = new THREE.MeshLambertMaterial({ color: 0xf2ebdc });
+const sabCrownC = new THREE.Mesh(new THREE.BoxGeometry(4.2, 1.4, 0.6), sabCream);
+sabCrownC.position.set(425 - W / 2, 12.8, 86.6 - H / 2);
+sabPorch.add(sabCrownC);
+[-2.6, 2.6].forEach((dx) => {
+  const sc = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.6), sabCream);
+  sc.position.set(425 + dx - W / 2, 12.4, 86.6 - H / 2);
+  sabPorch.add(sc);
+});
+const sabFlute = new THREE.Mesh(new THREE.BoxGeometry(0.8, 2.0, 0.3), sabCream);
+sabFlute.position.set(425 - W / 2, 11.4, 86.75 - H / 2);
+sabPorch.add(sabFlute);
+
+// 3 large first-floor window bays on the entrance facade
+const sabWinC = document.createElement('canvas');
+sabWinC.width = 512;
+sabWinC.height = 192;
+const sabWg = sabWinC.getContext('2d');
+sabWg.fillStyle = '#f5eee2';
+sabWg.fillRect(0, 0, 512, 192);
+[32, 192, 352].forEach((wx) => {
+  sabWg.fillStyle = '#ffffff';
+  sabWg.fillRect(wx - 4, 12, 136, 168);
+  sabWg.fillStyle = '#3a4b5c';
+  sabWg.fillRect(wx, 16, 128, 160);
+  sabWg.fillStyle = '#ffffff';
+  for (let vx = 32; vx < 128; vx += 32) sabWg.fillRect(wx + vx, 16, 3, 160);
+  for (let vy = 32; vy < 160; vy += 32) sabWg.fillRect(wx, 16 + vy, 128, 3);
+});
+const sabWinTx = new THREE.CanvasTexture(sabWinC);
+sabWinTx.encoding = THREE.sRGBEncoding;
+const sabWinM = new THREE.Mesh(
+  new THREE.PlaneGeometry(10.5, 4.0),
+  new THREE.MeshBasicMaterial({ map: sabWinTx })
+);
+sabWinM.position.set(425 - W / 2, 8.6, 86.65 - H / 2);
+sabPorch.add(sabWinM);
+
+// Signboard: सरदार पटेल सभागृह / SARDAR PATEL SABHAGRIHA
+const sabSignC = document.createElement('canvas');
+sabSignC.width = 512;
+sabSignC.height = 96;
+const sabSg = sabSignC.getContext('2d');
+sabSg.fillStyle = '#f8f4e6';
+sabSg.fillRect(0, 0, 512, 96);
+sabSg.strokeStyle = '#bda77a';
+sabSg.lineWidth = 4;
+sabSg.strokeRect(4, 4, 504, 88);
+sabSg.fillStyle = '#2a2420';
+sabSg.textAlign = 'center';
+sabSg.textBaseline = 'middle';
+sabSg.font = '700 32px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+sabSg.fillText('सरदार पटेल सभागृह', 256, 34);
+sabSg.font = '700 24px Arial,sans-serif';
+sabSg.fillText('SARDAR PATEL SABHAGRIHA', 256, 70);
+const sabSignTx = new THREE.CanvasTexture(sabSignC);
+sabSignTx.encoding = THREE.sRGBEncoding;
+const sabSignM = new THREE.Mesh(
+  new THREE.PlaneGeometry(9.6, 1.8),
+  new THREE.MeshBasicMaterial({ map: sabSignTx })
+);
+sabSignM.position.set(425 - W / 2, 5.5, 86.68 - H / 2);
+sabPorch.add(sabSignM);
+
+// Ground floor glass entrance doors
+const sabDoorC = document.createElement('canvas');
+sabDoorC.width = 384;
+sabDoorC.height = 160;
+const sabDg = sabDoorC.getContext('2d');
+sabDg.fillStyle = '#ffffff';
+sabDg.fillRect(0, 0, 384, 160);
+for (let dx = 8; dx < 380; dx += 92) {
+  sabDg.fillStyle = '#24323e';
+  sabDg.fillRect(dx, 8, 84, 144);
+  sabDg.fillStyle = '#ffffff';
+  sabDg.fillRect(dx + 40, 8, 4, 144);
+  sabDg.fillRect(dx, 80, 84, 4);
+}
+const sabDoorTx = new THREE.CanvasTexture(sabDoorC);
+sabDoorTx.encoding = THREE.sRGBEncoding;
+const sabDoorM = new THREE.Mesh(
+  new THREE.PlaneGeometry(7.8, 3.2),
+  new THREE.MeshBasicMaterial({ map: sabDoorTx })
+);
+sabDoorM.position.set(425 - W / 2, 2.4, 86.65 - H / 2);
+sabPorch.add(sabDoorM);
+
+// Terracotta entrance steps and approach
+const sabTerra = new THREE.MeshLambertMaterial({ color: 0x9b4637 });
+[
+  [10.8, 0.35, 1.4, 87.2, 0.18],
+  [9.8, 0.35, 1.2, 88.0, 0.52],
+  [8.8, 0.35, 1.0, 88.7, 0.85]
+].forEach(([w, h, d, z, y]) => {
+  const step = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), sabTerra);
+  step.position.set(425 - W / 2, y, z - H / 2);
+  step.castShadow = true;
+  sabPorch.add(step);
+});
+flat(412, 86, 438, 102, 0.25, 0xc8bcab);
+
+// ============================================================================
+// Pahune Hostel (Student Hostel & Front Recreation Hall)
+// ============================================================================
+const pahBase = tx((g) => {
+  g.fillStyle = '#ded9ce';
+  g.fillRect(0, 0, 64, 64);
+  [8, 38].forEach((x) => {
+    // Upper floor balcony doors/windows
+    g.fillStyle = '#3f4f5f';
+    g.fillRect(x, 10, 14, 22);
+    g.fillStyle = '#ffffff';
+    g.fillRect(x + 6, 10, 2, 22);
+    // Lower floor windows
+    g.fillStyle = '#3f4f5f';
+    g.fillRect(x, 40, 14, 18);
+    g.fillStyle = '#ffffff';
+    g.fillRect(x + 6, 40, 2, 18);
+  });
+  // Terracotta plinth and intermediate trim
+  g.fillStyle = '#8b3b2d';
+  g.fillRect(0, 34, 64, 3);
+  g.fillRect(0, 60, 64, 4);
+});
+
+// Main 2-story Hostel residential block
+const pahM = mk(
+  [
+    [456, 58],
+    [498, 58],
+    [498, 80],
+    [456, 80]
+  ],
+  9.2,
+  0xcfc7ba,
+  0xb87333,
+  1.7,
+  [],
+  [],
+  pahBase,
+  [1 / 14, 1 / 3.4]
+);
+
+// Upper floor open balcony corridor square pillars
+const pahColMat = new THREE.MeshLambertMaterial({ color: 0xe4ded4 });
+for (let k = 0; k <= 9; k++) {
+  const colX = 458 + k * 4.2;
+  const col = new THREE.Mesh(new THREE.BoxGeometry(0.55, 4.2, 0.55), pahColMat);
+  col.position.set(colX - W / 2, 6.7, 80.1 - H / 2);
+  col.castShadow = true;
+  pahM.add(col);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.35, 0.8), pahColMat);
+  cap.position.set(colX - W / 2, 8.9, 80.1 - H / 2);
+  pahM.add(cap);
+}
+// Balcony steel railing
+const pahRail = new THREE.Mesh(
+  new THREE.BoxGeometry(40, 0.9, 0.1),
+  new THREE.MeshLambertMaterial({ color: 0x3d4852 })
+);
+pahRail.position.set(477 - W / 2, 5.2, 80.15 - H / 2);
+pahM.add(pahRail);
+
+// Prominent central-right chimney / stairwell shaft
+const pahTower = new THREE.Mesh(
+  new THREE.BoxGeometry(2.4, 12.8, 2.4),
+  new THREE.MeshLambertMaterial({ color: 0xa8a196 })
+);
+pahTower.position.set(486 - W / 2, 6.4, 80.3 - H / 2);
+pahTower.castShadow = true;
+pahM.add(pahTower);
+const pahTowerCap = new THREE.Mesh(
+  new THREE.BoxGeometry(2.8, 0.6, 2.8),
+  new THREE.MeshLambertMaterial({ color: 0xe0d8cc })
+);
+pahTowerCap.position.set(486 - W / 2, 12.9, 80.3 - H / 2);
+pahM.add(pahTowerCap);
+
+// Front 1-story Entrance Recreation Hall Pavilion (warm ochre plaster, terracotta trim)
+const pahOchre = new THREE.MeshLambertMaterial({ color: 0xeed99c });
+const pahTerraTrim = new THREE.MeshLambertMaterial({ color: 0x8a382c });
+const pRec = new THREE.Mesh(new THREE.BoxGeometry(14, 4.6, 8.5), pahOchre);
+pRec.position.set(476 - W / 2, 2.3, 84.25 - H / 2);
+pRec.castShadow = true;
+pahM.add(pRec);
+
+// Dado wall around pavilion
+const pDado = new THREE.Mesh(new THREE.BoxGeometry(14.2, 1.2, 8.7), pahTerraTrim);
+pDado.position.set(476 - W / 2, 0.6, 84.25 - H / 2);
+pahM.add(pDado);
+
+// Sloped terracotta hip roof border around pavilion
+const pRoofTile = new THREE.Mesh(
+  new THREE.BoxGeometry(14.8, 0.6, 9.3),
+  new THREE.MeshLambertMaterial({ color: 0x9a4130 })
+);
+pRoofTile.position.set(476 - W / 2, 4.7, 84.25 - H / 2);
+pahM.add(pRoofTile);
+
+// Front projecting entrance porch / pediment
+const pPorch = new THREE.Mesh(new THREE.BoxGeometry(7.2, 3.8, 2.6), pahOchre);
+pPorch.position.set(476 - W / 2, 1.9, 89.8 - H / 2);
+pPorch.castShadow = true;
+pahM.add(pPorch);
+const pPorchDado = new THREE.Mesh(new THREE.BoxGeometry(7.3, 1.2, 2.7), pahTerraTrim);
+pPorchDado.position.set(476 - W / 2, 0.6, 89.8 - H / 2);
+pahM.add(pPorchDado);
+const pPorchRoof = new THREE.Mesh(
+  new THREE.BoxGeometry(7.8, 0.5, 3.1),
+  new THREE.MeshLambertMaterial({ color: 0x9a4130 })
+);
+pPorchRoof.position.set(476 - W / 2, 3.9, 89.8 - H / 2);
+pahM.add(pPorchRoof);
+
+// Stepped pediment crown
+const pPedCrown = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.8, 0.4), pahTerraTrim);
+pPedCrown.position.set(476 - W / 2, 4.4, 91.1 - H / 2);
+pahM.add(pPedCrown);
+
+// Authentic Pahune / Recreation Hall Signboard
+const pahSignC = document.createElement('canvas');
+pahSignC.width = 512;
+pahSignC.height = 160;
+const pahSg = pahSignC.getContext('2d');
+pahSg.fillStyle = '#eed99c';
+pahSg.fillRect(0, 0, 512, 160);
+// Top Devanagari plate
+pahSg.fillStyle = '#ffffff';
+pahSg.fillRect(176, 8, 160, 48);
+pahSg.strokeStyle = '#8a382c';
+pahSg.lineWidth = 2;
+pahSg.strokeRect(176, 8, 160, 48);
+pahSg.fillStyle = '#16448e';
+pahSg.textAlign = 'center';
+pahSg.textBaseline = 'middle';
+pahSg.font = '700 36px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+pahSg.fillText('पाहुणे', 256, 32);
+// Middle English plate
+pahSg.fillStyle = '#ffffff';
+pahSg.fillRect(136, 62, 240, 44);
+pahSg.strokeStyle = '#8a382c';
+pahSg.strokeRect(136, 62, 240, 44);
+pahSg.fillStyle = '#16448e';
+pahSg.font = '700 30px Arial,sans-serif';
+pahSg.fillText('PAHUNE', 256, 84);
+// Bottom Recreation Hall green plate
+pahSg.fillStyle = '#1e6834';
+pahSg.fillRect(146, 114, 220, 36);
+pahSg.fillStyle = '#ffffff';
+pahSg.font = '700 20px Arial,sans-serif';
+pahSg.fillText('RECREATION HALL', 256, 132);
+const pahSignTx = new THREE.CanvasTexture(pahSignC);
+pahSignTx.encoding = THREE.sRGBEncoding;
+const pahSignM = new THREE.Mesh(
+  new THREE.PlaneGeometry(6.4, 2.0),
+  new THREE.MeshBasicMaterial({ map: pahSignTx })
+);
+pahSignM.position.set(476 - W / 2, 3.4, 91.15 - H / 2);
+pahM.add(pahSignM);
+
+// Double entrance wooden glass doors
+const pahDoor = new THREE.Mesh(
+  new THREE.PlaneGeometry(3.0, 2.2),
+  new THREE.MeshBasicMaterial({ color: 0x2e1e14 })
+);
+pahDoor.position.set(476 - W / 2, 1.2, 91.13 - H / 2);
+pahM.add(pahDoor);
+
+// Entrance terracotta steps and ramp
+[
+  [5.6, 0.3, 1.2, 91.7, 0.15],
+  [4.8, 0.3, 1.0, 92.3, 0.45]
+].forEach(([w, h, d, z, y]) => {
+  const step = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), pahTerraTrim);
+  step.position.set(476 - W / 2, y, z - H / 2);
+  step.castShadow = true;
+  pahM.add(step);
+});
+
+// Flanking ornamental gate pillars with classical urn / lamp finials
+[-4.6, 4.6].forEach((dx) => {
+  const post = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.8, 1.1), sabCream);
+  post.position.set(476 + dx - W / 2, 0.9, 92.5 - H / 2);
+  post.castShadow = true;
+  pahM.add(post);
+  const urn = new THREE.Mesh(
+    new THREE.SphereGeometry(0.42, 14, 14),
+    new THREE.MeshLambertMaterial({ color: 0xffffff })
+  );
+  urn.position.set(476 + dx - W / 2, 2.1, 92.5 - H / 2);
+  urn.castShadow = true;
+  pahM.add(urn);
+});
+
+// Forecourt pavement for Pahune Hostel
+flat(468, 88, 484, 102, 0.25, 0xcabdb0);
+
 const brick = tx((g) => {
   g.fillStyle = '#b9623f';
   g.fillRect(0, 0, 64, 64);
@@ -1915,8 +2639,8 @@ road(
     [480, 109],
     [540, 109],
     [562, 118],
-    [585, 140],
-    [603, 146]
+    [554, 138],
+    [554, 175]
   ],
   9,
   'm'
@@ -2041,6 +2765,7 @@ const HAND = [
   [609, 132, 669, 164],
   [610, 80, 686, 121],
   [506, 56, 555, 105],
+  [395, 45, 505, 105], // Sabhagrah & Pahune Hostel (between GSV and Atithi)
   [451, 244, 541, 310],
   [474, 133, 549, 183],
   [322, 158, 360, 220],
@@ -2081,12 +2806,15 @@ GEO.b.forEach(([gh, ...f]) => {
 const inB = (x, y) =>
   nearRoad(x, y, 2) ||
   BUILDINGS.some((b) => x > b[0] - 6 && x < b[2] + 6 && y > b[1] - 6 && y < b[3] + 6) ||
-  (x > 498 && x < 563 && y > 48 && y < 112) ||
-  (x > 468 && x < 554 && y > 110 && y < 190) ||
-  (x > 446 && x < 546 && y > 225 && y < 314) ||
-  (x > 290 && x < 378 && y > 146 && y < 232) ||
-  (x > 316 && x < 398 && y > 34 && y < 98) ||
-  (x > 412 && x < 458 && y > 178 && y < 236);
+  (x > 390 && x < 505 && y > 48 && y < 128) || // Sabhagrah & Pahune Hostel (forecourt & entrance)
+  (x > 498 && x < 563 && y > 48 && y < 125) || // Atithi Hostel (entrance & south forecourt)
+  (x > 468 && x < 554 && y > 110 && y < 190) || // Proposed Lab (entrance & forecourt)
+  (x > 446 && x < 546 && y > 225 && y < 314) || // Proposed Academic
+  (x > 290 && x < 378 && y > 146 && y < 232) || // Palace (grand lawn)
+  (x > 316 && x < 398 && y > 34 && y < 114) || // GSV Academic Block (entrance portico & avenue)
+  (x > 412 && x < 458 && y > 164 && y < 236) || // Manthan building (front steps & approach)
+  (x > 560 && x < 594 && y > 22 && y < 65) || // Main Entrance Gate (approach road)
+  (x > 565 && x < 614 && y > 124 && y < 172); // NHSRCL forecourt & entrance approach
 const spots = [];
 GEO.t.forEach(([x, y, cd]) => {
   if (x >= W || y >= H || inB(x, y) || FOOT.some((f) => x > f[0] && x < f[2] && y > f[1] && y < f[3])) return;
@@ -2250,6 +2978,7 @@ const rings = [0, 1].map(() => {
   );
   r.rotation.x = -Math.PI / 2;
   r.position.set(LX, 0.6, LZ);
+  r.visible = false;
   scene.add(r);
   return r;
 });
