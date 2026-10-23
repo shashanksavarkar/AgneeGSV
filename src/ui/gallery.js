@@ -19,7 +19,7 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
               <button type="button" class="btn-play-video" id="btnPlayVideo" aria-label="Play festival teaser video">
                 <span class="play-icon" aria-hidden="true">▶</span>
               </button>
-              <h3 class="video-title">Agnee Festival Experience Teaser</h3>
+              <h3 class="video-title">Agnee'26 Trailer</h3>
               <p class="video-desc">Tap play to watch. Nothing from YouTube loads until you do.</p>
             </div>
           </div>
@@ -59,24 +59,51 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
   const slot = document.getElementById('videoPlaceholderSlot');
   const frame = document.getElementById('videoEmbedFrame');
 
-  playBtn?.addEventListener('click', () => {
-    if (!slot || !frame) return;
+  let started = false;
+  let playing = false;
+  let resumeOnReturn = false;
+  const YT_ORIGIN = 'https://www.youtube-nocookie.com';
+  let volumeSet = false;
+  const ytCommand = (func, args = '') => frame.querySelector('iframe')?.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), YT_ORIGIN);
+
+  const startTrailer = (muted) => {
+    if (!slot || !frame || started || !gallery.trailerId) return;
+    started = true;
     slot.hidden = true;
     frame.hidden = false;
-    // Embed privacy-enhanced YouTube or placeholder video
+    // annotations hidden, captions off; native YouTube controls stay on
+    const params = `autoplay=1&mute=${muted ? 1 : 0}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&cc_load_policy=0`;
     frame.innerHTML = `
-      <iframe 
-        width="100%" 
-        height="100%" 
-        src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1" 
-        title="Agnee Festival Aftermovie" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen
-        style="width: 100%; aspect-ratio: 16/9; border-radius: 16px; border: 0;"
-      ></iframe>
+      <iframe src="${YT_ORIGIN}/embed/${gallery.trailerId}?${params}"
+        title="Agnee'26 Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
     `;
+    // subscribe to player state so we know whether it is playing (1) or not
+    frame.querySelector('iframe').addEventListener('load', () => {
+      frame.querySelector('iframe').contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), YT_ORIGIN);
+    });
+  };
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== YT_ORIGIN) return;
+    try {
+      const data = JSON.parse(e.data);
+      if (data.event !== 'infoDelivery') return;
+      if (!volumeSet) { ytCommand('setVolume', [75]); volumeSet = true; } // default volume 75%
+      if (data.info?.playerState !== undefined) playing = data.info.playerState === 1;
+    } catch { /* not a YouTube state message */ }
   });
+
+  playBtn?.addEventListener('click', () => startTrailer(false));
+
+  // Whole player visible: autoplay or resume. Less than 70% visible: pause.
+  // Sound is on only if the visitor has already clicked or tapped the page; browsers block autoplay with sound otherwise.
+  const reel = mount.querySelector('.aftermovie-container');
+  if (reel) new IntersectionObserver(([entry]) => {
+    const ratio = entry.intersectionRatio;
+    if (!started) { if (ratio >= 0.98) setTimeout(() => startTrailer(!navigator.userActivation?.hasBeenActive), 300); return; }
+    if (ratio < 0.7 && playing) { ytCommand('pauseVideo'); resumeOnReturn = true; }
+    else if (ratio >= 0.98 && resumeOnReturn) { ytCommand('playVideo'); resumeOnReturn = false; }
+  }, { threshold: [0, 0.7, 0.98] }).observe(reel);
 }
 
 // One marquee row. The set is repeated an even number of times (long enough to fill wide screens)

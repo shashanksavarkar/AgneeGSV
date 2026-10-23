@@ -16,9 +16,16 @@ export function renderHero() {
       ${particleField('petals', 14)}
 
       <div class="hero-content">
-        <img class="hero-wordmark-img" src="${wordmarkSrc}" alt="Agnee 2026" width="620" height="150" fetchpriority="high">
+      <img class="hero-wordmark-img" src="${wordmarkSrc}" alt="Agnee 2026" width="620" height="150" fetchpriority="high">
       </div>
+
+      <button type="button" class="hero-trailer-btn" id="btnWatchTrailer"><span aria-hidden="true">▶</span> Watch Agnee'26 Trailer</button>
     </section>
   `;
 
+  // Jump to the gallery and start the trailer (the click counts as the gesture browsers need for autoplay)
+  document.getElementById('btnWatchTrailer').addEventListener('click', () => {
+    document.querySelector('#gallery .aftermovie-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('btnPlayVideo')?.click();
+  });
 }

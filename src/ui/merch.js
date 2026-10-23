@@ -35,8 +35,6 @@ export function renderMerch(items = []) {
           `).join('')}
         </div>
 
-        <p class="merch-note"><strong>Note:</strong> The college does not provide any delivery or courier facility for merchandise. All merchandise must be collected in person.</p>
-
         <dialog class="merch-modal" id="merchModal" aria-label="Merchandise details">
           <button type="button" class="merch-modal-close" aria-label="Close">&times;</button>
           <div class="merch-modal-body"></div>

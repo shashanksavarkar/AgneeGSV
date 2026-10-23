@@ -22,6 +22,7 @@ import { renderContact } from './ui/contact.js';
 import { renderFooter } from './ui/footer.js';
 import { renderToastContainer } from './ui/toast.js';
 import { initScrollRail } from './ui/scrollbar.js';
+import { initCursorFx } from './ui/cursor-fx.js';
 
 async function bootstrap() {
   try {
@@ -48,6 +49,7 @@ async function bootstrap() {
     // Rangoli in each section's bottom-left corner (the top-right one is .section::after)
     document.querySelectorAll('.section').forEach(sec => sec.insertAdjacentHTML('beforeend', '<span class="rangoli-bl" aria-hidden="true"></span>'));
     initScrollRail();
+    initCursorFx();
 
     // 4. Initialize client-side router
     router.init();

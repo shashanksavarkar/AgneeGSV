@@ -204,7 +204,6 @@ function applyFiltersAndRender() {
   const filtered = cachedEvents.filter(ev => {
     if (category !== 'All' && ev.category !== category) return false;
     if (day !== 'All' && ev.schedule?.day !== day) return false;
-    if (openOnly && ev.registrationState !== 'open') return false;
     if (search) {
       const query = search.toLowerCase();
       const inName = ev.name.toLowerCase().includes(query);
@@ -234,25 +233,26 @@ function applyFiltersAndRender() {
 }
 
 function renderEventCard(ev, i) {
-  const teamText = ev.teamSize.min === ev.teamSize.max 
-    ? (ev.teamSize.min === 1 ? 'Solo' : `${ev.teamSize.min} Members`) 
-    : `${ev.teamSize.min}–${ev.teamSize.max} Members`;
+  const { min, max } = ev.teamSize;
+  const teamText = !min ? 'TBA'
+    : min === max ? (min === 1 ? 'Solo' : `${min} Members`)
+    : `${min}–${max} Members`;
 
   return `
-    <article class="event-card" data-id="${ev.id}" data-no="${String(i + 1).padStart(2, '0')}" aria-label="${ev.name}">
+    <article class="event-card" data-id="${ev.id}" aria-label="${ev.name}">
       ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
-      <span class="ev-club">${ev.category}</span>
+      <span class="ev-day">${ev.schedule?.day || 'Day TBA'}</span>
 
-      <div class="card-main">
+      <div class="ev-body">
+        <span class="ev-club">${ev.category}</span>
         <h3 class="event-card-title">${ev.name}</h3>
         <p class="event-card-tagline">${ev.tagline || ''}</p>
+        <dl class="ev-stats">
+          <div><dt>Team</dt><dd>${teamText}</dd></div>
+          <div><dt>Venue</dt><dd>${ev.schedule?.venueName || 'Venue TBA'}</dd></div>
+        </dl>
+        ${ev.tags?.length ? `<ul class="ev-tags">${ev.tags.map(tag => `<li>${tag}</li>`).join('')}</ul>` : ''}
       </div>
-
-      <dl class="ev-stats">
-        <div><dt>Team</dt><dd>${teamText}</dd></div>
-        <div><dt>Venue</dt><dd>${ev.schedule?.venueName || 'Venue TBA'}</dd></div>
-        <div><dt>When</dt><dd>${ev.schedule?.day || 'Day TBA'}</dd></div>
-      </dl>
     </article>
   `;
 }

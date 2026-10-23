@@ -54,7 +54,6 @@ export const site = {
     }
   ],
   "contactEmail": "student.cell@gsv.ac.in",
-  "emergencyHelpline": "To be announced",
   "analyticsEnabled": false
 };
 
@@ -73,7 +72,6 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: 'assets/DNQ.webp',
     tags: ['Debating', 'Pre-Agnee']
   },
@@ -84,14 +82,13 @@ export const events = [
     tagline: 'Strength. Stamina. Spotlight.',
     description: 'Pre-Agnee fitness showdown where participants show off their strength and stamina.',
     teamSize: {
-      min: 1,
-      max: 1
+      min: "",
+      max: "",
     },
     schedule: {
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: 'assets/muscle-mania.webp',
     tags: ['Fitness', 'Pre-Agnee']
   },
@@ -109,7 +106,6 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: 'assets/LC.webp',
     tags: ['Quiz', 'Pre-Agnee']
   },
@@ -128,7 +124,6 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: 'assets/BCLUB.webp',
     tags: ['Marketing', 'Pre-Agnee']
   },
@@ -146,7 +141,6 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: '',
     tags: ['Singing', 'Pre-Agnee']
   },
@@ -164,7 +158,6 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    registrationState: 'soon',
     posterImage: '',
     tags: ['Adventure', 'Pre-Agnee']
   }
@@ -284,7 +277,7 @@ export const team = {
       role: "Dean (Students' Welfare)",
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'dean.sw@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/dr-r-edwin-raj-21b00628/',
       avatar: 'assets/edwin_sir.webp'
     },
     {
@@ -292,15 +285,15 @@ export const team = {
       role: 'Faculty In-Charge',
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'ram.upadhyay@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/ram-krishna-upadhyay-13767b2b8/',
       avatar: 'assets/ram_sir.webp'
     }
   ],
   creativeTeam: [
-    { name: 'Ravi Panchal', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
-    { name: 'Rishav Kumar', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
-    { name: 'Shashank Savarkar', role: '', team: 'Creative Team', email: '', linkedin: '', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
-    { name: 'Abhinav Kesarwani', role: '', team: 'Creative Team', email: '', linkedin: '', github: '', avatar: 'assets/abhinav.webp' }
+    { name: 'Ravi Panchal', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/ravixpanchal/', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
+    { name: 'Rishav Kumar', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/rkgsv/', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
+    { name: 'Shashank Savarkar', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/shashanksavarkar/', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
+    { name: 'Abhinav Kesarwani', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/', github: 'https://github.com/AbhiKesarwani', avatar: 'assets/abhinav.webp' }
   ],
   coreTeam: [
     {
@@ -308,15 +301,15 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'President - Student Cell GSV',
       email: 'himanshu.yadav_btech23@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/himanshu-kumar-yadav-0b792a2ba/',
       avatar: 'assets/himanshu.webp'
     },
     {
-      name: 'Risahv Kumar',
+      name: 'Rishav Kumar',
       role: 'Overall Coordinator',
       team: 'Vice-President',
       email: 'rishav.kumar_btech23@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/rkgsv/',
       avatar: 'assets/rishav.webp'
     },
     {
@@ -324,7 +317,7 @@ export const team = {
       role: 'Overall Coordinator',
       team: 'External Secretary',
       email: 'soumya.banerjee_btech23@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/soumya04banerjee/',
       avatar: 'assets/soumya.webp'
     },
     {
@@ -332,7 +325,7 @@ export const team = {
       role: '',
       team: 'External Secretary',
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/ananya-kasaudhan-617531328/',
       avatar: 'assets/ananya.webp'
     },
     {
@@ -340,7 +333,7 @@ export const team = {
       role: 'Tech Lead',
       team: 'Technical Secretary',
       email: 'atulya.bharat_btech24@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/atulyabharat/',
       avatar: 'assets/atulya.webp'
     },
     {
@@ -348,15 +341,15 @@ export const team = {
       role: 'Cultural Lead',
       team: 'Cultural Secretary',
       email: 'harshit.verma_btech24@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/harshit-verma-1a6558418/',
       avatar: 'assets/harshit.webp'
     },
     {
       name: 'Rupesh Kumar',
-      role: '',
+      role: 'Operations Lead',
       team: 'Sports Secretary',
       email: 'rupesh.kumar_btech24@gsv.ac.in',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/rupesh-kumar-2627772a4/',
       avatar: 'assets/rupesh.webp'
     }
   ]
@@ -393,6 +386,7 @@ export const faqs = [
 // Gallery marquee. top scrolls right-to-left, bottom scrolls left-to-right.
 // Put the photo path in src (e.g. "assets/gallery/stage.webp"); while src is "" a coloured placeholder tile is shown.
 export const gallery = {
+  trailerId: 'FFECeziDu30', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
   top: [
     { title: "Oval Ground Stage at Dusk", tag: "Stage", color: "#5b1a8f", src: "/assets/1.webp" },
     { title: "Street Theatre (Nukkad Natak)", tag: "Culture", color: "#d6246e", src: "/assets/2.webp" },
