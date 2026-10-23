@@ -36,7 +36,6 @@ export function renderSponsors(sponsorsData = { tiers: [] }) {
                       `}
                     </div>
                     <span class="sponsor-name">${sp.name}</span>
-                    <span class="sponsor-tag">${tier.tierName}</span>
                   </div>
                 `).join('')}
               </div>

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery layout options</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --bg: #07050a;
+  --surface: #110c12;
+  --gold: #ffb347;
+  --gold-soft: #ffd27a;
+  --orange: #ff7a1a;
+  --cream: #f6ead0;
+  --text: #eadfce;
+  --muted: #a99a84;
+  --heading: 'Cinzel Decorative', serif;
+  --body: 'Spectral', serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 var(--body);
+}
+img { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; }
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background: rgba(7, 5, 10, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 179, 71, 0.25);
+}
+.top b { font: 700 13px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-right: 8px; }
+.top a {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 179, 71, 0.35);
+  color: var(--gold-soft);
+  font: 600 12px var(--sans);
+  text-decoration: none;
+}
+.top a:hover { background: var(--orange); color: #1a0c02; border-color: var(--orange); }
+
+section { overflow-x: clip; padding: 72px 16px 56px; border-bottom: 1px solid rgba(255, 179, 71, 0.12); }
+section:nth-of-type(even) { background: var(--surface); }
+.head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
+.head h2 {
+  margin: 0 0 8px;
+  font: 700 clamp(22px, 3.4vw, 34px)/1.2 var(--heading);
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #ffd9a0, #b98a3a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.head p { margin: 0; color: var(--muted); font: italic 16px var(--body); }
+.stage { max-width: 1200px; margin: 0 auto; }
+
+.nav { display: flex; justify-content: center; gap: 12px; margin-top: 22px; }
+.nav button {
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid rgba(255, 179, 71, 0.5);
+  background: rgba(0, 0, 0, 0.4); color: var(--gold-soft); font-size: 18px;
+}
+.nav button:hover { background: var(--orange); color: #1a0c02; }
+.nav .view-btn { width: auto; }
+.view-btn {
+  padding: 0 18px; height: 46px; border-radius: 999px;
+  border: 1px solid rgba(255, 179, 71, 0.5);
+  background: transparent; color: var(--gold-soft);
+  font: 700 12px var(--sans); letter-spacing: 0.14em; text-transform: uppercase;
+}
+.view-btn:hover { background: var(--orange); color: #1a0c02; }
+
+/* 1. Accordion */
+.acc { display: flex; gap: 8px; height: 460px; }
+.acc figure {
+  position: relative; flex: 1; margin: 0; overflow: hidden; border-radius: 14px;
+  border: 1px solid rgba(255, 179, 71, 0.3);
+  transition: flex 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+.acc figure.on { flex: 6; }
+.acc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.7) brightness(0.7); transition: filter 0.5s, transform 0.8s; }
+.acc figure.on img { filter: none; transform: scale(1.04); }
+.acc figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  font: 700 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);
+  opacity: 0; transform: translateY(10px); transition: 0.4s 0.2s;
+}
+.acc figure.on figcaption { opacity: 1; transform: none; }
+@media (max-width: 700px) {
+  .acc { flex-direction: column; height: 640px; }
+}
+
+/* 2. Deck */
+.deck { position: relative; width: min(80vw, 380px); height: 500px; margin: 0 auto; }
+.deck .card {
+  position: absolute; inset: 0 0 auto 0; padding: 12px 12px 44px;
+  background: var(--cream); border-radius: 3px;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.6);
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s;
+  cursor: pointer; user-select: none;
+}
+.deck .card img { width: 100%; aspect-ratio: 4 / 4.2; object-fit: cover; pointer-events: none; }
+.deck .card span { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: italic 18px var(--body); color: #5a4524; }
+.deck .card.fly { transform: translate(130%, -10%) rotate(24deg) !important; opacity: 0; }
+
+/* 3. Coverflow */
+.flow { position: relative; height: 420px; perspective: 1300px; overflow: hidden; }
+.flow .it {
+  position: absolute; left: 50%; top: 50%; width: min(64vw, 440px); height: 340px; margin: -170px 0 0 calc(min(64vw, 440px) / -2);
+  border-radius: 12px; overflow: hidden; border: 2px solid rgba(255, 179, 71, 0.5);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s, filter 0.5s;
+  cursor: pointer;
+}
+.flow .it img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.flow .it::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 40%); pointer-events: none; }
+
+/* 4. Reel */
+.reel { max-width: 960px; margin: 0 auto; }
+.reel-main { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255, 179, 71, 0.4); background: #000; cursor: zoom-in; }
+.reel-main .bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(26px) brightness(0.55); }
+.reel-main img { position: relative; width: 100%; height: 100%; object-fit: contain; animation: kb 6s ease-out forwards; }
+@keyframes kb { from { transform: scale(1); } to { transform: scale(1.08); } }
+.reel-meta { position: absolute; left: 16px; bottom: 14px; display: flex; gap: 12px; align-items: baseline; text-shadow: 0 2px 8px #000; }
+.reel-meta .cnt { font: 700 34px var(--heading); color: var(--gold-soft); }
+.reel-meta .tag { font: 700 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: #fff; }
+.reel-bar { height: 3px; margin-top: 10px; background: rgba(255, 179, 71, 0.18); }
+.reel-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--orange), var(--gold-soft)); }
+.reel-thumbs { display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; padding-bottom: 6px; }
+.reel-thumbs img { flex: none; width: 96px; height: 62px; object-fit: cover; border-radius: 6px; opacity: 0.45; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+.reel-thumbs img.on, .reel-thumbs img:hover { opacity: 1; border-color: var(--gold); transform: translateY(-3px); }
+
+/* 5. Mosaic */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 22px; }
+.chips button { padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.4); background: transparent; color: var(--gold-soft); font: 700 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
+.chips button.on, .chips button:hover { background: var(--orange); color: #1a0c02; border-color: var(--orange); }
+.mos { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; grid-auto-flow: dense; gap: 10px; }
+.mos figure { position: relative; margin: 0; overflow: hidden; border-radius: 12px; cursor: zoom-in; animation: pop 0.5s both; }
+.mos figure:nth-child(4n + 1) { grid-row: span 2; }
+.mos figure:nth-child(6n + 3) { grid-column: span 2; }
+.mos figure[hidden] { display: none; }
+@keyframes pop { from { opacity: 0; transform: scale(0.9); } }
+.mos img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+.mos figure:hover img { transform: scale(1.14) rotate(1deg); }
+.mos figcaption {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.85));
+  opacity: 0; transition: opacity 0.35s;
+  font: 700 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);
+}
+.mos figcaption small { margin-top: 4px; color: #fff; font-size: 11px; }
+.mos figure:hover figcaption { opacity: 1; }
+@media (max-width: 900px) { .mos { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .mos { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; } }
+
+/* 6. Rangoli ring */
+@property --rot { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+.ring { --R: min(34vw, 215px); --size: 78px; position: relative; width: calc(var(--R) * 2 + var(--size) + 20px); aspect-ratio: 1; margin: 0 auto; }
+.ring .spin { position: absolute; inset: 0; background: url('assets/elements/rangoli-full.svg') center / 92% no-repeat; opacity: 0.35; animation: turn 120s linear infinite; }
+@keyframes turn { to { transform: rotate(360deg); } }
+.ring .orbit { position: absolute; inset: 0; transform: rotate(var(--rot)); transition: --rot 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ring .orbit button {
+  position: absolute; left: 50%; top: 50%; width: var(--size); height: var(--size); margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); padding: 0;
+  border-radius: 50%; overflow: hidden; border: 2px solid rgba(255, 179, 71, 0.6); background: #000;
+  transform: rotate(var(--a)) translateY(calc(var(--R) * -1)) rotate(calc(var(--a) * -1 - var(--rot)));
+  transition: border-color 0.3s, box-shadow 0.3s, width 0.3s, height 0.3s;
+}
+.ring .orbit button img { width: 100%; height: 100%; object-fit: cover; }
+.ring .orbit button.on { border-color: var(--gold-soft); box-shadow: 0 0 22px rgba(255, 150, 40, 0.9); }
+.ring .hub {
+  position: absolute; left: 50%; top: 50%; width: calc(var(--R) * 1.3); aspect-ratio: 1; transform: translate(-50%, -50%);
+  border-radius: 50%; overflow: hidden; border: 4px solid #c9a05a; outline: 1px solid rgba(255, 179, 71, 0.5); outline-offset: 6px;
+  box-shadow: 0 0 40px rgba(255, 122, 26, 0.45); cursor: zoom-in; background: #000;
+}
+.ring .hub img { width: 100%; height: 100%; object-fit: cover; animation: fade 0.7s; }
+@keyframes fade { from { opacity: 0; transform: scale(1.1); } }
+.ring-tag { margin-top: 18px; text-align: center; font: 700 12px var(--sans); letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-soft); }
+
+/* 7. Hanging line */
+.hang { display: grid; gap: 30px; }
+.hang-row { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 26px; padding-top: 0; }
+.hang-row::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a05a 12%, #ffd27a 50%, #c9a05a 88%, transparent); }
+.hang figure { position: relative; margin: 0; padding-top: 34px; transform-origin: 50% 0; animation: swing var(--d, 5s) ease-in-out infinite; animation-delay: var(--dl, 0s); }
+@keyframes swing { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.hang figure::before { content: ''; position: absolute; top: 0; left: 50%; width: 2px; height: 34px; background: #c9a05a; }
+.hang figure::after { content: ''; position: absolute; top: 20px; left: 50%; width: 12px; height: 22px; margin-left: -6px; border-radius: 3px; background: linear-gradient(180deg, #ffb347, #b4400a); }
+.hang figure:hover { animation-play-state: paused; z-index: 5; }
+.hang .fr { width: 190px; padding: 8px 8px 30px; background: var(--cream); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.55); transition: transform 0.4s, box-shadow 0.4s; cursor: zoom-in; position: relative; }
+.hang .fr img { width: 100%; aspect-ratio: 4 / 4.4; object-fit: cover; }
+.hang .fr span { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: italic 14px var(--body); color: #5a4524; }
+.hang figure:hover .fr { transform: translateY(8px) scale(1.18); box-shadow: 0 24px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 150, 40, 0.5); }
+@media (max-width: 700px) { .hang .fr { width: 40vw; max-width: 170px; } .hang-row { gap: 0 16px; } }
+
+/* Lightbox */
+dialog { width: min(94vw, 900px); padding: 14px; border: 1px solid rgba(255, 179, 71, 0.5); border-radius: 12px; background: #120c16; color: var(--text); }
+dialog::backdrop { background: rgba(0, 0, 0, 0.88); }
+dialog img { width: 100%; max-height: 78dvh; object-fit: contain; }
+dialog .bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font: 700 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); }
+dialog .bar button { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.5); background: transparent; color: var(--gold-soft); font: 700 12px var(--sans); }
+@media (prefers-reduced-motion: reduce) { .hang figure, .ring .spin, .reel-main img { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <b>Gallery options</b>
+  <a href="#d1">1 Accordion</a><a href="#d2">2 Photo deck</a><a href="#d3">3 Coverflow</a><a href="#d4">4 Cinema reel</a>
+  <a href="#d5">5 Mosaic</a><a href="#d6">6 Rangoli ring</a><a href="#d7">7 Hanging line</a>
+</nav>
+
+<section id="d1"><div class="head"><h2>1. Expanding strips</h2><p>Hover or tap a strip and it opens up while the others fold away. Click the open one to view it full size.</p></div><div class="stage"></div></section>
+<section id="d2"><div class="head"><h2>2. Photo deck</h2><p>A pile of prints. Click the top photo (or swipe it) to flick it to the back.</p></div><div class="stage"></div></section>
+<section id="d3"><div class="head"><h2>3. Coverflow</h2><p>Photos fan out in 3D. Click a side photo, use the arrows or keys, or swipe.</p></div><div class="stage"></div></section>
+<section id="d4"><div class="head"><h2>4. Cinema reel</h2><p>One big photo with a slow zoom, auto-advancing. Pick any thumbnail; hovering pauses it.</p></div><div class="stage"></div></section>
+<section id="d5"><div class="head"><h2>5. Filter mosaic</h2><p>A mixed-size grid. Filter by theme, hover for the label, click to view.</p></div><div class="stage"></div></section>
+<section id="d6"><div class="head"><h2>6. Rangoli ring</h2><p>Photos orbit a turning rangoli. Click one and it rolls to the top and fills the centre.</p></div><div class="stage"></div></section>
+<section id="d7"><div class="head"><h2>7. Hanging line</h2><p>Prints pegged on a line and swinging gently. Hover to catch one; click to view.</p></div><div class="stage"></div></section>
+
+<dialog id="lb"><img alt=""><div class="bar"><span></span><div><button id="lbPrev">Prev</button> <button id="lbNext">Next</button> <button id="lbClose">Close</button></div></div></dialog>
+
+<script>
+const P = [[1,'Stage'],[2,'Culture'],[3,'Dance'],[4,'Dance'],[9,'Dance'],[5,'Campus'],[6,'Energy'],[7,'Atmosphere'],[8,'Atmosphere']]
+  .map(([n, tag]) => ({ src: `assets/${n}.webp`, tag }));
+const N = P.length, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const stage = (id) => $(`#${id} .stage`);
+const mod = (i) => (i + N) % N;
+
+/* Lightbox */
+const lb = $('#lb'); let lbI = 0;
+function zoom(i) { lbI = mod(i); $('img', lb).src = P[lbI].src; $('.bar span', lb).textContent = `${P[lbI].tag}  ${lbI + 1} / ${N}`; if (!lb.open) lb.showModal(); }
+$('#lbPrev').onclick = () => zoom(lbI - 1); $('#lbNext').onclick = () => zoom(lbI + 1); $('#lbClose').onclick = () => lb.close();
+lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+
+/* Swipe helper */
+function swipe(el, onLeft, onRight) {
+  let x0 = null;
+  el.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+  el.addEventListener('pointerup', (e) => { if (x0 === null) return; const d = e.clientX - x0; x0 = null; if (d < -50) onLeft(); else if (d > 50) onRight(); });
+}
+
+/* 1. Accordion */
+(() => {
+  const s = stage('d1');
+  s.innerHTML = `<div class="acc">${P.map((p, i) => `<figure data-i="${i}" tabindex="0" class="${i === 3 ? 'on' : ''}"><img src="${p.src}" alt="${p.tag}" loading="lazy"><figcaption>${p.tag}</figcaption></figure>`).join('')}</div>`;
+  const set = (f) => { $$('figure', s).forEach((x) => x.classList.toggle('on', x === f)); };
+  s.addEventListener('mouseover', (e) => { const f = e.target.closest('figure'); if (f && matchMedia('(hover: hover)').matches) set(f); });
+  s.addEventListener('focusin', (e) => { const f = e.target.closest('figure'); if (f) set(f); });
+  s.addEventListener('click', (e) => { const f = e.target.closest('figure'); if (!f) return; f.classList.contains('on') ? zoom(+f.dataset.i) : set(f); });
+})();
+
+/* 2. Deck */
+(() => {
+  const s = stage('d2'), rot = [-4, 3, -2, 5, -6, 2, 4, -3, 1]; let order = P.map((_, i) => i), busy = false;
+  s.innerHTML = `<div class="deck">${P.map((p, i) => `<div class="card" data-i="${i}"><img src="${p.src}" alt="${p.tag}" loading="lazy"><span>${p.tag}</span></div>`).join('')}</div>
+    <div class="nav"><button id="dkPrev" aria-label="Previous">&#8592;</button><button class="view-btn" id="dkView">View</button><button id="dkNext" aria-label="Next">&#8594;</button></div>`;
+  const cards = $$('.card', s);
+  const paint = () => cards.forEach((c, i) => {
+    const pos = order.indexOf(i);
+    c.style.zIndex = 50 - pos;
+    c.style.opacity = pos < 5 ? 1 : 0;
+    c.style.transform = `translate(${pos * 12}px, ${pos * 8}px) rotate(${rot[i] + pos * 0.6}deg) scale(${1 - pos * 0.035})`;
+    c.style.pointerEvents = pos === 0 ? 'auto' : 'none';
+  });
+  const next = () => { if (busy) return; busy = true; const top = cards[order[0]]; top.classList.add('fly'); setTimeout(() => { top.classList.remove('fly'); order.push(order.shift()); paint(); busy = false; }, 420); };
+  const prev = () => { order.unshift(order.pop()); paint(); };
+  paint();
+  $('#dkNext').onclick = next; $('#dkPrev').onclick = prev; $('#dkView').onclick = () => zoom(order[0]);
+  $('.deck', s).addEventListener('click', (e) => { if (e.target.closest('.card')) next(); });
+  swipe($('.deck', s), next, prev);
+})();
+
+/* 3. Coverflow */
+(() => {
+  const s = stage('d3'); let cur = 3;
+  s.innerHTML = `<div class="flow" tabindex="0">${P.map((p, i) => `<div class="it" data-i="${i}"><img src="${p.src}" alt="${p.tag}" loading="lazy"></div>`).join('')}</div>
+    <div class="nav"><button id="cfPrev" aria-label="Previous">&#8592;</button><button class="view-btn" id="cfView">View</button><button id="cfNext" aria-label="Next">&#8594;</button></div>`;
+  const items = $$('.it', s), flow = $('.flow', s);
+  const paint = () => items.forEach((it, i) => {
+    const d = i - cur, a = Math.abs(d);
+    it.style.transform = `translateX(${d * 52}%) translateZ(${-a * 150}px) rotateY(${Math.max(-60, Math.min(60, -d * 42))}deg)`;
+    it.style.zIndex = 20 - a; it.style.opacity = a > 3 ? 0 : 1 - a * 0.14; it.style.filter = `brightness(${1 - a * 0.22})`;
+    it.style.pointerEvents = a > 3 ? 'none' : 'auto';
+  });
+  const go = (i) => { cur = Math.max(0, Math.min(N - 1, i)); paint(); };
+  paint();
+  flow.addEventListener('click', (e) => { const it = e.target.closest('.it'); if (!it) return; +it.dataset.i === cur ? zoom(cur) : go(+it.dataset.i); });
+  $('#cfPrev').onclick = () => go(cur - 1); $('#cfNext').onclick = () => go(cur + 1); $('#cfView').onclick = () => zoom(cur);
+  flow.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'ArrowRight') go(cur + 1); });
+  swipe(flow, () => go(cur + 1), () => go(cur - 1));
+})();
+
+/* 4. Cinema reel */
+(() => {
+  const s = stage('d4'); let cur = 0, timer; const STEP = 4500;
+  s.innerHTML = `<div class="reel"><div class="reel-main"><div class="bg"></div><img alt=""><div class="reel-meta"><span class="cnt"></span><span class="tag"></span></div></div>
+    <div class="reel-bar"><i></i></div><div class="reel-thumbs">${P.map((p, i) => `<img data-i="${i}" src="${p.src}" alt="${p.tag}" loading="lazy">`).join('')}</div></div>`;
+  const main = $('.reel-main', s), img = $('img', main), bar = $('.reel-bar i', s), thumbs = $$('.reel-thumbs img', s);
+  function show(i) {
+    cur = mod(i);
+    img.style.animation = 'none'; img.offsetHeight; img.style.animation = ''; img.src = P[cur].src;
+    $('.bg', main).style.backgroundImage = `url(${P[cur].src})`;
+    $('.cnt', main).textContent = String(cur + 1).padStart(2, '0'); $('.tag', main).textContent = P[cur].tag;
+    thumbs.forEach((t, k) => t.classList.toggle('on', k === cur));
+    thumbs[cur].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    bar.style.transition = 'none'; bar.style.width = '0'; bar.offsetHeight; bar.style.transition = `width ${STEP}ms linear`; bar.style.width = '100%';
+  }
+  const play = () => { clearInterval(timer); timer = setInterval(() => show(cur + 1), STEP); };
+  const pause = () => { clearInterval(timer); bar.style.transition = 'none'; bar.style.width = '0'; };
+  main.addEventListener('click', () => zoom(cur));
+  $('.reel', s).addEventListener('mouseenter', pause); $('.reel', s).addEventListener('mouseleave', () => { show(cur); play(); });
+  $('.reel-thumbs', s).addEventListener('click', (e) => { const t = e.target.closest('img'); if (t) { show(+t.dataset.i); play(); } });
+  show(0); play();
+})();
+
+/* 5. Mosaic */
+(() => {
+  const s = stage('d5'), tags = ['All', ...new Set(P.map((p) => p.tag))];
+  s.innerHTML = `<div class="chips">${tags.map((t, i) => `<button class="${i ? '' : 'on'}" data-t="${t}">${t}</button>`).join('')}</div>
+    <div class="mos">${P.map((p, i) => `<figure data-i="${i}" data-t="${p.tag}"><img src="${p.src}" alt="${p.tag}" loading="lazy"><figcaption>${p.tag}<small>Click to view</small></figcaption></figure>`).join('')}</div>`;
+  $('.chips', s).addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    $$('.chips button', s).forEach((x) => x.classList.toggle('on', x === b));
+    $$('.mos figure', s).forEach((f) => { f.hidden = b.dataset.t !== 'All' && f.dataset.t !== b.dataset.t; f.style.animation = 'none'; f.offsetHeight; f.style.animation = ''; });
+  });
+  $('.mos', s).addEventListener('click', (e) => { const f = e.target.closest('figure'); if (f) zoom(+f.dataset.i); });
+})();
+
+/* 6. Rangoli ring */
+(() => {
+  const s = stage('d6'), step = 360 / N; let cur = 0, timer;
+  s.innerHTML = `<div class="ring"><div class="spin"></div><div class="orbit">${P.map((p, i) => `<button data-i="${i}" style="--a:${i * step}deg" aria-label="${p.tag}"><img src="${p.src}" alt="" loading="lazy"></button>`).join('')}</div><div class="hub"><img alt=""></div></div>
+    <div class="ring-tag"></div><div class="nav"><button id="rgPrev" aria-label="Previous">&#8592;</button><button id="rgNext" aria-label="Next">&#8594;</button></div>`;
+  const ring = $('.ring', s), btns = $$('.orbit button', s), hub = $('.hub img', s);
+  let turns = 0;
+  function go(i) {
+    const nxt = mod(i); let diff = nxt - cur; if (diff > N / 2) diff -= N; if (diff < -N / 2) diff += N;
+    turns += diff; cur = nxt;
+    ring.style.setProperty('--rot', `${-turns * step}deg`);
+    btns.forEach((b, k) => b.classList.toggle('on', k === cur));
+    hub.style.animation = 'none'; hub.offsetHeight; hub.style.animation = ''; hub.src = P[cur].src;
+    $('.ring-tag', s).textContent = `${P[cur].tag}  ${cur + 1} / ${N}`;
+  }
+  const play = () => { clearInterval(timer); timer = setInterval(() => go(cur + 1), 4000); };
+  go(0); play();
+  $('.orbit', s).addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { go(+b.dataset.i); play(); } });
+  $('.hub', s).addEventListener('click', () => zoom(cur));
+  $('#rgPrev').onclick = () => { go(cur - 1); play(); }; $('#rgNext').onclick = () => { go(cur + 1); play(); };
+  ring.addEventListener('mouseenter', () => clearInterval(timer)); ring.addEventListener('mouseleave', play);
+})();
+
+/* 7. Hanging line */
+(() => {
+  const s = stage('d7'), rows = [[0, 1, 2, 3, 4], [5, 6, 7, 8]];
+  s.innerHTML = `<div class="hang">${rows.map((r) => `<div class="hang-row">${r.map((i) => `<figure data-i="${i}" style="--d:${4 + (i % 4) * 0.8}s;--dl:${-i * 0.7}s"><div class="fr"><img src="${P[i].src}" alt="${P[i].tag}" loading="lazy"><span>${P[i].tag}</span></div></figure>`).join('')}</div>`).join('')}</div>`;
+  s.addEventListener('click', (e) => { const f = e.target.closest('figure'); if (f) zoom(+f.dataset.i); });
+})();
+</script>
+</body>
+</html>

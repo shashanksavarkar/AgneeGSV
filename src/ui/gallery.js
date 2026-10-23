@@ -4,6 +4,9 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
   const mount = document.getElementById('gallery-mount');
   if (!mount) return;
 
+  // top + bottom rows merged, each photo once
+  const photos = [...gallery.top, ...gallery.bottom].filter((item, i, all) => !item.src || all.findIndex((o) => o.src === item.src) === i);
+
   mount.innerHTML = `
     <section class="section gallery-section" id="gallery" aria-labelledby="galleryHeading">
       <div class="container">
@@ -26,9 +29,14 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
           <div class="video-embed-frame" id="videoEmbedFrame" hidden></div>
         </div>
 
-        <!-- Media Marquee: top row drifts left, bottom row drifts right; hover pauses -->
-        <div class="gallery-marquee">
-          ${[['top', 'marquee-left'], ['bottom', 'marquee-right']].map(([key, dir]) => renderRow(gallery[key] || [], key, dir)).join('')}
+        <!-- Coverflow: the front photo holds for 2.5 s, then the stack moves on, forever -->
+        <div class="gf" tabindex="0" aria-roledescription="carousel" aria-label="Festival photos">
+          ${photos.map((item, index) => `
+            <figure class="gf-it" data-index="${index}" style="--accent: ${item.color}" aria-label="${item.title}">
+              ${item.src
+                ? `<img src="${item.src}" alt="${item.title}" loading="lazy" draggable="false">`
+                : `<div class="thumb-ambient-art" aria-hidden="true"><span class="ambient-tag">${item.tag}</span><span class="ambient-num">0${index + 1}</span></div>`}
+            </figure>`).join('')}
         </div>
 
         <dialog class="gallery-lightbox" id="galleryLightbox" aria-label="Gallery image">
@@ -39,17 +47,53 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
     </section>
   `;
 
-  // Lightbox: click a VIEW button to pop the image up
+  // Coverflow: auto-advance every 2.5 s (looping), click a side photo to bring it forward, click the front one to enlarge it
   const box = document.getElementById('galleryLightbox');
-  mount.querySelector('.gallery-marquee')?.addEventListener('click', (e) => {
-    const item = e.target.closest('.gallery-view')?.closest('.gallery-item');
+  const flow = mount.querySelector('.gf');
+  const items = [...flow.querySelectorAll('.gf-it')];
+  const HOLD = 2500;
+  let cur = 0;
+  let timer;
+
+  const paint = () => items.forEach((it, i) => {
+    const n = items.length;
+    const d = ((i - cur + n + n / 2) % n) - n / 2; // shortest signed distance, so the stack wraps around
+    const a = Math.abs(d);
+    it.style.transform = `translateX(${d * 52}%) translateZ(${-a * 150}px) rotateY(${Math.max(-60, Math.min(60, -d * 42))}deg)`;
+    it.style.zIndex = 20 - Math.round(a);
+    it.style.opacity = a > 3 ? 0 : 1 - a * 0.14;
+    it.style.filter = `brightness(${1 - Math.min(a, 3) * 0.22})`;
+    it.style.pointerEvents = a > 3 ? 'none' : 'auto';
+  });
+  const go = (i) => { cur = (i + items.length) % items.length; paint(); };
+  const play = () => { clearInterval(timer); timer = setInterval(() => go(cur + 1), HOLD); };
+
+  paint();
+  play();
+  flow.addEventListener('mouseenter', () => clearInterval(timer));
+  flow.addEventListener('mouseleave', play);
+  flow.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'ArrowRight') go(cur + 1); });
+
+  let x0 = null;
+  flow.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+  flow.addEventListener('pointerup', (e) => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 50) { go(cur + (dx < 0 ? 1 : -1)); play(); }
+  });
+
+  flow.addEventListener('click', (e) => {
+    const item = e.target.closest('.gf-it');
     if (!item) return;
-    const { title, tag, color, src } = gallery[item.dataset.row][item.dataset.index];
+    const index = +item.dataset.index;
+    if (index !== cur) { go(index); play(); return; }
+    const { title, tag, color, src } = photos[index];
     const art = box.querySelector('#lightboxArt');
     art.style.background = src ? '#000' : `linear-gradient(135deg, ${color}99, #0a0514)`;
     art.innerHTML = src
       ? `<img src="${src}" alt="${title}">`
-      : `<span class="ambient-tag">${tag}</span><span class="ambient-num">0${+item.dataset.index + 1}</span>`;
+      : `<span class="ambient-tag">${tag}</span><span class="ambient-num">0${index + 1}</span>`;
     box.showModal();
   });
   box.addEventListener('click', (e) => { if (e.target === box || e.target.closest('.lightbox-close')) box.close(); });
@@ -104,28 +148,4 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
     if (ratio < 0.7 && playing) { ytCommand('pauseVideo'); resumeOnReturn = true; }
     else if (ratio >= 0.98 && resumeOnReturn) { ytCommand('playVideo'); resumeOnReturn = false; }
   }, { threshold: [0, 0.7, 0.98] }).observe(reel);
-}
-
-// One marquee row. The set is repeated an even number of times (long enough to fill wide screens)
-// so the -50% loop animation is seamless.
-function renderRow(items, key, dir) {
-  if (!items.length) return '';
-  const copies = Math.max(1, Math.ceil(2400 / (items.length * 298))) * 2;
-  return `
-    <div class="marquee-row ${dir}">
-      <div class="marquee-track">
-        ${Array.from({ length: copies }, (_, copy) => items.map((item, index) => `
-          <figure class="gallery-item glass-panel" data-row="${key}" data-index="${index}" style="--accent: ${item.color}" ${copy ? 'aria-hidden="true"' : ''}>
-            <div class="gallery-thumb-slot" style="background: linear-gradient(135deg, ${item.color}33, #0a0514)">
-              ${item.src
-                ? `<img class="gallery-photo" src="${item.src}" alt="${item.title}" loading="lazy" draggable="false">`
-                : `<div class="thumb-ambient-art" aria-hidden="true">
-                    <span class="ambient-tag">${item.tag}</span>
-                    <span class="ambient-num">0${index + 1}</span>
-                  </div>`}
-              <button type="button" class="gallery-view" ${copy ? 'tabindex="-1"' : ''} aria-label="View ${item.title}">VIEW</button>
-            </div>
-          </figure>`).join('')).join('')}
-      </div>
-    </div>`;
 }
