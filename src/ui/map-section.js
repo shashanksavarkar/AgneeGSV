@@ -14,6 +14,7 @@ export function renderMapSection(places = [], events = []) {
   const mount = document.getElementById('map-mount');
   if (!mount) return;
 
+  /*
   // COMING SOON: delete this block (and uncomment boot.js in index.html) to restore the full map below.
   mount.innerHTML = `
     <section class="section map-section" id="map" aria-labelledby="mapHeading">
@@ -30,6 +31,7 @@ export function renderMapSection(places = [], events = []) {
     </section>
   `;
   return;
+  */
 
   mount.innerHTML = `
     <section class="section map-section" id="map" aria-labelledby="mapHeading">
@@ -70,6 +72,7 @@ export function renderMapSection(places = [], events = []) {
               <div class="tag o" id="t6">Proposed laboratory block</div>
               <div class="tag o" id="t7">Proposed academic block</div>
               <div class="tag" id="t8">Pratap Vilas Palace</div>
+              <div class="tag f" id="t12">★ Rajabaug · Pre-Agnee Stalls</div>
               <div class="tag" id="t9">Manthan building</div>
               <div class="tag p" id="t10">AGNEE · The Cultural Fest — Oval Ground</div>
               <div class="tag e" id="t11">Main entrance gate</div>
@@ -78,9 +81,42 @@ export function renderMapSection(places = [], events = []) {
                 <button id="bTop" type="button">Top view</button>
                 <button id="bHos" type="button">Hostels</button>
                 <button id="bOval" type="button">★ Agnee Fest</button>
+                <button id="bRaj" type="button">🎪 Rajabaug</button>
               </div>
               <button id="shareBtn" class="share-btn" type="button" aria-label="Share Agnee 2026">↗ <span>Share</span></button>
-              <div id="load"><div class="ld"><i></i><b>Campus in 3D</b><span>Gati Shakti Vishwavidyalaya · building the map…</span></div></div>
+              
+              <!-- Rajabaug Pre-Agnee Stalls Interactive Counter Navigator -->
+              <div class="rb-nav glass-panel" id="rbNav" hidden>
+                <div class="rb-header">
+                  <div class="rb-badge">★ RAJABAUG CARNIVAL</div>
+                  <div class="rb-counter-no">COUNTER <span id="rbCurNum">1</span> OF 10</div>
+                  <button type="button" class="rb-close" id="rbCloseBtn" aria-label="Close counter view">✕</button>
+                </div>
+                <div class="rb-body">
+                  <div class="rb-title-row">
+                    <h3 class="rb-stall-title" id="rbStallTitle">Counter 1: Ring Toss & Bulls-Eye</h3>
+                    <span class="rb-tag" id="rbStallTag">Carnival Game</span>
+                  </div>
+                  <div class="rb-meta-row">
+                    <span class="rb-meta-chip" id="rbStallPrice">🎟️ ₹30 / 5 Rings</span>
+                    <span class="rb-meta-chip highlight" id="rbStallReward">🏆 Agnee Badges</span>
+                  </div>
+                  <p class="rb-desc" id="rbStallDesc">Toss rings onto colored glass bottles to win official Agnee badges & prizes!</p>
+                  <div class="rb-action-box" id="rbStallAction"></div>
+                </div>
+                <div class="rb-controls">
+                  <button type="button" class="rb-btn prev" id="rbPrevBtn">‹ Prev</button>
+                  <div class="rb-dots" id="rbDots">
+                    <button type="button" class="rb-dot active" data-idx="0">1</button><button type="button" class="rb-dot " data-idx="1">2</button><button type="button" class="rb-dot " data-idx="2">3</button><button type="button" class="rb-dot " data-idx="3">4</button><button type="button" class="rb-dot " data-idx="4">5</button><button type="button" class="rb-dot " data-idx="5">6</button><button type="button" class="rb-dot " data-idx="6">7</button><button type="button" class="rb-dot " data-idx="7">8</button><button type="button" class="rb-dot " data-idx="8">9</button><button type="button" class="rb-dot " data-idx="9">10</button>
+                  </div>
+                  <button type="button" class="rb-btn next" id="rbNextBtn">Next ›</button>
+                </div>
+                <div class="rb-actions">
+                  <button type="button" class="rb-view-btn" id="rbOverviewBtn">🎪 Garden Overview</button>
+                </div>
+              </div>
+  
+<div id="load"><div class="ld"><i></i><b>Campus in 3D</b><span>Gati Shakti Vishwavidyalaya · building the map…</span></div></div>
             </div>
           </div>
 
@@ -133,6 +169,24 @@ export function renderMapSection(places = [], events = []) {
 }
 
 function setupMapSectionInteractions() {
+  // Setup Rajabaug Counter Navigator Event Handlers
+  setTimeout(() => {
+    const prevBtn = document.getElementById('rbPrevBtn');
+    const nextBtn = document.getElementById('rbNextBtn');
+    const closeBtn = document.getElementById('rbCloseBtn');
+    const overBtn = document.getElementById('rbOverviewBtn');
+    const dots = document.querySelectorAll('#rbDots .rb-dot');
+
+    if (prevBtn) prevBtn.onclick = () => window.RB_NAV?.go(window.RB_NAV.i - 1);
+    if (nextBtn) nextBtn.onclick = () => window.RB_NAV?.go(window.RB_NAV.i + 1);
+    if (closeBtn) closeBtn.onclick = () => window.RB_NAV?.close();
+    if (overBtn) overBtn.onclick = () => window.RB_NAV?.showOverview();
+
+    dots.forEach((dot, idx) => {
+      dot.onclick = () => window.RB_NAV?.go(idx);
+    });
+  }, 100);
+
   const activateBtn = document.getElementById('btnActivate3D');
   const placeholder = document.getElementById('mapPosterPlaceholder');
   const canvasMount = document.getElementById('canvasMount');

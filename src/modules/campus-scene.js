@@ -1137,129 +1137,1933 @@ labM.add(ls);
     scene.add(bs);
   });
 })();
-// Gati Shakti Vishwavidyalaya (current academic block, the school pin): white building, triple-arched portico, blue sign, dome
-const her = tx((g) => {
-  g.fillStyle = '#f2eee3';
-  g.fillRect(0, 0, 64, 64);
-  [6, 38].forEach((x) => {
-    g.fillStyle = '#ffffff';
-    g.fillRect(x - 2, 10, 20, 40);
-    g.fillStyle = '#4c5a66';
-    g.fillRect(x, 12, 16, 34);
-    g.fillStyle = '#f2eee3';
-    g.fillRect(x + 7, 12, 2, 34);
-    g.fillRect(x, 24, 16, 2);
+
+// ============================================================================
+// RAJABAUG — PRE-AGNEE CARNIVAL & FUN STALLS (10 STALLS + PERFORMANCE AREA)
+// Sited directly west of Pratap Vilas Palace across the arterial road:
+// - Manicured royal garden lawns, sandstone promenades, and perimeter boxwood hedges
+// - Iconic western concentric circular fountain plaza (as in official master plan)
+// - Central open-air "PERFORMANCE AREA" with busking platform and stage perimeter
+// - 10 Pre-Agnee Canopied Fun Stalls (5 along Top / North, 5 along Bottom / South)
+// - Bold numbered stall plaques (1 to 10) matching layout diagram
+// - Custom carnival games, interactive festival booths, and festoon fairy lights
+// - Grand eastern ceremonial entrance gateway with "RAJABAUG" welcome banner
+// ============================================================================
+// RAJABAUG — PRE-AGNEE CARNIVAL & FUN STALLS (REALISTIC 3D ARCHITECTURE)
+// Faithfully modeled from the official master plan & stall layout diagram:
+// - Realistic manicured parterre turf with mowed stripes, curbs & stone edging
+// - Flagstone sandstone promenade network linking all 10 stalls and palace
+// - Western concentric circular fountain plaza with cascading water & marigold beds
+// - Central open-air "PERFORMANCE AREA" with circular acoustic stage & truss lighting
+// - 10 Pre-Agnee Canopied Fun Stalls (5 North row, 5 South row) with:
+//   * Striped canvas tent canopies & scalloped cloth valance fringes
+//   * Bold, high-contrast overhead number plaques (1 to 10)
+//   * Detailed interactive carnival games & food counters
+//   * Warm glowing interior lanterns & catenary festoon fairy lights
+//   * Interactive clickable stalls for counter-to-counter navigation
+// - Grand eastern ceremonial entrance gateway with double-sided illuminated banner
+// ============================================================================
+
+(function () {
+  const rajabaug = new THREE.Group();
+  rajabaug.name = 'rajabaugCarnival';
+
+  const RB_CX = 256 - W / 2; // -119.5
+  const RB_CZ = 189 - H / 2; // -26
+  const RB_W = 82;
+  const RB_D = 68;
+  rajabaug.position.set(RB_CX, 0.04, RB_CZ);
+
+  // ---- 1. Realistic Procedural Turf Texture (Mowed Parterre Bands & Natural Grain)
+  const lawnTex = (() => {
+    const c = document.createElement('canvas');
+    c.width = 512;
+    c.height = 512;
+    const g = c.getContext('2d');
+
+    // Rich deep emerald turf base
+    g.fillStyle = '#346d2c';
+    g.fillRect(0, 0, 512, 512);
+
+    // Subtle alternating mowed lawn bands (light/dark green stripes)
+    for (let y = 0; y < 512; y += 32) {
+      g.fillStyle = (Math.floor(y / 32) % 2 === 0) ? 'rgba(64, 134, 54, 0.45)' : 'rgba(40, 85, 34, 0.3)';
+      g.fillRect(0, y, 512, 32);
+    }
+
+    // Natural grass speckling and grain
+    for (let i = 0; i < 4000; i++) {
+      const rx = Math.random() * 512;
+      const ry = Math.random() * 512;
+      const rCol = Math.random() > 0.5 ? 'rgba(74, 150, 62, 0.35)' : 'rgba(30, 65, 26, 0.35)';
+      g.fillStyle = rCol;
+      g.fillRect(rx, ry, 1.5, 3);
+    }
+
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(4, 4);
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  })();
+
+  const lawnBase = new THREE.Mesh(
+    new THREE.BoxGeometry(RB_W, 0.16, RB_D),
+    new THREE.MeshLambertMaterial({ map: lawnTex, roughness: 0.85 })
+  );
+  lawnBase.position.set(0, 0.08, 0);
+  lawnBase.receiveShadow = true;
+  rajabaug.add(lawnBase);
+
+  // Sandstone beveled perimeter curb around the entire lawn
+  const curbMat = new THREE.MeshLambertMaterial({ color: 0xd4c8b2 });
+  [
+    { w: RB_W + 0.6, d: 0.8, x: 0, z: -RB_D / 2 - 0.4 },
+    { w: RB_W + 0.6, d: 0.8, x: 0, z: RB_D / 2 + 0.4 },
+    { w: 0.8, d: RB_D + 0.6, x: -RB_W / 2 - 0.4, z: 0 },
+    { w: 0.8, d: RB_D + 0.6, x: RB_W / 2 + 0.4, z: 0 }
+  ].forEach((cb) => {
+    const curb = new THREE.Mesh(new THREE.BoxGeometry(cb.w, 0.22, cb.d), curbMat);
+    curb.position.set(cb.x, 0.11, cb.z);
+    rajabaug.add(curb);
   });
-  g.fillStyle = '#d9d1bd';
-  g.fillRect(0, 56, 64, 8);
-});
-const arches3 = tx((g) => {
-  g.fillStyle = '#f4f1e8';
-  g.fillRect(0, 0, 64, 64);
-  const ar = (x, w, top) => {
-    g.fillStyle = '#5d4e40';
-    g.fillRect(x, top + w / 2, w, 64 - top - w / 2 - 5);
-    g.beginPath();
-    g.arc(x + w / 2, top + w / 2, w / 2, Math.PI, 0);
-    g.fill();
+
+  // Manicured Dark Green Boxwood Perimeter Hedges
+  const hedgeMat = new THREE.MeshLambertMaterial({ color: 0x1b4018 });
+  const northHedge = new THREE.Mesh(new THREE.BoxGeometry(RB_W - 2, 0.95, 1.5), hedgeMat);
+  northHedge.position.set(0, 0.52, -RB_D / 2 + 1.0);
+  northHedge.castShadow = true;
+  rajabaug.add(northHedge);
+
+  const southHedge = new THREE.Mesh(new THREE.BoxGeometry(RB_W - 2, 0.95, 1.5), hedgeMat);
+  southHedge.position.set(0, 0.52, RB_D / 2 - 1.0);
+  southHedge.castShadow = true;
+  rajabaug.add(southHedge);
+
+  const westHedge = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.95, RB_D - 2), hedgeMat);
+  westHedge.position.set(-RB_W / 2 + 1.0, 0.52, 0);
+  westHedge.castShadow = true;
+  rajabaug.add(westHedge);
+
+  // East perimeter hedge (framing the grand entrance gate with 14m opening)
+  const eastHedgeHalfD = (RB_D - 16) / 2;
+  [-RB_D / 4 - 4, RB_D / 4 + 4].forEach((hz) => {
+    const eh = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.95, eastHedgeHalfD), hedgeMat);
+    eh.position.set(RB_W / 2 - 1.0, 0.52, hz);
+    eh.castShadow = true;
+    rajabaug.add(eh);
+  });
+
+  // ---- 2. Realistic Sandstone Flagstone Pathways Texture
+  const paverTex = (() => {
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 256;
+    const g = c.getContext('2d');
+    g.fillStyle = '#dbcfba';
+    g.fillRect(0, 0, 256, 256);
+
+    // Stone joint lines
+    g.strokeStyle = '#baa990';
+    g.lineWidth = 2;
+    for (let y = 0; y < 256; y += 32) {
+      g.beginPath(); g.moveTo(0, y); g.lineTo(256, y); g.stroke();
+    }
+    for (let row = 0; row < 256; row += 32) {
+      const off = (row % 64 === 0) ? 0 : 24;
+      for (let x = off; x < 256; x += 48) {
+        g.beginPath(); g.moveTo(x, row); g.lineTo(x, row + 32); g.stroke();
+      }
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(8, 2);
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  })();
+
+  const pathMat = new THREE.MeshLambertMaterial({ map: paverTex, roughness: 0.8 });
+
+  // Main Central East-West Sandstone Promenade
+  const mainAvenue = new THREE.Mesh(new THREE.BoxGeometry(RB_W, 0.08, 5.2), pathMat);
+  mainAvenue.position.set(0, 0.14, 0);
+  mainAvenue.receiveShadow = true;
+  rajabaug.add(mainAvenue);
+
+  // North-South cross pathway connecting stalls to performance area
+  const crossAvenue = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, RB_D - 4), pathMat);
+  crossAvenue.position.set(4, 0.14, 0);
+  crossAvenue.receiveShadow = true;
+  rajabaug.add(crossAvenue);
+
+  // Stall Apron Walkways (In front of Stalls 1-5 and Stalls 6-10)
+  [-17, 17].forEach((wz) => {
+    const apron = new THREE.Mesh(new THREE.BoxGeometry(64, 0.08, 4.6), pathMat);
+    apron.position.set(4, 0.14, wz);
+    apron.receiveShadow = true;
+    rajabaug.add(apron);
+  });
+
+  // ---- 3. Western Fountain & Concentric Circular Plaza (Matching Reference Diagram)
+  const fountainGroup = new THREE.Group();
+  fountainGroup.position.set(-28, 0, 0); // mapX = 228, mapY = 189
+
+  // Concentric sandstone plaza terraces
+  const plazaOuter = new THREE.Mesh(
+    new THREE.CylinderGeometry(9.6, 9.6, 0.12, 32),
+    new THREE.MeshLambertMaterial({ color: 0xd6cdba, roughness: 0.75 })
+  );
+  plazaOuter.position.y = 0.14;
+  plazaOuter.receiveShadow = true;
+  fountainGroup.add(plazaOuter);
+
+  const plazaInner = new THREE.Mesh(
+    new THREE.CylinderGeometry(6.8, 6.8, 0.16, 32),
+    new THREE.MeshLambertMaterial({ color: 0xebe3d3, roughness: 0.7 })
+  );
+  plazaInner.position.y = 0.16;
+  plazaInner.receiveShadow = true;
+  fountainGroup.add(plazaInner);
+
+  // Tiered Royal Marble & Sandstone Fountain
+  const stoneMat = new THREE.MeshLambertMaterial({ color: 0xded5c4, roughness: 0.65 });
+  const waterMat = new THREE.MeshLambertMaterial({
+    color: 0x2980b9,
+    transparent: true,
+    opacity: 0.88,
+    roughness: 0.1
+  });
+
+  // Octagonal/Circular stone basin with carved lip
+  const basin = new THREE.Mesh(new THREE.CylinderGeometry(4.5, 4.6, 0.85, 24), stoneMat);
+  basin.position.y = 0.54;
+  basin.castShadow = true;
+  fountainGroup.add(basin);
+
+  const basinLip = new THREE.Mesh(new THREE.CylinderGeometry(4.8, 4.6, 0.15, 24), stoneMat);
+  basinLip.position.y = 0.98;
+  fountainGroup.add(basinLip);
+
+  // Shimmering water pool disc
+  const waterPool = new THREE.Mesh(new THREE.CylinderGeometry(4.3, 4.3, 0.06, 24), waterMat);
+  waterPool.position.y = 0.88;
+  fountainGroup.add(waterPool);
+
+  // Ornate central pedestal
+  const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 1.0, 1.9, 16), stoneMat);
+  pedestal.position.y = 1.45;
+  pedestal.castShadow = true;
+  fountainGroup.add(pedestal);
+
+  // Upper overflowing scalloped basin
+  const upperBasin = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.1, 0.5, 20), stoneMat);
+  upperBasin.position.y = 2.25;
+  upperBasin.castShadow = true;
+  fountainGroup.add(upperBasin);
+
+  const upperWater = new THREE.Mesh(new THREE.CylinderGeometry(2.15, 2.15, 0.05, 20), waterMat);
+  upperWater.position.y = 2.48;
+  fountainGroup.add(upperWater);
+
+  // Fountain finial & crystal water plume
+  const finial = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.48, 1.2, 12), stoneMat);
+  finial.position.y = 2.95;
+  finial.castShadow = true;
+  fountainGroup.add(finial);
+
+  // Upward foaming crystal water spray plume
+  const waterPlume = new THREE.Mesh(
+    new THREE.ConeGeometry(0.4, 1.8, 12),
+    new THREE.MeshLambertMaterial({ color: 0xceeaf5, transparent: true, opacity: 0.82 })
+  );
+  waterPlume.position.y = 3.95;
+  fountainGroup.add(waterPlume);
+
+  // 6 curved dancing water spray jets
+  for (let j = 0; j < 6; j++) {
+    const jAngle = (j * Math.PI) / 3;
+    const sprayCurve = new THREE.QuadraticBezierCurve3(
+      new THREE.Vector3(0, 3.2, 0),
+      new THREE.Vector3(Math.cos(jAngle) * 1.5, 3.5, Math.sin(jAngle) * 1.5),
+      new THREE.Vector3(Math.cos(jAngle) * 2.2, 2.4, Math.sin(jAngle) * 2.2)
+    );
+    const sprayGeo = new THREE.TubeGeometry(sprayCurve, 8, 0.08, 4, false);
+    const sprayMesh = new THREE.Mesh(sprayGeo, waterMat);
+    fountainGroup.add(sprayMesh);
+  }
+
+  // Concentric Blooming Marigold Flowerbeds surrounding the terrace
+  const flowerColors = [0xe67300, 0xf5b800, 0x9b1b6e, 0xf58e00];
+  for (let fb = 0; fb < 8; fb++) {
+    const fAngle = (fb * Math.PI) / 4;
+    const fRad = 8.3;
+    const bed = new THREE.Mesh(
+      new THREE.CylinderGeometry(1.3, 1.4, 0.32, 14),
+      new THREE.MeshLambertMaterial({ color: 0x224a1d })
+    );
+    bed.position.set(Math.cos(fAngle) * fRad, 0.24, Math.sin(fAngle) * fRad);
+    fountainGroup.add(bed);
+
+    // Blooming flower blossoms
+    const flowerHead = new THREE.Mesh(
+      new THREE.SphereGeometry(1.05, 8, 6),
+      new THREE.MeshLambertMaterial({ color: flowerColors[fb % flowerColors.length] })
+    );
+    flowerHead.position.set(Math.cos(fAngle) * fRad, 0.52, Math.sin(fAngle) * fRad);
+    flowerHead.scale.y = 0.45;
+    fountainGroup.add(flowerHead);
+  }
+
+  // 4 Classical Stone Garden Urns framing plaza corners
+  [
+    [-6.8, -6.8], [6.8, -6.8], [-6.8, 6.8], [6.8, 6.8]
+  ].forEach(([ux, uz]) => {
+    const urn = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.25, 0.9, 12), stoneMat);
+    urn.position.set(ux, 0.65, uz);
+    urn.castShadow = true;
+    fountainGroup.add(urn);
+
+    const bush = new THREE.Mesh(
+      new THREE.SphereGeometry(0.55, 8, 8),
+      new THREE.MeshLambertMaterial({ color: 0x2d6124 })
+    );
+    bush.position.set(ux, 1.25, uz);
+    fountainGroup.add(bush);
+  });
+
+  rajabaug.add(fountainGroup);
+
+  // ---- 4. Central "PERFORMANCE AREA" (Matching Layout Image 3)
+  const perfGroup = new THREE.Group();
+  perfGroup.position.set(4, 0, 0); // mapX = 260, mapY = 189
+
+  // Performance arena dashed border (34m wide x 18m deep)
+  const perfW = 34;
+  const perfD = 18;
+  const dashMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+  const addDashedLine = (x0, z0, x1, z1, segments = 12) => {
+    for (let s = 0; s < segments; s++) {
+      if (s % 2 === 0) {
+        const t0 = s / segments;
+        const t1 = (s + 0.85) / segments;
+        const sx = x0 + (x1 - x0) * (t0 + t1) / 2;
+        const sz = z0 + (z1 - z0) * (t0 + t1) / 2;
+        const len = Math.hypot(x1 - x0, z1 - z0) / segments * 0.85;
+        const isHoriz = Math.abs(x1 - x0) > Math.abs(z1 - z0);
+        const dash = new THREE.Mesh(
+          new THREE.BoxGeometry(isHoriz ? len : 0.24, 0.03, isHoriz ? 0.24 : len),
+          dashMat
+        );
+        dash.position.set(sx, 0.17, sz);
+        perfGroup.add(dash);
+      }
+    }
   };
-  ar(4, 16, 20);
-  ar(24, 16, 6);
-  ar(44, 16, 20);
-  g.fillStyle = '#c9b78f';
-  g.fillRect(0, 59, 64, 5);
+  addDashedLine(-perfW / 2, -perfD / 2, perfW / 2, -perfD / 2, 14); // North line
+  addDashedLine(-perfW / 2, perfD / 2, perfW / 2, perfD / 2, 14);   // South line
+  addDashedLine(-perfW / 2, -perfD / 2, -perfW / 2, perfD / 2, 8);  // West line
+  addDashedLine(perfW / 2, -perfD / 2, perfW / 2, perfD / 2, 8);   // East line
+
+  // Raised Circular Acoustic Teak Busking Platform
+  const buskStage = new THREE.Mesh(
+    new THREE.CylinderGeometry(4.4, 4.5, 0.4, 24),
+    new THREE.MeshLambertMaterial({ color: 0x82522c, roughness: 0.7 })
+  );
+  buskStage.position.y = 0.28;
+  buskStage.receiveShadow = true;
+  buskStage.castShadow = true;
+  perfGroup.add(buskStage);
+
+  // Stage center decorative starburst inlay
+  const stageInlay = new THREE.Mesh(
+    new THREE.CylinderGeometry(2.6, 2.6, 0.04, 16),
+    new THREE.MeshLambertMaterial({ color: 0xda9442, roughness: 0.6 })
+  );
+  stageInlay.position.y = 0.49;
+  perfGroup.add(stageInlay);
+
+  // Central microphone stand & acoustic monitors
+  const micStand = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.04, 0.04, 1.8, 8),
+    new THREE.MeshLambertMaterial({ color: 0x222222 })
+  );
+  micStand.position.set(0, 1.38, 0);
+  perfGroup.add(micStand);
+
+  [-1.6, 1.6].forEach((mx) => {
+    const speaker = new THREE.Mesh(
+      new THREE.BoxGeometry(0.7, 0.9, 0.55),
+      new THREE.MeshLambertMaterial({ color: 0x1f2226 })
+    );
+    speaker.position.set(mx, 0.75, 2.4);
+    speaker.rotation.y = mx > 0 ? -0.35 : 0.35;
+    speaker.castShadow = true;
+    perfGroup.add(speaker);
+  });
+
+  // 4 Corner Aluminum Stage Lighting Truss Towers with Angled Floodlights
+  [
+    [-perfW / 2 + 1.2, -perfD / 2 + 1.2],
+    [perfW / 2 - 1.2, -perfD / 2 + 1.2],
+    [-perfW / 2 + 1.2, perfD / 2 - 1.2],
+    [perfW / 2 - 1.2, perfD / 2 - 1.2]
+  ].forEach(([tx, tz]) => {
+    const truss = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.14, 0.18, 4.8, 8),
+      new THREE.MeshLambertMaterial({ color: 0x7c8591, roughness: 0.5 })
+    );
+    truss.position.set(tx, 2.4, tz);
+    truss.castShadow = true;
+    perfGroup.add(truss);
+
+    const spotFixture = new THREE.Mesh(
+      new THREE.BoxGeometry(0.45, 0.35, 0.5),
+      new THREE.MeshBasicMaterial({ color: 0xffb74d })
+    );
+    spotFixture.position.set(tx, 4.8, tz);
+    spotFixture.lookAt(0, 0.5, 0);
+    perfGroup.add(spotFixture);
+  });
+
+  // 4 Wooden Picnic / Bistro Tables with Umbrellas for Spectators
+  [
+    [-11, -5.5], [11, -5.5], [-11, 5.5], [11, 5.5]
+  ].forEach(([bx, bz]) => {
+    const tableGroup = new THREE.Group();
+    tableGroup.position.set(bx, 0.15, bz);
+
+    // Wooden table
+    const table = new THREE.Mesh(
+      new THREE.CylinderGeometry(1.1, 1.1, 0.1, 12),
+      new THREE.MeshLambertMaterial({ color: 0xa06d42 })
+    );
+    table.position.y = 0.75;
+    table.castShadow = true;
+    tableGroup.add(table);
+
+    const pole = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.04, 2.4, 8),
+      new THREE.MeshLambertMaterial({ color: 0x444444 })
+    );
+    pole.position.y = 1.2;
+    tableGroup.add(pole);
+
+    // Colorful umbrella canopy
+    const umbrella = new THREE.Mesh(
+      new THREE.ConeGeometry(1.6, 0.6, 10),
+      new THREE.MeshLambertMaterial({ color: (bx * bz > 0) ? 0xe67e22 : 0x2980b9 })
+    );
+    umbrella.position.y = 2.4;
+    tableGroup.add(umbrella);
+
+    perfGroup.add(tableGroup);
+  });
+
+  rajabaug.add(perfGroup);
+
+  // ---- 5. The 10 Pre-Agnee Canopied Fun Stalls (High-Fidelity 3D Models & Authentic Props)
+  const STALL_CONFIGS = [
+    { num: 1, name: 'Ring Toss & Bulls-Eye', tag: 'Carnival Game', desc: 'Toss rings onto colored glass bottles to win official Agnee badges & keychains!', roofCol: '#e86820', stripeCol: '#ffffff', type: 'toss', price: '🎟️ ₹30 / 5 Rings', reward: '🏆 Agnee Badges & Toys' },
+    { num: 2, name: 'Balloon Dart Blitz', tag: 'Action Game', desc: 'Pop 3 target balloons in a row with precision darts for Agnee vouchers & passes!', roofCol: '#1d55b8', stripeCol: '#ffffff', type: 'dart', price: '🎯 ₹40 / 3 Darts', reward: '🎟️ Fest Day Passes' },
+    { num: 3, name: 'Can Knockout Alley', tag: 'Skill Game', desc: 'Knock down the silver tin can pyramid in a single clean strike to win an Agnee cap!', roofCol: '#ce2626', stripeCol: '#ffe600', type: 'cans', price: '⚾ ₹30 / 2 Throws', reward: '🧢 Agnee Festival Cap' },
+    { num: 4, name: 'Agnee VR & Retro Gaming', tag: 'Arcade Hub', desc: 'Challenge friends at 90s retro arcade cabinets and experience immersive campus VR tours!', roofCol: '#1f8a4e', stripeCol: '#00f0ff', type: 'arcade', price: '🎮 Free to Play', reward: '✨ VR Experience & Highscores' },
+    { num: 5, name: 'Fortune Wheel & Lucky Draw', tag: 'Prize Spin', desc: 'Spin the giant 12-segment carnival wheel for fest merch, stickers, and pro-show passes!', roofCol: '#7b2391', stripeCol: '#f39c12', type: 'wheel', price: '🎡 ₹50 per Spin', reward: '🎁 Hoodies & VIP Passes' },
+    { num: 6, name: 'Face Art & Glitter Tattoos', tag: 'Art Studio', desc: 'Vibrant tribal face paint, neon glowing decals, and metallic Agnee fest tattoos!', roofCol: '#e86820', stripeCol: '#ffea00', type: 'face', price: '🎨 ₹50 – ₹100', reward: '✨ UV Glow & Decals' },
+    { num: 7, name: 'Agnee Merch & Souvenirs', tag: 'Official Shop', desc: 'Official Agnee 2026 hoodies (Eclipse Black & Inferno Red), tees, totes, and caps!', roofCol: '#1d55b8', stripeCol: '#f1c40f', type: 'merch', price: '🏷️ ₹499 Official Merch', reward: '🛍️ Hoodies, Tees, Totes & Caps', isMerch: true },
+    { num: 8, name: 'Popcorn & Candy Floss', tag: 'Festival Treats', desc: 'Fresh hot buttered popcorn, twirled cotton candy, and chilled fruit slushies!', roofCol: '#ce2626', stripeCol: '#ff66cc', type: 'popcorn', price: '🍿 ₹40 – ₹60', reward: '🍿 Hot Buttered Treats' },
+    { num: 9, name: 'Chai & Street Munchies', tag: 'Campus Food', desc: 'Traditional cutting masala chai in clay kulhads with hot golden samosas and spicy bites!', roofCol: '#1f8a4e', stripeCol: '#f39c12', type: 'chai', price: '☕ ₹20 – ₹50', reward: '☕ Cutting Chai & Samosas' },
+    { num: 10, name: 'Polaroid Memory Wall', tag: 'Photo Zone', desc: 'Capture instant retro Polaroid snapshots and pin your memory onto the Agnee memory wall!', roofCol: '#7b2391', stripeCol: '#00d2d3', type: 'photo', price: '📸 ₹50 per Print', reward: '🖼️ Custom Keepsake Frame' }
+  ];
+
+  const stallXs = [-17, -6, 5, 16, 27]; // 5 columns across the field
+  const interactiveStallMeshes = [];
+
+  // Helper to create high-resolution striped awning canopy texture
+  const createAwningTex = (baseHex, stripeHex) => {
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 256;
+    const g = c.getContext('2d');
+    g.fillStyle = baseHex;
+    g.fillRect(0, 0, 256, 256);
+
+    // 8 vertical bold festival stripes
+    g.fillStyle = stripeHex;
+    for (let x = 0; x < 256; x += 32) {
+      g.fillRect(x, 0, 16, 256);
+    }
+    // Shadow shading along eaves
+    const shGrad = g.createLinearGradient(0, 200, 0, 256);
+    shGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    shGrad.addColorStop(1, 'rgba(0,0,0,0.35)');
+    g.fillStyle = shGrad;
+    g.fillRect(0, 200, 256, 56);
+
+    const t = new THREE.CanvasTexture(c);
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  };
+
+  STALL_CONFIGS.forEach((cfg) => {
+    const isTop = cfg.num <= 5;
+    const colIdx = isTop ? cfg.num - 1 : cfg.num - 6;
+    const sx = stallXs[colIdx];
+    const sz = isTop ? -21 : 21;
+    const sRot = isTop ? 0 : Math.PI;
+
+    const stall = new THREE.Group();
+    stall.name = 'stall_' + cfg.num;
+    stall.userData = { stallIndex: cfg.num - 1, stallConfig: cfg };
+    stall.position.set(sx, 0, sz);
+    stall.rotation.y = sRot;
+
+    // A. Raised Teak Wood Deck Platform
+    const deck = new THREE.Mesh(
+      new THREE.BoxGeometry(4.8, 0.14, 4.2),
+      new THREE.MeshLambertMaterial({ color: 0x8a5933, roughness: 0.7 })
+    );
+    deck.position.set(0, 0.07, 0);
+    deck.receiveShadow = true;
+    stall.add(deck);
+
+    // B. Corner Timber Posts with Brass Base Rings
+    const postMat = new THREE.MeshLambertMaterial({ color: 0xeee9df, roughness: 0.5 });
+    const brassMat = new THREE.MeshLambertMaterial({ color: 0xe6b325, roughness: 0.3 });
+    [
+      [-2.1, -1.8], [2.1, -1.8], [-2.1, 1.8], [2.1, 1.8]
+    ].forEach(([px, pz]) => {
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.9, 8), postMat);
+      pole.position.set(px, 1.48, pz);
+      pole.castShadow = true;
+      stall.add(pole);
+
+      const footing = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.08, 0.24), brassMat);
+      footing.position.set(px, 0.14, pz);
+      stall.add(footing);
+    });
+
+    // C. Realistic Striped Pagoda Fabric Canopy Roof
+    const awningTex = createAwningTex(cfg.roofCol, cfg.stripeCol);
+    const roof = new THREE.Mesh(
+      new THREE.ConeGeometry(3.4, 1.75, 4),
+      new THREE.MeshLambertMaterial({ map: awningTex, roughness: 0.65, side: THREE.DoubleSide })
+    );
+    roof.position.set(0, 3.65, 0);
+    roof.rotation.y = Math.PI / 4;
+    roof.castShadow = true;
+    stall.add(roof);
+
+    // D. Scalloped Cloth Valance Fringe around Eaves
+    const valanceMat = new THREE.MeshLambertMaterial({ color: cfg.stripeCol === '#ffffff' ? cfg.roofCol : cfg.stripeCol });
+    const valanceFront = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.35, 0.06), valanceMat);
+    valanceFront.position.set(0, 2.85, 1.85);
+    stall.add(valanceFront);
+
+    const valanceBack = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.35, 0.06), valanceMat);
+    valanceBack.position.set(0, 2.85, -1.85);
+    stall.add(valanceBack);
+
+    [-2.2, 2.2].forEach((vx) => {
+      const valanceSide = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.35, 3.8), valanceMat);
+      valanceSide.position.set(vx, 2.85, 0);
+      stall.add(valanceSide);
+    });
+
+    // Warm Festoon Fairy String Lights under Eave
+    const bulbMat = new THREE.MeshBasicMaterial({ color: 0xfff099 });
+    for (let b = -1.8; b <= 1.8; b += 0.45) {
+      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 8), bulbMat);
+      bulb.position.set(b, 2.68 - Math.sin((b + 1.8) / 3.6 * Math.PI) * 0.08, 1.84);
+      stall.add(bulb);
+    }
+
+    // Brass Apex Finial with Waving Agnee Festival Pennant
+    const finialPin = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.08, 0.6, 8),
+      brassMat
+    );
+    finialPin.position.set(0, 4.75, 0);
+    stall.add(finialPin);
+
+    const flagMesh = new THREE.Mesh(
+      new THREE.ConeGeometry(0.25, 0.65, 3),
+      new THREE.MeshLambertMaterial({ color: cfg.roofCol, side: THREE.DoubleSide })
+    );
+    flagMesh.position.set(0.25, 4.9, 0);
+    flagMesh.rotation.z = -Math.PI / 2;
+    stall.add(flagMesh);
+
+    // E. Polished Hardwood Front Serving Counter
+    const counter = new THREE.Mesh(
+      new THREE.BoxGeometry(3.9, 0.95, 0.85),
+      new THREE.MeshLambertMaterial({ color: 0x9e6538, roughness: 0.6 })
+    );
+    counter.position.set(0, 0.48, 1.4);
+    counter.castShadow = true;
+    stall.add(counter);
+
+    // Front Decorative Festival Skirt Banner
+    const skirt = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.85, 0.78),
+      new THREE.MeshLambertMaterial({ color: cfg.roofCol })
+    );
+    skirt.position.set(0, 0.45, 1.83);
+    stall.add(skirt);
+
+    // Front Desk Emblem Plate
+    const deskCanvas = document.createElement('canvas');
+    deskCanvas.width = 384;
+    deskCanvas.height = 96;
+    const dg = deskCanvas.getContext('2d');
+    dg.fillStyle = '#0e1624';
+    dg.fillRect(0, 0, 384, 96);
+    dg.strokeStyle = '#f5b800';
+    dg.lineWidth = 4;
+    dg.strokeRect(3, 3, 378, 90);
+    dg.fillStyle = '#ffffff';
+    dg.font = '800 24px Arial, sans-serif';
+    dg.textAlign = 'center';
+    dg.textBaseline = 'middle';
+    dg.fillText('AGNEE FESTIVAL · STALL ' + cfg.num, 192, 48);
+    const deskTex = new THREE.CanvasTexture(deskCanvas);
+    deskTex.encoding = THREE.sRGBEncoding;
+    const deskPlate = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.8, 0.45),
+      new THREE.MeshBasicMaterial({ map: deskTex, side: THREE.DoubleSide })
+    );
+    deskPlate.position.set(0, 0.46, 1.84);
+    stall.add(deskPlate);
+
+    // F. Backboard Display Wall
+    const backWall = new THREE.Mesh(
+      new THREE.BoxGeometry(4.2, 2.3, 0.12),
+      new THREE.MeshLambertMaterial({ color: 0x483a2e, roughness: 0.8 })
+    );
+    backWall.position.set(0, 1.55, -1.75);
+    backWall.castShadow = true;
+    stall.add(backWall);
+
+    // G. Realistic Overhead Eaves Marquee Banner (Mounted above serving window at Y = 3.12m!)
+    const signCanvas = document.createElement('canvas');
+    signCanvas.width = 512;
+    signCanvas.height = 140;
+    const sg = signCanvas.getContext('2d');
+
+    // Obsidian glossy plate with brushed gold metallic double-border
+    sg.fillStyle = '#0b1320';
+    sg.fillRect(0, 0, 512, 140);
+    sg.strokeStyle = '#f5b800';
+    sg.lineWidth = 6;
+    sg.strokeRect(4, 4, 504, 132);
+    sg.lineWidth = 2;
+    sg.strokeRect(10, 10, 492, 120);
+
+    // Number Badge (Left Pill / Circle)
+    sg.fillStyle = '#f5b800';
+    sg.beginPath();
+    sg.arc(60, 70, 42, 0, Math.PI * 2);
+    sg.fill();
+    sg.fillStyle = '#0c1322';
+    sg.font = '900 44px Arial, sans-serif';
+    sg.textAlign = 'center';
+    sg.textBaseline = 'middle';
+    sg.fillText(String(cfg.num), 60, 70);
+
+    // Activity Title (Right Bold Heading)
+    sg.fillStyle = '#ffffff';
+    sg.font = '900 30px Arial, sans-serif';
+    sg.textAlign = 'left';
+    sg.textBaseline = 'alphabetic';
+    sg.fillText(cfg.name.toUpperCase(), 124, 62);
+
+    // Activity Tag Subtitle
+    sg.fillStyle = '#f5b800';
+    sg.font = '700 18px Arial, sans-serif';
+    sg.fillText('★ ' + cfg.tag.toUpperCase() + ' · ' + (cfg.price || 'PRE-AGNEE'), 124, 100);
+
+    const signTex = new THREE.CanvasTexture(signCanvas);
+    signTex.encoding = THREE.sRGBEncoding;
+    const signBoard = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.5, 0.68),
+      new THREE.MeshBasicMaterial({ map: signTex, side: THREE.DoubleSide })
+    );
+    signBoard.position.set(0, 3.12, 1.86);
+    stall.add(signBoard);
+
+    // H. Warm Interior Glowing Lantern Fixture
+    const interiorLantern = new THREE.Mesh(
+      new THREE.SphereGeometry(0.2, 12, 12),
+      new THREE.MeshBasicMaterial({ color: 0xffea88 })
+    );
+    interiorLantern.position.set(0, 2.5, 0);
+    stall.add(interiorLantern);
+
+    // I. Custom High-Fidelity 3D Game & Merchandise Props
+    if (cfg.type === 'toss') {
+      // 1. Rustic wooden bottle crate with 10 colored glass bottles
+      const crateMat = new THREE.MeshLambertMaterial({ color: 0x6e4726 });
+      const crate = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.18, 0.7), crateMat);
+      crate.position.set(-0.6, 0.98, 1.4);
+      stall.add(crate);
+
+      const bCols = [0xe74c3c, 0x3498db, 0x2ecc71, 0xf1c40f, 0x9b59b6];
+      for (let b = 0; b < 10; b++) {
+        const row = Math.floor(b / 5);
+        const col = b % 5;
+        const bottle = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.045, 0.065, 0.44, 12),
+          new THREE.MeshLambertMaterial({ color: bCols[b % 5], roughness: 0.15 })
+        );
+        bottle.position.set(-1.1 + col * 0.26, 1.15, 1.25 + row * 0.28);
+        bottle.castShadow = true;
+        stall.add(bottle);
+      }
+      // Rattan hoop rings stack
+      for (let r = 0; r < 5; r++) {
+        const ring = new THREE.Mesh(
+          new THREE.TorusGeometry(0.16, 0.022, 8, 16),
+          new THREE.MeshLambertMaterial({ color: 0xc8a165 })
+        );
+        ring.position.set(1.1, 0.98 + r * 0.028, 1.4);
+        ring.rotation.x = Math.PI / 2;
+        stall.add(ring);
+      }
+      // Giant Plush Teddy Bear Prize on Back Shelf
+      const bearShelf = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.08, 0.4), crateMat);
+      bearShelf.position.set(0, 1.6, -1.55);
+      const bearBody = new THREE.Mesh(new THREE.SphereGeometry(0.24, 12, 12), new THREE.MeshLambertMaterial({ color: 0x8d5524 }));
+      bearBody.position.set(0, 1.88, -1.55);
+      const bearHead = new THREE.Mesh(new THREE.SphereGeometry(0.18, 12, 12), new THREE.MeshLambertMaterial({ color: 0xa06535 }));
+      bearHead.position.set(0, 2.2, -1.55);
+      const ear1 = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), new THREE.MeshLambertMaterial({ color: 0x8d5524 }));
+      ear1.position.set(-0.14, 2.34, -1.55);
+      const ear2 = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), new THREE.MeshLambertMaterial({ color: 0x8d5524 }));
+      ear2.position.set(0.14, 2.34, -1.55);
+      stall.add(bearShelf, bearBody, bearHead, ear1, ear2);
+
+    } else if (cfg.type === 'dart') {
+      const bCols = [0xe91e63, 0x00bcd4, 0xffeb3b, 0x4caf50, 0xff5722];
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 5; col++) {
+          const balloon = new THREE.Mesh(
+            new THREE.SphereGeometry(0.18, 10, 10),
+            new THREE.MeshLambertMaterial({ color: bCols[(row * 5 + col) % 5], roughness: 0.3 })
+          );
+          balloon.scale.set(0.9, 1.25, 0.8);
+          balloon.position.set(-1.2 + col * 0.6, 1.35 + row * 0.52, -1.6);
+          stall.add(balloon);
+        }
+      }
+      // Cork dartboard with bullseye
+      const dartboard = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.48, 0.48, 0.06, 16),
+        new THREE.MeshLambertMaterial({ color: 0x222222 })
+      );
+      dartboard.rotation.x = Math.PI / 2;
+      dartboard.position.set(0, 1.6, -1.65);
+      const bull = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.07, 16), new THREE.MeshLambertMaterial({ color: 0xe74c3c }));
+      bull.rotation.x = Math.PI / 2;
+      bull.position.set(0, 1.6, -1.63);
+      stall.add(dartboard, bull);
+
+      // Dart tray with steel darts
+      const dTray = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.08, 0.35), new THREE.MeshLambertMaterial({ color: 0x3e2723 }));
+      dTray.position.set(0.8, 0.98, 1.4);
+      stall.add(dTray);
+      for (let d = 0; d < 3; d++) {
+        const dart = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.28, 6), new THREE.MeshLambertMaterial({ color: 0xffd700 }));
+        dart.position.set(0.65 + d * 0.14, 1.04, 1.4);
+        dart.rotation.x = Math.PI / 2;
+        stall.add(dart);
+      }
+
+    } else if (cfg.type === 'cans') {
+      const canMat = new THREE.MeshLambertMaterial({ color: 0xe0e0e0, roughness: 0.2 });
+      [-0.7, 0.7].forEach((cx) => {
+        // Base row (3 cans)
+        for (let i = 0; i < 3; i++) {
+          const c = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.24, 12), canMat);
+          c.position.set(cx - 0.22 + i * 0.22, 1.05, 1.4);
+          c.castShadow = true;
+          stall.add(c);
+        }
+        // Middle row (2 cans)
+        for (let i = 0; i < 2; i++) {
+          const c = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.24, 12), canMat);
+          c.position.set(cx - 0.11 + i * 0.22, 1.29, 1.4);
+          c.castShadow = true;
+          stall.add(c);
+        }
+        // Top can
+        const topCan = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.24, 12), canMat);
+        topCan.position.set(cx, 1.53, 1.4);
+        topCan.castShadow = true;
+        stall.add(topCan);
+      });
+      // Soft base balls
+      for (let b = 0; b < 3; b++) {
+        const ball = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), new THREE.MeshLambertMaterial({ color: 0xff3b30 }));
+        ball.position.set(-0.2 + b * 0.2, 1.01, 1.4);
+        stall.add(ball);
+      }
+
+    } else if (cfg.type === 'arcade') {
+      [-0.85, 0.85].forEach((ax) => {
+        const cabinet = new THREE.Mesh(
+          new THREE.BoxGeometry(0.9, 1.8, 0.8),
+          new THREE.MeshLambertMaterial({ color: 0x121824, roughness: 0.5 })
+        );
+        cabinet.position.set(ax, 0.9, 0.3);
+        cabinet.castShadow = true;
+        stall.add(cabinet);
+
+        const screen = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.7, 0.5),
+          new THREE.MeshBasicMaterial({ color: ax < 0 ? 0x00f0ff : 0xff007f })
+        );
+        screen.position.set(ax, 1.25, 0.71);
+        stall.add(screen);
+      });
+      // VR Headset on tabletop stand
+      const vrVisor = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.18, 0.24), new THREE.MeshLambertMaterial({ color: 0x222222 }));
+      vrVisor.position.set(0, 1.05, 1.4);
+      const vrLed = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.04), new THREE.MeshBasicMaterial({ color: 0x00f0ff }));
+      vrLed.position.set(0, 1.05, 1.53);
+      stall.add(vrVisor, vrLed);
+
+    } else if (cfg.type === 'wheel') {
+      const wheelStand = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.08, 0.12, 1.9, 8),
+        new THREE.MeshLambertMaterial({ color: 0x333333 })
+      );
+      wheelStand.position.set(0, 1.25, 0.3);
+      stall.add(wheelStand);
+
+      const wheelDisc = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.95, 0.95, 0.08, 20),
+        new THREE.MeshLambertMaterial({ color: 0xf39c12, roughness: 0.5 })
+      );
+      wheelDisc.rotation.x = Math.PI / 2;
+      wheelDisc.position.set(0, 1.9, 0.35);
+      stall.add(wheelDisc);
+
+      // Raffle ticket box & prize packages
+      const raffle = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.35, 0.35), new THREE.MeshLambertMaterial({ color: 0xe67e22 }));
+      raffle.position.set(-0.8, 1.12, 1.4);
+      stall.add(raffle);
+
+    } else if (cfg.type === 'face') {
+      const palette = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.38, 0.38, 0.04, 12),
+        new THREE.MeshLambertMaterial({ color: 0xdeb887 })
+      );
+      palette.position.set(-0.6, 0.98, 1.4);
+      stall.add(palette);
+
+      [0xe74c3c, 0x3498db, 0x2ecc71, 0xf1c40f, 0x9b59b6].forEach((col, k) => {
+        const blob = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.06, 0.06, 0.02, 8),
+          new THREE.MeshLambertMaterial({ color: col })
+        );
+        blob.position.set(-0.75 + k * 0.08, 1.01, 1.4);
+        stall.add(blob);
+      });
+      // Vanity mirror stand
+      const mirror = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.65, 0.04), new THREE.MeshLambertMaterial({ color: 0xdddddd }));
+      mirror.position.set(0.6, 1.28, 1.4);
+      stall.add(mirror);
+
+    } else if (cfg.type === 'merch') {
+      // ================================================================
+      // HIGH-FIDELITY OFFICIAL AGNEE'26 MERCHANDISE SELLING COUNTER
+      // ================================================================
+      // 1. Chrome Clothes Display Rail with Vertical Standards & Feet
+      const rackMat = new THREE.MeshLambertMaterial({ color: 0xe0e0e0, roughness: 0.2 });
+      const rackBar = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 2.3, 12), rackMat);
+      rackBar.position.set(0, 1.7, -0.6);
+      rackBar.rotation.z = Math.PI / 2;
+      stall.add(rackBar);
+
+      [-1.05, 1.05].forEach((rx) => {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 1.7, 12), rackMat);
+        post.position.set(rx, 0.85, -0.6);
+        stall.add(post);
+        const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.04, 12), rackMat);
+        foot.position.set(rx, 0.08, -0.6);
+        stall.add(foot);
+      });
+
+      // 2. Three Distinct Official Agnee Garments on Hangers
+      // Center: "Eclipse Black" Official Hoodie (₹499)
+      const blackHoodie = new THREE.Group();
+      blackHoodie.position.set(0, 1.22, -0.6);
+      const bBody = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.68, 0.16), new THREE.MeshLambertMaterial({ color: 0x111114 }));
+      const bHood = new THREE.Mesh(new THREE.SphereGeometry(0.18, 12, 12), new THREE.MeshLambertMaterial({ color: 0x18181c }));
+      bHood.scale.set(1.1, 1.3, 0.9);
+      bHood.position.set(0, 0.36, -0.04);
+      const bLogo = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 0.2), new THREE.MeshBasicMaterial({ color: 0xff7700 }));
+      bLogo.position.set(0, 0.1, 0.09);
+      blackHoodie.add(bBody, bHood, bLogo);
+      stall.add(blackHoodie);
+
+      // Left: "Inferno Red" Festival Hoodie (₹499)
+      const redHoodie = new THREE.Group();
+      redHoodie.position.set(-0.64, 1.22, -0.6);
+      const rBody = new THREE.Mesh(new THREE.BoxGeometry(0.50, 0.65, 0.15), new THREE.MeshLambertMaterial({ color: 0xb51e2b }));
+      const rHood = new THREE.Mesh(new THREE.SphereGeometry(0.17, 12, 12), new THREE.MeshLambertMaterial({ color: 0xc92433 }));
+      rHood.scale.set(1.1, 1.3, 0.9);
+      rHood.position.set(0, 0.35, -0.04);
+      const rLogo = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.18), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+      rLogo.position.set(0, 0.1, 0.085);
+      redHoodie.add(rBody, rHood, rLogo);
+      stall.add(redHoodie);
+
+      // Right: "Ethereal White" Festival Tote / Tee (₹499)
+      const whiteItem = new THREE.Group();
+      whiteItem.position.set(0.64, 1.22, -0.6);
+      const wBody = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.62, 0.12), new THREE.MeshLambertMaterial({ color: 0xf4f0e6 }));
+      const wLogo = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.18), new THREE.MeshBasicMaterial({ color: 0xd4a017 }));
+      wLogo.position.set(0, 0.08, 0.07);
+      whiteItem.add(wBody, wLogo);
+      stall.add(whiteItem);
+
+      // 3. Tabletop Folded Merchandise Stacks
+      // Black folded hoodies stack
+      for (let s = 0; s < 4; s++) {
+        const stack1 = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.06, 0.42), new THREE.MeshLambertMaterial({ color: 0x16161a }));
+        stack1.position.set(-1.15, 0.98 + s * 0.065, 1.4);
+        stall.add(stack1);
+      }
+      // Red folded tees stack
+      for (let s = 0; s < 4; s++) {
+        const stack2 = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.05, 0.40), new THREE.MeshLambertMaterial({ color: 0xb51e2b }));
+        stack2.position.set(-0.6, 0.98 + s * 0.055, 1.4);
+        stall.add(stack2);
+      }
+
+      // 4. Two Embroidered Festival Caps on Stand
+      [0.05, 0.55].forEach((cx, idx) => {
+        const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.06, 0.22, 8), new THREE.MeshLambertMaterial({ color: 0x8a5933 }));
+        stand.position.set(cx, 1.06, 1.4);
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 12, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshLambertMaterial({ color: idx === 0 ? 0x0f172a : 0xb51e2b }));
+        cap.position.set(cx, 1.18, 1.4);
+        const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.02, 12, 1, false, 0, Math.PI), new THREE.MeshLambertMaterial({ color: idx === 0 ? 0x0f172a : 0xb51e2b }));
+        brim.position.set(cx, 1.16, 1.48);
+        stall.add(stand, cap, brim);
+      });
+
+      // 5. Official Acrylic Price Plaque Stand
+      const priceCanvas = document.createElement('canvas');
+      priceCanvas.width = 256;
+      priceCanvas.height = 128;
+      const pg = priceCanvas.getContext('2d');
+      pg.fillStyle = '#0f1724';
+      pg.fillRect(0, 0, 256, 128);
+      pg.strokeStyle = '#f5b800';
+      pg.lineWidth = 4;
+      pg.strokeRect(2, 2, 252, 124);
+      pg.fillStyle = '#ffffff';
+      pg.font = '800 24px Arial, sans-serif';
+      pg.textAlign = 'center';
+      pg.fillText('OFFICIAL HOODIE', 128, 42);
+      pg.fillStyle = '#f5b800';
+      pg.font = '900 36px Arial, sans-serif';
+      pg.fillText('₹499/-', 128, 86);
+      const priceTex = new THREE.CanvasTexture(priceCanvas);
+      priceTex.encoding = THREE.sRGBEncoding;
+
+      const priceStand = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.55, 0.35),
+        new THREE.MeshBasicMaterial({ map: priceTex, side: THREE.DoubleSide })
+      );
+      priceStand.position.set(1.2, 1.14, 1.4);
+      priceStand.rotation.y = -0.2;
+      stall.add(priceStand);
+
+      // 6. Ceramic Fest Mugs
+      [1.0, 1.35].forEach((mx) => {
+        const mug = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.14, 12), new THREE.MeshLambertMaterial({ color: 0x1e272e }));
+        mug.position.set(mx, 1.02, 1.18);
+        stall.add(mug);
+      });
+
+      // 7. Back wall official promotional poster
+      const merchPoster = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.6, 1.0),
+        new THREE.MeshLambertMaterial({ color: 0x1a2536 })
+      );
+      merchPoster.position.set(0, 1.7, -1.68);
+      stall.add(merchPoster);
+
+    } else if (cfg.type === 'popcorn') {
+      const warmer = new THREE.Mesh(
+        new THREE.BoxGeometry(0.85, 0.95, 0.7),
+        new THREE.MeshLambertMaterial({ color: 0xd63031, roughness: 0.4 })
+      );
+      warmer.position.set(-0.6, 1.42, 1.4);
+      warmer.castShadow = true;
+      stall.add(warmer);
+
+      const corn = new THREE.Mesh(
+        new THREE.SphereGeometry(0.25, 8, 8),
+        new THREE.MeshLambertMaterial({ color: 0xf1c40f })
+      );
+      corn.position.set(-0.6, 1.35, 1.4);
+      stall.add(corn);
+
+      // Popcorn tubs
+      for (let p = 0; p < 3; p++) {
+        const tub = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.06, 0.22, 10), new THREE.MeshLambertMaterial({ color: 0xfff275 }));
+        tub.position.set(0.2 + p * 0.22, 1.06, 1.4);
+        stall.add(tub);
+      }
+
+    } else if (cfg.type === 'chai') {
+      const kettle = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.24, 0.35, 0.65, 14),
+        new THREE.MeshLambertMaterial({ color: 0xb87333, roughness: 0.3 })
+      );
+      kettle.position.set(-0.7, 1.25, 1.4);
+      kettle.castShadow = true;
+      stall.add(kettle);
+
+      // Chai cutting glasses in wooden carrier
+      const cCarrier = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.08, 0.4), new THREE.MeshLambertMaterial({ color: 0x5a3d1c }));
+      cCarrier.position.set(0.4, 0.98, 1.4);
+      stall.add(cCarrier);
+
+      for (let g = 0; g < 4; g++) {
+        const glass = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.05, 0.04, 0.14, 8),
+          new THREE.MeshLambertMaterial({ color: 0xdfe6e9, transparent: true, opacity: 0.7 })
+        );
+        glass.position.set(0.18 + g * 0.15, 1.04, 1.4);
+        stall.add(glass);
+      }
+
+      // Golden fried samosas on plate
+      const plate = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.02, 16), new THREE.MeshLambertMaterial({ color: 0xcccccc }));
+      plate.position.set(1.15, 0.98, 1.4);
+      stall.add(plate);
+      for (let s = 0; s < 3; s++) {
+        const samosa = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.1, 3), new THREE.MeshLambertMaterial({ color: 0xd4a017 }));
+        samosa.position.set(1.1 + s * 0.08, 1.02, 1.4);
+        stall.add(samosa);
+      }
+
+    } else if (cfg.type === 'photo') {
+      const photoFrame = new THREE.Mesh(
+        new THREE.BoxGeometry(2.6, 1.9, 0.06),
+        new THREE.MeshLambertMaterial({ color: 0x3e2723, roughness: 0.7 })
+      );
+      photoFrame.position.set(0, 1.65, -1.35);
+      stall.add(photoFrame);
+
+      // Hanging Polaroid photo mockups
+      for (let p = 0; p < 6; p++) {
+        const row = Math.floor(p / 3);
+        const col = p % 3;
+        const pic = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.35, 0.42),
+          new THREE.MeshLambertMaterial({ color: 0xffffff })
+        );
+        pic.position.set(-0.6 + col * 0.6, 1.9 - row * 0.52, -1.31);
+        stall.add(pic);
+      }
+      // Polaroid instant camera on tabletop tripod
+      const camBody = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.20, 0.26), new THREE.MeshLambertMaterial({ color: 0xf5f6fa }));
+      camBody.position.set(0.8, 1.08, 1.4);
+      const camLens = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.08, 12), new THREE.MeshLambertMaterial({ color: 0x222222 }));
+      camLens.rotation.x = Math.PI / 2;
+      camLens.position.set(0.8, 1.08, 1.54);
+      stall.add(camBody, camLens);
+    }
+
+    // Assign clickable target
+    interactiveStallMeshes.push(stall);
+    rajabaug.add(stall);
+  });
+
+  window.AGNEE_RAJABAUG_STALLS = interactiveStallMeshes;
+
+  // ---- 6. Overhead Festoon Fairy Lights & Pennant Bunting
+  const buntingColors = [0xe74c3c, 0xf39c12, 0x2ecc71, 0x3498db, 0x9b59b6];
+  [-21, 21].forEach((bz) => {
+    // String wire
+    const wireGeo = new THREE.BoxGeometry(56, 0.03, 0.03);
+    const wire = new THREE.Mesh(wireGeo, new THREE.MeshBasicMaterial({ color: 0x333333 }));
+    wire.position.set(5, 3.5, bz);
+    rajabaug.add(wire);
+
+    // Bunting pennants
+    for (let bx = -22; bx <= 32; bx += 1.6) {
+      const pennant = new THREE.Mesh(
+        new THREE.ConeGeometry(0.18, 0.38, 3),
+        new THREE.MeshLambertMaterial({
+          color: buntingColors[Math.abs(Math.floor(bx)) % buntingColors.length],
+          side: THREE.DoubleSide
+        })
+      );
+      pennant.position.set(bx, 3.4 + Math.sin(bx * 0.4) * 0.2, bz);
+      pennant.rotation.x = Math.PI;
+      rajabaug.add(pennant);
+
+      // Glowing warm bulb node every 3.2m
+      if (Math.abs(Math.floor(bx)) % 2 === 0) {
+        const bulb = new THREE.Mesh(
+          new THREE.SphereGeometry(0.08, 6, 6),
+          new THREE.MeshBasicMaterial({ color: 0xffecaa })
+        );
+        bulb.position.set(bx, 3.25 + Math.sin(bx * 0.4) * 0.2, bz);
+        rajabaug.add(bulb);
+      }
+    }
+  });
+
+  // ---- 7. Grand Ceremonial Entrance Gateway (East, Facing Pratap Vilas Palace)
+  const gateGroup = new THREE.Group();
+  gateGroup.position.set(RB_W / 2 - 1, 0, 0); // mapX = 296, mapY = 189
+  gateGroup.rotation.y = -Math.PI / 2;
+
+  // Carved Sandstone Entrance Gate Towers (Left & Right)
+  [-4.8, 4.8].forEach((gx) => {
+    const pillar = new THREE.Mesh(
+      new THREE.BoxGeometry(1.6, 5.4, 1.6),
+      new THREE.MeshLambertMaterial({ color: 0xd9ceb6, roughness: 0.65 })
+    );
+    pillar.position.set(gx, 2.7, 0);
+    pillar.castShadow = true;
+    gateGroup.add(pillar);
+
+    const cap = new THREE.Mesh(
+      new THREE.BoxGeometry(2.0, 0.45, 2.0),
+      new THREE.MeshLambertMaterial({ color: 0xede4d1 })
+    );
+    cap.position.set(gx, 5.5, 0);
+    gateGroup.add(cap);
+
+    const domePin = new THREE.Mesh(
+      new THREE.SphereGeometry(0.6, 14, 10),
+      new THREE.MeshLambertMaterial({ color: 0xc47c58 })
+    );
+    domePin.position.set(gx, 6.0, 0);
+    gateGroup.add(domePin);
+
+    const lantern = new THREE.Mesh(
+      new THREE.BoxGeometry(0.45, 0.7, 0.45),
+      new THREE.MeshBasicMaterial({ color: 0xffea88 })
+    );
+    lantern.position.set(gx, 3.4, 0.95);
+    gateGroup.add(lantern);
+  });
+
+  const headerBeam = new THREE.Mesh(
+    new THREE.BoxGeometry(10.2, 0.75, 0.9),
+    new THREE.MeshLambertMaterial({ color: 0xd9ceb6 })
+  );
+  headerBeam.position.set(0, 5.0, 0);
+  headerBeam.castShadow = true;
+  gateGroup.add(headerBeam);
+
+  const gateCanvas = document.createElement('canvas');
+  gateCanvas.width = 512;
+  gateCanvas.height = 128;
+  const gg = gateCanvas.getContext('2d');
+
+  const grad = gg.createLinearGradient(0, 0, 512, 128);
+  grad.addColorStop(0, '#0e2d78');
+  grad.addColorStop(0.5, '#193f9e');
+  grad.addColorStop(1, '#0e2d78');
+  gg.fillStyle = grad;
+  gg.fillRect(0, 0, 512, 128);
+
+  gg.strokeStyle = '#e6b325';
+  gg.lineWidth = 6;
+  gg.strokeRect(6, 6, 500, 116);
+  gg.lineWidth = 2;
+  gg.strokeRect(12, 12, 488, 104);
+
+  gg.fillStyle = '#ffffff';
+  gg.font = '900 42px Arial, sans-serif';
+  gg.textAlign = 'center';
+  gg.textBaseline = 'middle';
+  gg.fillText('★ RAJABAUG ★', 256, 44);
+
+  gg.fillStyle = '#f5c542';
+  gg.font = '700 24px Arial, sans-serif';
+  gg.fillText('PRE-AGNEE FUN CARNIVAL · 10 STALLS', 256, 88);
+
+  const gateTex = new THREE.CanvasTexture(gateCanvas);
+  gateTex.encoding = THREE.sRGBEncoding;
+  const gateBanner = new THREE.Mesh(
+    new THREE.PlaneGeometry(8.6, 2.1),
+    new THREE.MeshBasicMaterial({ map: gateTex, side: THREE.DoubleSide })
+  );
+  gateBanner.position.set(0, 4.3, 0.05);
+  gateGroup.add(gateBanner);
+
+  rajabaug.add(gateGroup);
+
+  // ---- 8. Boundary Royal Palm Trees Framing Rajabaug Perimeter
+  for (let pz = -RB_D / 2 + 5; pz <= RB_D / 2 - 5; pz += 12) {
+    const palm = new THREE.Group();
+    palm.position.set(-RB_W / 2 + 3.2, 0, pz);
+
+    const trunk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.24, 0.32, 6.8, 8),
+      new THREE.MeshLambertMaterial({ color: 0x7a6c5d })
+    );
+    trunk.position.y = 3.4;
+    trunk.castShadow = true;
+    palm.add(trunk);
+
+    const crownMat = new THREE.MeshLambertMaterial({ color: 0x2b6326, side: THREE.DoubleSide });
+    for (let f = 0; f < 8; f++) {
+      const fAngle = (f * Math.PI) / 4;
+      const frondCurve = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(0, 6.6, 0),
+        new THREE.Vector3(Math.cos(fAngle) * 2.3, 7.0, Math.sin(fAngle) * 2.3),
+        new THREE.Vector3(Math.cos(fAngle) * 3.8, 5.4, Math.sin(fAngle) * 3.8)
+      );
+      const frondGeo = new THREE.TubeGeometry(frondCurve, 8, 0.16, 4, false);
+      const frond = new THREE.Mesh(frondGeo, crownMat);
+      frond.castShadow = true;
+      palm.add(frond);
+    }
+    rajabaug.add(palm);
+  }
+
+  scene.add(rajabaug);
+})();
+
+// ============================================================================
+// Gati Shakti Vishwavidyalaya — Central Academic Block
+// Faithfully modeled from the physical architectural scale model:
+// - Grand 3-storey Neoclassical / Indo-Saracenic institutional palace
+// - Warm sandstone & crisp white classical architectural trim
+// - 4 Projecting corner towers with authentic domed Chhatris (Pavilions)
+// - Grand monumental Triple-Arched Entrance Portico (Porte-Cochère)
+// - Stately Central Drum & Heritage Ribbed Dome crowning the main entrance axis
+// - Central Roof Atrium with arched barrel-vault glass skylight and white structural ribs
+// - Grand 2-storey arched portals on side elevations
+// - Classical white balustrades, stringcourses, dentil cornices, and roof urns
+// - Refined royal blue & gold institutional plaque above the entrance archway
+// - Front garden promenade with formal lawns, hedges, and Royal Palm trees
+// ============================================================================
+
+const gsvGroup = new THREE.Group();
+gsvGroup.name = 'gsvAcademicBlock';
+
+// ---- 1. High-Resolution Procedural Architectural Facade Textures
+const acadFacadeTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = 512;
+  c.height = 512;
+  const g = c.getContext('2d');
+
+  // Sandstone wall base
+  g.fillStyle = '#e5ddd0';
+  g.fillRect(0, 0, 512, 512);
+
+  // Subtle horizontal ashlar stone joint lines
+  g.strokeStyle = 'rgba(185, 172, 153, 0.45)';
+  g.lineWidth = 1;
+  for (let y = 0; y < 512; y += 14) {
+    g.beginPath();
+    g.moveTo(0, y);
+    g.lineTo(512, y);
+    g.stroke();
+  }
+
+  // Vertical ashlar coursing (staggered)
+  for (let row = 0; row < 512; row += 28) {
+    const offset = (row % 56 === 0) ? 0 : 28;
+    for (let x = offset; x < 512; x += 56) {
+      g.beginPath();
+      g.moveTo(x, row);
+      g.lineTo(x, row + 28);
+      g.stroke();
+    }
+  }
+
+  // 4 repetitive bays across 512px (each bay = 128px)
+  for (let b = 0; b < 4; b++) {
+    const bx = b * 128;
+
+    // --- Ground Floor (Y: 340 to 500): Rusticated base + Round Arched Windows
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 18, 360, 92, 130);
+    // Molded Arch Top
+    g.beginPath();
+    g.arc(bx + 64, 385, 36, Math.PI, 0);
+    g.fill();
+
+    // Dark multi-pane window interior
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 28, 385, 72, 105);
+    g.beginPath();
+    g.arc(bx + 64, 385, 36 - 6, Math.PI, 0);
+    g.fill();
+
+    // Warm interior glow sheen
+    const grad1 = g.createRadialGradient(bx + 64, 430, 8, bx + 64, 430, 48);
+    grad1.addColorStop(0, 'rgba(255, 215, 120, 0.45)');
+    grad1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    g.fillStyle = grad1;
+    g.fillRect(bx + 28, 370, 72, 120);
+
+    // White glazing bars (muntins)
+    g.strokeStyle = '#f8f6f0';
+    g.lineWidth = 2.5;
+    g.beginPath();
+    // Vertical mullions
+    g.moveTo(bx + 52, 368); g.lineTo(bx + 52, 490);
+    g.moveTo(bx + 76, 368); g.lineTo(bx + 76, 490);
+    // Horizontal transoms
+    g.moveTo(bx + 28, 415); g.lineTo(bx + 100, 415);
+    g.moveTo(bx + 28, 450); g.lineTo(bx + 100, 450);
+    g.stroke();
+
+    // Keystone on arch
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 59, 344, 10, 14);
+
+    // Rusticated pier accents
+    g.fillStyle = 'rgba(255,255,255,0.7)';
+    g.fillRect(bx + 2, 355, 12, 145);
+    g.fillRect(bx + 114, 355, 12, 145);
+
+    // --- 1st Floor (Y: 175 to 335): Balustrade + Tall Colonial French Windows
+    // Balcony white balustrade strip
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx, 332, 128, 12);
+    // Balusters
+    for (let bl = bx + 6; bl < bx + 124; bl += 10) {
+      g.fillRect(bl, 336, 4, 8);
+    }
+
+    // Window frame
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 24, 195, 80, 134);
+    // Triangular pediment on top of window
+    g.beginPath();
+    g.moveTo(bx + 18, 195);
+    g.lineTo(bx + 64, 175);
+    g.lineTo(bx + 110, 195);
+    g.closePath();
+    g.fill();
+
+    // Window glass
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 32, 202, 64, 124);
+
+    // Warm glow
+    const grad2 = g.createRadialGradient(bx + 64, 255, 6, bx + 64, 255, 42);
+    grad2.addColorStop(0, 'rgba(255, 215, 120, 0.42)');
+    grad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    g.fillStyle = grad2;
+    g.fillRect(bx + 32, 202, 64, 124);
+
+    // White glazing bars
+    g.strokeStyle = '#ffffff';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(bx + 53, 202); g.lineTo(bx + 53, 326);
+    g.moveTo(bx + 75, 202); g.lineTo(bx + 75, 326);
+    g.moveTo(bx + 32, 235); g.lineTo(bx + 96, 235);
+    g.moveTo(bx + 32, 270); g.lineTo(bx + 96, 270);
+    g.moveTo(bx + 32, 300); g.lineTo(bx + 96, 300);
+    g.stroke();
+
+    // Paired classical fluted pilasters flanking window
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 6, 185, 12, 147);
+    g.fillRect(bx + 110, 185, 12, 147);
+
+    // --- 2nd Floor (Y: 40 to 170): Upper Colonial Windows & Entablature
+    // Floor dividing band
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx, 170, 128, 8);
+
+    // Window frame
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 28, 62, 72, 102);
+
+    // Segmental / flat molded pediment
+    g.fillRect(bx + 22, 54, 84, 8);
+
+    // Window glass
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 36, 68, 56, 92);
+
+    // Glazing bars
+    g.strokeStyle = '#ffffff';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(bx + 64, 68); g.lineTo(bx + 64, 160);
+    g.moveTo(bx + 36, 98); g.lineTo(bx + 92, 98);
+    g.moveTo(bx + 36, 128); g.lineTo(bx + 92, 128);
+    g.stroke();
+
+    // Pilasters with Corinthian/Ionic capitals
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 6, 50, 12, 120);
+    g.fillRect(bx + 110, 50, 12, 120);
+    // Capital
+    g.fillRect(bx + 3, 44, 18, 7);
+    g.fillRect(bx + 107, 44, 18, 7);
+  }
+
+  // --- Upper Entablature, Dentil Molding & Parapet (Y: 0 to 45)
+  g.fillStyle = '#ffffff';
+  g.fillRect(0, 0, 512, 42);
+
+  // Dentil band
+  g.fillStyle = 'rgba(160, 145, 125, 0.45)';
+  for (let dx = 4; dx < 512; dx += 12) {
+    g.fillRect(dx, 22, 6, 8);
+  }
+
+  // Top molded cornice shadow
+  g.fillStyle = 'rgba(0,0,0,0.12)';
+  g.fillRect(0, 42, 512, 4);
+
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  return t;
+})();
+
+// Texture for Central Side Facade Arched Portals
+const acadSidePortalTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = 256;
+  c.height = 512;
+  const g = c.getContext('2d');
+
+  g.fillStyle = '#e5ddd0';
+  g.fillRect(0, 0, 256, 512);
+
+  // Grand 2-storey classical arched portal in center
+  g.fillStyle = '#ffffff';
+  g.fillRect(38, 120, 180, 392);
+  g.beginPath();
+  g.arc(128, 150, 90, Math.PI, 0);
+  g.fill();
+
+  // Recessed portal opening
+  g.fillStyle = '#222930';
+  g.fillRect(56, 160, 144, 352);
+  g.beginPath();
+  g.arc(128, 160, 72, Math.PI, 0);
+  g.fill();
+
+  // Grand fanlight tracery
+  g.strokeStyle = '#ffffff';
+  g.lineWidth = 3;
+  g.beginPath();
+  g.arc(128, 160, 72, Math.PI, 0);
+  g.stroke();
+  for (let a = 0; a <= Math.PI; a += Math.PI / 6) {
+    g.beginPath();
+    g.moveTo(128, 160);
+    g.lineTo(128 + Math.cos(a) * 72, 160 - Math.sin(a) * 72);
+    g.stroke();
+  }
+
+  // Transom and double entrance doors
+  g.fillStyle = '#ffffff';
+  g.fillRect(56, 320, 144, 8);
+
+  // Large ornamental keystone
+  g.fillStyle = '#ffffff';
+  g.fillRect(116, 50, 24, 28);
+
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  return t;
+})();
+
+// Dedicated Shared Materials
+const acadWhiteMat = new THREE.MeshLambertMaterial({ color: 0xfcfbf8 });
+const acadSandstoneMat = new THREE.MeshLambertMaterial({ color: 0xdfd4c1 });
+const acadGoldMat = new THREE.MeshLambertMaterial({ color: 0xe5ba5b });
+const acadRoofMat = new THREE.MeshLambertMaterial({ color: 0xd8cebd });
+const acadDarkMat = new THREE.MeshLambertMaterial({ color: 0x222a32 });
+const acadGlassMat = new THREE.MeshStandardMaterial({
+  color: 0x98cbe8,
+  roughness: 0.12,
+  metalness: 0.2,
+  transparent: true,
+  opacity: 0.65
 });
+
+// Coordinate constants (Scaled to harmonious, elegant institutional proportions)
+// Center X = 357, Center Z = 64
+// World coordinates: x = X - W/2, z = Z - H/2
+const AC_CX = 357 - W / 2; // -18.5
+const AC_CZ = 64 - H / 2;  // -151
+const AC_W = 52;   // Was 70 (scaled down to proportional institutional scale)
+const AC_D = 36;   // Was 48
+const AC_H = 13.5; // Was 16.2 (scaled 3-storey height)
+
+// ---- 2. Main Building Body (with central courtyard cutout)
 const gsv = mk(
   [
-    [322, 40],
-    [392, 40],
-    [392, 88],
-    [322, 88]
+    [AC_CX - AC_W / 2 + W / 2, AC_CZ - AC_D / 2 + H / 2],
+    [AC_CX + AC_W / 2 + W / 2, AC_CZ - AC_D / 2 + H / 2],
+    [AC_CX + AC_W / 2 + W / 2, AC_CZ + AC_D / 2 + H / 2],
+    [AC_CX - AC_W / 2 + W / 2, AC_CZ + AC_D / 2 + H / 2]
   ],
-  14,
-  0xe9e3d3,
-  0x3a5bd0,
+  AC_H,
+  0xd8cebd,
+  0xd4c7b2,
   1.5,
-  [],
-  [],
-  her,
-  [1 / 10, 1 / 7]
-);
-const por2 = mk(
   [
-    [342, 88],
-    [372, 88],
-    [372, 93],
-    [342, 93]
+    // Central Atrium Courtyard Hole (width 22m, depth 16m)
+    [
+      [AC_CX - 11 + W / 2, AC_CZ - 8 + H / 2],
+      [AC_CX + 11 + W / 2, AC_CZ - 8 + H / 2],
+      [AC_CX + 11 + W / 2, AC_CZ + 8 + H / 2],
+      [AC_CX - 11 + W / 2, AC_CZ + 8 + H / 2]
+    ]
   ],
-  11,
-  0xe9e3d3,
-  0x3a5bd0,
-  1.7,
   [],
-  [],
-  arches3,
-  [1 / 30, 1 / 11]
+  acadFacadeTex,
+  [1 / 6.5, 1 / 4.5]
 );
-const gc = document.createElement('canvas');
-gc.width = 1024;
-gc.height = 96;
-const gg = gc.getContext('2d');
-gg.fillStyle = '#1f3fa8';
-gg.fillRect(0, 0, 1024, 96);
-gg.fillStyle = '#fff';
-gg.textAlign = 'center';
-gg.textBaseline = 'middle';
-gg.font = '700 52px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
-gg.fillText('गति शक्ति विश्वविद्यालय', 270, 50);
-gg.font = '700 40px Arial,sans-serif';
-gg.fillText('GATI SHAKTI VISHWAVIDYALAYA', 780, 52);
-gg.lineWidth = 4;
-gg.strokeStyle = '#fff';
-gg.beginPath();
-gg.arc(512, 48, 24, 0, Math.PI * 2);
-gg.stroke();
-const gtx = new THREE.CanvasTexture(gc);
-gtx.encoding = THREE.sRGBEncoding;
-const gbd = new THREE.Mesh(
-  new THREE.BoxGeometry(34, 3.2, 0.8),
-  new THREE.MeshLambertMaterial({ color: 0x1f3fa8 })
+
+// Add building plinth foundation
+const plinth = new THREE.Mesh(
+  new THREE.BoxGeometry(AC_W + 1.2, 0.6, AC_D + 1.2),
+  new THREE.MeshLambertMaterial({ color: 0x8a8174 })
 );
-gbd.position.set(357 - W / 2, 12.6, 88.9 - H / 2);
-por2.add(gbd);
-const gsn = new THREE.Mesh(
-  new THREE.PlaneGeometry(34, 3.2),
-  new THREE.MeshBasicMaterial({ map: gtx })
+plinth.position.set(AC_CX, 0.3, AC_CZ);
+plinth.receiveShadow = true;
+gsv.add(plinth);
+
+// ---- 3. Projecting Architectural Moldings & Balustrades
+// Continuous white cornice along roofline
+const roofCornice = new THREE.Mesh(
+  new THREE.BoxGeometry(AC_W + 1.0, 0.55, AC_D + 1.0),
+  acadWhiteMat
 );
-gsn.position.set(357 - W / 2, 12.6, 89.32 - H / 2);
-por2.add(gsn);
-const cream = new THREE.MeshLambertMaterial({ color: 0xf0ead9 });
-const dbase = new THREE.Mesh(new THREE.BoxGeometry(14, 3, 14), cream);
-dbase.position.set(357 - W / 2, 15.5, 70 - H / 2);
-gsv.add(dbase);
-const ddrum = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 2.4, 20), cream);
-ddrum.position.set(357 - W / 2, 18.2, 70 - H / 2);
-gsv.add(ddrum);
-const dd = new THREE.Mesh(
-  new THREE.SphereGeometry(5, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2),
-  cream
-);
-dd.position.set(357 - W / 2, 19.4, 70 - H / 2);
-dd.castShadow = true;
-gsv.add(dd);
-const fin = new THREE.Mesh(new THREE.ConeGeometry(0.5, 2.4, 8), cream);
-fin.position.set(357 - W / 2, 25.6, 70 - H / 2);
-gsv.add(fin);
-[
-  [351, 64],
-  [363, 64],
-  [351, 76],
-  [363, 76]
-].forEach(([x, z]) => {
-  const pn = new THREE.Mesh(new THREE.ConeGeometry(0.8, 2.4, 6), cream);
-  pn.position.set(x - W / 2, 18.2, z - H / 2);
-  gsv.add(pn);
+roofCornice.position.set(AC_CX, AC_H + 0.28, AC_CZ);
+roofCornice.castShadow = true;
+gsv.add(roofCornice);
+
+// Rooftop Balustrade / Parapet around outer roof edge
+const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.8, 1.0, 0.4), acadWhiteMat);
+parapetFront.position.set(AC_CX, AC_H + 0.95, AC_CZ + AC_D / 2);
+const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.8, 1.0, 0.4), acadWhiteMat);
+parapetBack.position.set(AC_CX, AC_H + 0.95, AC_CZ - AC_D / 2);
+const parapetLeft = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, AC_D + 0.8), acadWhiteMat);
+parapetLeft.position.set(AC_CX - AC_W / 2, AC_H + 0.95, AC_CZ);
+const parapetRight = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, AC_D + 0.8), acadWhiteMat);
+parapetRight.position.set(AC_CX + AC_W / 2, AC_H + 0.95, AC_CZ);
+gsv.add(parapetFront, parapetBack, parapetLeft, parapetRight);
+
+// Mid-level horizontal white stringcourses
+const beltCourse1 = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.5, 0.3, AC_D + 0.5), acadWhiteMat);
+beltCourse1.position.set(AC_CX, 4.5, AC_CZ);
+const beltCourse2 = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.5, 0.3, AC_D + 0.5), acadWhiteMat);
+beltCourse2.position.set(AC_CX, 9.0, AC_CZ);
+gsv.add(beltCourse1, beltCourse2);
+
+// ---- 4. Four Projecting Corner Towers with Heritage Domed Chhatris (Pavilions)
+const cornerCoords = [
+  [-AC_W / 2, AC_D / 2],   // Front-Left (SW)
+  [AC_W / 2, AC_D / 2],    // Front-Right (SE)
+  [-AC_W / 2, -AC_D / 2],  // Rear-Left (NW)
+  [AC_W / 2, -AC_D / 2]    // Rear-Right (NE)
+];
+
+cornerCoords.forEach(([ox, oz]) => {
+  const tx = AC_CX + ox;
+  const tz = AC_CZ + oz;
+  const tower = new THREE.Group();
+  tower.position.set(tx, 0, tz);
+
+  // Tower shaft (6.2m x 6.2m)
+  const shaft = new THREE.Mesh(new THREE.BoxGeometry(6.4, AC_H + 1.8, 6.4), acadSandstoneMat);
+  shaft.position.y = (AC_H + 1.8) / 2;
+  shaft.castShadow = shaft.receiveShadow = true;
+  tower.add(shaft);
+
+  // Corner white quoins / pilasters
+  const quoinGeo = new THREE.BoxGeometry(6.7, 0.35, 6.7);
+  for (let qy = 1.0; qy < AC_H + 1.6; qy += 1.6) {
+    const qm = new THREE.Mesh(quoinGeo, acadWhiteMat);
+    qm.position.y = qy;
+    tower.add(qm);
+  }
+
+  // Decorative circular medallion (oculus) on upper tower level
+  const oculusGeo = new THREE.CylinderGeometry(0.9, 0.9, 0.18, 16);
+  oculusGeo.rotateX(Math.PI / 2);
+  const oculus = new THREE.Mesh(oculusGeo, acadWhiteMat);
+  oculus.position.set(0, AC_H - 1.0, (oz > 0 ? 3.3 : -3.3));
+  tower.add(oculus);
+
+  // Tower entablature cornice at roof level
+  const tCornice = new THREE.Mesh(new THREE.BoxGeometry(7.0, 0.5, 7.0), acadWhiteMat);
+  tCornice.position.y = AC_H + 2.0;
+  tCornice.castShadow = true;
+  tower.add(tCornice);
+
+  // Tower parapet
+  const tParapet = new THREE.Mesh(new THREE.BoxGeometry(6.6, 0.65, 6.6), acadWhiteMat);
+  tParapet.position.y = AC_H + 2.5;
+  tower.add(tParapet);
+
+  // ---- Open Chhatri (Pavilion)
+  const chhatriY = AC_H + 2.8;
+  const colRad = 0.25;
+  const colH = 2.6;
+  const colOffset = 1.9;
+  const colGeo = new THREE.CylinderGeometry(colRad, colRad, colH, 12);
+
+  // 4 classical white pillars
+  [[-colOffset, -colOffset], [colOffset, -colOffset], [-colOffset, colOffset], [colOffset, colOffset]].forEach(([cx, cz]) => {
+    const col = new THREE.Mesh(colGeo, acadWhiteMat);
+    col.position.set(cx, chhatriY + colH / 2, cz);
+    col.castShadow = true;
+    tower.add(col);
+  });
+
+  // Chhatri roof cornice canopy
+  const chhatriRoof = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.4, 5.6), acadWhiteMat);
+  chhatriRoof.position.y = chhatriY + colH + 0.2;
+  chhatriRoof.castShadow = true;
+  tower.add(chhatriRoof);
+
+  // Heritage domed cupola
+  const domeRadius = 2.0;
+  const cupola = new THREE.Mesh(
+    new THREE.SphereGeometry(domeRadius, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+    acadSandstoneMat
+  );
+  cupola.position.y = chhatriY + colH + 0.35;
+  cupola.castShadow = true;
+  tower.add(cupola);
+
+  // Golden finial spire
+  const finial = new THREE.Mesh(new THREE.ConeGeometry(0.24, 1.1, 8), acadGoldMat);
+  finial.position.y = cupola.position.y + domeRadius + 0.55;
+  tower.add(finial);
+
+  gsv.add(tower);
 });
+
+// ---- 5. Grand Central Entrance Portico (Porte-Cochère)
+// Projects forward towards campus road: width 20m, depth 7.5m, height 8.5m
+const portico = new THREE.Group();
+const porticoW = 20.0;
+const porticoD = 7.5;
+const porticoH = 8.5;
+const porticoZ = AC_CZ + AC_D / 2 + porticoD / 2; // -129.25 (Front edge at Y = 89.5)
+portico.position.set(AC_CX, 0, porticoZ);
+
+// Portico plinth
+const portPlinth = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.6, 0.5, porticoD + 0.6), acadWhiteMat);
+portPlinth.position.y = 0.25;
+portico.add(portPlinth);
+
+// Portico ground structure with triple monumental archway
+// 6 Classical White Columns along front edge
+const portColGeo = new THREE.CylinderGeometry(0.5, 0.55, 4.2, 14);
+const colXOffsets = [-8.5, -5.2, -1.8, 1.8, 5.2, 8.5];
+colXOffsets.forEach((cx) => {
+  const col = new THREE.Mesh(portColGeo, acadWhiteMat);
+  col.position.set(cx, 0.5 + 2.1, porticoD / 2 - 0.55);
+  col.castShadow = true;
+  portico.add(col);
+});
+
+// Side return columns
+[-porticoW / 2 + 0.55, porticoW / 2 - 0.55].forEach((sx) => {
+  const sc = new THREE.Mesh(portColGeo, acadWhiteMat);
+  sc.position.set(sx, 0.5 + 2.1, 0);
+  portico.add(sc);
+});
+
+// Front Archway Lintels & Molded Arches
+const archEntablature = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.3, 0.9, porticoD + 0.3), acadWhiteMat);
+archEntablature.position.y = 5.0;
+archEntablature.castShadow = true;
+portico.add(archEntablature);
+
+// First Floor Hall over portico
+const portUpper = new THREE.Mesh(new THREE.BoxGeometry(porticoW, 3.4, porticoD), acadSandstoneMat);
+portUpper.position.y = 5.4 + 1.7;
+portUpper.castShadow = portUpper.receiveShadow = true;
+portico.add(portUpper);
+
+// First Floor Front Windows & Pilasters
+const portUpperTrim = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.3, 0.5, porticoD + 0.3), acadWhiteMat);
+portUpperTrim.position.y = porticoH + 0.25;
+portico.add(portUpperTrim);
+
+// Open Rooftop Terrace with Classical White Balustrade
+const balustradeTerrace = new THREE.Mesh(new THREE.BoxGeometry(porticoW, 0.8, porticoD), new THREE.MeshLambertMaterial({ color: 0xdcd3c4 }));
+balustradeTerrace.position.y = porticoH + 0.5;
+portico.add(balustradeTerrace);
+
+const balFront = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.2, 0.85, 0.35), acadWhiteMat);
+balFront.position.set(0, porticoH + 0.85, porticoD / 2);
+const balSideL = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.85, porticoD), acadWhiteMat);
+balSideL.position.set(-porticoW / 2, porticoH + 0.85, 0);
+const balSideR = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.85, porticoD), acadWhiteMat);
+balSideR.position.set(porticoW / 2, porticoH + 0.85, 0);
+portico.add(balFront, balSideL, balSideR);
+
+// Front pediment accent on portico terrace
+const pediment = new THREE.Mesh(new THREE.BoxGeometry(8.0, 1.3, 0.5), acadWhiteMat);
+pediment.position.set(0, porticoH + 1.4, porticoD / 2);
+portico.add(pediment);
+
+// ---- Official Gati Shakti Vishwavidyalaya Name Board with Blue Background and White Text & Logo
+const nameboardLoader = new THREE.TextureLoader();
+const nameTex = nameboardLoader.load('assets/gsv-nameboard-blue.png');
+nameTex.encoding = THREE.sRGBEncoding;
+if (typeof renderer !== 'undefined' && renderer.capabilities) {
+  nameTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+}
+
+// 1024 x 195 aspect ratio: 5.25 : 1
+const boardW = 18.0;
+const boardH = 3.43;
+const plaqueFrame = new THREE.Mesh(new THREE.BoxGeometry(boardW + 0.6, boardH + 0.5, 0.35), acadWhiteMat);
+plaqueFrame.position.set(0, 6.2, porticoD / 2 + 0.12);
+const plaquePlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(boardW, boardH),
+  new THREE.MeshBasicMaterial({ map: nameTex })
+);
+plaquePlane.position.set(0, 6.2, porticoD / 2 + 0.32);
+portico.add(plaqueFrame, plaquePlane);
+
+gsv.add(portico);
+
+// ---- 6. Monumental Central Heritage Dome & Drum (Crowning Entrance Axis)
+const domeGroup = new THREE.Group();
+const domeZ = AC_CZ + AC_D / 2 - 3.5;
+domeGroup.position.set(AC_CX, AC_H, domeZ);
+
+// Tier 1: Stately White & Sandstone Pedestal Base
+const domeBase = new THREE.Mesh(new THREE.BoxGeometry(11.5, 1.8, 11.5), acadWhiteMat);
+domeBase.position.y = 0.9;
+domeBase.castShadow = true;
+domeGroup.add(domeBase);
+
+const domeBaseCornice = new THREE.Mesh(new THREE.BoxGeometry(12.4, 0.4, 12.4), acadWhiteMat);
+domeBaseCornice.position.y = 2.0;
+domeGroup.add(domeBaseCornice);
+
+// Tier 2: Cylindrical Drum with 12 Arched Windows
+const drumRadius = 4.8;
+const drumH = 3.2;
+const drum = new THREE.Mesh(
+  new THREE.CylinderGeometry(drumRadius, drumRadius, drumH, 28),
+  acadWhiteMat
+);
+drum.position.y = 2.0 + drumH / 2;
+drum.castShadow = true;
+domeGroup.add(drum);
+
+// Arched clerestory window panels around drum
+const drumWindowGeo = new THREE.BoxGeometry(1.2, 1.8, 0.25);
+for (let i = 0; i < 12; i++) {
+  const ang = (i * Math.PI * 2) / 12;
+  const dw = new THREE.Mesh(drumWindowGeo, acadDarkMat);
+  dw.position.set(
+    Math.sin(ang) * (drumRadius + 0.04),
+    drum.position.y,
+    Math.cos(ang) * (drumRadius + 0.04)
+  );
+  dw.rotation.y = ang;
+  domeGroup.add(dw);
+}
+
+// Drum upper cornice
+const drumCornice = new THREE.Mesh(
+  new THREE.CylinderGeometry(drumRadius + 0.55, drumRadius + 0.55, 0.4, 28),
+  acadWhiteMat
+);
+drumCornice.position.y = 2.0 + drumH + 0.2;
+domeGroup.add(drumCornice);
+
+// Tier 3: Grand Heritage Ribbed Dome
+const mainDomeRad = 5.0;
+const mainDome = new THREE.Mesh(
+  new THREE.SphereGeometry(mainDomeRad, 28, 16, 0, Math.PI * 2, 0, Math.PI / 2),
+  new THREE.MeshLambertMaterial({ color: 0xf4eee2 })
+);
+mainDome.position.y = drumCornice.position.y + 0.2;
+mainDome.castShadow = true;
+domeGroup.add(mainDome);
+
+// 8 Classical Architectural Ribs on the dome surface
+for (let r = 0; r < 8; r++) {
+  const ribCurve = new THREE.EllipseCurve(0, 0, mainDomeRad + 0.06, mainDomeRad + 0.06, 0, Math.PI / 2, false, 0);
+  const ribPts = ribCurve.getPoints(14).map(p => new THREE.Vector3(p.x, p.y, 0));
+  const ribGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ribPts), 12, 0.1, 6, false);
+  const rib = new THREE.Mesh(ribGeo, acadWhiteMat);
+  rib.position.y = mainDome.position.y;
+  rib.rotation.y = (r * Math.PI) / 4;
+  domeGroup.add(rib);
+}
+
+// Tier 4: Grand Golden Kalash & Finial Spire
+const finialBase = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.7, 1.0, 14), acadGoldMat);
+finialBase.position.y = mainDome.position.y + mainDomeRad + 0.5;
+const finialBall = new THREE.Mesh(new THREE.SphereGeometry(0.6, 14, 10), acadGoldMat);
+finialBall.position.y = finialBase.position.y + 0.75;
+const finialSpire = new THREE.Mesh(new THREE.ConeGeometry(0.28, 2.5, 10), acadGoldMat);
+finialSpire.position.y = finialBall.position.y + 1.45;
+domeGroup.add(finialBase, finialBall, finialSpire);
+
+gsv.add(domeGroup);
+
+// ---- 7. Central Roof Atrium & Vaulted Glass Skylight
+const atriumGroup = new THREE.Group();
+const atriumZ = AC_CZ - 2.5;
+atriumGroup.position.set(AC_CX, AC_H, atriumZ);
+
+// Raised white perimeter curb around atrium
+const curbW = 23.0;
+const curbD = 17.0;
+const curbH = 1.0;
+const curbFront = new THREE.Mesh(new THREE.BoxGeometry(curbW, curbH, 0.5), acadWhiteMat);
+curbFront.position.set(0, curbH / 2, curbD / 2);
+const curbBack = new THREE.Mesh(new THREE.BoxGeometry(curbW, curbH, 0.5), acadWhiteMat);
+curbBack.position.set(0, curbH / 2, -curbD / 2);
+const curbLeft = new THREE.Mesh(new THREE.BoxGeometry(0.5, curbH, curbD), acadWhiteMat);
+curbLeft.position.set(-curbW / 2, curbH / 2, 0);
+const curbRight = new THREE.Mesh(new THREE.BoxGeometry(0.5, curbH, curbD), acadWhiteMat);
+curbRight.position.set(curbW / 2, curbH / 2, 0);
+atriumGroup.add(curbFront, curbBack, curbLeft, curbRight);
+
+// Vaulted Glass Skylight
+const vaultSpan = curbD - 1.6;
+const vaultLen = curbW - 1.6;
+const vaultRad = vaultSpan / 2;
+const vaultGeo = new THREE.CylinderGeometry(vaultRad, vaultRad, vaultLen, 20, 1, false, 0, Math.PI);
+vaultGeo.rotateZ(Math.PI / 2);
+vaultGeo.rotateY(Math.PI / 2);
+const vaultMesh = new THREE.Mesh(vaultGeo, acadGlassMat);
+vaultMesh.position.y = curbH + 0.1;
+atriumGroup.add(vaultMesh);
+
+// 6 White Structural Arched Steel Ribs across the barrel vault
+for (let ribIdx = 0; ribIdx < 6; ribIdx++) {
+  const rx = -vaultLen / 2 + (ribIdx * vaultLen) / 5;
+  const archRibGeo = new THREE.TorusGeometry(vaultRad, 0.11, 8, 20, Math.PI);
+  archRibGeo.rotateY(Math.PI / 2);
+  const archRib = new THREE.Mesh(archRibGeo, acadWhiteMat);
+  archRib.position.set(rx, curbH + 0.1, 0);
+  atriumGroup.add(archRib);
+}
+
+gsv.add(atriumGroup);
+
+// ---- 8. Grand Arched Portals on Center of Side Elevations
+[-AC_W / 2 - 0.2, AC_W / 2 + 0.2].forEach((sx) => {
+  const sidePortal = new THREE.Mesh(
+    new THREE.PlaneGeometry(9.5, 8.0),
+    new THREE.MeshBasicMaterial({ map: acadSidePortalTex, side: THREE.DoubleSide })
+  );
+  sidePortal.position.set(AC_CX + sx, 4.8, AC_CZ);
+  sidePortal.rotation.y = (sx > 0 ? Math.PI / 2 : -Math.PI / 2);
+  gsv.add(sidePortal);
+});
+
+// ---- 9. Front Landscaping Promenade (COMPACT & STRICTLY NORTH OF THE ROAD)
+// Sits cleanly in the 22m forecourt between portico front (Y = 89.5) and road curb (Y = 112.65).
+// Garden ends at Y = 105, leaving a full 7.6m buffer before the road, so the road NEVER crosses it!
+const frontPark = new THREE.Group();
+const parkCenterZ = AC_CZ + AC_D / 2 + porticoD + 7.5; // Y = 98 (in world space)
+frontPark.position.set(AC_CX, 0.05, parkCenterZ);
+
+// Main Sandstone Paved Promenade Plaza (Leading from portico to sidewalk)
+const avenue = new THREE.Mesh(
+  new THREE.BoxGeometry(12.0, 0.08, 15.0),
+  new THREE.MeshLambertMaterial({ color: 0xe0d9cb })
+);
+frontPark.add(avenue);
+
+// Sandstone ceremonial circular inlay in center plaza
+const plazaCircle = new THREE.Mesh(
+  new THREE.CylinderGeometry(4.2, 4.2, 0.1, 24),
+  new THREE.MeshLambertMaterial({ color: 0xd6cbb8 })
+);
+plazaCircle.position.set(0, 0.05, 0);
+frontPark.add(plazaCircle);
+
+// Symmetrical Manicured Green Lawn Parterres (Compact size: 9.5m width x 11.0m depth)
+// Spans Y = 92.5 to Y = 103.5. Road is at Y = 118. Complete 14.5m separation from road centerline!
+const lawnGeo = new THREE.BoxGeometry(9.5, 0.16, 11.0);
+const lawnMat = new THREE.MeshLambertMaterial({ color: 0x3d7037 });
+const hedgeMat = new THREE.MeshLambertMaterial({ color: 0x1e4219 });
+
+[-11.2, 11.2].forEach((lx) => {
+  // Green grass lawn
+  const lawn = new THREE.Mesh(lawnGeo, lawnMat);
+  lawn.position.set(lx, 0.08, 0);
+  lawn.receiveShadow = true;
+  frontPark.add(lawn);
+
+  // Dark manicured boxwood border hedge
+  const hedgeBorder = new THREE.Mesh(new THREE.BoxGeometry(10.1, 0.38, 11.6), hedgeMat);
+  hedgeBorder.position.set(lx, 0.18, 0);
+  frontPark.add(hedgeBorder);
+
+  // Decorative circular center floral bed inside each lawn
+  const flowerBed = new THREE.Mesh(
+    new THREE.CylinderGeometry(2.0, 2.0, 0.22, 18),
+    new THREE.MeshLambertMaterial({ color: 0x2e5927 })
+  );
+  flowerBed.position.set(lx, 0.2, 0);
+  frontPark.add(flowerBed);
+
+  // Stately Royal Palm Trees neatly flanking the central promenade inside the lawn
+  // Spaced along Z = -3.6, 0, 3.6 (map Y = 94.4, 98.0, 101.6) — all strictly north of the road!
+  [-3.6, 0, 3.6].forEach((pz) => {
+    const palm = new THREE.Group();
+    palm.position.set(lx > 0 ? 5.2 : -5.2, 0, pz);
+
+    // Slender textured palm trunk
+    const trunk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.2, 0.28, 5.8, 8),
+      new THREE.MeshLambertMaterial({ color: 0x7c6d5c })
+    );
+    trunk.position.y = 2.9;
+    trunk.castShadow = true;
+    palm.add(trunk);
+
+    // Crown of graceful palm fronds
+    const crownMat = new THREE.MeshLambertMaterial({ color: 0x2e6628, side: THREE.DoubleSide });
+    for (let f = 0; f < 8; f++) {
+      const fAngle = (f * Math.PI) / 4;
+      const frondCurve = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(0, 5.7, 0),
+        new THREE.Vector3(Math.cos(fAngle) * 2.0, 6.0, Math.sin(fAngle) * 2.0),
+        new THREE.Vector3(Math.cos(fAngle) * 3.0, 4.6, Math.sin(fAngle) * 3.0)
+      );
+      const frondGeo = new THREE.TubeGeometry(frondCurve, 8, 0.13, 4, false);
+      const frond = new THREE.Mesh(frondGeo, crownMat);
+      frond.castShadow = true;
+      palm.add(frond);
+    }
+
+    frontPark.add(palm);
+  });
+});
+
+gsv.add(frontPark);
+
+scene.add(gsv);
 // Manthan building: sandstone, two floors, flat dome, pediment porch with maroon columns
 const sandT = tx((g) => {
   g.fillStyle = '#d9baa4';
@@ -1381,7 +3185,7 @@ for (let i = 0; i < 3; i++) {
   scene.add(o);
 });
 flat(470, 196, 544, 232, 0.3, 0x7fb069);
-flat(455, 318, 535, 365, 0.3, 0x7fb069);
+flat(455, 324, 535, 365, 0.3, 0x7fb069);
 const pth = new THREE.Mesh(
   new THREE.CircleGeometry(7, 24),
   new THREE.MeshLambertMaterial({ color: 0xd8cdb4 })
@@ -1438,11 +3242,16 @@ for (let i = 0; i < 3; i++) {
   cr.position.set(cx0 - W / 2, 5.5, cz0 - H / 2);
   scene.add(tr, cr);
 }
-// ---- roads & paths (map pixels), traced from the master plan
+// ---- ROADS & CAMPUS INFRASTRUCTURE (FAITHFULLY TRACED FROM MASTER PLAN)
+// Unified, continuous road network strictly routed around all buildings, parks, and structures.
+// Guaranteed zero pass-through for the Oval Ground festival arena, Rajabaug, or any building.
+// Connected continuous East-West avenues with zero tree blockages.
+
 const RS = [],
   LP = [],
   MAINSP = [],
   MAINW = [];
+
 const nearRoad = (x, y, p = 0) =>
   RS.some(([a, h]) =>
     a.some((q, i) => {
@@ -1454,490 +3263,449 @@ const nearRoad = (x, y, p = 0) =>
       return Math.hypot(x - o[0] - t * dx, y - o[1] - t * dy) < h + p;
     })
   );
-function mkTex(w, h, fn, rep) {
-  const c = document.createElement('canvas');
-  c.width = w;
-  c.height = h;
-  fn(c.getContext('2d'));
-  const t = new THREE.CanvasTexture(c);
-  t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.encoding = THREE.sRGBEncoding;
-  t.anisotropy = 4;
-  return t;
-}
-const asphT = mkTex(128, 128, (g) => {
-  g.fillStyle = '#43464c';
-  g.fillRect(0, 0, 128, 128);
-  let q = 11;
-  const r = () => (q = (q * 16807) % 2147483647) / 2147483647;
-  for (let i = 0; i < 2600; i++) {
-    const v = r() < 0.5 ? 'rgba(255,255,255,' : 'rgba(0,0,0,';
-    g.fillStyle = v + (0.05 + r() * 0.12) + ')';
-    g.fillRect(r() * 128, r() * 128, 1 + r() * 1.6, 1 + r() * 1.6);
+
+// Major campus junctions / intersections (center coordinates and clear-zone radius)
+const JUNCTIONS = [
+  [142, 378, 16], // SW Entrance Hub (Gate, Oval Ring, South Boundary)
+  [307, 20, 16],  // North Central Hub (North Boundary, Oval Rings, Palace Arterial)
+  [307, 118, 11], // Palace North T-Junction (North Central Cross Avenue)
+  [307, 345, 10], // Palace South Hub
+  [307, 385, 10], // South Arterial / South Boundary
+  [577, 20, 14],  // 9M Eastern Spine North Terminal & Main Gate Approach
+  [577, 72, 12],  // 9M Spine / Hostel Link Intersection
+  [566, 118, 11], // 9M Spine / North Central Cross Avenue
+  [566, 188, 11], // 9M Spine / Proposed Garden North
+  [566, 238, 12], // 9M Spine / Academic Block North
+  [566, 317, 12], // 9M Spine / Academic Block South
+  [566, 415, 12], // 9M Spine South Terminal
+  [590, 72, 10],  // Hostel Forecourt North T
+  [590, 172, 10], // Hostel Forecourt South T
+  [196, 122, 10], // West Rajabaug / Oval North Cross
+  [38, 140, 10],  // Oval North Cross West
+  [385, 118, 9],  // Palace Rear North
+  [380, 310, 9],  // Residential Cross 1
+  [412, 310, 9],  // Residential Cross 2
+  [380, 395, 10]  // Residential Lane 1 South
+];
+
+const isJunction = (x, y) => JUNCTIONS.some(([jx, jy, jr]) => Math.hypot(x - jx, y - jy) < jr);
+
+// Complete road network accurately mapped from the official campus master plan
+// Guaranteed zero conflict with Oval Ground festival arena, Rajabaug, or any building
+const MASTER_ROADS = [
+  // 1. North Boundary Arterial Road (Far north: Y=20, well north of Acad Block Y=38)
+  {
+    name: 'North Boundary Road',
+    pts: [[165, 20], [220, 20], [307, 20], [370, 20], [440, 20], [500, 20], [566, 20], [577, 20]],
+    w: 8.5,
+    main: true
+  },
+  // 2. Oval Outer Ring Road (Along western boundary fence - sweeps safely outside Oval ground)
+  {
+    name: 'Oval Outer Ring Road',
+    pts: [[105, 412], [122, 395], [142, 378], [90, 345], [52, 280], [36, 210], [38, 140], [62, 85], [105, 50], [165, 20]],
+    w: 9,
+    main: true
+  },
+  // 3. West Rajabaug Perimeter Road (Between Oval ground and Rajabaug: X=196, stays outside Oval arena)
+  {
+    name: 'West Rajabaug Perimeter Road',
+    pts: [[307, 20], [250, 40], [215, 80], [196, 122], [196, 175]],
+    w: 8,
+    main: true
+  },
+  // 4. Oval North Cross Connector (North of Rajabaug & Oval arena: Y=122)
+  {
+    name: 'Oval North Cross Connector',
+    pts: [[38, 140], [85, 130], [140, 122], [196, 122]],
+    w: 7,
+    main: false
+  },
+  // 5. Central Palace North-South Arterial (In corridor between Rajabaug X=297 and Palace X=316: X = 307)
+  {
+    name: 'Central Palace North-South Arterial',
+    pts: [[307, 20], [307, 50], [307, 118], [307, 160], [307, 232], [307, 285], [307, 345], [307, 385]],
+    w: 8,
+    main: true
+  },
+  // 6. North Central Cross Avenue (CONNECTED CONTINUOUSLY from X=307 across to X=566 at Y=118!)
+  // Perfectly joins left and right sections with zero tree disconnection!
+  {
+    name: 'North Central Cross Avenue',
+    pts: [[307, 118], [360, 118], [412, 118], [440, 118], [500, 118], [566, 118]],
+    w: 7.5,
+    main: false
+  },
+  // 7. Palace East Rear Loop (Between Palace X=362 and Manthan X=417: X = 385)
+  {
+    name: 'Palace East Rear Loop',
+    pts: [[385, 118], [385, 170], [385, 232]],
+    w: 6.5,
+    main: false
+  },
+  // 8. Eastern Spine Road (9M Wide Road: East of Atithi X=556, Lab Block X=550, Acad Block X=542, West of NHSRCL X=596: X = 566)
+  {
+    name: 'Eastern Spine Road (9M)',
+    pts: [[577, 10], [577, 20], [577, 46], [577, 72], [572, 95], [566, 118], [566, 188], [566, 238], [566, 317], [566, 370], [566, 415]],
+    w: 9,
+    main: true
+  },
+  // 9. Road Between Lab Block and Proposed Garden (Between Lab Block Y=184 and Garden Y=196: Y = 188)
+  {
+    name: 'Road Between Lab Block and Garden (6M)',
+    pts: [[465, 188], [500, 188], [566, 188]],
+    w: 6.5,
+    main: false
+  },
+  // 10. Road North of Academic Block / South of Garden (Between Garden Y=232 and Acad Block Y=244: Y = 238)
+  {
+    name: 'Road North of Academic Block (9M)',
+    pts: [[440, 238], [500, 238], [566, 238]],
+    w: 6,
+    main: false
+  },
+  // 11. Road South of Academic Block (Between Acad Block Y=310 and Garden South Y=324: Y = 317)
+  {
+    name: 'Road South of Academic Block (9M)',
+    pts: [[440, 238], [440, 317], [500, 317], [566, 317]],
+    w: 6.5,
+    main: false
+  },
+  // 12. Hostel East-West Link (North of NHSRCL Hostel Y=75: Y = 72)
+  {
+    name: 'Hostel East-West Link',
+    pts: [[566, 72], [577, 72], [590, 72]],
+    w: 7,
+    main: false
+  },
+  // 13. Hostel South Road (South of NHSRCL Hostel Y=165: Y = 172)
+  {
+    name: 'Hostel South Road',
+    pts: [[566, 172], [590, 172], [670, 172]],
+    w: 7.5,
+    main: false
+  },
+  // 14. Hostel West Forecourt Lane (West of NHSRCL Hostel X=596: X = 590)
+  {
+    name: 'Hostel West Forecourt',
+    pts: [[590, 72], [590, 172]],
+    w: 7,
+    main: false
+  },
+  // 15. South Campus Boundary Road (Along southern perimeter fence - south of Oval ground arena)
+  {
+    name: 'South Campus Boundary Road',
+    pts: [[142, 378], [220, 385], [307, 385], [380, 395], [460, 405], [566, 415]],
+    w: 9,
+    main: true
+  },
+  // 16. Residential Street 1 (South of Palace rear to South Boundary Y=395: X = 380)
+  {
+    name: 'Residential Street 1',
+    pts: [[380, 232], [380, 310], [380, 395]],
+    w: 6.5,
+    main: false
+  },
+  // 17. Residential Street 2 (South of Palace rear to Y=360: X = 412)
+  {
+    name: 'Residential Street 2',
+    pts: [[412, 232], [412, 310], [412, 360]],
+    w: 6,
+    main: false
+  },
+  // 18. Residential Cross Street (At Y = 310 from X=340 to X=438, strictly west of Proposed Garden South X=455)
+  {
+    name: 'Residential Cross Street',
+    pts: [[340, 310], [380, 310], [412, 310], [438, 310]],
+    w: 6,
+    main: false
+  },
+  // 19. Southwest Main Campus Gate Approach
+  {
+    name: 'Southwest Gate Approach',
+    pts: [[95, 418], [115, 405], [142, 378]],
+    w: 10,
+    main: true
   }
-  for (let i = 0; i < 5; i++) {
-    g.strokeStyle = 'rgba(20,20,22,.35)';
-    g.lineWidth = 0.8;
-    g.beginPath();
-    let x = r() * 128,
-      y = r() * 128;
-    g.moveTo(x, y);
-    for (let k = 0; k < 6; k++) {
-      x += r() * 14 - 7;
-      y += r() * 14 - 7;
-      g.lineTo(x, y);
-    }
-    g.stroke();
-  }
-  for (let i = 0; i < 4; i++) {
-    g.fillStyle = 'rgba(0,0,0,.08)';
-    g.fillRect(r() * 100, r() * 100, 10 + r() * 24, 8 + r() * 18);
-  }
-});
-const pavT = mkTex(64, 64, (g) => {
-  g.fillStyle = '#d9cfb8';
-  g.fillRect(0, 0, 64, 64);
-  g.strokeStyle = 'rgba(120,105,80,.55)';
-  g.lineWidth = 1.2;
-  for (let i = 0; i <= 64; i += 16) {
-    g.beginPath();
-    g.moveTo(i, 0);
-    g.lineTo(i, 64);
-    g.stroke();
-    g.beginPath();
-    g.moveTo(0, i);
-    g.lineTo(64, i);
-    g.stroke();
-  }
-});
-function strip(sp, w, off, y, col, k, dash, map, opa, sc) {
-  const pos = [],
-    idx = [],
-    uv = [],
-    N = sp.length;
-  let d = 0;
-  sp.forEach((p, i) => {
-    const a = sp[Math.max(0, i - 1)],
-      b = sp[Math.min(N - 1, i + 1)],
-      l = Math.hypot(b.x - a.x, b.z - a.z) || 1,
-      nx = -(b.z - a.z) / l,
-      nz = (b.x - a.x) / l,
-      h = w / 2;
-    if (i) d += Math.hypot(p.x - sp[i - 1].x, p.z - sp[i - 1].z);
-    pos.push(
-      p.x + nx * (off + h),
-      y,
-      p.z + nz * (off + h),
-      p.x + nx * (off - h),
-      y,
-      p.z + nz * (off - h)
-    );
-    uv.push(0, d / (sc || w), 1, d / (sc || w));
-  });
-  for (let i = 0; i < N - 1; i++)
-    if (!dash || i % 2 == 0) idx.push(2 * i, 2 * i + 1, 2 * i + 2, 2 * i + 1, 2 * i + 3, 2 * i + 2);
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-  g.setIndex(idx);
-  g.computeVertexNormals();
-  const m = new THREE.Mesh(
-    g,
-    new THREE.MeshLambertMaterial({
-      color: col,
-      map: map || null,
-      side: THREE.DoubleSide,
-      transparent: opa != null,
-      opacity: opa == null ? 1 : opa,
-      depthWrite: opa == null,
-      polygonOffset: true,
-      polygonOffsetFactor: -k,
-      polygonOffsetUnits: -k
-    })
-  );
-  m.receiveShadow = true;
-  scene.add(m);
-}
-function wall(sp, off, y0, y1, col) {
-  const pos = [],
-    idx = [],
-    N = sp.length;
-  sp.forEach((p, i) => {
-    const a = sp[Math.max(0, i - 1)],
-      b = sp[Math.min(N - 1, i + 1)],
-      l = Math.hypot(b.x - a.x, b.z - a.z) || 1,
-      x = p.x - ((b.z - a.z) / l) * off,
-      z = p.z + ((b.x - a.x) / l) * off;
-    pos.push(x, y0, z, x, y1, z);
-  });
-  for (let i = 0; i < N - 1; i++)
-    idx.push(2 * i, 2 * i + 1, 2 * i + 2, 2 * i + 1, 2 * i + 3, 2 * i + 2);
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.setIndex(idx);
-  g.computeVertexNormals();
-  const m = new THREE.Mesh(
-    g,
-    new THREE.MeshLambertMaterial({ color: col, side: THREE.DoubleSide })
-  );
-  m.receiveShadow = true;
-  scene.add(m);
-}
-function road(P, w, kind) {
-  const c = new THREE.CatmullRomCurve3(
-    P.map(([x, y]) => new V(x - W / 2, 0, y - H / 2)),
+];
+
+// Sample smooth curve points for each road path
+MASTER_ROADS.forEach(rd => {
+  const curve = new THREE.CatmullRomCurve3(
+    rd.pts.map(([x, y]) => new THREE.Vector3(x, 0, y)),
     false,
-    kind == 'm' ? 'catmullrom' : 'centripetal',
-    0.4
+    'centripetal',
+    0.35
   );
-  const sp = c.getSpacedPoints(Math.ceil(c.getLength() / 3));
+  const len = curve.getLength();
+  const numSteps = Math.max(10, Math.ceil(len / 1.6));
+  rd.samples = curve.getSpacedPoints(numSteps).map(p => ({ x: p.x, y: p.z }));
+
+  // Push to RS collision data for nearRoad()
   RS.push([
-    sp.map((p) => [p.x + W / 2, p.z + H / 2]),
-    kind == 'r' ? w / 2 + 3 : kind == 'm' ? w / 2 : w / 2 + 1
+    rd.samples.map(p => [p.x, p.y]),
+    rd.w / 2 + 2.4
   ]);
-  if (kind == 'r' && w >= 10) {
-    MAINSP.push(sp);
-    MAINW.push(w);
+
+  // Push to MAINSP for festival car traffic
+  if (rd.main) {
+    MAINSP.push(
+      rd.samples.map(p => new THREE.Vector3(p.x - W / 2, 0.3, p.y - H / 2))
+    );
+    MAINW.push(rd.w);
   }
-  if (kind == 'r') {
-    if (w >= 10) {
-      strip(sp, w + 5, 0, 0.22, 0xcfc8b6, 1);
-      [1, -1].forEach((s) => {
-        strip(sp, 1.2, s * (w / 2 + 0.6), 0.62, 0xcbc5b5, 5);
-        wall(sp, s * (w / 2 + 0.05), 0.3, 0.62, 0xa9a392);
+});
+
+// Render the high-resolution unified road network canvas
+const S_ROAD = 4; // 4x supersampling (3004 x 1720) for crisp sub-meter resolution
+const roadCv = document.createElement('canvas');
+roadCv.width = W * S_ROAD;
+roadCv.height = H * S_ROAD;
+const rg = roadCv.getContext('2d');
+rg.lineJoin = 'round';
+rg.lineCap = 'round';
+
+// PASS 1: Light sandstone beveled sidewalk / curb border
+// Round line joins fuse all road intersections seamlessly with zero gaps
+rg.strokeStyle = '#d0c6b0';
+MASTER_ROADS.forEach(rd => {
+  rg.lineWidth = (rd.w + 3.2) * S_ROAD;
+  rg.beginPath();
+  rd.samples.forEach((p, i) => {
+    if (i === 0) rg.moveTo(p.x * S_ROAD, p.y * S_ROAD);
+    else rg.lineTo(p.x * S_ROAD, p.y * S_ROAD);
+  });
+  rg.stroke();
+});
+
+// PASS 2: Granite curb bevel edge / subtle shadow groove
+rg.strokeStyle = '#857e70';
+MASTER_ROADS.forEach(rd => {
+  rg.lineWidth = (rd.w + 0.8) * S_ROAD;
+  rg.beginPath();
+  rd.samples.forEach((p, i) => {
+    if (i === 0) rg.moveTo(p.x * S_ROAD, p.y * S_ROAD);
+    else rg.lineTo(p.x * S_ROAD, p.y * S_ROAD);
+  });
+  rg.stroke();
+});
+
+// PASS 3: Seamless dark matte asphalt carriageway
+// Every road's asphalt fuses into a single unified surface (no overlapping alpha or z-fighting)
+rg.strokeStyle = '#32353a';
+MASTER_ROADS.forEach(rd => {
+  rg.lineWidth = rd.w * S_ROAD;
+  rg.beginPath();
+  rd.samples.forEach((p, i) => {
+    if (i === 0) rg.moveTo(p.x * S_ROAD, p.y * S_ROAD);
+    else rg.lineTo(p.x * S_ROAD, p.y * S_ROAD);
+  });
+  rg.stroke();
+});
+
+// PASS 4: Realistic asphalt tire wear tracks & fine aggregate texture
+rg.save();
+rg.globalCompositeOperation = 'source-atop'; // Restrict wear exclusively to the asphalt
+
+// Subtle dual wheel-wear tracks along main roads
+MASTER_ROADS.forEach(rd => {
+  if (rd.w < 7.5) return;
+  const trackOffset = rd.w * 0.22;
+  [-trackOffset, trackOffset].forEach(off => {
+    rg.strokeStyle = 'rgba(24, 26, 29, 0.38)';
+    rg.lineWidth = 1.6 * S_ROAD;
+    rg.beginPath();
+    for (let i = 0; i < rd.samples.length; i++) {
+      const p = rd.samples[i];
+      const prev = rd.samples[Math.max(0, i - 1)];
+      const next = rd.samples[Math.min(rd.samples.length - 1, i + 1)];
+      const dx = next.x - prev.x;
+      const dy = next.y - prev.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len;
+      const ny = dx / len;
+      const px = (p.x + nx * off) * S_ROAD;
+      const py = (p.y + ny * off) * S_ROAD;
+      if (i === 0) rg.moveTo(px, py);
+      else rg.lineTo(px, py);
+    }
+    rg.stroke();
+  });
+});
+rg.restore();
+
+// PASS 5: Road markings (Solid white shoulder lines & dashed center dividers)
+// CRITICAL: Markings strictly pause before intersection zones to prevent criss-crossing
+MASTER_ROADS.forEach(rd => {
+  if (rd.w < 7.2) return;
+
+  const runs = [];
+  let curRun = [];
+  rd.samples.forEach(p => {
+    if (!isJunction(p.x, p.y)) {
+      curRun.push(p);
+    } else {
+      if (curRun.length >= 4) runs.push(curRun);
+      curRun = [];
+    }
+  });
+  if (curRun.length >= 4) runs.push(curRun);
+
+  runs.forEach(run => {
+    // A. Crisp outer white shoulder lines
+    const edgeOffset = rd.w * 0.44;
+    [-edgeOffset, edgeOffset].forEach(off => {
+      rg.strokeStyle = 'rgba(242, 240, 232, 0.88)';
+      rg.lineWidth = 0.45 * S_ROAD;
+      rg.beginPath();
+      for (let i = 0; i < run.length; i++) {
+        const p = run[i];
+        const prev = run[Math.max(0, i - 1)];
+        const next = run[Math.min(run.length - 1, i + 1)];
+        const dx = next.x - prev.x;
+        const dy = next.y - prev.y;
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = -dy / len;
+        const ny = dx / len;
+        const px = (p.x + nx * off) * S_ROAD;
+        const py = (p.y + ny * off) * S_ROAD;
+        if (i === 0) rg.moveTo(px, py);
+        else rg.lineTo(px, py);
+      }
+      rg.stroke();
+    });
+
+    // B. Warm yellow/amber dashed center lane dividers
+    if (rd.w >= 8.2) {
+      rg.save();
+      rg.strokeStyle = 'rgba(245, 226, 142, 0.92)';
+      rg.lineWidth = 0.52 * S_ROAD;
+      rg.setLineDash([8 * S_ROAD, 8 * S_ROAD]);
+      rg.beginPath();
+      run.forEach((p, i) => {
+        if (i === 0) rg.moveTo(p.x * S_ROAD, p.y * S_ROAD);
+        else rg.lineTo(p.x * S_ROAD, p.y * S_ROAD);
+      });
+      rg.stroke();
+      rg.restore();
+    }
+  });
+});
+
+// PASS 6: Pedestrian Zebra Crossings at key campus gateways & focal buildings
+const ZEBRAS = [
+  { x: 307, y: 189, angle: 0, bars: 6 },      // Pratap Vilas Palace Grand Entry
+  { x: 307, y: 160, angle: 0, bars: 5 },      // Rajabaug North Promenade Entrance
+  { x: 566, y: 238, angle: 0, bars: 6 },      // Academic Block East Entrance
+  { x: 566, y: 188, angle: 0, bars: 6 },      // Proposed Garden Entry
+  { x: 577, y: 72, angle: 0, bars: 6 },       // Hostel Zone / Main Gate Entry Axis
+  { x: 577, y: 36, angle: 0, bars: 6 },       // Main Campus Entrance Gate Pedestrian Crossing
+  { x: 135, y: 388, angle: -0.65, bars: 6 }   // Southwest Main Campus Gate Entrance
+];
+
+ZEBRAS.forEach(z => {
+  rg.save();
+  rg.translate(z.x * S_ROAD, z.y * S_ROAD);
+  rg.rotate(z.angle);
+  const barW = 0.52 * S_ROAD;
+  const barL = 3.2 * S_ROAD;
+  const spacing = 1.05 * S_ROAD;
+  const totalW = (z.bars - 1) * spacing;
+  rg.fillStyle = '#ffffff';
+  for (let b = 0; b < z.bars; b++) {
+    const bx = -totalW / 2 + b * spacing - barW / 2;
+    rg.fillRect(bx, -barL / 2, barW, barL);
+  }
+  rg.restore();
+});
+
+// Create 3D road network plane in the campus scene
+const roadTex = new THREE.CanvasTexture(roadCv);
+roadTex.encoding = THREE.sRGBEncoding;
+roadTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+const roadGeo = new THREE.PlaneGeometry(W, H);
+const roadMat = new THREE.MeshLambertMaterial({
+  map: roadTex,
+  transparent: true,
+  alphaTest: 0.05,
+  polygonOffset: true,
+  polygonOffsetFactor: -2,
+  polygonOffsetUnits: -2
+});
+const roadMesh = new THREE.Mesh(roadGeo, roadMat);
+roadMesh.rotation.x = -Math.PI / 2;
+roadMesh.position.y = 0.28;
+roadMesh.receiveShadow = true;
+scene.add(roadMesh);
+
+// PASS 7: Intelligent Streetlamp Placement Along Sidewalk Curbs
+// Strictly avoids junctions, building footprints, and Rajabaug garden interior
+MASTER_ROADS.forEach(rd => {
+  if (rd.w < 7.2) return;
+  const lampInterval = rd.main ? 26 : 32;
+  let distAccum = 0;
+  const curbDist = rd.w / 2 + 1.8;
+
+  for (let i = 1; i < rd.samples.length - 1; i++) {
+    const prev = rd.samples[i - 1];
+    const p = rd.samples[i];
+    distAccum += Math.hypot(p.x - prev.x, p.y - prev.y);
+
+    if (distAccum >= lampInterval) {
+      distAccum = 0;
+
+      // Skip if inside or near any intersection
+      if (isJunction(p.x, p.y)) continue;
+
+      // Skip if near any building footprint or park
+      if (p.x > 214 && p.x < 298 && p.y > 154 && p.y < 224) continue; // Rajabaug
+      if (p.x > 316 && p.x < 362 && p.y > 156 && p.y < 222) continue; // Palace
+      if (p.x > 318 && p.x < 395 && p.y > 38 && p.y < 92) continue;   // Central Acad Block
+      if (p.x > 450 && p.x < 542 && p.y > 243 && p.y < 311) continue; // Proposed Acad Block
+      if (p.x > 472 && p.x < 550 && p.y > 132 && p.y < 184) continue; // Lab Block
+      if (p.x > 504 && p.x < 556 && p.y > 55 && p.y < 106) continue;  // Atithi
+      if (p.x > 596 && p.x < 698 && p.y > 75 && p.y < 165) continue;  // NHSRCL Hostel
+      if (p.x > 417 && p.x < 453 && p.y > 183 && p.y < 219) continue; // Manthan
+      if (p.x > 470 && p.x < 544 && p.y > 196 && p.y < 232) continue; // Garden North
+      if (p.x > 455 && p.x < 535 && p.y > 324 && p.y < 365) continue; // Garden South
+      if (p.x > 195 && p.x < 285 && p.y > 230 && p.y < 312) continue; // Oval Ground arena
+
+      const next = rd.samples[i + 1];
+      const dx = next.x - prev.x;
+      const dy = next.y - prev.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len;
+      const ny = dx / len;
+
+      const sides = rd.main ? [1, -1] : [(i % 2 === 0 ? 1 : -1)];
+      sides.forEach(sd => {
+        const lx = p.x + nx * curbDist * sd;
+        const lz = p.y + ny * curbDist * sd;
+
+        if (!isJunction(lx, lz)) {
+          const inObj = (
+            (lx > 214 && lx < 298 && lz > 154 && lz < 224) ||
+            (lx > 316 && lx < 362 && lz > 156 && lz < 222) ||
+            (lx > 318 && lx < 395 && lz > 38 && lz < 92) ||
+            (lx > 450 && lx < 542 && lz > 243 && lz < 311) ||
+            (lx > 472 && lx < 550 && lz > 132 && lz < 184) ||
+            (lx > 504 && lx < 556 && lz > 55 && lz < 106) ||
+            (lx > 596 && lx < 698 && lz > 75 && lz < 165) ||
+            (lx > 417 && lx < 453 && lz > 183 && lz < 219) ||
+            (lx > 470 && lx < 544 && lz > 196 && lz < 232) ||
+            (lx > 455 && lx < 535 && lz > 324 && lz < 365) ||
+            (lx > 195 && lx < 285 && lz > 230 && lz < 312)
+          );
+          if (!inObj) {
+            LP.push([lx, lz, -nx * sd, -ny * sd]);
+          }
+        }
       });
     }
-    strip(sp, w, 0, 0.3, 0xffffff, 2, false, asphT);
-    [1, -1].forEach((s) => {
-      strip(sp, w * 0.2, s * w * 0.2, 0.33, 0x000000, 3, false, null, 0.12);
-      strip(sp, 1, s * (w / 2 - 0.5), 0.34, 0x8c7f68, 3, false, null, 0.28);
-    });
   }
-  if (kind == 'm') strip(sp, w, 0, 0.45, 0xffffff, 2, false, asphT);
-  if (kind == 'p') {
-    strip(sp, w + 1.4, 0, 0.28, 0xb0a58c, 1);
-    strip(sp, w, 0, 0.34, 0xffffff, 2, false, pavT, null, w);
-  }
-  if (kind != 'p') {
-    const yy = kind == 'm' ? 0.52 : 0.38;
-    if (w >= 9) [1, -1].forEach((s) => strip(sp, 0.45, s * (w / 2 - 1.3), yy, 0xe9e7dc, 4));
-    strip(sp, 0.55, 0, yy, 0xeadf9c, 4, true);
-  }
-  if (kind != 'p') {
-    const big = w >= 10,
-      sides0 = big || kind == 'm';
-    for (let i = 4, s = 1; i < sp.length - 2; i += big ? 8 : 10, s = -s) {
-      const a = sp[i - 1],
-        b = sp[i + 1],
-        l = Math.hypot(b.x - a.x, b.z - a.z) || 1,
-        nx = -(b.z - a.z) / l,
-        nz = (b.x - a.x) / l,
-        o = w / 2 + (big ? 3.2 : 2.4);
-      (sides0 ? [1, -1] : [s]).forEach((sd) =>
-        LP.push([sp[i].x + nx * o * sd + W / 2, sp[i].z + nz * o * sd + H / 2, -nx * sd, -nz * sd])
-      );
-    }
-  }
-}
-const zb = (x, y, ns, n) => {
-  for (let i = -n; i <= n; i++)
-    ns
-      ? flat(x + i * 1.7 - 0.45, y - 2.2, x + i * 1.7 + 0.45, y + 2.2, 0.44, 0xf4f4f4)
-      : flat(x - 2.2, y + i * 1.7 - 0.45, x + 2.2, y + i * 1.7 + 0.45, 0.44, 0xf4f4f4);
-};
-// campus roads & paths traced from the Google Maps road overlay (registered to this photo)
-const NET = [
-  [
-    [292, 383],
-    [301, 383]
-  ],
-  [
-    [303, 340],
-    [250, 338],
-    [246, 329]
-  ],
-  [
-    [373, 392],
-    [316, 388],
-    [301, 383]
-  ],
-  [
-    [112, 42],
-    [133, 45],
-    [153, 57]
-  ],
-  [
-    [321, 72],
-    [312, 70],
-    [299, 80]
-  ],
-  [
-    [388, 405],
-    [379, 403],
-    [373, 392]
-  ],
-  [
-    [388, 405],
-    [393, 399],
-    [396, 337],
-    [400, 318]
-  ],
-  [
-    [140, 175],
-    [136, 120]
-  ],
-  [
-    [204, 329],
-    [157, 254],
-    [147, 235]
-  ],
-  [
-    [6, 430],
-    [3, 409]
-  ],
-  [
-    [374, 107],
-    [306, 102]
-  ],
-  [
-    [6, 430],
-    [21, 427]
-  ],
-  [
-    [6, 430],
-    [3, 444]
-  ],
-  [
-    [400, 318],
-    [400, 277],
-    [388, 273]
-  ],
-  [
-    [543, 119],
-    [483, 115],
-    [477, 118]
-  ],
-  [
-    [428, 166],
-    [420, 168]
-  ],
-  [
-    [371, 156],
-    [375, 160]
-  ],
-  [
-    [371, 156],
-    [376, 162]
-  ],
-  [
-    [371, 156],
-    [376, 162]
-  ],
-  [
-    [378, 318],
-    [382, 286],
-    [388, 273]
-  ],
-  [
-    [386, 237],
-    [369, 228]
-  ],
-  [
-    [306, 102],
-    [299, 80]
-  ],
-  [
-    [184, 353],
-    [218, 378],
-    [280, 384],
-    [292, 383]
-  ],
-  [
-    [373, 392],
-    [378, 318]
-  ],
-  [
-    [374, 107],
-    [376, 79]
-  ],
-  [
-    [306, 102],
-    [303, 132]
-  ],
-  [
-    [308, 314],
-    [310, 270],
-    [304, 261]
-  ],
-  [
-    [204, 329],
-    [216, 334]
-  ],
-  [
-    [308, 314],
-    [378, 318]
-  ],
-  [
-    [472, 155],
-    [477, 118]
-  ],
-  [
-    [308, 314],
-    [303, 340]
-  ],
-  [
-    [299, 80],
-    [289, 73],
-    [282, 58],
-    [268, 54],
-    [153, 57]
-  ],
-  [
-    [321, 224],
-    [306, 237]
-  ],
-  [
-    [303, 132],
-    [136, 120]
-  ],
-  [
-    [303, 132],
-    [304, 148]
-  ],
-  [
-    [246, 329],
-    [216, 334]
-  ],
-  [
-    [246, 329],
-    [281, 291],
-    [294, 268],
-    [304, 261]
-  ],
-  [
-    [304, 261],
-    [306, 237]
-  ],
-  [
-    [321, 224],
-    [369, 228]
-  ],
-  [
-    [298, 226],
-    [306, 237]
-  ],
-  [
-    [376, 162],
-    [372, 168],
-    [369, 228]
-  ],
-  [
-    [386, 237],
-    [384, 266],
-    [388, 273]
-  ],
-  [
-    [430, 241],
-    [414, 238],
-    [386, 237]
-  ],
-  [
-    [371, 156],
-    [374, 107]
-  ],
-  [
-    [420, 168],
-    [376, 162]
-  ],
-  [
-    [136, 120],
-    [136, 97],
-    [153, 57]
-  ],
-  [
-    [303, 340],
-    [301, 383]
-  ],
-  [
-    [400, 318],
-    [425, 318]
-  ],
-  [
-    [295, 142],
-    [298, 228]
-  ],
-  [
-    [135, 170],
-    [142, 228]
-  ]
-];
-NET.forEach((p) => road(p, 7, 'r'));
-road(
-  [
-    [0, 77],
-    [50, 211],
-    [125, 430]
-  ],
-  15,
-  'r'
-);
-road(
-  [
-    [0, 0],
-    [164, 11],
-    [314, 22],
-    [465, 32],
-    [603, 41],
-    [701, 48]
-  ],
-  12,
-  'r'
-);
-road(
-  [
-    [577, 41],
-    [568, 94],
-    [564, 169],
-    [557, 253],
-    [552, 320],
-    [550, 378],
-    [552, 430]
-  ],
-  10,
-  'r'
-);
-// markings only on the existing asphalt (fly route, hostel 6M road, forecourt)
-road(
-  [
-    [350, 98],
-    [372, 106],
-    [410, 109],
-    [480, 109],
-    [540, 109],
-    [562, 118],
-    [585, 140],
-    [603, 146]
-  ],
-  9,
-  'm'
-);
-road(
-  [
-    [582, 126],
-    [640, 126],
-    [692, 126]
-  ],
-  11,
-  'm'
-);
-road(
-  [
-    [599, 80],
-    [599, 120]
-  ],
-  10,
-  'm'
-);
+});
+
 const GLW = (() => {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
@@ -1967,6 +3735,14 @@ const fadeCone = (r, h, pw = 1.4) => {
   g.setAttribute('color', new THREE.Float32BufferAttribute(c, 3));
   return g;
 };
+// Remove any streetlamps in Acad Block & forecourt to maintain an open, grand, glare-free vista
+for (let i = LP.length - 1; i >= 0; i--) {
+  const p = LP[i];
+  if (p[0] > 298 && p[0] < 418 && p[1] > 30 && p[1] < 155) {
+    LP.splice(i, 1);
+  }
+}
+
 const mt2 = new THREE.Matrix4(),
   L_lq = new THREE.Quaternion(),
   L_le = new THREE.Euler(),
@@ -2044,6 +3820,7 @@ const HAND = [
   [451, 244, 541, 310],
   [474, 133, 549, 183],
   [322, 158, 360, 220],
+  [214, 152, 298, 228],
   [322, 40, 392, 93],
   [418, 184, 452, 218]
 ];
@@ -2074,19 +3851,23 @@ GEO.b.forEach(([gh, ...f]) => {
   const r = hash2(cxp, cyp),
     area = (Math.max(...xs) - Math.min(...xs)) * (Math.max(...ys) - Math.min(...ys)),
     h = gh === 6 ? 7 + r * 8 + (area > 700 ? 4 : 0) : gh * 0.92;
-  addPoly(pts, h, 1.2 + (cxp / W) * 1.8 + r * 0.6, r < 0.5 ? wallBase : hostelBase);
+  // Unnamed generic background buildings removed
+  // addPoly(pts, h, 1.2 + (cxp / W) * 1.8 + r * 0.6, r < 0.5 ? wallBase : hostelBase);
 });
 
-// ---- trees from the green pixels
+// ---- trees from the green pixels (with enhanced road clearance & obstacle exclusion)
 const inB = (x, y) =>
-  nearRoad(x, y, 2) ||
+  nearRoad(x, y, 6.0) ||
   BUILDINGS.some((b) => x > b[0] - 6 && x < b[2] + 6 && y > b[1] - 6 && y < b[3] + 6) ||
-  (x > 498 && x < 563 && y > 48 && y < 112) ||
-  (x > 468 && x < 554 && y > 110 && y < 190) ||
-  (x > 446 && x < 546 && y > 225 && y < 314) ||
-  (x > 290 && x < 378 && y > 146 && y < 232) ||
-  (x > 316 && x < 398 && y > 34 && y < 98) ||
-  (x > 412 && x < 458 && y > 178 && y < 236);
+  (x > 498 && x < 563 && y > 48 && y < 112) || // Atithi
+  (x > 468 && x < 554 && y > 110 && y < 190) || // Lab Block
+  (x > 446 && x < 546 && y > 225 && y < 314) || // Proposed Acad Block
+  (x > 290 && x < 378 && y > 146 && y < 232) || // Pratap Vilas Palace
+  (x > 298 && x < 418 && y > 30 && y < 155) ||  // Central Acad Block Vista
+  (x > 214 && x < 298 && y > 152 && y < 228) || // Rajabaug Carnival Park
+  (x > 412 && x < 458 && y > 178 && y < 236) || // Manthan
+  (x > 290 && x < 575 && y > 106 && y < 130) || // North Central Cross Avenue corridor (Clears tree disconnection in Image 2!)
+  (x > 195 && x < 285 && y > 230 && y < 312);   // Oval Ground Cultural Fest Area (Clears arena in Image 1!)
 const spots = [];
 GEO.t.forEach(([x, y, cd]) => {
   if (x >= W || y >= H || inB(x, y) || FOOT.some((f) => x > f[0] && x < f[2] && y > f[1] && y < f[3])) return;
@@ -2217,22 +3998,9 @@ sdw.frustumCulled = false;
 TM.push(sdw);
 scene.add(sdw);
 
-// ---- school pin
+// ---- school pin (invisible anchor node, orange balloon pin removed)
 const pin = new THREE.Group();
-const body = new THREE.MeshLambertMaterial({ color: 0xff7a1a, emissive: 0x9a3a00 });
-const cone = new THREE.Mesh(new THREE.ConeGeometry(5, 12, 16), body);
-cone.rotation.x = Math.PI;
-cone.position.y = 6;
-const ball = new THREE.Mesh(new THREE.SphereGeometry(7, 20, 20), body);
-ball.position.y = 17;
-const dot = new THREE.Mesh(
-  new THREE.SphereGeometry(3.2, 12, 12),
-  new THREE.MeshBasicMaterial({ color: 0xffffff })
-);
-dot.position.set(0, 17, 5.4);
-pin.add(cone, ball, dot);
-pin.position.set(357 - W / 2, 22, 70 - H / 2);
-pin.castShadow = true;
+pin.position.set(357 - W / 2, 28, 83 - H / 2);
 scene.add(pin);
 
 // ---- location beacon

@@ -1140,11 +1140,11 @@ function festAnim0(t) {
 const t11 = document.getElementById('t11');
 const EGG = new THREE.Group();
 EGG.position.set(577 - W / 2, 0, 46 - H / 2);
-EGG.rotation.y = -0.168;
+EGG.rotation.y = 0; // Perfectly perpendicular to the incoming North-South entrance road
 scene.add(EGG);
 const EWL = new THREE.Group();
 EWL.position.copy(EGG.position);
-EWL.rotation.y = -0.065;
+EWL.rotation.y = 0;
 scene.add(EWL);
 const ETC = 0x9d4a32,
   EBG = 0xe3d3b4,
@@ -1160,69 +1160,58 @@ const ETC = 0x9d4a32,
   );
   lm.position.set(x, 13.3, 0);
   EGG.add(lm);
+
+  // Warm carriage lanterns flanking the entrance arch on each pillar
+  [1.35, -1.35].forEach((lz) => {
+    const sconce = new THREE.Mesh(
+      new THREE.BoxGeometry(0.35, 0.65, 0.35),
+      new THREE.MeshBasicMaterial({ color: 0xffe899 })
+    );
+    sconce.position.set(x, 4.2, lz);
+    EGG.add(sconce);
+  });
 });
 bx(22, 3.2, 2.4, EBG, 0, 9.5, 0, EGG);
 bx(22.2, 0.7, 2.6, ETC, 0, 7.6, 0, EGG);
 bx(23, 0.5, 2.8, EST, 0, 11.35, 0, EGG);
 bx(6, 1.4, 2.6, ETC, 0, 12.3, 0, EGG);
-const egc = document.createElement('canvas');
-egc.width = 1024;
-egc.height = 160;
-{
-  const g = egc.getContext('2d');
-  g.fillStyle = '#f6eedb';
-  g.fillRect(0, 0, 1024, 160);
-  g.strokeStyle = '#1b3a6b';
-  g.lineWidth = 6;
-  g.strokeRect(6, 6, 1012, 148);
-  g.fillStyle = '#1f4fa3';
-  g.beginPath();
-  g.arc(92, 80, 52, 0, 6.3);
-  g.fill();
-  g.strokeStyle = '#fff';
-  g.lineWidth = 5;
-  g.beginPath();
-  g.arc(92, 80, 40, 0, 6.3);
-  g.stroke();
-  g.beginPath();
-  g.arc(92, 80, 10, 0, 6.3);
-  g.stroke();
-  for (let i = 0; i < 8; i++) {
-    g.beginPath();
-    g.moveTo(92 + Math.cos(i * 0.785) * 10, 80 + Math.sin(i * 0.785) * 10);
-    g.lineTo(92 + Math.cos(i * 0.785) * 40, 80 + Math.sin(i * 0.785) * 40);
-    g.stroke();
-  }
-  g.fillStyle = '#1b3a6b';
-  g.textAlign = 'center';
-  g.textBaseline = 'middle';
-  g.font = '800 62px Arial,sans-serif';
-  g.fillText('GATI SHAKTI VISHWAVIDYALAYA', 570, 58);
-  g.font = '700 44px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
-  g.fillText('गति शक्ति विश्वविद्यालय', 570, 122);
-}
-const egt = new THREE.CanvasTexture(egc);
+const bannerLoader = new THREE.TextureLoader();
+const egt = bannerLoader.load('assets/main-gate-banner.png');
 egt.encoding = THREE.sRGBEncoding;
+if (typeof renderer !== 'undefined' && renderer.capabilities) {
+  egt.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+}
 [1.25, -1.25].forEach((z, i) => {
   const p = new THREE.Mesh(
-    new THREE.PlaneGeometry(19.6, 3.06),
+    new THREE.PlaneGeometry(16.28, 3.1),
     new THREE.MeshBasicMaterial({ map: egt })
   );
   p.position.set(0, 9.5, z);
   if (i) p.rotation.y = Math.PI;
   EGG.add(p);
 });
+
+// Paved pedestrian sidewalk curbs flanking road through the gate portal (15.2m clear opening)
+[-7.1, 7.1].forEach((px) => {
+  const walkCurb = new THREE.Mesh(
+    new THREE.BoxGeometry(1.6, 0.22, 8.0),
+    new THREE.MeshLambertMaterial({ color: 0xd0c6b0 })
+  );
+  walkCurb.position.set(px, 0.11, 0);
+  EGG.add(walkCurb);
+});
+
 // boundary walls with pilasters (long wing east, short wing west beside Atithi)
 [
-  [10.8, 24, 1],
-  [-10.8, 9, -1]
+  [11.0, 26, 1],
+  [-11.0, 10, -1]
 ].forEach(([x0, L, d]) => {
   bx(L, 3.2, 0.9, EBG, x0 + (d * L) / 2, 1.6, 0, EWL);
   bx(L + 0.3, 0.4, 1.2, ETC, x0 + (d * L) / 2, 3.4, 0, EWL);
   for (let u = 0; u <= L; u += 6) bx(1.2, 3.9, 1.4, EST, x0 + d * u, 1.95, 0, EWL);
 });
-// guard cabins, boom barrier
-[-12.2, 12.2].forEach((x) => {
+// guard cabins placed outside the portal flanking the road
+[-13.5, 13.5].forEach((x) => {
   bx(3.8, 3.5, 3.2, 0xf1ead8, x, 1.75, 4.6, EGG);
   bx(4.6, 0.4, 4, ETC, x, 3.7, 4.6, EGG);
   bx(2.2, 1.2, 0.1, dk, x + (x < 0 ? 1.95 : -1.95) * 0, 2.2, 6.25, EGG);
@@ -1628,72 +1617,6 @@ const agRings = [0, 1].map(() => {
   scene.add(r);
   return r;
 });
-const agCv = new THREE.CatmullRomCurve3(
-  [
-    [577, 46],
-    [572, 80],
-    [563, 113],
-    [540, 109],
-    [480, 109],
-    [410, 109],
-    [350, 100],
-    [318, 104],
-    [298, 114],
-    [297, 142],
-    [297, 228],
-    [290, 255],
-    [274, 252]
-  ].map(([x, y]) => new V(x - W / 2, 0, y - H / 2)),
-  false,
-  'centripetal'
-);
-{
-  const sp = agCv.getSpacedPoints(Math.ceil(agCv.getLength() / 3)),
-    pg = [],
-    pi = [];
-  sp.forEach((p, i) => {
-    const a = sp[Math.max(0, i - 1)],
-      b = sp[Math.min(sp.length - 1, i + 1)],
-      l = Math.hypot(b.x - a.x, b.z - a.z) || 1,
-      nx = (-(b.z - a.z) / l) * 1.7,
-      nz = ((b.x - a.x) / l) * 1.7;
-    pg.push(p.x + nx, 0.85, p.z + nz, p.x - nx, 0.85, p.z - nz);
-    if (i < sp.length - 1) {
-      const k = 2 * i;
-      pi.push(k, k + 1, k + 2, k + 1, k + 3, k + 2);
-    }
-  });
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pg, 3));
-  g.setIndex(pi);
-  scene.add(
-    new THREE.Mesh(
-      g,
-      new THREE.MeshBasicMaterial({
-        color: 0xff3fa4,
-        transparent: true,
-        opacity: 0.5,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        side: THREE.DoubleSide
-      })
-    )
-  );
-}
-const AGN = 44,
-  agCh = new THREE.InstancedMesh(
-    new THREE.SphereGeometry(1.3, 8, 6),
-    new THREE.MeshBasicMaterial({
-      color: 0xffe08a,
-      transparent: true,
-      opacity: 0.9,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    }),
-    AGN
-  ),
-  agm = new THREE.Matrix4();
-scene.add(agCh);
 function agneeAnim(t) {
   const O = OV.userData,
     dA = Math.min(0.05, Math.max(0, t - agT));
@@ -1711,12 +1634,6 @@ function agneeAnim(t) {
     r.scale.setScalar(8 + k * 60);
     r.material.opacity = (1 - k) * 0.7;
   });
-  for (let i = 0; i < AGN; i++) {
-    const p = agCv.getPointAt((t * 0.045 + i / AGN) % 1);
-    agm.makeTranslation(p.x, 1.8, p.z);
-    agCh.setMatrixAt(i, agm);
-  }
-  agCh.instanceMatrix.needsUpdate = true;
 }
 let agT = 0;
 const agLive = document.createElement('div');

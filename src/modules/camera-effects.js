@@ -104,7 +104,7 @@ const bFree = document.getElementById('bFree'),
   bHos = document.getElementById('bHos'),
   bOval = document.getElementById('bOval');
 function setOn(b) {
-  [bFree, bTop, bHos, bOval].forEach((x) => x.classList.toggle('on', x === b));
+  [bFree, bTop, bHos, bOval, bRaj].filter(Boolean).forEach((x) => x.classList.toggle('on', x === b));
 }
 const shareBtn = document.getElementById('shareBtn');
 shareBtn?.addEventListener('click', async () => {
@@ -139,6 +139,22 @@ bHos.onclick = () => {
   setOn(bHos);
 };
 bOval.onclick = () => TOUR.start();
+const bRaj = document.getElementById('bRaj');
+if (bRaj) {
+  bRaj.onclick = () => {
+    if (window.RB_NAV) {
+      window.RB_NAV.enter(0);
+    } else {
+      FT.set(256 - W / 2, 6, 189 - H / 2);
+      FR = 110;
+      focA = Math.atan2(camPos.x - FT.x, camPos.z - FT.z);
+      mode = 'focus';
+      setOn(bRaj);
+      showInfo('t12');
+    }
+  };
+}
+
 bTop.onclick = () => {
   T0.set(0, 0, 12);
   if (mode !== 'explore') {
@@ -188,6 +204,28 @@ function enterOF() {
 const rMin = () => (mode === 'ovfree' ? 14 : 90),
   rMax = () => (mode === 'ovfree' ? 170 : 1100),
   pMax = () => (mode === 'ovfree' ? 1.45 : 1.25);
+function earthZoomIn(step) {
+  toFree();
+  const factor = typeof step === 'number' ? step : 0.72;
+  orb.rt = clamp(orb.rt * factor, rMin(), rMax());
+}
+function earthZoomOut(step) {
+  toFree();
+  const factor = typeof step === 'number' ? step : 1.38;
+  orb.rt = clamp(orb.rt * factor, rMin(), rMax());
+}
+function earthZoomMax() {
+  toFree();
+  orb.rt = rMin();
+}
+function earthZoomMin() {
+  toFree();
+  orb.rt = rMax();
+}
+window.earthZoomIn = earthZoomIn;
+window.earthZoomOut = earthZoomOut;
+window.earthZoomMax = earthZoomMax;
+window.earthZoomMin = earthZoomMin;
 const clampOV = () => {
   if (mode !== 'ovfree') return;
   const cx = 240 - W / 2,
@@ -280,6 +318,46 @@ const up = (e) => {
 };
 canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', up);
+
+// Interactive 3D Raycasting for Rajabaug Carnival Stalls
+const rbRaycaster = new THREE.Raycaster();
+const rbMouse = new THREE.Vector2();
+
+canvas.addEventListener('click', (e) => {
+  if (tapMoved) return;
+  const rect = canvas.getBoundingClientRect();
+  rbMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  rbMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  rbRaycaster.setFromCamera(rbMouse, cam);
+
+  if (window.AGNEE_RAJABAUG_STALLS && window.AGNEE_RAJABAUG_STALLS.length) {
+    const hits = rbRaycaster.intersectObjects(window.AGNEE_RAJABAUG_STALLS, true);
+    if (hits.length > 0) {
+      let obj = hits[0].object;
+      while (obj && (!obj.userData || typeof obj.userData.stallIndex !== 'number')) {
+        obj = obj.parent;
+      }
+      if (obj && typeof obj.userData.stallIndex === 'number' && window.RB_NAV) {
+        window.RB_NAV.enter(obj.userData.stallIndex);
+        return;
+      }
+    }
+  }
+});
+
+canvas.addEventListener('pointermove', (e) => {
+  if (ptrs.size > 0 || !window.AGNEE_RAJABAUG_STALLS || !window.AGNEE_RAJABAUG_STALLS.length) return;
+  const rect = canvas.getBoundingClientRect();
+  rbMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  rbMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  rbRaycaster.setFromCamera(rbMouse, cam);
+  const hits = rbRaycaster.intersectObjects(window.AGNEE_RAJABAUG_STALLS, true);
+  if (hits.length > 0) {
+    canvas.style.cursor = 'pointer';
+  } else if (canvas.style.cursor === 'pointer') {
+    canvas.style.cursor = '';
+  }
+});
 canvas.addEventListener(
   'wheel',
   (e) => {
@@ -333,7 +411,9 @@ const t1 = document.getElementById('t1'),
   t6 = document.getElementById('t6'),
   t7 = document.getElementById('t7'),
   t8 = document.getElementById('t8'),
-  t9 = document.getElementById('t9');
+  t9 = document.getElementById('t9'),
+  t12 = document.getElementById('t12');
+window.t12 = t12;
 [
   ['t1', 357, 70, 170],
   ['t4', 648, 98, 150],
@@ -342,7 +422,8 @@ const t1 = document.getElementById('t1'),
   ['t7', 496, 270, 160],
   ['t8', 331, 189, 140],
   ['t9', 435, 201, 110],
-  ['t11', 577, 46, 80]
+  ['t11', 577, 46, 80],
+  ['t12', 256, 189, 110]
 ].forEach(([id, x, z, r]) => {
   const el = document.getElementById(id);
   el.style.pointerEvents = 'auto';
@@ -354,6 +435,9 @@ const t1 = document.getElementById('t1'),
     mode = 'focus';
     setOn(null);
     showInfo(id);
+    if (id === 't12' && window.RB_NAV) {
+      setTimeout(() => window.RB_NAV.enter(0), 300);
+    }
   };
 });
 t3.style.pointerEvents = t10.style.pointerEvents = 'auto';

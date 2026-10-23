@@ -157,7 +157,8 @@ stl.querySelector('[data-s=wall]').onclick=()=>GRD.wall();
 const spw=dm('stl stW','<div class="sk">Sponsor wall</div><div class="sn"><img class="wmi" style="height:34px" alt="Agnee" src="'+WMURI+'"></div><em class="st">Cultural Fest of GSV</em><p class="sd">'+FEST.name+' 2026 is the cultural fest of '+FEST.host+', held at the '+FEST.venue+'. The sponsors below make it happen. Names and logos will go on the wall as they are confirmed.</p>'+SPON.tiers.map(t=>'<div class="spt"><b>'+t.t+'</b><span>'+sponTxt(t)+'</span></div>').join('')+'<div class="srow"><button data-s="stalls" type="button">Stalls</button><button data-s="stage" type="button">Stage</button><button data-s="free" type="button">Free roam</button></div>');
 spw.querySelector('[data-s=stalls]').onclick=()=>GRD.enter(0);spw.querySelector('[data-s=stage]').onclick=()=>STG.enter(false);spw.querySelector('[data-s=free]').onclick=()=>enterOF();
 stl.querySelectorAll('.sdots i').forEach(e=>e.onclick=()=>GRD.go(+e.dataset.i));
-document.addEventListener('keydown',e=>{if(mode!=='ground'||fest.isOpen)return;if(GRD.kind==='wall'){if(e.key==='Escape'){mode='oval';setOn(bOval);}return;}if(e.key==='ArrowRight')GRD.go(GRD.i+1);else if(e.key==='ArrowLeft')GRD.go(GRD.i-1);else if(e.key==='Escape'){mode='oval';setOn(bOval);}});
+document.addEventListener('keydown',e=>{if(mode!=='ground'||fest.isOpen)return;if(GRD.kind==='wall'){if(e.key==='Escape'){mode='oval';setOn(bOval);}return;}if(e.key==='ArrowRight')GRD.go(GRD.i+1);else if(e.key==='ArrowLeft')GRD.go(GRD.i-1);
+ if(mode==='rajabaug'){if(e.key==='ArrowRight')RB_NAV.go(RB_NAV.i+1);else if(e.key==='ArrowLeft')RB_NAV.go(RB_NAV.i-1);else if(e.key==='Escape')RB_NAV.close();}else if(e.key==='Escape'){mode='oval';setOn(bOval);}});
 // journey controller
 const TOUR={active:false,i:-1,ph:'',t0:0,D:4,P0:new V(),T0:new V(),P1:new V(),P2:new V(),P3:new V(),tg:new V(),cp:new V(),lk:new V(),fov:41,direct:false,aE:0,w:.1,sgn:1,first:false,dwell:3.2,
  start(){fest.close();this.active=true;this.i=-1;view.classList.remove('landing');view.classList.add('tour','cg');hint.style.display='none';mode='tour';setOn(null);this.next();},
@@ -223,6 +224,201 @@ tq('#tSkip').onclick=()=>{if(TOUR.active)TOUR.finish();};
 tq('#tFree').onclick=()=>{TOUR.abort();toFree();};
 land.querySelector('#goFest').onclick=()=>TOUR.start();
 land.querySelector('#goFree').onclick=()=>{view.classList.remove('landing');hint.style.display='';hint.style.opacity=1;setTimeout(()=>hint.style.opacity=0,6000);goFree();};
+
+// ---- Rajabaug Pre-Agnee Stalls Counter Navigator
+const RB_NAV = {
+  i: 0,
+  t0: 0,
+  D: 2.2,
+  P0: new V(),
+  T0: new V(),
+  P1: new V(),
+  P2: new V(),
+  P3: new V(),
+  tg: new V(),
+  cp: new V(),
+  lk: new V(),
+  fov: 42,
+  fov0: 42,
+  active: false,
+  overview: false,
+
+  stalls: [
+    { num: 1, name: 'Ring Toss & Bulls-Eye', tag: 'Carnival Game', desc: 'Toss rings onto colored glass bottles to win official Agnee badges & prizes!', c: '#e86820', x: -17, z: -21, rot: 0 },
+    { num: 2, name: 'Balloon Dart Blitz', tag: 'Action Game', desc: 'Pop 3 target balloons in a row with precision darts for Agnee vouchers!', c: '#1d55b8', x: -6, z: -21, rot: 0 },
+    { num: 3, name: 'Can Knockout Alley', tag: 'Skill Game', desc: 'Knock down the silver tin can pyramid in a single clean baseball strike!', c: '#ce2626', x: 5, z: -21, rot: 0 },
+    { num: 4, name: 'Agnee VR & Gaming Arcade', tag: 'Arcade Hub', desc: 'Challenge friends at 90s retro arcade gaming and VR experiences!', c: '#1f8a4e', x: 16, z: -21, rot: 0 },
+    { num: 5, name: 'Fortune Wheel & Lucky Draw', tag: 'Prize Spin', desc: 'Spin the giant 12-segment carnival wheel for fest merch and concert passes!', c: '#7b2391', x: 27, z: -21, rot: 0 },
+    { num: 6, name: 'Face Art & Glitter Tattoos', tag: 'Art Studio', desc: 'Vibrant tribal face paint, neon glowing decals, and metallic fest tattoos!', c: '#e86820', x: -17, z: 21, rot: Math.PI },
+    { num: 7, name: 'Agnee Merch & Souvenirs', tag: 'Official Shop', desc: 'Exclusive Agnee 2026 hoodies, embroidered caps, lanyards, and sticker packs!', c: '#1d55b8', x: -6, z: 21, rot: Math.PI },
+    { num: 8, name: 'Popcorn & Candy Floss', tag: 'Festival Treats', desc: 'Fresh hot buttered popcorn, twirled cotton candy, and chilled fruit slushies!', c: '#ce2626', x: 5, z: 21, rot: Math.PI },
+    { num: 9, name: 'Chai & Street Munchies', tag: 'Campus Food', desc: 'Traditional cutting masala chai with steaming golden samosas and spicy bites!', c: '#1f8a4e', x: 16, z: 21, rot: Math.PI },
+    { num: 10, name: 'Polaroid Memory Wall', tag: 'Photo Zone', desc: 'Capture instant retro Polaroid snapshots and pin your memory onto the wall!', c: '#7b2391', x: 27, z: 21, rot: Math.PI }
+  ],
+
+  enter(index = 0) {
+    this.active = true;
+    this.overview = false;
+    mode = 'rajabaug';
+    const bRaj = document.getElementById('bRaj');
+    if (typeof setOn === 'function') setOn(bRaj);
+    this.go(index);
+  },
+
+  showOverview() {
+    this.overview = true;
+    mode = 'rajabaug';
+    this.P0.copy(camPos);
+    this.T0.copy(camTgt);
+    this.t0 = now;
+    this.D = 2.4;
+    // Overview bird's eye view looking down at Rajabaug from southeast
+    this.P3.set(-119.5 + 46, 38, -26 + 48);
+    this.tg.set(-119.5, 4, -26);
+    this.fov = 44;
+    this.updateUI();
+  },
+
+  go(index) {
+    const n = this.stalls.length;
+    this.i = (index + n) % n;
+    this.overview = false;
+    mode = 'rajabaug';
+    const s = this.stalls[this.i];
+    
+    // World coordinates of this stall
+    // Rajabaug center is RB_CX = 256 - W / 2 = -119.5, RB_CZ = 189 - H / 2 = -26
+    const wx = -119.5 + s.x;
+    const wz = -26 + s.z;
+
+    this.P0.copy(camPos);
+    this.T0.copy(camTgt);
+    this.fov0 = cam.fov;
+    this.t0 = now;
+
+    // North stalls (1-5, z = -21): front faces South (+Z)
+    // Eye stands in front of the counter (+4.8m) looking North into the stall
+    // South stalls (6-10, z = 21): front faces North (-Z)
+    // Eye stands in front of the counter (-4.8m) looking South into the stall
+    const camDist = 5.8;
+    const camH = 2.35;
+    const tgtH = 1.45;
+    if (s.rot === 0) {
+      this.P3.set(wx, camH, wz + camDist);
+      this.tg.set(wx, tgtH, wz + 0.4);
+    } else {
+      this.P3.set(wx, camH, wz - camDist);
+      this.tg.set(wx, tgtH, wz - 0.4);
+    }
+
+    const d = this.P0.distanceTo(this.P3);
+    this.D = clamp(1.4 + d / 45, 1.6, 3.8);
+    this.fov = 40;
+    this.updateUI();
+  },
+
+  step() {
+    TOUR.direct = true;
+    const u = clamp((now - this.t0) / this.D);
+    const e = ease5(u);
+    const up = Math.min(22, this.P0.distanceTo(this.P3) * 0.18);
+    this.P1.set(lerp(this.P0.x, this.P3.x, 0.35), Math.max(this.P0.y, this.P3.y) + up, lerp(this.P0.z, this.P3.z, 0.35));
+    this.P2.set(lerp(this.P0.x, this.P3.x, 0.72), this.P3.y + up * 0.4, lerp(this.P0.z, this.P3.z, 0.72));
+    bez(this.cp, this.P0, this.P1, this.P2, this.P3, e);
+    this.lk.copy(this.T0).lerp(this.tg, ease5(clamp(u / 0.9)));
+    this.fov = lerp(this.fov0, this.overview ? 46 : 40, e);
+    if (u >= 1) {
+      this.cp.copy(this.P3);
+      if (!this.overview) {
+        this.cp.x += Math.sin(now * 0.4) * 0.12;
+        this.cp.y += Math.sin(now * 0.35) * 0.06;
+      }
+      this.lk.copy(this.tg);
+    }
+  },
+
+  close() {
+    this.active = false;
+    mode = 'explore';
+    if (typeof toFree === 'function') toFree();
+    this.hideUI();
+  },
+
+  updateUI() {
+    const el = document.getElementById('rbNav');
+    if (!el) return;
+    el.hidden = false;
+    const s = this.stalls[this.i];
+    el.style.setProperty('--rb-col', s.c);
+
+    const numSpan = document.getElementById('rbCurNum');
+    if (numSpan) numSpan.textContent = this.overview ? 'OVERVIEW' : (this.i + 1);
+
+    const titleEl = document.getElementById('rbStallTitle');
+    if (titleEl) titleEl.textContent = this.overview ? 'Rajabaug Garden Overview' : ('Counter ' + s.num + ': ' + s.name);
+
+    const tagEl = document.getElementById('rbStallTag');
+    if (tagEl) tagEl.textContent = this.overview ? '10 Fun Stalls' : s.tag;
+
+    const descEl = document.getElementById('rbStallDesc');
+    if (descEl) descEl.textContent = this.overview ? 'Use Prev / Next or click any number below to walk up directly to each counter.' : s.desc;
+
+    const priceEl = document.getElementById('rbStallPrice');
+    if (priceEl) priceEl.textContent = this.overview ? '🎪 10 Festive Counters' : (s.price || '🎟️ Free Entry');
+
+    const rewardEl = document.getElementById('rbStallReward');
+    if (rewardEl) rewardEl.textContent = this.overview ? '★ Pre-Agnee Carnival' : (s.reward || '🏆 Fest Prizes');
+
+    // Contextual action box
+    const actionBox = document.getElementById('rbStallAction');
+    if (actionBox) {
+      if (this.overview) {
+        actionBox.innerHTML = '<button type="button" class="rb-action-btn" onclick="window.RB_NAV?.go(0)">Explore Counter 1 →</button>';
+      } else if (s.isMerch || s.num === 7) {
+        // OFFICIAL MERCHANDISE SELLING ACTION & DIRECT LINK
+        actionBox.innerHTML = `
+          <div class="rb-merch-promo">
+            <div class="rb-merch-pills">
+              <span class="pill">🖤 Eclipse Black</span>
+              <span class="pill">🔥 Inferno Red</span>
+              <span class="pill">🤍 Ethereal White</span>
+            </div>
+            <div class="rb-merch-btns">
+              <button type="button" class="rb-action-btn merch-btn" id="rbMerchScrollBtn">🛍️ Browse Merch Section (₹499)</button>
+              <a class="rb-action-link" href="https://forms.gle/fzC46cAi2thMU7Er7" target="_blank" rel="noopener noreferrer">Order via Form ↗</a>
+            </div>
+          </div>
+        `;
+        document.getElementById('rbMerchScrollBtn')?.addEventListener('click', () => {
+          document.getElementById('merch')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } else {
+        // Other stalls helper info
+        actionBox.innerHTML = `
+          <div class="rb-stall-helper">
+            <span class="rb-helper-timing">🕒 Pre-Agnee Day · 4:00 PM – 10:00 PM</span>
+            <button type="button" class="rb-action-btn-ghost" onclick="window.RB_NAV?.go(6)">🛍️ Visit Merch Counter (#7) →</button>
+          </div>
+        `;
+      }
+    }
+
+    // Update dots
+    const dotsContainer = document.getElementById('rbDots');
+    if (dotsContainer) {
+      dotsContainer.querySelectorAll('button').forEach((b, k) => {
+        b.classList.toggle('active', !this.overview && k === this.i);
+      });
+    }
+  },
+
+  hideUI() {
+    const el = document.getElementById('rbNav');
+    if (el) el.hidden = true;
+  }
+};
+window.RB_NAV = RB_NAV;
+
 function goIdle(){mode='idle';setOn(null);}
 
 function frame(ms){
@@ -243,6 +439,7 @@ function frame(ms){
  else if(mode==='tour'){TOUR.step();dp=TOUR.cp;dt2=TOUR.lk;}
  else if(mode==='stage'){STG.step();dp=STG.cp;dt2=STG.lk;}
  else if(mode==='ground'){GRD.step();dp=GRD.cp;dt2=GRD.lk;}
+ else if(mode==='rajabaug'){RB_NAV.step();dp=RB_NAV.cp;dt2=RB_NAV.lk;}
  else if(mode==='oval'){const el=now-AF.t0,u=clamp(el/AF.D),oR=q=>95+14*Math.sin(q*.31),oH=q=>62+9*Math.sin(q*.23),oT=new V(240-W/2-4,6,270-H/2+4),P3=orbAt(AF.a0,oR(AF.D),oH(AF.D));
   if(u<1){AF.fly=true;AF.u=u;const e=ease5(u),P0=AF.P0,dist=P0.distanceTo(P3),yHi=Math.max(P0.y,P3.y,Math.min(150,70+dist*.2)),
    P1=AFarc(P0,P3,.3,yHi,1),P2=AFarc(P0,P3,.72,Math.max(yHi*.75,P3.y+35),-.55),
@@ -257,8 +454,8 @@ function frame(ms){
  if(mode!==pMode){const inO=m=>m==='oval'||m==='stage'||m==='ovfree'||m==='ground';if(mode==='oval'&&!inO(pMode))AFstart();else if(inO(pMode)&&!inO(mode))agLeave();pMode=mode;modeT=now;}if(mode!=='focus')hideInfo();
  const bs={intro:.12,explore:.26,hostels:.9,oval:.45,focus:.9}[mode]||.6,st=mode==='intro'?bs:lerp(1.5,bs,clamp((now-modeT)/2.2));
  if(AF.fly||TOUR.direct){camPos.copy(dp);camTgt.copy(dt2);camV.set(0,0,0);tgtV.set(0,0,0);}else{sd(camPos,camV,dp,st,dt);sd(camTgt,tgtV,dt2,st*.8,dt);}
- const fv=AF.fly?(RM?41:34+17*Math.pow(Math.sin(Math.PI*AF.u),1.4)-5*Math.pow(clamp((AF.u-.8)/.2),2)):(mode==='tour'?TOUR.fov:mode==='stage'?STG.fov:mode==='ground'?GRD.fov:mode==='explore'?38:41);if(Math.abs(cam.fov-fv)>.02){cam.fov+=(fv-cam.fov)*(1-Math.exp(-dt*(AF.fly||mode==='tour'||mode==='stage'||mode==='ground'?5:2)));cam.updateProjectionMatrix();}cam.position.copy(camPos);cam.lookAt(camTgt);cinematic.camFx(dt);
- place(t1,new V(pin.position.x,pin.position.y+30,pin.position.z));place(t3,new V(639-W/2,50,146-H/2));place(t4,new V(648-W/2,62,98-H/2));place(t5,new V(530-W/2,28,80-H/2));place(t6,new V(511-W/2,46,158-H/2));place(t7,new V(496-W/2,44,277-H/2));place(t8,new V(331-W/2,44,189-H/2));place(t9,new V(435-W/2,24,201-H/2));place(t10,new V(240-W/2,58,270-H/2));place(t11,new V(577-W/2,19,46-H/2));
+ const fv=AF.fly?(RM?41:34+17*Math.pow(Math.sin(Math.PI*AF.u),1.4)-5*Math.pow(clamp((AF.u-.8)/.2),2)):(mode==='tour'?TOUR.fov:mode==='stage'?STG.fov:mode==='ground'?GRD.fov:mode==='rajabaug'?RB_NAV.fov:mode==='explore'?38:41);if(Math.abs(cam.fov-fv)>.02){cam.fov+=(fv-cam.fov)*(1-Math.exp(-dt*(AF.fly||mode==='tour'||mode==='stage'||mode==='ground'?5:2)));cam.updateProjectionMatrix();}cam.position.copy(camPos);cam.lookAt(camTgt);cinematic.camFx(dt);
+ place(t1,new V(pin.position.x,pin.position.y+30,pin.position.z));place(t3,new V(639-W/2,50,146-H/2));place(t4,new V(648-W/2,62,98-H/2));place(t5,new V(530-W/2,28,80-H/2));place(t6,new V(511-W/2,46,158-H/2));place(t7,new V(496-W/2,44,277-H/2));place(t8,new V(331-W/2,44,189-H/2));place(t9,new V(435-W/2,24,201-H/2));place(t10,new V(240-W/2,58,270-H/2));place(t11,new V(577-W/2,19,46-H/2));if(typeof t12!=='undefined'&&t12)place(t12,new V(256-W/2,22,189-H/2));
  festAnim(now);cinematic.update(dt);TOUR.ui();STG.ui();renderer.render(scene,cam);cinematic.post();
  const ld=document.getElementById('load');if(ld&&t>.2){ld.style.opacity=0;setTimeout(()=>ld.remove(),700);}
  window.AGNEE_RUNTIME.raf=requestAnimationFrame(frame);

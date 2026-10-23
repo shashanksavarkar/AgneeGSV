@@ -38,7 +38,7 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   // Parse URL safely
-  let reqPath = req.url.split('?')[0].split('#')[0];
+  let reqPath = decodeURIComponent(req.url.split('?')[0].split('#')[0]);
   if (reqPath === '/' || reqPath === '') {
     reqPath = '/index.html';
   }

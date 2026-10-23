@@ -264,6 +264,7 @@ canvas:active{cursor:grabbing}
   <div class="tag o" id="t6">Proposed laboratory block</div>
   <div class="tag o" id="t7">Proposed academic block</div>
   <div class="tag" id="t8">Pratap Vilas Palace</div>
+              <div class="tag f" id="t12">★ Rajabaug · Pre-Agnee Stalls</div>
   <div class="tag" id="t9">Manthan building</div>
   <div class="tag p" id="t10">AGNEE · The Cultural Fest — Oval Ground</div>
   <div class="tag e" id="t11">Main entrance gate</div>
@@ -333,10 +334,7 @@ const wallBase=new THREE.CanvasTexture(wc);wallBase.wrapS=wallBase.wrapT=THREE.R
 const roofMat=new THREE.MeshLambertMaterial({map:tex});
 
 // ---- buildings (pixel boxes on the photo: x0,y0,x1,y1,height)
-const BUILDINGS=[
-[258,34,312,52,14],[408,66,492,88,12],
-[428,354,466,428,22],[466,360,526,408,18],
-[412,124,442,160,12],[264,300,302,326,8],[308,314,336,342,8]];
+const BUILDINGS=[];
 const blds=[];
 function addB(x0,y0,x1,y1,h,delay){
  const w=x1-x0,d=y1-y0,cxp=(x0+x1)/2,cyp=(y0+y1)/2;
@@ -485,25 +483,727 @@ flat(296,185,316,193,.35,0xcdb8a0);
 const co=new THREE.Mesh(new THREE.ConeGeometry(3.8,14,12),new THREE.MeshLambertMaterial({color:0x2f5a34}));co.position.set(306-W/2,7,178-H/2);co.castShadow=true;scene.add(co);
 [[309,168,3],[309,210,3],[304,198,2.6]].forEach(([x,z,r])=>{const bs=new THREE.Mesh(new THREE.IcosahedronGeometry(r,1),new THREE.MeshLambertMaterial({color:0x4a8a3a}));bs.position.set(x-W/2,r*.9,z-H/2);bs.castShadow=true;scene.add(bs);});
 })();
-// Gati Shakti Vishwavidyalaya (current academic block, the school pin): white building, triple-arched portico, blue sign, dome
-const her=tx(g=>{g.fillStyle='#f2eee3';g.fillRect(0,0,64,64);[6,38].forEach(x=>{g.fillStyle='#ffffff';g.fillRect(x-2,10,20,40);g.fillStyle='#4c5a66';g.fillRect(x,12,16,34);g.fillStyle='#f2eee3';g.fillRect(x+7,12,2,34);g.fillRect(x,24,16,2);});g.fillStyle='#d9d1bd';g.fillRect(0,56,64,8);});
-const arches3=tx(g=>{g.fillStyle='#f4f1e8';g.fillRect(0,0,64,64);const ar=(x,w,top)=>{g.fillStyle='#5d4e40';g.fillRect(x,top+w/2,w,64-top-w/2-5);g.beginPath();g.arc(x+w/2,top+w/2,w/2,Math.PI,0);g.fill();};ar(4,16,20);ar(24,16,6);ar(44,16,20);g.fillStyle='#c9b78f';g.fillRect(0,59,64,5);});
-const gsv=mk([[322,40],[392,40],[392,88],[322,88]],14,0xe9e3d3,0x3a5bd0,1.5,[],[],her,[1/10,1/7]);
-const por2=mk([[342,88],[372,88],[372,93],[342,93]],11,0xe9e3d3,0x3a5bd0,1.7,[],[],arches3,[1/30,1/11]);
-const gc=document.createElement('canvas');gc.width=1024;gc.height=96;const gg=gc.getContext('2d');
-gg.fillStyle='#1f3fa8';gg.fillRect(0,0,1024,96);gg.fillStyle='#fff';gg.textAlign='center';gg.textBaseline='middle';
-gg.font='700 52px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';gg.fillText('गति शक्ति विश्वविद्यालय',270,50);
-gg.font='700 40px Arial,sans-serif';gg.fillText('GATI SHAKTI VISHWAVIDYALAYA',780,52);
-gg.lineWidth=4;gg.strokeStyle='#fff';gg.beginPath();gg.arc(512,48,24,0,Math.PI*2);gg.stroke();
-const gtx=new THREE.CanvasTexture(gc);gtx.encoding=THREE.sRGBEncoding;
-const gbd=new THREE.Mesh(new THREE.BoxGeometry(34,3.2,.8),new THREE.MeshLambertMaterial({color:0x1f3fa8}));gbd.position.set(357-W/2,12.6,88.9-H/2);por2.add(gbd);
-const gsn=new THREE.Mesh(new THREE.PlaneGeometry(34,3.2),new THREE.MeshBasicMaterial({map:gtx}));gsn.position.set(357-W/2,12.6,89.32-H/2);por2.add(gsn);
-const cream=new THREE.MeshLambertMaterial({color:0xf0ead9});
-const dbase=new THREE.Mesh(new THREE.BoxGeometry(14,3,14),cream);dbase.position.set(357-W/2,15.5,70-H/2);gsv.add(dbase);
-const ddrum=new THREE.Mesh(new THREE.CylinderGeometry(5,5,2.4,20),cream);ddrum.position.set(357-W/2,18.2,70-H/2);gsv.add(ddrum);
-const dd=new THREE.Mesh(new THREE.SphereGeometry(5,24,12,0,Math.PI*2,0,Math.PI/2),cream);dd.position.set(357-W/2,19.4,70-H/2);dd.castShadow=true;gsv.add(dd);
-const fin=new THREE.Mesh(new THREE.ConeGeometry(.5,2.4,8),cream);fin.position.set(357-W/2,25.6,70-H/2);gsv.add(fin);
-[[351,64],[363,64],[351,76],[363,76]].forEach(([x,z])=>{const pn=new THREE.Mesh(new THREE.ConeGeometry(.8,2.4,6),cream);pn.position.set(x-W/2,18.2,z-H/2);gsv.add(pn);});
+
+
+// ============================================================================
+// Gati Shakti Vishwavidyalaya — Central Academic Block
+// Faithfully modeled from the physical architectural scale model:
+// - Grand 3-storey Neoclassical / Indo-Saracenic institutional palace
+// - Warm sandstone & crisp white classical architectural trim
+// - 4 Projecting corner towers with authentic domed Chhatris (Pavilions)
+// - Grand monumental Triple-Arched Entrance Portico (Porte-Cochère)
+// - Stately Central Drum & Heritage Ribbed Dome crowning the main entrance axis
+// - Central Roof Atrium with arched barrel-vault glass skylight and white structural ribs
+// - Grand 2-storey arched portals on side elevations
+// - Classical white balustrades, stringcourses, dentil cornices, and roof urns
+// - Refined royal blue & gold institutional plaque above the entrance archway
+// - Front garden promenade with formal lawns, hedges, and Royal Palm trees
+// ============================================================================
+
+const gsvGroup = new THREE.Group();
+gsvGroup.name = 'gsvAcademicBlock';
+
+// ---- 1. High-Resolution Procedural Architectural Facade Textures
+const acadFacadeTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = 512;
+  c.height = 512;
+  const g = c.getContext('2d');
+
+  // Sandstone wall base
+  g.fillStyle = '#e5ddd0';
+  g.fillRect(0, 0, 512, 512);
+
+  // Subtle horizontal ashlar stone joint lines
+  g.strokeStyle = 'rgba(185, 172, 153, 0.45)';
+  g.lineWidth = 1;
+  for (let y = 0; y < 512; y += 14) {
+    g.beginPath();
+    g.moveTo(0, y);
+    g.lineTo(512, y);
+    g.stroke();
+  }
+
+  // Vertical ashlar coursing (staggered)
+  for (let row = 0; row < 512; row += 28) {
+    const offset = (row % 56 === 0) ? 0 : 28;
+    for (let x = offset; x < 512; x += 56) {
+      g.beginPath();
+      g.moveTo(x, row);
+      g.lineTo(x, row + 28);
+      g.stroke();
+    }
+  }
+
+  // 4 repetitive bays across 512px (each bay = 128px)
+  for (let b = 0; b < 4; b++) {
+    const bx = b * 128;
+
+    // --- Ground Floor (Y: 340 to 500): Rusticated base + Round Arched Windows
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 18, 360, 92, 130);
+    // Molded Arch Top
+    g.beginPath();
+    g.arc(bx + 64, 385, 36, Math.PI, 0);
+    g.fill();
+
+    // Dark multi-pane window interior
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 28, 385, 72, 105);
+    g.beginPath();
+    g.arc(bx + 64, 385, 36 - 6, Math.PI, 0);
+    g.fill();
+
+    // Warm interior glow sheen
+    const grad1 = g.createRadialGradient(bx + 64, 430, 8, bx + 64, 430, 48);
+    grad1.addColorStop(0, 'rgba(255, 215, 120, 0.45)');
+    grad1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    g.fillStyle = grad1;
+    g.fillRect(bx + 28, 370, 72, 120);
+
+    // White glazing bars (muntins)
+    g.strokeStyle = '#f8f6f0';
+    g.lineWidth = 2.5;
+    g.beginPath();
+    // Vertical mullions
+    g.moveTo(bx + 52, 368); g.lineTo(bx + 52, 490);
+    g.moveTo(bx + 76, 368); g.lineTo(bx + 76, 490);
+    // Horizontal transoms
+    g.moveTo(bx + 28, 415); g.lineTo(bx + 100, 415);
+    g.moveTo(bx + 28, 450); g.lineTo(bx + 100, 450);
+    g.stroke();
+
+    // Keystone on arch
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 59, 344, 10, 14);
+
+    // Rusticated pier accents
+    g.fillStyle = 'rgba(255,255,255,0.7)';
+    g.fillRect(bx + 2, 355, 12, 145);
+    g.fillRect(bx + 114, 355, 12, 145);
+
+    // --- 1st Floor (Y: 175 to 335): Balustrade + Tall Colonial French Windows
+    // Balcony white balustrade strip
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx, 332, 128, 12);
+    // Balusters
+    for (let bl = bx + 6; bl < bx + 124; bl += 10) {
+      g.fillRect(bl, 336, 4, 8);
+    }
+
+    // Window frame
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 24, 195, 80, 134);
+    // Triangular pediment on top of window
+    g.beginPath();
+    g.moveTo(bx + 18, 195);
+    g.lineTo(bx + 64, 175);
+    g.lineTo(bx + 110, 195);
+    g.closePath();
+    g.fill();
+
+    // Window glass
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 32, 202, 64, 124);
+
+    // Warm glow
+    const grad2 = g.createRadialGradient(bx + 64, 255, 6, bx + 64, 255, 42);
+    grad2.addColorStop(0, 'rgba(255, 215, 120, 0.42)');
+    grad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    g.fillStyle = grad2;
+    g.fillRect(bx + 32, 202, 64, 124);
+
+    // White glazing bars
+    g.strokeStyle = '#ffffff';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(bx + 53, 202); g.lineTo(bx + 53, 326);
+    g.moveTo(bx + 75, 202); g.lineTo(bx + 75, 326);
+    g.moveTo(bx + 32, 235); g.lineTo(bx + 96, 235);
+    g.moveTo(bx + 32, 270); g.lineTo(bx + 96, 270);
+    g.moveTo(bx + 32, 300); g.lineTo(bx + 96, 300);
+    g.stroke();
+
+    // Paired classical fluted pilasters flanking window
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 6, 185, 12, 147);
+    g.fillRect(bx + 110, 185, 12, 147);
+
+    // --- 2nd Floor (Y: 40 to 170): Upper Colonial Windows & Entablature
+    // Floor dividing band
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx, 170, 128, 8);
+
+    // Window frame
+    g.fillStyle = '#ffffff';
+    g.fillRect(bx + 28, 62, 72, 102);
+
+    // Segmental / flat molded pediment
+    g.fillRect(bx + 22, 54, 84, 8);
+
+    // Window glass
+    g.fillStyle = '#222930';
+    g.fillRect(bx + 36, 68, 56, 92);
+
+    // Glazing bars
+    g.strokeStyle = '#ffffff';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(bx + 64, 68); g.lineTo(bx + 64, 160);
+    g.moveTo(bx + 36, 98); g.lineTo(bx + 92, 98);
+    g.moveTo(bx + 36, 128); g.lineTo(bx + 92, 128);
+    g.stroke();
+
+    // Pilasters with Corinthian/Ionic capitals
+    g.fillStyle = '#f8f6f0';
+    g.fillRect(bx + 6, 50, 12, 120);
+    g.fillRect(bx + 110, 50, 12, 120);
+    // Capital
+    g.fillRect(bx + 3, 44, 18, 7);
+    g.fillRect(bx + 107, 44, 18, 7);
+  }
+
+  // --- Upper Entablature, Dentil Molding & Parapet (Y: 0 to 45)
+  g.fillStyle = '#ffffff';
+  g.fillRect(0, 0, 512, 42);
+
+  // Dentil band
+  g.fillStyle = 'rgba(160, 145, 125, 0.45)';
+  for (let dx = 4; dx < 512; dx += 12) {
+    g.fillRect(dx, 22, 6, 8);
+  }
+
+  // Top molded cornice shadow
+  g.fillStyle = 'rgba(0,0,0,0.12)';
+  g.fillRect(0, 42, 512, 4);
+
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  return t;
+})();
+
+// Texture for Central Side Facade Arched Portals
+const acadSidePortalTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = 256;
+  c.height = 512;
+  const g = c.getContext('2d');
+
+  g.fillStyle = '#e5ddd0';
+  g.fillRect(0, 0, 256, 512);
+
+  // Grand 2-storey classical arched portal in center
+  g.fillStyle = '#ffffff';
+  g.fillRect(38, 120, 180, 392);
+  g.beginPath();
+  g.arc(128, 150, 90, Math.PI, 0);
+  g.fill();
+
+  // Recessed portal opening
+  g.fillStyle = '#222930';
+  g.fillRect(56, 160, 144, 352);
+  g.beginPath();
+  g.arc(128, 160, 72, Math.PI, 0);
+  g.fill();
+
+  // Grand fanlight tracery
+  g.strokeStyle = '#ffffff';
+  g.lineWidth = 3;
+  g.beginPath();
+  g.arc(128, 160, 72, Math.PI, 0);
+  g.stroke();
+  for (let a = 0; a <= Math.PI; a += Math.PI / 6) {
+    g.beginPath();
+    g.moveTo(128, 160);
+    g.lineTo(128 + Math.cos(a) * 72, 160 - Math.sin(a) * 72);
+    g.stroke();
+  }
+
+  // Transom and double entrance doors
+  g.fillStyle = '#ffffff';
+  g.fillRect(56, 320, 144, 8);
+
+  // Large ornamental keystone
+  g.fillStyle = '#ffffff';
+  g.fillRect(116, 50, 24, 28);
+
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
+  return t;
+})();
+
+// Dedicated Shared Materials
+const acadWhiteMat = new THREE.MeshLambertMaterial({ color: 0xfcfbf8 });
+const acadSandstoneMat = new THREE.MeshLambertMaterial({ color: 0xdfd4c1 });
+const acadGoldMat = new THREE.MeshLambertMaterial({ color: 0xe5ba5b });
+const acadRoofMat = new THREE.MeshLambertMaterial({ color: 0xd8cebd });
+const acadDarkMat = new THREE.MeshLambertMaterial({ color: 0x222a32 });
+const acadGlassMat = new THREE.MeshStandardMaterial({
+  color: 0x98cbe8,
+  roughness: 0.12,
+  metalness: 0.2,
+  transparent: true,
+  opacity: 0.65
+});
+
+// Coordinate constants
+// Center X = 357, Center Z = 64
+// World coordinates: x = X - W/2, z = Z - H/2
+const AC_CX = 357 - W / 2; // -43
+const AC_CZ = 64 - H / 2;  // -236
+const AC_W = 70;
+const AC_D = 48;
+const AC_H = 16.2; // 3 storeys height
+
+// ---- 2. Main Building Body (with central courtyard cutout)
+const gsv = mk(
+  [
+    [322, 40],
+    [392, 40],
+    [392, 88],
+    [322, 88]
+  ],
+  AC_H,
+  0xd8cebd,
+  0xd4c7b2,
+  1.5,
+  [
+    // Central Atrium Courtyard Hole (width 32m, depth 24m)
+    [
+      [341, 52],
+      [373, 52],
+      [373, 76],
+      [341, 76]
+    ]
+  ],
+  [],
+  acadFacadeTex,
+  [1 / 8.75, 1 / 5.4]
+);
+
+// Add building plinth foundation
+const plinth = new THREE.Mesh(
+  new THREE.BoxGeometry(AC_W + 1.6, 0.8, AC_D + 1.6),
+  new THREE.MeshLambertMaterial({ color: 0x8a8174 })
+);
+plinth.position.set(AC_CX, 0.4, AC_CZ);
+plinth.receiveShadow = true;
+gsv.add(plinth);
+
+// ---- 3. Projecting Architectural Moldings & Balustrades
+// Continuous white cornice along roofline
+const roofCornice = new THREE.Mesh(
+  new THREE.BoxGeometry(AC_W + 1.4, 0.7, AC_D + 1.4),
+  acadWhiteMat
+);
+roofCornice.position.set(AC_CX, AC_H + 0.35, AC_CZ);
+roofCornice.castShadow = true;
+gsv.add(roofCornice);
+
+// Rooftop Balustrade / Parapet around outer roof edge
+const parapetFront = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 1.0, 1.2, 0.5), acadWhiteMat);
+parapetFront.position.set(AC_CX, AC_H + 1.2, AC_CZ + AC_D / 2);
+const parapetBack = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 1.0, 1.2, 0.5), acadWhiteMat);
+parapetBack.position.set(AC_CX, AC_H + 1.2, AC_CZ - AC_D / 2);
+const parapetLeft = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.2, AC_D + 1.0), acadWhiteMat);
+parapetLeft.position.set(AC_CX - AC_W / 2, AC_H + 1.2, AC_CZ);
+const parapetRight = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.2, AC_D + 1.0), acadWhiteMat);
+parapetRight.position.set(AC_CX + AC_W / 2, AC_H + 1.2, AC_CZ);
+gsv.add(parapetFront, parapetBack, parapetLeft, parapetRight);
+
+// Mid-level horizontal white stringcourses
+const beltCourse1 = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.6, 0.35, AC_D + 0.6), acadWhiteMat);
+beltCourse1.position.set(AC_CX, 5.4, AC_CZ);
+const beltCourse2 = new THREE.Mesh(new THREE.BoxGeometry(AC_W + 0.6, 0.35, AC_D + 0.6), acadWhiteMat);
+beltCourse2.position.set(AC_CX, 10.8, AC_CZ);
+gsv.add(beltCourse1, beltCourse2);
+
+// ---- 4. Four Projecting Corner Towers with Heritage Domed Chhatris (Pavilions)
+const cornerCoords = [
+  [-AC_W / 2, AC_D / 2],   // Front-Left (SW)
+  [AC_W / 2, AC_D / 2],    // Front-Right (SE)
+  [-AC_W / 2, -AC_D / 2],  // Rear-Left (NW)
+  [AC_W / 2, -AC_D / 2]    // Rear-Right (NE)
+];
+
+cornerCoords.forEach(([ox, oz]) => {
+  const tx = AC_CX + ox;
+  const tz = AC_CZ + oz;
+  const tower = new THREE.Group();
+  tower.position.set(tx, 0, tz);
+
+  // Tower shaft (8m x 8m, projecting 1.5m outward)
+  const shaft = new THREE.Mesh(new THREE.BoxGeometry(8.2, AC_H + 2.2, 8.2), acadSandstoneMat);
+  shaft.position.y = (AC_H + 2.2) / 2;
+  shaft.castShadow = shaft.receiveShadow = true;
+  tower.add(shaft);
+
+  // Corner white quoins / pilasters
+  const quoinGeo = new THREE.BoxGeometry(8.5, 0.4, 8.5);
+  for (let qy = 1.2; qy < AC_H + 2; qy += 1.8) {
+    const qm = new THREE.Mesh(quoinGeo, acadWhiteMat);
+    qm.position.y = qy;
+    tower.add(qm);
+  }
+
+  // Decorative circular medallion (oculus) on upper tower level
+  const oculusGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.2, 16);
+  oculusGeo.rotateX(Math.PI / 2);
+  const oculus = new THREE.Mesh(oculusGeo, acadWhiteMat);
+  oculus.position.set(0, AC_H - 1.2, (oz > 0 ? 4.2 : -4.2));
+  tower.add(oculus);
+
+  // Tower entablature cornice at roof level
+  const tCornice = new THREE.Mesh(new THREE.BoxGeometry(9.0, 0.6, 9.0), acadWhiteMat);
+  tCornice.position.y = AC_H + 2.4;
+  tCornice.castShadow = true;
+  tower.add(tCornice);
+
+  // Tower parapet
+  const tParapet = new THREE.Mesh(new THREE.BoxGeometry(8.4, 0.8, 8.4), acadWhiteMat);
+  tParapet.position.y = AC_H + 3.0;
+  tower.add(tParapet);
+
+  // ---- Open Chhatri (Pavilion)
+  const chhatriY = AC_H + 3.4;
+  const colRad = 0.32;
+  const colH = 3.2;
+  const colOffset = 2.4;
+  const colGeo = new THREE.CylinderGeometry(colRad, colRad, colH, 12);
+
+  // 4 classical white pillars
+  [[-colOffset, -colOffset], [colOffset, -colOffset], [-colOffset, colOffset], [colOffset, colOffset]].forEach(([cx, cz]) => {
+    const col = new THREE.Mesh(colGeo, acadWhiteMat);
+    col.position.set(cx, chhatriY + colH / 2, cz);
+    col.castShadow = true;
+    tower.add(col);
+  });
+
+  // Chhatri roof cornice canopy
+  const chhatriRoof = new THREE.Mesh(new THREE.BoxGeometry(7.2, 0.5, 7.2), acadWhiteMat);
+  chhatriRoof.position.y = chhatriY + colH + 0.25;
+  chhatriRoof.castShadow = true;
+  tower.add(chhatriRoof);
+
+  // Heritage domed cupola
+  const domeRadius = 2.6;
+  const cupola = new THREE.Mesh(
+    new THREE.SphereGeometry(domeRadius, 24, 14, 0, Math.PI * 2, 0, Math.PI / 2),
+    acadSandstoneMat
+  );
+  cupola.position.y = chhatriY + colH + 0.45;
+  cupola.castShadow = true;
+  tower.add(cupola);
+
+  // Golden finial spire
+  const finial = new THREE.Mesh(new THREE.ConeGeometry(0.3, 1.4, 8), acadGoldMat);
+  finial.position.y = cupola.position.y + domeRadius + 0.7;
+  tower.add(finial);
+
+  gsv.add(tower);
+});
+
+// ---- 5. Grand Central Entrance Portico (Porte-Cochère)
+// Projects forward towards campus road: width 28m, depth 12m, height 10.8m
+const portico = new THREE.Group();
+const porticoW = 28;
+const porticoD = 12;
+const porticoH = 10.8;
+const porticoZ = AC_CZ + AC_D / 2 + porticoD / 2; // -206
+portico.position.set(AC_CX, 0, porticoZ);
+
+// Portico plinth
+const portPlinth = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.8, 0.6, porticoD + 0.8), acadWhiteMat);
+portPlinth.position.y = 0.3;
+portico.add(portPlinth);
+
+// Portico ground structure with triple monumental archway
+// 6 Classical White Columns along front edge
+const portColGeo = new THREE.CylinderGeometry(0.65, 0.7, 5.2, 16);
+const colXOffsets = [-12, -7.5, -2.5, 2.5, 7.5, 12];
+colXOffsets.forEach((cx) => {
+  const col = new THREE.Mesh(portColGeo, acadWhiteMat);
+  col.position.set(cx, 0.6 + 2.6, porticoD / 2 - 0.7);
+  col.castShadow = true;
+  portico.add(col);
+});
+
+// Side return columns
+[-porticoW / 2 + 0.7, porticoW / 2 - 0.7].forEach((sx) => {
+  const sc = new THREE.Mesh(portColGeo, acadWhiteMat);
+  sc.position.set(sx, 0.6 + 2.6, 0);
+  portico.add(sc);
+});
+
+// Front Archway Lintels & Molded Arches
+const archEntablature = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.4, 1.2, porticoD + 0.4), acadWhiteMat);
+archEntablature.position.y = 6.2;
+archEntablature.castShadow = true;
+portico.add(archEntablature);
+
+// First Floor Hall over portico
+const portUpper = new THREE.Mesh(new THREE.BoxGeometry(porticoW, 4.4, porticoD), acadSandstoneMat);
+portUpper.position.y = 6.8 + 2.2;
+portUpper.castShadow = portUpper.receiveShadow = true;
+portico.add(portUpper);
+
+// First Floor Front Windows & Pilasters
+const portUpperTrim = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.4, 0.6, porticoD + 0.4), acadWhiteMat);
+portUpperTrim.position.y = porticoH + 0.3;
+portico.add(portUpperTrim);
+
+// Open Rooftop Terrace with Classical White Balustrade
+const balustradeTerrace = new THREE.Mesh(new THREE.BoxGeometry(porticoW, 1.1, porticoD), new THREE.MeshLambertMaterial({ color: 0xdcd3c4 }));
+balustradeTerrace.position.y = porticoH + 0.65;
+portico.add(balustradeTerrace);
+
+const balFront = new THREE.Mesh(new THREE.BoxGeometry(porticoW + 0.2, 1.0, 0.4), acadWhiteMat);
+balFront.position.set(0, porticoH + 1.1, porticoD / 2);
+const balSideL = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, porticoD), acadWhiteMat);
+balSideL.position.set(-porticoW / 2, porticoH + 1.1, 0);
+const balSideR = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.0, porticoD), acadWhiteMat);
+balSideR.position.set(porticoW / 2, porticoH + 1.1, 0);
+portico.add(balFront, balSideL, balSideR);
+
+// Front pediment accent on portico terrace
+const pediment = new THREE.Mesh(new THREE.BoxGeometry(10, 1.6, 0.6), acadWhiteMat);
+pediment.position.set(0, porticoH + 1.8, porticoD / 2);
+portico.add(pediment);
+
+// ---- Official Gati Shakti Vishwavidyalaya Name Board with Blue Background and White Text & Logo
+const nameboardLoader = new THREE.TextureLoader();
+const nameTex = nameboardLoader.load('assets/gsv-nameboard-blue.png');
+nameTex.encoding = THREE.sRGBEncoding;
+if (typeof renderer !== 'undefined' && renderer.capabilities) {
+  nameTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+}
+
+// 1024 x 195 aspect ratio: 5.25 : 1
+const boardW = 24.0;
+const boardH = 4.57;
+const plaqueFrame = new THREE.Mesh(new THREE.BoxGeometry(boardW + 0.8, boardH + 0.6, 0.4), acadWhiteMat);
+plaqueFrame.position.set(0, 7.8, porticoD / 2 + 0.15);
+const plaquePlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(boardW, boardH),
+  new THREE.MeshBasicMaterial({ map: nameTex })
+);
+plaquePlane.position.set(0, 7.8, porticoD / 2 + 0.38);
+portico.add(plaqueFrame, plaquePlane);
+
+gsv.add(portico);
+
+// ---- 6. Monumental Central Heritage Dome & Drum (Crowning Entrance Axis)
+// Positioned directly over the front entrance axis at X = AC_CX, Z = AC_CZ + 19
+const domeGroup = new THREE.Group();
+const domeZ = AC_CZ + 19; // -217
+domeGroup.position.set(AC_CX, AC_H, domeZ);
+
+// Tier 1: Stately White & Sandstone Pedestal Base
+const domeBase = new THREE.Mesh(new THREE.BoxGeometry(15, 2.2, 15), acadWhiteMat);
+domeBase.position.y = 1.1;
+domeBase.castShadow = true;
+domeGroup.add(domeBase);
+
+const domeBaseCornice = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 16), acadWhiteMat);
+domeBaseCornice.position.y = 2.4;
+domeGroup.add(domeBaseCornice);
+
+// Tier 2: Grand Cylindrical Drum with 12 Arched Windows & Pilasters
+const drumRadius = 6.2;
+const drumH = 4.2;
+const drum = new THREE.Mesh(
+  new THREE.CylinderGeometry(drumRadius, drumRadius, drumH, 32),
+  acadWhiteMat
+);
+drum.position.y = 2.4 + drumH / 2;
+drum.castShadow = true;
+domeGroup.add(drum);
+
+// Arched clerestory window panels around drum
+const drumWindowGeo = new THREE.BoxGeometry(1.6, 2.4, 0.3);
+for (let i = 0; i < 12; i++) {
+  const ang = (i * Math.PI * 2) / 12;
+  const dw = new THREE.Mesh(drumWindowGeo, acadDarkMat);
+  dw.position.set(
+    Math.sin(ang) * (drumRadius + 0.05),
+    drum.position.y,
+    Math.cos(ang) * (drumRadius + 0.05)
+  );
+  dw.rotation.y = ang;
+  domeGroup.add(dw);
+}
+
+// Drum upper cornice
+const drumCornice = new THREE.Mesh(
+  new THREE.CylinderGeometry(drumRadius + 0.7, drumRadius + 0.7, 0.5, 32),
+  acadWhiteMat
+);
+drumCornice.position.y = 2.4 + drumH + 0.25;
+domeGroup.add(drumCornice);
+
+// Tier 3: Grand Heritage Ribbed Dome
+const mainDomeRad = 6.5;
+const mainDome = new THREE.Mesh(
+  new THREE.SphereGeometry(mainDomeRad, 32, 18, 0, Math.PI * 2, 0, Math.PI / 2),
+  new THREE.MeshLambertMaterial({ color: 0xf4eee2 })
+);
+mainDome.position.y = drumCornice.position.y + 0.25;
+mainDome.castShadow = true;
+domeGroup.add(mainDome);
+
+// 8 Classical Architectural Ribs on the dome surface
+for (let r = 0; r < 8; r++) {
+  const ribCurve = new THREE.EllipseCurve(0, 0, mainDomeRad + 0.08, mainDomeRad + 0.08, 0, Math.PI / 2, false, 0);
+  const ribPts = ribCurve.getPoints(16).map(p => new THREE.Vector3(p.x, p.y, 0));
+  const ribGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ribPts), 14, 0.12, 6, false);
+  const rib = new THREE.Mesh(ribGeo, acadWhiteMat);
+  rib.position.y = mainDome.position.y;
+  rib.rotation.y = (r * Math.PI) / 4;
+  domeGroup.add(rib);
+}
+
+// Tier 4: Grand Golden Kalash & Finial Spire
+const finialBase = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.9, 1.2, 16), acadGoldMat);
+finialBase.position.y = mainDome.position.y + mainDomeRad + 0.6;
+const finialBall = new THREE.Mesh(new THREE.SphereGeometry(0.75, 16, 12), acadGoldMat);
+finialBall.position.y = finialBase.position.y + 0.9;
+const finialSpire = new THREE.Mesh(new THREE.ConeGeometry(0.35, 3.2, 12), acadGoldMat);
+finialSpire.position.y = finialBall.position.y + 1.8;
+domeGroup.add(finialBase, finialBall, finialSpire);
+
+gsv.add(domeGroup);
+
+// ---- 7. Central Roof Atrium & Vaulted Glass Skylight
+// In Photos 2, 4, and 5: Central courtyard is covered by a barrel-vaulted skylight
+const atriumGroup = new THREE.Group();
+const atriumZ = AC_CZ - 4; // -240 (in the center of courtyard well)
+atriumGroup.position.set(AC_CX, AC_H, atriumZ);
+
+// Raised white perimeter curb around atrium
+const curbW = 32.6;
+const curbD = 24.6;
+const curbH = 1.2;
+const curbFront = new THREE.Mesh(new THREE.BoxGeometry(curbW, curbH, 0.6), acadWhiteMat);
+curbFront.position.set(0, curbH / 2, curbD / 2);
+const curbBack = new THREE.Mesh(new THREE.BoxGeometry(curbW, curbH, 0.6), acadWhiteMat);
+curbBack.position.set(0, curbH / 2, -curbD / 2);
+const curbLeft = new THREE.Mesh(new THREE.BoxGeometry(0.6, curbH, curbD), acadWhiteMat);
+curbLeft.position.set(-curbW / 2, curbH / 2, 0);
+const curbRight = new THREE.Mesh(new THREE.BoxGeometry(0.6, curbH, curbD), acadWhiteMat);
+curbRight.position.set(curbW / 2, curbH / 2, 0);
+atriumGroup.add(curbFront, curbBack, curbLeft, curbRight);
+
+// Vaulted Glass Skylight (Barrel Vault spanning across the atrium)
+const vaultSpan = curbD - 2;
+const vaultLen = curbW - 2;
+const vaultRad = vaultSpan / 2; // 11.3m
+const vaultGeo = new THREE.CylinderGeometry(vaultRad, vaultRad, vaultLen, 24, 1, false, 0, Math.PI);
+vaultGeo.rotateZ(Math.PI / 2);
+vaultGeo.rotateY(Math.PI / 2);
+const vaultMesh = new THREE.Mesh(vaultGeo, acadGlassMat);
+vaultMesh.position.y = curbH + 0.1;
+atriumGroup.add(vaultMesh);
+
+// 7 White Structural Arched Steel Ribs across the barrel vault
+for (let ribIdx = 0; ribIdx < 7; ribIdx++) {
+  const rx = -vaultLen / 2 + (ribIdx * vaultLen) / 6;
+  const archRibGeo = new THREE.TorusGeometry(vaultRad, 0.14, 8, 24, Math.PI);
+  archRibGeo.rotateY(Math.PI / 2);
+  const archRib = new THREE.Mesh(archRibGeo, acadWhiteMat);
+  archRib.position.set(rx, curbH + 0.1, 0);
+  atriumGroup.add(archRib);
+}
+
+gsv.add(atriumGroup);
+
+// ---- 8. Grand Arched Portals on Center of Side Elevations
+[-AC_W / 2 - 0.2, AC_W / 2 + 0.2].forEach((sx) => {
+  const sidePortal = new THREE.Mesh(
+    new THREE.PlaneGeometry(12, 10),
+    new THREE.MeshBasicMaterial({ map: acadSidePortalTex, side: THREE.DoubleSide })
+  );
+  sidePortal.position.set(AC_CX + sx, 6.0, AC_CZ);
+  sidePortal.rotation.y = (sx > 0 ? Math.PI / 2 : -Math.PI / 2);
+  gsv.add(sidePortal);
+});
+
+// ---- 9. Front Landscaping Promenade (Matching Physical Model Showcase)
+// Formal entrance drive, wide ceremonial plaza, symmetrical lawn parterres, and flanking Royal Palms
+const frontPark = new THREE.Group();
+const parkZ = porticoZ + porticoD / 2 + 16;
+frontPark.position.set(AC_CX, 0.05, parkZ);
+
+// Main Sandstone Paved Promenade Plaza (Wide 34m corridor framing portico)
+const avenue = new THREE.Mesh(new THREE.BoxGeometry(34, 0.08, 32), new THREE.MeshLambertMaterial({ color: 0xe0d9cb }));
+frontPark.add(avenue);
+
+// Sandstone ceremonial circular inlay in center plaza
+const plazaCircle = new THREE.Mesh(new THREE.CylinderGeometry(6.5, 6.5, 0.1, 32), new THREE.MeshLambertMaterial({ color: 0xd6cbb8 }));
+plazaCircle.position.set(0, 0.05, 0);
+frontPark.add(plazaCircle);
+
+// Symmetrical Manicured Green Lawn Parterres (Left & Right flanking the plaza)
+const lawnGeo = new THREE.BoxGeometry(18, 0.16, 30);
+const lawnMat = new THREE.MeshLambertMaterial({ color: 0x3d7037 });
+const hedgeMat = new THREE.MeshLambertMaterial({ color: 0x1e4219 });
+
+[-26, 26].forEach((lx) => {
+  // Green grass lawn
+  const lawn = new THREE.Mesh(lawnGeo, lawnMat);
+  lawn.position.set(lx, 0.08, 0);
+  lawn.receiveShadow = true;
+  frontPark.add(lawn);
+
+  // Dark manicured boxwood border hedge
+  const hedgeBorder = new THREE.Mesh(new THREE.BoxGeometry(18.8, 0.45, 30.8), hedgeMat);
+  hedgeBorder.position.set(lx, 0.2, 0);
+  frontPark.add(hedgeBorder);
+
+  // Decorative circular center floral bed inside the lawn
+  const flowerBed = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 0.25, 24), new THREE.MeshLambertMaterial({ color: 0x2e5927 }));
+  flowerBed.position.set(lx, 0.22, 0);
+  frontPark.add(flowerBed);
+
+  // Stately Royal Palm Trees flanking the outer edge of the promenade (x = ±19m)
+  // Framing the 28m entrance portico without obstructing the facade, columns, or nameboard
+  for (let pz = -12; pz <= 12; pz += 6) {
+    const palm = new THREE.Group();
+    palm.position.set(lx > 0 ? 19 : -19, 0, pz);
+
+    // Slender textured palm trunk
+    const trunk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.24, 0.34, 7.2, 8),
+      new THREE.MeshLambertMaterial({ color: 0x7c6d5c })
+    );
+    trunk.position.y = 3.6;
+    trunk.castShadow = true;
+    palm.add(trunk);
+
+    // Crown of graceful palm fronds
+    const crownMat = new THREE.MeshLambertMaterial({ color: 0x2e6628, side: THREE.DoubleSide });
+    for (let f = 0; f < 8; f++) {
+      const fAngle = (f * Math.PI) / 4;
+      const frondCurve = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(0, 7.1, 0),
+        new THREE.Vector3(Math.cos(fAngle) * 2.4, 7.5, Math.sin(fAngle) * 2.4),
+        new THREE.Vector3(Math.cos(fAngle) * 3.8, 5.8, Math.sin(fAngle) * 3.8)
+      );
+      const frondGeo = new THREE.TubeGeometry(frondCurve, 8, 0.16, 4, false);
+      const frond = new THREE.Mesh(frondGeo, crownMat);
+      frond.castShadow = true;
+      palm.add(frond);
+    }
+
+    frontPark.add(palm);
+  }
+});
+
+gsv.add(frontPark);
+
+// Add to scene and register with buildings array
+scene.add(gsv);
 // Manthan building: sandstone, two floors, flat dome, pediment porch with maroon columns
 const sandT=tx(g=>{g.fillStyle='#d9baa4';g.fillRect(0,0,64,64);[6,38].forEach(x=>{g.fillStyle='#c4a088';g.fillRect(x-3,8,22,40);g.beginPath();g.arc(x+8,14,11,Math.PI,0);g.fill();g.fillStyle='#fff';g.fillRect(x,16,16,28);g.fillStyle='#5f7280';g.fillRect(x+1.5,17.5,13,25);g.fillStyle='#fff';g.fillRect(x+7,17.5,2,25);});g.fillStyle='#c9a891';g.fillRect(0,56,64,8);});
 const manM=mk([[418,184],[452,184],[452,218],[418,218]],11,0xcfae98,0xc08a6a,1.9,[],[],sandT,[1/12,1/5.5]);
@@ -564,17 +1264,18 @@ function road(P,w,kind){
 }
 const zb=(x,y,ns,n)=>{for(let i=-n;i<=n;i++)ns?flat(x+i*1.7-.45,y-2.2,x+i*1.7+.45,y+2.2,.44,0xf4f4f4):flat(x-2.2,y+i*1.7-.45,x+2.2,y+i*1.7+.45,.44,0xf4f4f4);};
 // campus roads & paths traced from the Google Maps road overlay (registered to this photo)
-const NET=[[[292,383],[301,383]],[[303,340],[250,338],[246,329]],[[373,392],[316,388],[301,383]],[[112,42],[133,45],[153,57]],[[321,72],[312,70],[299,80]],[[388,405],[379,403],[373,392]],[[388,405],[393,399],[396,337],[400,318]],[[140,175],[136,120]],[[204,329],[157,254],[147,235]],[[6,430],[3,409]],[[374,107],[306,102]],[[6,430],[21,427]],[[6,430],[3,444]],[[400,318],[400,277],[388,273]],[[543,119],[483,115],[477,118]],[[428,166],[420,168]],[[371,156],[375,160]],[[371,156],[376,162]],[[371,156],[376,162]],[[378,318],[382,286],[388,273]],[[386,237],[369,228]],[[306,102],[299,80]],[[184,353],[218,378],[280,384],[292,383]],[[373,392],[378,318]],[[374,107],[376,79]],[[306,102],[303,132]],[[308,314],[310,270],[304,261]],[[204,329],[216,334]],[[308,314],[378,318]],[[472,155],[477,118]],[[308,314],[303,340]],[[299,80],[289,73],[282,58],[268,54],[153,57]],[[321,224],[306,237]],[[303,132],[136,120]],[[303,132],[304,148]],[[246,329],[216,334]],[[246,329],[281,291],[294,268],[304,261]],[[304,261],[306,237]],[[321,224],[369,228]],[[298,226],[306,237]],[[376,162],[372,168],[369,228]],[[386,237],[384,266],[388,273]],[[430,241],[414,238],[386,237]],[[371,156],[374,107]],[[420,168],[376,162]],[[136,120],[136,97],[153,57]],[[303,340],[301,383]],[[400,318],[425,318]],[[295,142],[298,228]],[[135,170],[142,228]]];
+const NET=[[[292,383],[301,383]],[[303,340],[250,338],[246,329]],[[373,392],[316,388],[301,383]],[[112,42],[133,45],[153,57]],[[388,405],[379,403],[373,392]],[[388,405],[393,399],[396,337],[400,318]],[[140,175],[136,120]],[[204,329],[157,254],[147,235]],[[6,430],[3,409]],[[6,430],[21,427]],[[6,430],[3,444]],[[400,318],[400,277],[388,273]],[[543,119],[483,115],[477,118]],[[428,166],[420,168]],[[371,156],[375,160]],[[371,156],[376,162]],[[371,156],[376,162]],[[378,318],[382,286],[388,273]],[[386,237],[369,228]],[[303,132],[299,80]],[[184,353],[218,378],[280,384],[292,383]],[[373,392],[378,318]],[[308,314],[310,270],[304,261]],[[204,329],[216,334]],[[308,314],[378,318]],[[472,155],[477,118]],[[308,314],[303,340]],[[299,80],[289,73],[282,58],[268,54],[153,57]],[[321,224],[306,237]],[[303,132],[136,120]],[[303,132],[304,148]],[[246,329],[216,334]],[[246,329],[281,291],[294,268],[304,261]],[[304,261],[306,237]],[[321,224],[369,228]],[[298,226],[306,237]],[[376,162],[372,168],[369,228]],[[386,237],[384,266],[388,273]],[[430,241],[414,238],[386,237]],[[304,148],[371,156]],[[420,168],[376,162]],[[136,120],[136,97],[153,57]],[[303,340],[301,383]],[[400,318],[425,318]],[[295,142],[298,228]],[[135,170],[142,228]]];
 NET.forEach(p=>road(p,7,'r'));
 road([[0, 77], [50, 211], [125, 430]],15,'r');road([[0, 0], [164, 11], [314, 22], [465, 32], [603, 41], [701, 48]],12,'r');road([[577, 41], [568, 94], [564, 169], [557, 253], [552, 320], [550, 378], [552, 430]],10,'r');
 // markings only on the existing asphalt (fly route, hostel 6M road, forecourt)
-road([[350,98],[372,106],[410,109],[480,109],[540,109],[562,118],[585,140],[603,146]],9,'m');
+road([[445,112],[480,109],[540,109],[562,118],[585,140],[603,146]],9,'m');
 road([[582,126],[640,126],[692,126]],11,'m');
 road([[599,80],[599,120]],10,'m');
 const GLW=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);
  [[0,'rgba(255,228,175,1)'],[.16,'rgba(255,208,135,.6)'],[.42,'rgba(255,178,95,.18)'],[.72,'rgba(255,165,80,.04)'],[1,'rgba(255,160,70,0)']].forEach(([o,col])=>r.addColorStop(o,col));g.fillStyle=r;g.fillRect(0,0,128,128);
  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;})();
 const fadeCone=(r,h,pw=1.4)=>{const g=new THREE.ConeGeometry(r,h,14,1,true).translate(0,-h/2,0),p=g.attributes.position,c=[];for(let i=0;i<p.count;i++){const k=Math.pow(Math.max(0,1+p.getY(i)/h),pw);c.push(k,k,k);}g.setAttribute('color',new THREE.Float32BufferAttribute(c,3));return g;};
+for (let i = LP.length - 1; i >= 0; i--) { const p = LP[i]; if (p[0] > 298 && p[0] < 418 && p[1] > 30 && p[1] < 155) LP.splice(i, 1); }
 const mt2=new THREE.Matrix4(),L_lq=new THREE.Quaternion(),L_le=new THREE.Euler(),L_lv=new V(),L_ls=new V(1,1,1),
  lamp=new THREE.InstancedMesh(new THREE.CylinderGeometry(.22,.32,7,6),new THREE.MeshLambertMaterial({color:0x555b60}),LP.length),
  larm=new THREE.InstancedMesh(new THREE.BoxGeometry(2.4,.16,.16),new THREE.MeshLambertMaterial({color:0x555b60}),LP.length),
@@ -596,7 +1297,7 @@ for(let x=576;x<742;x+=21)for(let y=208;y<424;y+=21)if(houseOK(x,y)){const s=14+
 for(let x=150;x<420;x+=22)for(let y=372;y<426;y+=22){const rx=(y-90)*125/340;if(x>rx+18&&houseOK(x,y)){const s=13+rnd()*3;addB(x-s/2,y-s/2,x+s/2,y+s/2,6+rnd()*8,1.6+rnd()*1.6);}}
 
 // ---- trees from the green pixels
-const inB=(x,y)=>nearRoad(x,y,2)||BUILDINGS.some(b=>x>b[0]-6&&x<b[2]+6&&y>b[1]-6&&y<b[3]+6)||(x>498&&x<563&&y>48&&y<112)||(x>468&&x<554&&y>110&&y<190)||(x>446&&x<546&&y>225&&y<314)||(x>290&&x<378&&y>146&&y<232)||(x>316&&x<398&&y>34&&y<98)||(x>412&&x<458&&y>178&&y<236);
+const inB=(x,y)=>nearRoad(x,y,2)||BUILDINGS.some(b=>x>b[0]-6&&x<b[2]+6&&y>b[1]-6&&y<b[3]+6)||(x>498&&x<563&&y>48&&y<112)||(x>468&&x<554&&y>110&&y<190)||(x>446&&x<546&&y>225&&y<314)||(x>290&&x<378&&y>146&&y<232)||(x>298&&x<418&&y>30&&y<155)||(x>214&&x<298&&y>152&&y<228)||(x>412&&x<458&&y>178&&y<236);
 const spots=[];
 for(let i=0;i<9000&&spots.length<750;i++){const x=rnd()*W,y=rnd()*H,[r,gg,b]=lumAt(x,y);
  if(gg>r+5&&gg>b+4&&r+gg+b<340&&!inB(x,y))spots.push([x,y,r,gg,b]);}
@@ -624,7 +1325,7 @@ const sdw=new THREE.InstancedMesh(new THREE.CircleGeometry(1,14).rotateX(-Math.P
 sdw.count=si;sdw.frustumCulled=false;TM.push(sdw);scene.add(sdw);
 
 // ---- route
-const R=[[350,98],[372,106],[410,109],[480,109],[540,109],[562,118],[585,140],[603,146]].map(([x,y])=>new V(x-W/2,1.8,y-H/2));
+const R=[[445,112],[480,109],[540,109],[562,118],[585,140],[603,146]].map(([x,y])=>new V(x-W/2,1.8,y-H/2));
 const curve=new THREE.CatmullRomCurve3(R,false,'catmullrom',.4);
 const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,260,1.8,8),new THREE.MeshBasicMaterial({color:0xffc93c}));
 const glow=new THREE.Mesh(new THREE.TubeGeometry(curve,260,5,8),new THREE.MeshBasicMaterial({color:0xffc93c,transparent:true,opacity:.25,depthWrite:false}));
@@ -637,13 +1338,10 @@ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32Bu
 const rd=new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:0x50545a,side:THREE.DoubleSide}));rd.receiveShadow=true;scene.add(rd);})();
 const runner=new THREE.Mesh(new THREE.SphereGeometry(4,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));scene.add(runner);
 
-// ---- school pin
-const pin=new THREE.Group();
-const body=new THREE.MeshLambertMaterial({color:0x2f4858});
-const cone=new THREE.Mesh(new THREE.ConeGeometry(5,12,16),body);cone.rotation.x=Math.PI;cone.position.y=6;
-const ball=new THREE.Mesh(new THREE.SphereGeometry(7,20,20),body);ball.position.y=17;
-const dot=new THREE.Mesh(new THREE.SphereGeometry(3.2,12,12),new THREE.MeshBasicMaterial({color:0xffffff}));dot.position.set(0,17,5.4);
-pin.add(cone,ball,dot);pin.position.set(357-W/2,22,70-H/2);pin.castShadow=true;scene.add(pin);
+// ---- school pin (invisible anchor node, orange balloon pin removed)
+const pin = new THREE.Group();
+pin.position.set(357 - W / 2, 28, 83 - H / 2);
+scene.add(pin);
 
 // ---- location beacon
 const LX=603-W/2,LZ=146-H/2;
@@ -860,13 +1558,13 @@ const ETC=0x9d4a32,EBG=0xe3d3b4,EST=0xd8c3a0;
 [-9.3,9.3].forEach(x=>{bx(3.4,1.4,3.4,EST,x,.7,0,EGG);bx(2.6,9.6,2.6,ETC,x,6.2,0,EGG);bx(3.4,.6,3.4,EBG,x,11.3,0,EGG);bx(1.4,1.2,1.4,ETC,x,12.2,0,EGG);
  const lm=new THREE.Mesh(new THREE.SphereGeometry(.7,10,8),new THREE.MeshBasicMaterial({color:0xfff0b8}));lm.position.set(x,13.3,0);EGG.add(lm);});
 bx(22,3.2,2.4,EBG,0,9.5,0,EGG);bx(22.2,.7,2.6,ETC,0,7.6,0,EGG);bx(23,.5,2.8,EST,0,11.35,0,EGG);bx(6,1.4,2.6,ETC,0,12.3,0,EGG);
-const egc=document.createElement('canvas');egc.width=1024;egc.height=160;{const g=egc.getContext('2d');g.fillStyle='#f6eedb';g.fillRect(0,0,1024,160);g.strokeStyle='#1b3a6b';g.lineWidth=6;g.strokeRect(6,6,1012,148);
- g.fillStyle='#1f4fa3';g.beginPath();g.arc(92,80,52,0,6.3);g.fill();g.strokeStyle='#fff';g.lineWidth=5;g.beginPath();g.arc(92,80,40,0,6.3);g.stroke();g.beginPath();g.arc(92,80,10,0,6.3);g.stroke();
- for(let i=0;i<8;i++){g.beginPath();g.moveTo(92+Math.cos(i*.785)*10,80+Math.sin(i*.785)*10);g.lineTo(92+Math.cos(i*.785)*40,80+Math.sin(i*.785)*40);g.stroke();}
- g.fillStyle='#1b3a6b';g.textAlign='center';g.textBaseline='middle';g.font='800 62px Arial,sans-serif';g.fillText('GATI SHAKTI VISHWAVIDYALAYA',570,58);
- g.font='700 44px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';g.fillText('गति शक्ति विश्वविद्यालय',570,122);}
-const egt=new THREE.CanvasTexture(egc);egt.encoding=THREE.sRGBEncoding;
-[1.25,-1.25].forEach((z,i)=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(19.6,3.06),new THREE.MeshBasicMaterial({map:egt}));p.position.set(0,9.5,z);if(i)p.rotation.y=Math.PI;EGG.add(p);});
+const bannerLoader = new THREE.TextureLoader();
+const egt = bannerLoader.load('assets/main-gate-banner.png');
+egt.encoding = THREE.sRGBEncoding;
+if (typeof renderer !== 'undefined' && renderer.capabilities) {
+  egt.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+}
+[1.25,-1.25].forEach((z,i)=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(16.28,3.1),new THREE.MeshBasicMaterial({map:egt}));p.position.set(0,9.5,z);if(i)p.rotation.y=Math.PI;EGG.add(p);});
 // boundary walls with pilasters (long wing east, short wing west beside Atithi)
 [[10.8,24,1],[-10.8,9,-1]].forEach(([x0,L,d])=>{bx(L,3.2,.9,EBG,x0+d*L/2,1.6,0,EWL);bx(L+.3,.4,1.2,ETC,x0+d*L/2,3.4,0,EWL);
  for(let u=0;u<=L;u+=6)bx(1.2,3.9,1.4,EST,x0+d*u,1.95,0,EWL);});
@@ -940,16 +1638,9 @@ const agGeo=()=>{const g=new THREE.ConeGeometry(9,130,14,1,true).rotateX(Math.PI
 const agC=new V(240-W/2,0,270-H/2),agS=OV.localToWorld(new V(-30,0,0));
 const agBeams=[0xff3fa4,0x38d0ff,0xffc233,0x7cff5a,0xb06bff].map(c=>{const m=new THREE.Mesh(agGeo(),new THREE.MeshBasicMaterial({vertexColors:true,color:c,transparent:true,opacity:.35,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));m.position.set(agS.x,8,agS.z);scene.add(m);return m;});
 const agRings=[0,1].map(()=>{const r=new THREE.Mesh(new THREE.RingGeometry(.9,1,64),new THREE.MeshBasicMaterial({color:0xff3fa4,transparent:true,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending}));r.rotation.x=-Math.PI/2;r.position.set(agC.x,.9,agC.z);scene.add(r);return r;});
-const agCv=new THREE.CatmullRomCurve3([[577,46],[572,80],[563,113],[540,109],[480,109],[410,109],[350,100],[318,104],[298,114],[297,142],[297,228],[290,255],[274,252]].map(([x,y])=>new V(x-W/2,0,y-H/2)),false,'centripetal');
-{const sp=agCv.getSpacedPoints(Math.ceil(agCv.getLength()/3)),pg=[],pi=[];
- sp.forEach((p,i)=>{const a=sp[Math.max(0,i-1)],b=sp[Math.min(sp.length-1,i+1)],l=Math.hypot(b.x-a.x,b.z-a.z)||1,nx=-(b.z-a.z)/l*1.7,nz=(b.x-a.x)/l*1.7;pg.push(p.x+nx,.85,p.z+nz,p.x-nx,.85,p.z-nz);if(i<sp.length-1){const k=2*i;pi.push(k,k+1,k+2,k+1,k+3,k+2);}});
- const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pg,3));g.setIndex(pi);
- scene.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xff3fa4,transparent:true,opacity:.5,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})));}
-const AGN=44,agCh=new THREE.InstancedMesh(new THREE.SphereGeometry(1.3,8,6),new THREE.MeshBasicMaterial({color:0xffe08a,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false}),AGN),agm=new THREE.Matrix4();scene.add(agCh);
 function agneeAnim(t){const O=OV.userData,dA=Math.min(.05,Math.max(0,t-agT));agT=t;O.e+=((O.target||0)-O.e)*(1-Math.exp(-dA*.8));agLive.classList.toggle('on',O.e>.7);beams.forEach(m=>m.material.opacity=.12+.42*O.e);
  agBeams.forEach((m,i)=>{m.rotation.z=Math.sin(t*.7+i*1.26)*.42;m.rotation.x=Math.cos(t*.55+i*1.7)*.42;m.material.opacity=(.24+.09*Math.sin(t*2+i))*(1+dusk*1.2)*(.4+.6*O.e);});
- agRings.forEach((r,i)=>{const k=(t*.45+i*.5)%1;r.scale.setScalar(8+k*60);r.material.opacity=(1-k)*.7;});
- for(let i=0;i<AGN;i++){const p=agCv.getPointAt((t*.045+i/AGN)%1);agm.makeTranslation(p.x,1.8,p.z);agCh.setMatrixAt(i,agm);}agCh.instanceMatrix.needsUpdate=true;}
+ agRings.forEach((r,i)=>{const k=(t*.45+i*.5)%1;r.scale.setScalar(8+k*60);r.material.opacity=(1-k)*.7;});}
 let agT=0;const agLive=document.createElement('div');agLive.className='live';agLive.innerHTML='<i></i>LIVE · <img class="wmi" style="height:15px" alt="Agnee" src="'+WMURI+'">';view.appendChild(agLive);
 const agCard=document.createElement('div');agCard.className='agcard';agCard.innerHTML='<b><img class="wmi" style="height:30px" alt="Agnee" src="'+WMURI+'"></b><span>The Cultural Fest · Oval Ground</span><u>Take the journey →</u>';
 agCard.onclick=()=>TOUR.start();view.appendChild(agCard);
@@ -1428,7 +2119,7 @@ function frame(ms){
  // runner
  const rp=mode==='fly'&&((now-flyStart)%34)<26?ease(((now-flyStart)%34)/26):(now*.05)%1;
  runner.position.copy(curve.getPointAt(clamp(rp))).y=3.5;runner.visible=rv>.98||RM;
- place(t1,new V(pin.position.x,pin.position.y+30,pin.position.z));place(t3,new V(639-W/2,50,146-H/2));place(t4,new V(648-W/2,62,98-H/2));place(t5,new V(530-W/2,28,80-H/2));place(t6,new V(511-W/2,46,158-H/2));place(t7,new V(496-W/2,44,277-H/2));place(t8,new V(331-W/2,44,189-H/2));place(t9,new V(435-W/2,24,201-H/2));place(t10,new V(240-W/2,58,270-H/2));place(t11,new V(577-W/2,19,46-H/2));
+ place(t1,new V(pin.position.x,pin.position.y+30,pin.position.z));place(t3,new V(639-W/2,50,146-H/2));place(t4,new V(648-W/2,62,98-H/2));place(t5,new V(530-W/2,28,80-H/2));place(t6,new V(511-W/2,46,158-H/2));place(t7,new V(496-W/2,44,277-H/2));place(t8,new V(331-W/2,44,189-H/2));place(t9,new V(435-W/2,24,201-H/2));place(t10,new V(240-W/2,58,270-H/2));place(t11,new V(577-W/2,19,46-H/2));{const t12=document.getElementById("t12");if(t12)place(t12,new V(256-W/2,22,189-H/2));}
  festAnim(now);cinematic.update(dt);TOUR.ui();STG.ui();renderer.render(scene,cam);cinematic.post();
  const ld=document.getElementById('load');if(ld&&t>.2){ld.style.opacity=0;setTimeout(()=>ld.remove(),700);}
  requestAnimationFrame(frame);
