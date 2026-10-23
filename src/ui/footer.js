@@ -58,6 +58,11 @@ export function renderFooter(siteData = {}) {
           </div>
         </div>
 
+        <p class="ft-media">
+          <span class="ft-media-logo" aria-hidden="true"><img src="assets/M&T_logo.webp" alt="M&T_logo" onerror="this.remove()"></span>
+          Official Media Partner <strong>Media &amp; Tech Club GSV</strong>
+        </p>
+
         <div class="ft-bottom">
           <div class="ft-legal">
             <button type="button" id="linkPrivacyModal">Privacy Policy</button>

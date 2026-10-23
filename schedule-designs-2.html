@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule layout options, set 2</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --bg: #07050a; --surface: #110c12;
+  --gold: #ffb347; --gold-soft: #ffd27a; --orange: #ff7a1a;
+  --text: #eadfce; --muted: #a99a84;
+  --heading: 'Cinzel Decorative', serif; --body: 'Spectral', serif; --sans: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 var(--body); }
+button { font: inherit; cursor: pointer; }
+.top { position: sticky; top: 0; z-index: 90; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; padding: 12px 16px; background: rgba(7, 5, 10, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255, 179, 71, 0.25); }
+.top b { font: 700 13px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-right: 8px; }
+.top a { padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.35); color: var(--gold-soft); font: 600 12px var(--sans); text-decoration: none; }
+.top a:hover { background: var(--orange); color: #1a0c02; border-color: var(--orange); }
+section { overflow-x: clip; padding: 76px 16px 60px; border-bottom: 1px solid rgba(255, 179, 71, 0.12); }
+section.long { overflow-x: visible; }
+section:nth-of-type(even) { background: var(--surface); }
+.head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
+.head h2 { margin: 0 0 8px; font: 700 clamp(22px, 3.4vw, 34px)/1.2 var(--heading); text-transform: uppercase; background: linear-gradient(180deg, #ffd9a0, #b98a3a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.head p { margin: 0; color: var(--muted); font: italic 16px var(--body); }
+.stage { max-width: 1000px; margin: 0 auto; }
+
+/* 11. Split-flap board */
+.sf { background: #0c0809; border: 1px solid #3a2a14; border-radius: 14px; padding: 18px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+.sf-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font: 800 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.sf-bar button { padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.5); background: transparent; color: var(--gold-soft); font: 700 11px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+.sf-bar button:hover { background: var(--orange); color: #1a0c02; }
+.sf-row { display: flex; align-items: center; gap: 12px; padding: 5px 0; border-top: 1px solid #1c1416; }
+.sf-g { display: flex; flex-wrap: wrap; gap: 2px; }
+.sf-g.t { flex: none; } .sf-g.n { flex: 1; } .sf-g.m { flex: none; justify-content: flex-end; min-width: 6.5em; }
+.fc { display: inline-grid; place-items: center; width: clamp(9px, 2.1vw, 19px); height: clamp(14px, 3.2vw, 28px); border-radius: 3px; background: linear-gradient(180deg, #1f1719 49%, #0a0607 50%, #19120f); color: var(--gold-soft); font: 700 clamp(10px, 2.4vw, 20px) 'Courier New', monospace; box-shadow: inset 0 0 0 1px #000; }
+.fc.go { animation: fl 0.09s steps(2) infinite; }
+@keyframes fl { 50% { transform: scaleY(0.6); filter: brightness(1.6); } }
+.sf-row:hover .fc { color: #fff; }
+
+/* 12. Vinyl */
+.vn { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding-top: 56px; }
+@media (min-width: 860px) { .vn { grid-template-columns: 1fr 1fr; } }
+.vn-deck { position: relative; width: min(86vw, 420px); aspect-ratio: 1; margin: 0 auto; }
+.vn-rec { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, #000 0 18%, transparent 18.5%), repeating-radial-gradient(circle, #111 0 2px, #1d1518 3px 4px), conic-gradient(from 20deg, rgba(255, 255, 255, 0.12), transparent 25%, rgba(255, 255, 255, 0.12) 50%, transparent 75%, rgba(255, 255, 255, 0.12)); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 6px #1a1214; animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.vn-label { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 35% 30%, #ffd27a, #ff7a1a 70%); color: #2a1004; font: 900 clamp(15px, 3.2vw, 26px) var(--heading); box-shadow: inset 0 0 0 4px rgba(90, 30, 5, 0.4); }
+.vn-label small { display: block; font: 800 9px var(--sans); letter-spacing: 0.14em; }
+.vn-arm { position: absolute; right: -4%; top: -2%; width: 54%; height: 8px; transform-origin: 94% 50%; transform: rotate(var(--ang, 24deg)); transition: transform 0.9s cubic-bezier(0.3, 1.2, 0.4, 1); background: linear-gradient(90deg, #b98a3a, #ffd27a); border-radius: 6px; filter: drop-shadow(0 4px 6px #000); }
+.vn-arm::after { content: ''; position: absolute; left: -10px; top: -6px; width: 26px; height: 20px; border-radius: 4px; background: #2a1f18; border: 2px solid #c9a05a; }
+.vn-pivot { position: absolute; right: -2%; top: -4%; width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffd27a, #7a4a10); box-shadow: 0 4px 10px #000; }
+.vn-list { display: grid; gap: 4px; max-height: 440px; overflow-y: auto; padding-right: 6px; }
+.vn-it { display: grid; grid-template-columns: 26px 50px 1fr auto; gap: 10px; align-items: center; padding: 9px 12px; border: 0; border-radius: 8px; background: transparent; color: inherit; text-align: left; }
+.vn-it:hover { background: rgba(255, 179, 71, 0.08); } .vn-it.on { background: rgba(255, 122, 26, 0.2); }
+.vn-it .i { font: 700 12px var(--sans); color: var(--muted); } .vn-it .t { font: 800 13px var(--sans); color: var(--orange); } .vn-it .n { font: 700 14px var(--heading); text-transform: uppercase; } .vn-it .m { font: 600 12px var(--sans); color: var(--muted); }
+
+/* 13. Spotlight */
+.sp { position: relative; padding: 26px 8px; border-radius: 16px; background: #050308; border: 1px solid #2a1f14; overflow: hidden; cursor: none; --x: 50%; --y: 30%; touch-action: none; }
+.sp-list { display: grid; gap: 2px; }
+.sp-row { display: grid; grid-template-columns: 70px 1fr auto; gap: 14px; align-items: baseline; padding: 10px 18px; }
+.sp-row .t { font: 800 14px var(--sans); } .sp-row .n { font: 700 clamp(15px, 2.6vw, 24px) var(--heading); text-transform: uppercase; } .sp-row .m { font: 600 12px var(--sans); }
+.sp-base { color: #3a2e22; }
+.sp-lit { position: absolute; inset: 26px 8px; color: #ffd27a; pointer-events: none; -webkit-mask: radial-gradient(circle 150px at var(--x) var(--y), #000 30%, transparent 100%); mask: radial-gradient(circle 150px at var(--x) var(--y), #000 30%, transparent 100%); text-shadow: 0 0 16px rgba(255, 150, 40, 0.8); }
+.sp-lit .t { color: #ff9a3c; } .sp-lit .m { color: #fff1d2; }
+.sp-cone { position: absolute; left: var(--x); top: var(--y); width: 320px; height: 320px; margin: -160px 0 0 -160px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 190, 90, 0.18), transparent 65%); pointer-events: none; }
+
+/* 14. Stacking cards */
+.sk { padding-bottom: 20px; }
+.sk-c { position: sticky; top: calc(84px + var(--i) * 12px); min-height: 230px; margin-bottom: 40px; padding: 26px 28px; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; border-radius: 20px; border: 1px solid rgba(255, 179, 71, 0.35); background: linear-gradient(135deg, var(--c), #1a0c14 60%); box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6); transform: rotate(var(--r)); }
+.sk-c .t { font: 900 clamp(40px, 8vw, 84px)/1 var(--heading); color: #fff1d2; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); }
+.sk-c .b { font: 800 11px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 241, 210, 0.8); }
+.sk-c .n { margin: 6px 0; font: 700 clamp(18px, 3vw, 30px)/1.2 var(--heading); text-transform: uppercase; color: #fff; }
+.sk-c .m { font: 600 13px var(--sans); color: rgba(255, 241, 210, 0.85); }
+@media (max-width: 600px) { .sk-c { grid-template-columns: 1fr; gap: 6px; min-height: 190px; padding: 20px; } }
+
+/* 15. Giant type */
+.gt-l { display: grid; }
+.gt-r { position: relative; display: grid; grid-template-columns: 74px 1fr; gap: 16px; align-items: center; padding: 14px 6px; border-top: 1px solid rgba(255, 179, 71, 0.18); }
+.gt-r .t { font: 800 14px var(--sans); color: var(--orange); }
+.gt-r .n { font: 900 clamp(24px, 6.4vw, 64px)/1.05 var(--heading); text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(255, 179, 71, 0.7); background: linear-gradient(90deg, #ffd27a, #ff7a1a) no-repeat 0 0 / 0% 100%; -webkit-background-clip: text; background-clip: text; transition: background-size 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.4s; }
+.gt-r:hover .n { background-size: 100% 100%; transform: translateX(14px); }
+.gt-tip { position: fixed; z-index: 80; left: 0; top: 0; padding: 8px 14px; border-radius: 999px; background: var(--orange); color: #1a0c02; font: 800 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; pointer-events: none; opacity: 0; transform: translate(14px, 14px) scale(0.6); transition: opacity 0.2s, transform 0.2s; }
+.gt-tip.on { opacity: 1; transform: translate(14px, 14px) scale(1); }
+
+/* 16. Orbit */
+.ob { display: grid; place-items: center; gap: 18px; }
+.ob svg { width: min(94vw, 560px); height: auto; overflow: visible; }
+.ob .ring { fill: none; stroke: rgba(255, 179, 71, 0.2); stroke-dasharray: 2 6; }
+.ob g.rot { transform-origin: 300px 300px; animation: spin var(--d) linear infinite; animation-direction: var(--dir); }
+.ob svg:hover g.rot, .ob svg.hold g.rot { animation-play-state: paused; }
+.ob circle.nd { cursor: pointer; transition: r 0.25s; stroke: #1a0c02; stroke-width: 2; }
+.ob circle.nd:hover, .ob circle.nd.on { r: 13; filter: drop-shadow(0 0 8px currentColor); }
+.ob-core { fill: url(#core); animation: pulse 2s ease-in-out infinite; transform-origin: 300px 300px; }
+@keyframes pulse { 50% { transform: scale(1.12); } }
+.ob-info { min-height: 80px; text-align: center; } .ob-info .t { font: 900 30px var(--heading); color: var(--gold-soft); } .ob-info .n { font: 700 18px var(--heading); text-transform: uppercase; color: #fff1d2; } .ob-info .m { font: 600 13px var(--sans); color: var(--muted); }
+
+/* 17. Constellation */
+.cs { position: relative; border-radius: 16px; overflow: hidden; background: radial-gradient(ellipse at 50% 120%, #2a1030, #05030a 70%); border: 1px solid #2a1f14; }
+.cs svg { display: block; width: 100%; height: auto; }
+.cs .bgst { fill: #fff; animation: tw 3s ease-in-out infinite; }
+@keyframes tw { 50% { opacity: 0.15; } }
+.cs .line { fill: none; stroke: rgba(255, 179, 71, 0.25); stroke-width: 1.5; stroke-dasharray: 6 6; }
+.cs .lit { fill: none; stroke: #ffb347; stroke-width: 2.5; filter: drop-shadow(0 0 6px #ff7a1a); transition: stroke-dashoffset 0.8s; }
+.cs .star { cursor: pointer; transition: r 0.25s; }
+.cs .star:hover { r: 11; }
+.cs .halo { fill: none; stroke: rgba(255, 210, 122, 0.5); }
+.cs-tip { position: absolute; left: 12px; bottom: 12px; padding: 10px 16px; border-radius: 10px; background: rgba(10, 6, 14, 0.85); border: 1px solid rgba(255, 179, 71, 0.4); }
+.cs-tip .t { font: 800 12px var(--sans); color: var(--orange); } .cs-tip .n { font: 700 15px var(--heading); text-transform: uppercase; color: #fff1d2; } .cs-tip .m { font: 600 11px var(--sans); color: var(--muted); }
+
+/* 18. Cylinder */
+.cy { position: relative; height: 340px; perspective: 1200px; overflow: hidden; cursor: grab; touch-action: pan-y; }
+.cy-ring { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+.cy-c { position: absolute; width: var(--cw); height: 190px; margin: -95px 0 0 calc(var(--cw) / -2); padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 14px; border: 1px solid rgba(255, 179, 71, 0.5); background: linear-gradient(160deg, color-mix(in srgb, var(--c) 55%, #1d1522), #0e0a12); box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.4); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.cy-c .t { font: 900 30px var(--heading); color: #fff1d2; } .cy-c .n { font: 700 14px/1.25 var(--heading); text-transform: uppercase; } .cy-c .m { font: 700 11px var(--sans); letter-spacing: 0.1em; color: rgba(255, 241, 210, 0.8); }
+.cy-note { text-align: center; margin-top: 12px; font: 700 11px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+/* 19. Night sky */
+.ns { position: relative; height: 480px; border-radius: 18px; overflow: hidden; border: 1px solid #2a1f14; transition: background 0.2s; }
+.ns-stars { position: absolute; inset: 0; transition: opacity 0.3s; }
+.ns-stars i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; animation: tw 3s ease-in-out infinite; }
+.ns-orb { position: absolute; width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; transition: background 0.3s, box-shadow 0.3s; }
+.ns-hill { position: absolute; left: -5%; right: -5%; bottom: -50px; height: 150px; border-radius: 50% 50% 0 0; background: #07050a; }
+.ns-txt { position: absolute; left: 0; right: 0; top: 22%; text-align: center; padding: 0 16px; text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7); }
+.ns-txt .t { font: 900 clamp(48px, 9vw, 92px)/1 var(--heading); color: #fff1d2; } .ns-txt .n { margin-top: 8px; font: 700 clamp(17px, 3vw, 28px) var(--heading); text-transform: uppercase; color: #fff; } .ns-txt .m { font: 700 12px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: #ffd27a; }
+.ns-ctl { display: flex; gap: 14px; align-items: center; max-width: 640px; margin: 20px auto 0; }
+.ns-ctl input { flex: 1; accent-color: var(--orange); }
+.ns-ctl button { width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255, 179, 71, 0.5); background: transparent; color: var(--gold-soft); }
+.ns-ctl button:hover { background: var(--orange); color: #1a0c02; }
+
+/* 20. Embers */
+.em { position: relative; padding: 14px 0; border-radius: 16px; background: radial-gradient(ellipse at 50% 100%, rgba(255, 90, 20, 0.22), #060307 70%); border: 1px solid #2a1f14; overflow: hidden; }
+.em canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.em-r { position: relative; display: grid; grid-template-columns: 70px 1fr auto; gap: 14px; align-items: baseline; padding: 11px 24px; transition: transform 0.3s; cursor: default; }
+.em-r .t { font: 800 14px var(--sans); color: #ff9a3c; }
+.em-r .n { font: 700 clamp(15px, 2.6vw, 24px) var(--heading); text-transform: uppercase; color: #cdb99a; transition: color 0.3s, text-shadow 0.3s; }
+.em-r .m { font: 600 12px var(--sans); color: var(--muted); }
+.em-r:hover { transform: translateX(10px); }
+.em-r:hover .n { color: #fff1d2; text-shadow: 0 0 6px #ffb347, 0 -4px 14px #ff7a1a, 0 -10px 26px #e8381a; animation: burn 0.5s ease-in-out infinite alternate; }
+@keyframes burn { to { text-shadow: 0 0 8px #ffd27a, 0 -6px 16px #ff9a3c, 0 -14px 30px #ff4a1a; } }
+@media (prefers-reduced-motion: reduce) { .vn-rec, .ob g.rot, .em-r:hover .n { animation: none; } }
+
+/* 21. Ticker */
+.tkr { display: grid; gap: 14px; margin: 0 -16px; }
+.tk-band { overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.tk-track { display: flex; gap: 14px; width: max-content; animation: slide var(--d) linear infinite; animation-direction: var(--dir); }
+.tk-band:hover .tk-track { animation-play-state: paused; }
+@keyframes slide { to { transform: translateX(-50%); } }
+.tk-chip { flex: none; display: flex; gap: 12px; align-items: baseline; padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.4); background: linear-gradient(160deg, #1d1522, #0e0a12); color: inherit; transition: 0.3s; }
+.tk-chip:hover, .tk-chip.on { border-color: var(--gold); background: linear-gradient(160deg, var(--c), #1a0c14); box-shadow: 0 0 24px rgba(255, 122, 26, 0.5); }
+.tk-chip .t { font: 800 14px var(--sans); color: var(--orange); } .tk-chip:hover .t, .tk-chip.on .t { color: #fff1d2; }
+.tk-chip .n { font: 700 clamp(15px, 2vw, 20px) var(--heading); text-transform: uppercase; white-space: nowrap; }
+.tk-big { margin: 26px auto 0; min-height: 110px; max-width: 700px; text-align: center; padding: 0 16px; }
+.tk-big .t { font: 900 clamp(40px, 8vw, 72px)/1 var(--heading); color: var(--gold-soft); } .tk-big .n { margin-top: 6px; font: 700 clamp(17px, 3vw, 26px) var(--heading); text-transform: uppercase; color: #fff1d2; } .tk-big .m { font: 600 13px var(--sans); color: var(--muted); }
+
+/* 22. Desk calendar */
+.dc { position: relative; width: min(88vw, 460px); height: 360px; margin: 0 auto; perspective: 1400px; }
+.dc::before { content: ''; position: absolute; left: -2%; right: -2%; bottom: -14px; height: 22px; border-radius: 6px; background: #2a1810; box-shadow: 0 16px 30px rgba(0, 0, 0, 0.6); }
+.dc-rings { position: absolute; left: 0; right: 0; top: -12px; z-index: 200; display: flex; justify-content: space-around; padding: 0 14%; pointer-events: none; }
+.dc-rings i { width: 12px; height: 34px; border-radius: 8px; background: linear-gradient(90deg, #8a8a8a, #fff, #6a6a6a); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6); }
+.dc-pg { position: absolute; inset: 0; transform-origin: 50% 0; transition: transform 0.9s cubic-bezier(0.5, 0, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
+.dc-pg.gone { transform: rotateX(-178deg); }
+.dc-f, .dc-b { position: absolute; inset: 0; border-radius: 6px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.dc-f { display: grid; grid-template-rows: auto 1fr auto; text-align: center; background: linear-gradient(180deg, #f6ead0, #e8d5ab); color: #3a2814; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); overflow: hidden; }
+.dc-f .hd { padding: 26px 0 10px; background: var(--c); color: #fff; font: 800 12px var(--sans); letter-spacing: 0.24em; text-transform: uppercase; }
+.dc-f .t { align-self: center; font: 900 clamp(64px, 16vw, 110px)/1 var(--heading); color: #7a2a08; }
+.dc-f .n { padding: 0 20px 22px; font: 700 clamp(16px, 3.4vw, 22px)/1.2 var(--heading); text-transform: uppercase; }
+.dc-f .m { display: block; margin-top: 4px; font: 700 12px var(--sans); letter-spacing: 0.14em; color: #6b5330; }
+.dc-b { transform: rotateX(180deg); background: #e0cc9c; }
+.rnd { width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255, 179, 71, 0.5); background: transparent; color: var(--gold-soft); }
+.rnd:hover { background: var(--orange); color: #1a0c02; }
+
+/* 23. Petals */
+.pt { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
+@media (min-width: 820px) { .pt { grid-template-columns: 1fr 1fr; } }
+.pt svg { width: min(86vw, 420px); height: auto; margin: 0 auto; display: block; overflow: visible; }
+.pt .pp { cursor: pointer; transition: filter 0.3s; }
+.pt .pp.on { filter: drop-shadow(0 0 16px var(--c)); }
+.pt .pp ellipse { fill: var(--c); fill-opacity: 0.35; stroke: var(--c); stroke-width: 2; transition: fill-opacity 0.3s; }
+.pt .pp.on ellipse, .pt .pp:hover ellipse { fill-opacity: 0.9; }
+.pt .pn { font: 900 26px var(--heading); fill: #fff1d2; text-anchor: middle; pointer-events: none; }
+.pt .core { fill: url(#pcore); }
+.pt-list { min-height: 300px; }
+.pt-list .h { font: 800 12px var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+.pt-list .s { font: 600 13px var(--sans); color: var(--muted); margin-bottom: 12px; }
+.pt-act { display: flex; gap: 14px; padding: 11px 14px; margin-bottom: 6px; border-radius: 10px; border-left: 4px solid var(--c); background: #140e12; opacity: 0; transform: translateX(24px); animation: in 0.5s forwards; }
+@keyframes in { to { opacity: 1; transform: none; } }
+.pt-act .t { font: 800 13px var(--sans); color: var(--orange); min-width: 48px; } .pt-act .n { flex: 1; font: 700 14px var(--heading); text-transform: uppercase; } .pt-act .m { font: 600 12px var(--sans); color: var(--muted); }
+
+/* 24. Scratch cards */
+.sc-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.scr { position: relative; height: 130px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 179, 71, 0.4); background: linear-gradient(160deg, var(--c), #1a0c14 75%); }
+.scr .under { position: absolute; inset: 0; display: grid; place-content: center; padding: 10px 14px; text-align: center; }
+.scr .under .t { font: 800 13px var(--sans); letter-spacing: 0.12em; color: #fff1d2; } .scr .under .n { font: 700 15px/1.25 var(--heading); text-transform: uppercase; color: #fff; text-shadow: 0 1px 8px #000; } .scr .under .m { margin-top: 4px; font: 700 11px var(--sans); color: rgba(255, 241, 210, 0.85); }
+.scr canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity 0.6s; }
+.scr canvas.done { opacity: 0; pointer-events: none; }
+.sc-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 18px; }
+.sc-bar button { padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(255, 179, 71, 0.5); background: transparent; color: var(--gold-soft); font: 700 11px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+.sc-bar button:hover { background: var(--orange); color: #1a0c02; }
+
+/* 25. Radar */
+.rd { display: grid; place-items: center; gap: 18px; }
+.rd-dial { position: relative; width: min(92vw, 540px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #1a1008 0, #060306 70%); border: 2px solid rgba(255, 179, 71, 0.5); box-shadow: 0 0 40px rgba(255, 122, 26, 0.25), inset 0 0 60px rgba(0, 0, 0, 0.8); overflow: hidden; }
+.rd-grid { position: absolute; inset: 0; background: repeating-radial-gradient(circle, transparent 0 11.5%, rgba(255, 179, 71, 0.22) 11.8% 12%), linear-gradient(rgba(255, 179, 71, 0.2), rgba(255, 179, 71, 0.2)) 50% 0 / 1px 100% no-repeat, linear-gradient(rgba(255, 179, 71, 0.2), rgba(255, 179, 71, 0.2)) 0 50% / 100% 1px no-repeat; }
+.rd-sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, rgba(255, 150, 40, 0) 0deg, rgba(255, 150, 40, 0) 300deg, rgba(255, 150, 40, 0.5) 360deg); }
+.rd-b { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; padding: 0; border-radius: 50%; border: 0; background: var(--c); box-shadow: 0 0 8px var(--c); opacity: 0.35; transition: opacity 0.2s; }
+.rd-b::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--c); opacity: 0; }
+.rd-b.ping { opacity: 1; } .rd-b.ping::after { animation: rp 1.2s ease-out; }
+@keyframes rp { from { opacity: 1; transform: scale(0.6); } to { opacity: 0; transform: scale(2.6); } }
+.rd-b.on { opacity: 1; outline: 2px solid #fff; }
+.rd-info { min-height: 84px; text-align: center; } .rd-info .t { font: 900 30px var(--heading); color: var(--gold-soft); } .rd-info .n { font: 700 18px var(--heading); text-transform: uppercase; color: #fff1d2; } .rd-info .m { font: 600 13px var(--sans); color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .tk-track { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <b>Set 2</b>
+  <a href="#d11">11 Split-flap</a><a href="#d12">12 Vinyl</a><a href="#d13">13 Spotlight</a><a href="#d14">14 Stacking cards</a><a href="#d15">15 Giant type</a>
+  <a href="#d16">16 Orbit</a><a href="#d17">17 Constellation</a><a href="#d18">18 Cylinder</a><a href="#d19">19 Night sky</a><a href="#d20">20 Embers</a><a href="#d21">21 Ticker</a><a href="#d22">22 Desk calendar</a><a href="#d23">23 Petals</a><a href="#d24">24 Scratch cards</a><a href="#d25">25 Radar</a>
+  <a href="schedule-designs.html">Set 1</a>
+</nav>
+
+<section id="d11"><div class="head"><h2>11. Split-flap board</h2><p>An old station departures board. The letters flip into place as you reach it. Press Shuffle, or hover a row, to flip again.</p></div><div class="stage"></div></section>
+<section id="d12"><div class="head"><h2>12. Vinyl record</h2><p>A spinning record. Pick an act and the needle swings across to its groove while the label changes.</p></div><div class="stage"></div></section>
+<section id="d13"><div class="head"><h2>13. Stage spotlight</h2><p>The running order sits in the dark. Move your cursor (or drag a finger) and the spotlight reveals it.</p></div><div class="stage"></div></section>
+<section id="d14" class="long"><div class="head"><h2>14. Stacking cards</h2><p>Scroll down: every act drops onto the pile like a card dealt onto a table.</p></div><div class="stage sk"></div></section>
+<section id="d15"><div class="head"><h2>15. Giant type</h2><p>Huge outlined names that fill with fire as you hover, with the slot length following your cursor.</p></div><div class="stage"></div></section>
+<section id="d16"><div class="head"><h2>16. Orbit</h2><p>Each block is an orbit around the flame and its acts circle on it. Hover to freeze and read.</p></div><div class="stage"></div></section>
+<section id="d17"><div class="head"><h2>17. Constellation</h2><p>The evening as a chain of stars. Hover a star to read it; click one to light the line up to it.</p></div><div class="stage"></div></section>
+<section id="d18"><div class="head"><h2>18. 3D drum</h2><p>All the acts on a rotating drum. Drag to spin it; it turns on its own when you let go.</p></div><div class="stage"></div></section>
+<section id="d19"><div class="head"><h2>19. Night sky</h2><p>Slide time forward and the sky goes from dusk to midnight while the current act shows in the clouds.</p></div><div class="stage"></div></section>
+<section id="d20"><div class="head"><h2>20. Embers</h2><p>Run a cursor over the list and the lines catch fire, throwing sparks.</p></div><div class="stage"></div></section>
+
+<section id="d21"><div class="head"><h2>21. Ticker tape</h2><p>Two bands of acts sliding past in opposite directions, like a stock ticker. Hover to freeze, click a chip to read it.</p></div><div class="stage"></div></section>
+<section id="d22"><div class="head"><h2>22. Desk calendar</h2><p>A tear-off desk calendar. Click the page (or the buttons) and it flips up on its rings to show the next act.</p></div><div class="stage"></div></section>
+<section id="d23"><div class="head"><h2>23. Petal picker</h2><p>Six petals of a rangoli, one per block. Pick a petal and its acts bloom beside it.</p></div><div class="stage"></div></section>
+<section id="d24"><div class="head"><h2>24. Scratch cards</h2><p>Every act is hidden under gold foil. Scratch it with your mouse or finger to reveal what is on.</p></div><div class="stage"></div></section>
+<section id="d25"><div class="head"><h2>25. Radar</h2><p>A sweeping radar. Each act is a blip placed by its time; the beam makes them ping as it passes. Hover or tap a blip.</p></div><div class="stage"></div></section>
+
+<script type="module">
+import { schedule } from './data/data.js';
+
+const COLORS = ['#ffb347', '#ff7a1a', '#ff9a3c', '#e8553a', '#d6246e', '#9a4fd1'];
+const toMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+const fmt = (m) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+const durOf = (s) => { if (!s) return 30; const p = String(s).split('-').map(Number); return p.reduce((a, b) => a + b, 0) / p.length; };
+const acts = [];
+schedule.program.forEach((block, b) => block.forEach((a) => acts.push({ ...a, b, c: COLORS[b % COLORS.length], start: toMin(a.time), dur: durOf(a.mins), label: a.mins ? `${a.mins} min` : 'Late night' })));
+const N = acts.length, T0 = acts[0].start, T1 = acts[N - 1].start + acts[N - 1].dur;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const st = (id) => $(`#${id} .stage`);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 11. Split-flap */
+(() => {
+  const s = st('d11'), CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -:+', W = 32;
+  const cells = (txt, n) => [...txt.toUpperCase().padEnd(n, ' ').slice(0, n)].map((c) => `<span class="fc" data-c="${c}"> </span>`).join('');
+  s.innerHTML = `<div class="sf"><div class="sf-bar"><span>Programme &middot; Performances</span><button id="sfGo">Shuffle</button></div>${acts.map((a) => `<div class="sf-row"><div class="sf-g t">${cells(a.time, 5)}</div><div class="sf-g n">${cells(a.name, Math.min(W, a.name.length))}</div><div class="sf-g m">${cells(a.label, 9)}</div></div>`).join('')}</div>`;
+  const flip = (el, delay = 0) => {
+    const target = el.dataset.c; let n = 0; const total = 5 + Math.floor(Math.random() * 7);
+    setTimeout(() => { el.classList.add('go'); const iv = setInterval(() => { n++; if (n >= total) { clearInterval(iv); el.textContent = target; el.classList.remove('go'); } else el.textContent = CH[Math.floor(Math.random() * CH.length)]; }, 45); }, delay);
+  };
+  const row = (r, base = 0) => $$('.fc', r).forEach((c, i) => flip(c, base + i * 14));
+  const all = () => $$('.sf-row', s).forEach((r, k) => row(r, k * 110));
+  if (reduce) $$('.fc', s).forEach((c) => (c.textContent = c.dataset.c)); else { new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { all(); o.disconnect(); } }, { threshold: 0.2 }).observe(s); }
+  $('#sfGo').onclick = all;
+  $$('.sf-row', s).forEach((r) => r.addEventListener('mouseenter', () => row(r)));
+})();
+
+/* 12. Vinyl */
+(() => {
+  const s = st('d12'); let cur = 0;
+  s.innerHTML = `<div class="vn"><div class="vn-deck"><div class="vn-rec"></div><div class="vn-label"><div><small>AGNEE 2026</small><span id="vnT"></span></div></div><div class="vn-pivot"></div><div class="vn-arm" id="vnArm"></div></div>
+    <div class="vn-list">${acts.map((a, i) => `<button class="vn-it" data-i="${i}"><span class="i">${i + 1}</span><span class="t">${a.time}</span><span class="n">${a.name}</span><span class="m">${a.label}</span></button>`).join('')}</div></div>`;
+  const its = $$('.vn-it', s);
+  const set = (i) => { cur = i; its.forEach((x, k) => x.classList.toggle('on', k === i)); $('#vnT').textContent = acts[i].time; $('#vnArm').style.setProperty('--ang', 16 + (i / (N - 1)) * 24 + 'deg'); };
+  s.addEventListener('click', (e) => { const b = e.target.closest('.vn-it'); if (b) set(+b.dataset.i); });
+  set(0);
+})();
+
+/* 13. Spotlight */
+(() => {
+  const s = st('d13');
+  const rows = acts.map((a) => `<div class="sp-row"><span class="t">${a.time}</span><span class="n">${a.name}</span><span class="m">${a.label}</span></div>`).join('');
+  s.innerHTML = `<div class="sp"><div class="sp-list sp-base">${rows}</div><div class="sp-list sp-lit" aria-hidden="true">${rows}</div><div class="sp-cone"></div></div>`;
+  const sp = $('.sp', s);
+  const move = (e) => { const r = sp.getBoundingClientRect(); sp.style.setProperty('--x', e.clientX - r.left + 'px'); sp.style.setProperty('--y', e.clientY - r.top + 'px'); };
+  sp.addEventListener('pointermove', move); sp.addEventListener('pointerdown', move);
+  const lit = $('.sp-lit', sp); lit.style.setProperty('inset', '26px 8px');
+})();
+
+/* 14. Stacking cards */
+(() => {
+  const s = st('d14');
+  s.innerHTML = acts.map((a, i) => `<div class="sk-c" style="--i:${i};--c:${a.c};--r:${(i % 2 ? 1 : -1) * 0.8}deg"><div class="t">${a.time}</div><div><div class="b">Block ${a.b + 1}</div><div class="n">${a.name}</div><div class="m">${a.label}</div></div></div>`).join('');
+})();
+
+/* 15. Giant type */
+(() => {
+  const s = st('d15');
+  s.innerHTML = `<div class="gt-l">${acts.map((a) => `<div class="gt-r" data-m="${a.label}"><span class="t">${a.time}</span><span class="n">${a.name}</span></div>`).join('')}</div><div class="gt-tip"></div>`;
+  const tip = $('.gt-tip', s);
+  s.addEventListener('pointermove', (e) => { tip.style.left = e.clientX + 'px'; tip.style.top = e.clientY + 'px'; const r = e.target.closest('.gt-r'); tip.classList.toggle('on', !!r); if (r) tip.textContent = r.dataset.m; });
+  s.addEventListener('pointerleave', () => tip.classList.remove('on'));
+})();
+
+/* 16. Orbit */
+(() => {
+  const s = st('d16'), C = 300, byB = {}; acts.forEach((a) => (byB[a.b] ||= []).push(a));
+  const nB = Object.keys(byB).length;
+  const rings = Object.keys(byB).map((b) => {
+    const r = 70 + b * 40, list = byB[b];
+    const nodes = list.map((a, k) => { const ang = (k / list.length) * 2 * Math.PI; return `<circle class="nd" data-i="${acts.indexOf(a)}" cx="${C + r * Math.cos(ang)}" cy="${C + r * Math.sin(ang)}" r="9" fill="${a.c}" style="color:${a.c}"/>`; }).join('');
+    return `<circle class="ring" cx="${C}" cy="${C}" r="${r}"/><g class="rot" style="--d:${40 + b * 14}s;--dir:${b % 2 ? 'reverse' : 'normal'}">${nodes}</g>`;
+  }).join('');
+  s.innerHTML = `<div class="ob"><svg viewBox="0 0 600 600"><defs><radialGradient id="core"><stop offset="0" stop-color="#fff1d2"/><stop offset="0.5" stop-color="#ffb347"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient></defs>${rings}<circle class="ob-core" cx="${C}" cy="${C}" r="42"/></svg><div class="ob-info"><div class="t">&nbsp;</div><div class="n">Hover a planet</div><div class="m">Inner ring is block 1, outer is block ${nB}</div></div></div>`;
+  const svg = $('svg', s);
+  const show = (n) => { const a = acts[+n.dataset.i]; $$('.nd', s).forEach((x) => x.classList.toggle('on', x === n)); $('.ob-info .t', s).textContent = a.time; $('.ob-info .n', s).textContent = a.name; $('.ob-info .m', s).textContent = `${a.label} - Block ${a.b + 1}`; };
+  svg.addEventListener('mouseover', (e) => { const n = e.target.closest('.nd'); if (n) show(n); });
+  svg.addEventListener('click', (e) => { const n = e.target.closest('.nd'); if (n) { svg.classList.add('hold'); show(n); } else svg.classList.remove('hold'); });
+})();
+
+/* 17. Constellation */
+(() => {
+  const s = st('d17'), W = 1000, H = 560;
+  const pts = acts.map((a, i) => [60 + i * (880 / (N - 1)), 280 + Math.sin(i * 1.3) * 150 + (((i * 37) % 40) - 20)]);
+  const poly = pts.map((p) => p.join(',')).join(' ');
+  let bg = ''; for (let i = 0; i < 70; i++) bg += `<circle class="bgst" cx="${(i * 137) % W}" cy="${(i * 89) % H}" r="${0.6 + (i % 3) * 0.5}" style="animation-delay:${-(i % 7) * 0.45}s"/>`;
+  s.innerHTML = `<div class="cs"><svg viewBox="0 0 ${W} ${H}">${bg}<polyline class="line" points="${poly}"/><polyline class="lit" points="${poly}" id="csLit"/>
+    ${pts.map((p, i) => `<circle class="halo" cx="${p[0]}" cy="${p[1]}" r="16"/><circle class="star" data-i="${i}" cx="${p[0]}" cy="${p[1]}" r="7" fill="${acts[i].c}"/>`).join('')}</svg>
+    <div class="cs-tip"><div class="t">&nbsp;</div><div class="n">Hover a star</div><div class="m">Click to light the path</div></div></div>`;
+  const lit = $('#csLit', s), len = lit.getTotalLength(); lit.style.strokeDasharray = len; lit.style.strokeDashoffset = len;
+  const segs = pts.map((p, i) => i ? pts.slice(0, i + 1).reduce((a, q, k, arr) => a + (k ? Math.hypot(q[0] - arr[k - 1][0], q[1] - arr[k - 1][1]) : 0), 0) : 0);
+  const show = (i) => { const a = acts[i]; $('.cs-tip .t', s).textContent = a.time; $('.cs-tip .n', s).textContent = a.name; $('.cs-tip .m', s).textContent = `${a.label} - Block ${a.b + 1}`; };
+  const svg = $('svg', s);
+  svg.addEventListener('mouseover', (e) => { const t = e.target.closest('.star'); if (t) show(+t.dataset.i); });
+  svg.addEventListener('click', (e) => { const t = e.target.closest('.star'); if (!t) return; const i = +t.dataset.i; show(i); lit.style.strokeDashoffset = Math.max(0, len - segs[i] * (len / segs[N - 1])); });
+})();
+
+/* 18. Cylinder */
+(() => {
+  const s = st('d18'); let ry = 0, vel = 0.25, drag = false, x0 = 0, r0 = 0, hover = false;
+  const cw = innerWidth < 600 ? 150 : 200, radius = Math.round((cw / 2 + 8) / Math.tan(Math.PI / N));
+  s.innerHTML = `<div class="cy" style="--cw:${cw}px"><div class="cy-ring">${acts.map((a, i) => `<div class="cy-c" style="--c:${a.c};transform:rotateY(${i * 360 / N}deg) translateZ(${radius}px)"><div class="t">${a.time}</div><div><div class="n">${a.name}</div><div class="m">${a.label}</div></div></div>`).join('')}</div></div><div class="cy-note">Drag to spin</div>`;
+  const cy = $('.cy', s), ring = $('.cy-ring', s);
+  cy.style.setProperty('--cw', cw + 'px');
+  const paint = () => { ring.style.transform = `translateZ(${-radius}px) rotateY(${ry}deg)`; };
+  cy.addEventListener('pointerdown', (e) => { drag = true; x0 = e.clientX; r0 = ry; cy.style.cursor = 'grabbing'; cy.setPointerCapture(e.pointerId); });
+  cy.addEventListener('pointermove', (e) => { if (drag) { ry = r0 + (e.clientX - x0) * 0.35; paint(); } });
+  cy.addEventListener('pointerup', () => { drag = false; cy.style.cursor = ''; });
+  cy.addEventListener('mouseenter', () => (hover = true)); cy.addEventListener('mouseleave', () => (hover = false));
+  const tick = () => { if (!drag && !hover && !reduce) { ry -= vel; paint(); } requestAnimationFrame(tick); };
+  paint(); tick();
+})();
+
+/* 19. Night sky */
+(() => {
+  const s = st('d19'); let t = T0 - 10, timer;
+  s.innerHTML = `<div class="ns"><div class="ns-stars"></div><div class="ns-orb"></div><div class="ns-txt"><div class="t"></div><div class="n"></div><div class="m"></div></div><div class="ns-hill"></div></div>
+    <div class="ns-ctl"><button id="nsP" aria-label="Play">&#9654;</button><input type="range" min="${T0 - 10}" max="${T1 + 10}" value="${t}"></div>`;
+  const ns = $('.ns', s), rng = $('input', s), stars = $('.ns-stars', s), orb = $('.ns-orb', s);
+  stars.innerHTML = Array.from({ length: 80 }, (_, i) => `<i style="left:${(i * 53) % 100}%;top:${(i * 31) % 70}%;animation-delay:${-(i % 9) * 0.35}s"></i>`).join('');
+  const mix = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+  const paint = () => {
+    const k = Math.max(0, Math.min(1, (t - (T0 - 10)) / (T1 - T0 + 20)));
+    const top = mix([255, 122, 26], [5, 3, 10], Math.min(1, k * 1.6)), mid = mix([138, 40, 60], [12, 6, 24], Math.min(1, k * 1.4)), bot = mix([255, 190, 90], [24, 10, 40], Math.min(1, k * 1.3));
+    ns.style.background = `linear-gradient(180deg, rgb(${top}) 0%, rgb(${mid}) 55%, rgb(${bot}) 100%)`;
+    stars.style.opacity = Math.max(0, (k - 0.25) * 1.6);
+    orb.style.left = 8 + k * 84 + '%'; orb.style.top = 78 - Math.sin(k * Math.PI) * 58 + '%';
+    const moon = k > 0.45; orb.style.background = moon ? 'radial-gradient(circle at 35% 35%, #fff, #cfd6ee 70%)' : 'radial-gradient(circle at 35% 35%, #fff1d2, #ffb347 70%)'; orb.style.boxShadow = moon ? '0 0 50px 10px rgba(200, 210, 255, 0.5)' : '0 0 60px 16px rgba(255, 150, 40, 0.7)';
+    const cur = acts.findIndex((a) => t >= a.start && t < a.start + a.dur), nxt = acts.findIndex((a) => a.start > t);
+    const a = cur >= 0 ? acts[cur] : acts[nxt] || acts[N - 1];
+    $('.ns-txt .t', s).textContent = fmt(Math.round(t));
+    $('.ns-txt .n', s).textContent = cur >= 0 ? a.name : nxt >= 0 ? `Next: ${acts[nxt].name}` : 'That is a wrap';
+    $('.ns-txt .m', s).textContent = cur >= 0 ? `Now playing - ${a.label}` : nxt >= 0 ? `in ${Math.round(acts[nxt].start - t)} min` : 'Thank you for coming';
+  };
+  rng.addEventListener('input', () => { t = +rng.value; paint(); });
+  $('#nsP').onclick = () => { if (timer) { clearInterval(timer); timer = null; $('#nsP').innerHTML = '&#9654;'; return; } if (t >= T1 + 10) t = T0 - 10; $('#nsP').innerHTML = '&#10074;&#10074;'; timer = setInterval(() => { t += 1; rng.value = t; paint(); if (t >= T1 + 10) { clearInterval(timer); timer = null; $('#nsP').innerHTML = '&#9654;'; } }, 70); };
+  paint();
+})();
+
+/* 20. Embers */
+(() => {
+  const s = st('d20');
+  s.innerHTML = `<div class="em"><canvas></canvas>${acts.map((a) => `<div class="em-r"><span class="t">${a.time}</span><span class="n">${a.name}</span><span class="m">${a.label}</span></div>`).join('')}</div>`;
+  const em = $('.em', s), cv = $('canvas', em), ctx = cv.getContext('2d'); let ps = [], raf = 0;
+  const size = () => { cv.width = em.clientWidth; cv.height = em.clientHeight; }; size(); addEventListener('resize', size);
+  const loop = () => {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ps = ps.filter((p) => p.l > 0);
+    ps.forEach((p) => { p.x += p.vx; p.y += p.vy; p.vx += (Math.random() - 0.5) * 0.08; p.l -= 1; const k = p.l / p.max; ctx.globalAlpha = k; ctx.fillStyle = k > 0.6 ? '#fff1d2' : k > 0.3 ? '#ffb347' : '#ff5a1a'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * k + 0.4, 0, 6.3); ctx.fill(); });
+    raf = ps.length ? requestAnimationFrame(loop) : 0;
+  };
+  em.addEventListener('pointermove', (e) => {
+    const row = e.target.closest('.em-r'); if (!row || reduce) return;
+    const b = em.getBoundingClientRect(), r = row.getBoundingClientRect();
+    for (let i = 0; i < 3; i++) ps.push({ x: e.clientX - b.left + (Math.random() - 0.5) * 24, y: r.top - b.top + r.height * 0.55, vx: (Math.random() - 0.5) * 0.9, vy: -0.8 - Math.random() * 1.8, r: 1 + Math.random() * 2.4, l: 40 + Math.random() * 40, max: 80 });
+    if (!raf) raf = requestAnimationFrame(loop);
+  });
+})();
+
+/* 21. Ticker */
+(() => {
+  const s = st('d21');
+  const chip = (a, i) => `<button class="tk-chip" data-i="${i}" style="--c:${a.c}"><span class="t">${a.time}</span><span class="n">${a.name}</span></button>`;
+  const half = (list) => list.map(([a, i]) => chip(a, i)).join('');
+  const A = acts.map((a, i) => [a, i]), B = [...A].reverse();
+  s.innerHTML = `<div class="tkr"><div class="tk-band"><div class="tk-track" style="--d:70s;--dir:normal">${half(A)}${half(A)}</div></div><div class="tk-band"><div class="tk-track" style="--d:85s;--dir:reverse">${half(B)}${half(B)}</div></div></div><div class="tk-big"><div class="t">&nbsp;</div><div class="n">Tap a chip</div><div class="m">The bands pause while you hover</div></div>`;
+  s.addEventListener('click', (e) => { const c = e.target.closest('.tk-chip'); if (!c) return; const a = acts[+c.dataset.i]; $$('.tk-chip', s).forEach((x) => x.classList.toggle('on', x.dataset.i === c.dataset.i)); $('.tk-big .t', s).textContent = a.time; $('.tk-big .n', s).textContent = a.name; $('.tk-big .m', s).textContent = `${a.label} - Block ${a.b + 1}`; });
+})();
+
+/* 22. Desk calendar */
+(() => {
+  const s = st('d22'); let flipped = 0;
+  s.innerHTML = `<div class="dc"><div class="dc-rings">${'<i></i>'.repeat(6)}</div>${acts.map((a, i) => `<div class="dc-pg" style="z-index:${N - i}"><div class="dc-f" style="--c:${a.c}"><div class="hd">Block ${a.b + 1} &middot; Act ${i + 1} of ${N}</div><div class="t">${a.time}</div><div class="n">${a.name}<span class="m">${a.label}</span></div></div><div class="dc-b"></div></div>`).join('')}</div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:34px"><button class="rnd" id="dcP" aria-label="Previous">&#8592;</button><button class="rnd" id="dcN" aria-label="Next">&#8594;</button></div>`;
+  const pages = $$('.dc-pg', s);
+  const paint = () => pages.forEach((p, i) => p.classList.toggle('gone', i < flipped));
+  const next = () => { flipped = flipped >= N - 1 ? 0 : flipped + 1; paint(); };
+  const prev = () => { flipped = flipped <= 0 ? N - 1 : flipped - 1; paint(); };
+  $('.dc', s).addEventListener('click', next); $('#dcN').onclick = next; $('#dcP').onclick = prev;
+})();
+
+/* 23. Petals */
+(() => {
+  const s = st('d23'), nB = Math.max(...acts.map((a) => a.b)) + 1, C = 210;
+  const petals = Array.from({ length: nB }, (_, b) => { const ang = b * 360 / nB, col = COLORS[b % COLORS.length]; return `<g class="pp" data-b="${b}" style="--c:${col}" transform="rotate(${ang} ${C} ${C})"><ellipse cx="${C}" cy="${C - 100}" rx="44" ry="86"/><text class="pn" x="${C}" y="${C - 94}" transform="rotate(${-ang} ${C} ${C - 94})">${b + 1}</text></g>`; }).join('');
+  s.innerHTML = `<div class="pt"><svg viewBox="0 0 420 420"><defs><radialGradient id="pcore"><stop offset="0" stop-color="#fff1d2"/><stop offset="0.6" stop-color="#ffb347"/><stop offset="1" stop-color="#ff7a1a"/></radialGradient></defs>${petals}<circle class="core" cx="${C}" cy="${C}" r="34"/></svg><div class="pt-list"></div></div>`;
+  const list = $('.pt-list', s);
+  const show = (b) => {
+    $$('.pp', s).forEach((p) => p.classList.toggle('on', +p.dataset.b === b));
+    const a = acts.filter((x) => x.b === b), col = COLORS[b % COLORS.length];
+    list.innerHTML = `<div class="h">Block ${b + 1}</div><div class="s">${fmt(a[0].start)} to ${fmt(a[a.length - 1].start + a[a.length - 1].dur)} &middot; ${a.length} ${a.length > 1 ? 'acts' : 'act'}</div>${a.map((x, k) => `<div class="pt-act" style="--c:${col};animation-delay:${k * 90}ms"><span class="t">${x.time}</span><span class="n">${x.name}</span><span class="m">${x.label}</span></div>`).join('')}`;
+  };
+  s.addEventListener('click', (e) => { const p = e.target.closest('.pp'); if (p) show(+p.dataset.b); });
+  s.addEventListener('mouseover', (e) => { const p = e.target.closest('.pp'); if (p && !p.classList.contains('on') && matchMedia('(hover: hover)').matches) show(+p.dataset.b); });
+  show(0);
+})();
+
+/* 24. Scratch cards */
+(() => {
+  const s = st('d24');
+  s.innerHTML = `<div class="sc-bar"><button id="scAll">Reveal all</button><button id="scReset">Cover again</button></div><div class="sc-g">${acts.map((a) => `<div class="scr" style="--c:${a.c}"><div class="under"><div class="t">${a.time}</div><div class="n">${a.name}</div><div class="m">${a.label}</div></div><canvas></canvas></div>`).join('')}</div>`;
+  const cards = $$('.scr', s);
+  function cover(card) {
+    const cv = $('canvas', card), w = card.clientWidth, h = card.clientHeight, ctx = cv.getContext('2d');
+    cv.width = w; cv.height = h; cv.classList.remove('done');
+    const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#d9b24a'); g.addColorStop(0.5, '#fff0b0'); g.addColorStop(1, '#b8892a');
+    ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    for (let i = 0; i < 260; i++) { ctx.fillStyle = `rgba(${120 + Math.random() * 100},${90 + Math.random() * 80},20,0.25)`; ctx.fillRect(Math.random() * w, Math.random() * h, 2, 2); }
+    ctx.fillStyle = 'rgba(90, 60, 10, 0.55)'; ctx.font = '700 13px Inter, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('SCRATCH HERE', w / 2, h / 2 + 5);
+    let down = false, moves = 0;
+    const check = () => { const d = ctx.getImageData(0, 0, w, h).data; let c = 0; for (let i = 3; i < d.length; i += 64) if (d[i] === 0) c++; if (c / (d.length / 64) > 0.45) cv.classList.add('done'); };
+    const erase = (e) => { const r = cv.getBoundingClientRect(); ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc((e.clientX - r.left) * (w / r.width), (e.clientY - r.top) * (h / r.height), 20, 0, 6.3); ctx.fill(); if (++moves % 12 === 0) check(); };
+    cv.onpointerdown = (e) => { down = true; cv.setPointerCapture(e.pointerId); erase(e); };
+    cv.onpointermove = (e) => { if (down) erase(e); };
+    cv.onpointerup = () => { down = false; check(); };
+  }
+  const run = () => cards.forEach(cover);
+  requestAnimationFrame(run);
+  $('#scAll').onclick = () => $$('canvas', s).forEach((c) => c.classList.add('done')); $('#scReset').onclick = run;
+})();
+
+/* 25. Radar */
+(() => {
+  const s = st('d25'), span = T1 - T0, nB = Math.max(...acts.map((a) => a.b)) + 1;
+  s.innerHTML = `<div class="rd"><div class="rd-dial"><div class="rd-grid"></div><div class="rd-sweep"></div>${acts.map((a, i) => { const ang = ((a.start - T0) / span) * 2 * Math.PI, r = 14 + (a.b / (nB - 1 || 1)) * 32; return `<button class="rd-b" data-i="${i}" style="--c:${a.c};left:${50 + r * Math.sin(ang)}%;top:${50 - r * Math.cos(ang)}%" aria-label="${a.name}"></button>`; }).join('')}</div><div class="rd-info"><div class="t">&nbsp;</div><div class="n">Hover or tap a blip</div><div class="m">Angle is the time, distance is the block</div></div></div>`;
+  const sweep = $('.rd-sweep', s), blips = $$('.rd-b', s), angles = acts.map((a) => ((a.start - T0) / span) * 360);
+  let last = 0; const t0 = performance.now(), PERIOD = 9000;
+  const loop = (now) => {
+    const deg = (((now - t0) % PERIOD) / PERIOD) * 360; sweep.style.transform = `rotate(${deg}deg)`;
+    angles.forEach((a, i) => { const hit = last <= deg ? a > last && a <= deg : a > last || a <= deg; if (hit) { blips[i].classList.remove('ping'); void blips[i].offsetWidth; blips[i].classList.add('ping'); } });
+    last = deg; if (!reduce) requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+  const show = (b) => { const a = acts[+b.dataset.i]; blips.forEach((x) => x.classList.toggle('on', x === b)); $('.rd-info .t', s).textContent = a.time; $('.rd-info .n', s).textContent = a.name; $('.rd-info .m', s).textContent = `${a.label} - Block ${a.b + 1}`; };
+  s.addEventListener('mouseover', (e) => { const b = e.target.closest('.rd-b'); if (b) show(b); }); s.addEventListener('click', (e) => { const b = e.target.closest('.rd-b'); if (b) show(b); });
+})();
+</script>
+</body>
+</html>

@@ -7346,14 +7346,14 @@ main > div:nth-of-type(even) > .section > .container::before {
 .lu-card::before,
 .lu-card::after {
   /* full rangoli centred on a corner (card clips it to a quarter), spinning in opposite directions */
-  --s: 90px;
+  --s: 75px;
   content: '';
   position: absolute;
   z-index: 0;
   width: calc(var(--s) * 2);
   aspect-ratio: 1;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.25;
   background: url('assets/elements/rangoli-full.svg') center / contain no-repeat;
 }
 .lu-card::before {
@@ -9844,4 +9844,183 @@ main > div:nth-of-type(even) .rangoli-big {
   inset: 0;
   background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 40%);
   pointer-events: none;
+}
+
+/* Footer: media partner credit */
+.ft-media {
+  margin: 0;
+  padding: 16px 0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 190, 120, 0.12);
+  font: 700 12px var(--font-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.ft-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ft-media-logo {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border: 2px solid #c9a05a;
+  background: radial-gradient(circle at 50% 35%, #2a1a14, #0e0a12);
+  font: 700 11px var(--font-sans);
+  letter-spacing: 0.04em;
+  color: rgba(255, 179, 71, 0.7);
+}
+.ft-media-logo img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0e0a12;
+}
+.ft-media strong {
+  margin-left: 8px;
+  color: var(--gold-primary);
+}
+
+/* Hero wordmark: canvas of petals (src/ui/hero-petals.js) */
+.hero-petals {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(64vw, 1100px);
+  filter: drop-shadow(0 0 24px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 22px rgba(255, 122, 26, 0.55));
+}
+@media (max-width: 768px) {
+  .hero-petals {
+    width: 90vw;
+  }
+}
+
+/* Schedule: Night sky (src/ui/schedule.js) */
+.sky {
+  --sky-blur: 3.5px; /* everything behind the palace is softened; the palace and the text stay sharp */
+  position: relative;
+  height: clamp(380px, 56vw, 500px);
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #3a2a14;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+.sky-stars {
+  position: absolute;
+  inset: 0;
+  filter: blur(var(--sky-blur));
+}
+.sky-stars i {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  animation: sky-tw 3s ease-in-out infinite;
+}
+@keyframes sky-tw {
+  50% {
+    opacity: 0.15;
+  }
+}
+.sky-orb {
+  filter: blur(var(--sky-blur));
+  position: absolute;
+  width: clamp(54px, 9vw, 74px);
+  aspect-ratio: 1;
+  margin: calc(clamp(54px, 9vw, 74px) / -2) 0 0 calc(clamp(54px, 9vw, 74px) / -2);
+  border-radius: 50%;
+}
+.sky-hill {
+  filter: blur(var(--sky-blur));
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -50px;
+  height: 150px;
+  border-radius: 50% 50% 0 0;
+  background: #07050a;
+}
+.sky-palace {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.65;
+  background: url('assets/palace_bg.svg') center bottom / auto 52% no-repeat;
+  filter: drop-shadow(0 0 6px rgba(255, 190, 120, 0.45));
+}
+.sky-txt {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24%;
+  padding: 0 16px;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+.sky-time {
+  font: 900 clamp(46px, 9vw, 92px) / 1 var(--font-heading);
+  color: #fff1d2;
+}
+.sky-name {
+  margin-top: 8px;
+  font: 700 clamp(16px, 3vw, 28px) / 1.25 var(--font-heading);
+  text-transform: uppercase;
+  color: #fff;
+}
+.sky-meta {
+  margin-top: 4px;
+  font: 700 12px var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffd27a;
+}
+.sky-ctl {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 640px;
+  margin: 22px auto 0;
+}
+.sky-ctl input {
+  flex: 1;
+  min-width: 0;
+  accent-color: #ff7a1a;
+}
+.sky-play {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 179, 71, 0.5);
+  background: transparent;
+  color: var(--gold-primary);
+  cursor: var(--cur-hover);
+}
+.sky-play:hover {
+  background: #ff7a1a;
+  color: #1a0c02;
+}
+.sky-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-stars i {
+    animation: none;
+  }
 }

@@ -185,7 +185,7 @@ export const events = [
       day: 'Agnee',
       venueName: 'Agnee Stage'
     },
-    posterImage: 'assets/sur-sangram.webp',
+    posterImage: 'assets/ramp-walk.webp',
     tags: ['Ramp Walk', 'Pre-Agnee']
   },
 ];
