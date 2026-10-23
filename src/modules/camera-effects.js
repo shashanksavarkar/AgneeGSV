@@ -6,6 +6,7 @@ const orb = { theta: 0.3, phi: 0.95, r: 680, rt: 680, vt: 0, vp: 0 },
 const FT = new V();
 let FR = 150,
   focA = 0,
+  focTilt = 0.18,
   pMode = null,
   modeT = -9;
 const camV = new V(),
@@ -333,36 +334,64 @@ const t1 = document.getElementById('t1'),
   t6 = document.getElementById('t6'),
   t7 = document.getElementById('t7'),
   t8 = document.getElementById('t8'),
-  t9 = document.getElementById('t9');
+  t9 = document.getElementById('t9'),
+  t12 = document.getElementById('t12'),
+  t13 = document.getElementById('t13');
+const TAG_PLACE_MAP = {
+  t1: 'academic-block',
+  t3: 'current-hostel',
+  t4: 'proposed-hostel',
+  t5: 'atithi-hostel',
+  t6: 'proposed-lab',
+  t7: 'proposed-academic',
+  t8: 'palace',
+  t9: 'manthan',
+  t10: 'oval-ground',
+  t11: 'main-gate',
+  t12: 'sabhagrah',
+  t13: 'pahune-hostel'
+};
 [
-  ['t1', 357, 70, 170],
-  ['t4', 648, 98, 150],
-  ['t5', 530, 80, 150],
-  ['t6', 511, 150, 150],
-  ['t7', 496, 270, 160],
-  ['t8', 331, 189, 140],
-  ['t9', 435, 201, 110],
-  ['t11', 577, 46, 80]
+  ['t1', 357, 90.5, 54],
+  ['t12', 425, 86.5, 48],
+  ['t13', 476, 90, 48],
+  ['t4', 606.5, 100, 54],
+  ['t5', 516, 106, 48],
+  ['t6', 511.5, 131.5, 50],
+  ['t7', 481, 274.5, 52],
+  ['t8', 320, 189, 52],
+  ['t9', 435, 183.6, 48],
+  ['t11', 577, 46, 52],
+  ['t3', 605, 148, 44]
 ].forEach(([id, x, z, r]) => {
   const el = document.getElementById(id);
+  if (!el) return;
   el.style.pointerEvents = 'auto';
   el.style.cursor = 'pointer';
   el.onclick = () => {
-    FT.set(x - W / 2, 6, z - H / 2);
-    FR = r;
-    focA = Math.atan2(camPos.x - FT.x, camPos.z - FT.z);
-    mode = 'focus';
-    setOn(null);
+    const pid = TAG_PLACE_MAP[id];
+    if (pid && typeof window.earthFlyTo === 'function') {
+      window.earthFlyTo(pid);
+    } else {
+      FT.set(x - W / 2, id === 't3' ? 4.8 : 6, z - H / 2);
+      FR = r;
+      focA = id === 't3' ? -Math.PI / 2 : 0;
+      focTilt = id === 't3' ? 0.08 : 0.15;
+      mode = 'focus';
+      modeT = typeof now !== 'undefined' ? now : performance.now() / 1000;
+      setOn(null);
+    }
     showInfo(id);
   };
 });
-t3.style.pointerEvents = t10.style.pointerEvents = 'auto';
-t3.style.cursor = t10.style.cursor = 'pointer';
-t3.onclick = () => {
-  mode = 'hostels';
-  setOn(bHos);
-};
-t10.onclick = () => TOUR.start();
+if (t10) {
+  t10.style.pointerEvents = 'auto';
+  t10.style.cursor = 'pointer';
+  t10.onclick = () => {
+    if (typeof window.earthFlyTo === 'function') window.earthFlyTo('oval-ground');
+    else TOUR.start();
+  };
+}
 function place(el, v) {
   const p = v.clone().project(cam);
   const vis = p.z < 1;
@@ -924,7 +953,19 @@ const ST = [
   {
     chap: 'Hostels',
     n: 1,
-    of: 3,
+    of: 4,
+    name: 'Pahune Hostel',
+    sub: 'Hostel',
+    tag: 'Existing',
+    x: 476,
+    y: 90,
+    R: 48,
+    Hc: 20
+  },
+  {
+    chap: 'Hostels',
+    n: 2,
+    of: 4,
     name: 'Atithi Hostel',
     sub: 'Hostel',
     tag: 'Existing',
@@ -935,8 +976,8 @@ const ST = [
   },
   {
     chap: 'Hostels',
-    n: 2,
-    of: 3,
+    n: 3,
+    of: 4,
     name: 'Proposed Hostel Block',
     sub: 'Hostel',
     tag: 'Proposed',
@@ -947,15 +988,15 @@ const ST = [
   },
   {
     chap: 'Hostels',
-    n: 3,
-    of: 3,
+    n: 4,
+    of: 4,
     name: 'Current Hostel (NHSRCL)',
     sub: 'Hostel',
     tag: 'Existing',
-    x: 639,
-    y: 146,
-    R: 88,
-    Hc: 54
+    x: 605,
+    y: 148,
+    R: 44,
+    Hc: 14
   },
   {
     chap: 'New Buildings',
@@ -984,7 +1025,7 @@ const ST = [
   {
     chap: 'Academic Core',
     n: 1,
-    of: 2,
+    of: 3,
     name: 'Manthan Building',
     sub: 'Classroom building',
     tag: 'Existing',
@@ -996,7 +1037,19 @@ const ST = [
   {
     chap: 'Academic Core',
     n: 2,
-    of: 2,
+    of: 3,
+    name: 'Sardar Patel Sabhagrah',
+    sub: 'Auditorium & Conference Hall',
+    tag: 'Existing',
+    x: 425,
+    y: 86.5,
+    R: 48,
+    Hc: 20
+  },
+  {
+    chap: 'Academic Core',
+    n: 3,
+    of: 3,
     name: 'Gati Shakti Vishwavidyalaya',
     sub: 'Current academic block',
     tag: 'Existing',

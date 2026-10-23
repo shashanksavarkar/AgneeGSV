@@ -1,4 +1,4 @@
-﻿// ---- Oval Ground: Agnee cultural fest venue (bare field SW of the palace)
+// ---- Oval Ground: Agnee cultural fest venue (bare field SW of the palace)
 const t10 = document.getElementById('t10');
 const OV = new THREE.Group();
 OV.position.set(240 - W / 2, 0, 270 - H / 2);
@@ -67,7 +67,7 @@ const cyl = (r, h, col, x, y, z, p = OV) => {
 }
 // stage at the west end, facing the field
 const SG = new THREE.Group();
-SG.position.set(-30, 0, 0);
+SG.position.set(-30, 0, 0);                 
 OV.add(SG);
 const bn = document.createElement('canvas');
 bn.width = 512;
@@ -1543,6 +1543,8 @@ P_tb.onclick = () => {
 view.appendChild(P_tb);
 const P_INF = {
   t1: ['Gati Shakti Vishwavidyalaya', 'Current academic block', 'Existing'],
+  t12: ['Sardar Patel Sabhagrah', 'Auditorium & Conference Hall', 'Existing'],
+  t13: ['Pahune Hostel', 'Hostel & Recreation Hall', 'Existing'],
   t4: ['Proposed hostel block', 'Hostel', 'Proposed'],
   t5: ['Atithi hostel', 'Hostel', 'Existing'],
   t6: ['Proposed laboratory block', 'Laboratory', 'Proposed'],

@@ -15,21 +15,21 @@ export function renderMapSection(places = [], events = []) {
   if (!mount) return;
 
   // COMING SOON: delete this block (and uncomment boot.js in index.html) to restore the full map below.
-  mount.innerHTML = `
-    <section class="section map-section" id="map" aria-labelledby="mapHeading">
-      <div class="container">
-        <div class="soon" role="group" aria-labelledby="mapHeading">
-          <div class="soon-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></b></div>
-          <h2 class="soon-title" id="mapHeading">
-            <span>AGNEE'26 Interactive Experience</span>
-            <em>Coming Soon</em>
-          </h2>
-          <p class="soon-line">Something is being built in the dark. Not everything is meant to be seen yet.</p>
-        </div>
-      </div>
-    </section>
-  `;
-  return;
+  // mount.innerHTML = `
+  //   <section class="section map-section" id="map" aria-labelledby="mapHeading">
+  //     <div class="container">
+  //       <div class="soon" role="group" aria-labelledby="mapHeading">
+  //         <div class="soon-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></b></div>
+  //         <h2 class="soon-title" id="mapHeading">
+  //           <span>AGNEE'26 Interactive Experience</span>
+  //           <em>Coming Soon</em>
+  //         </h2>
+  //         <p class="soon-line">Something is being built in the dark. Not everything is meant to be seen yet.</p>
+  //       </div>
+  //     </div>
+  //   </section>
+  // `;
+  // return;
 
   mount.innerHTML = `
     <section class="section map-section" id="map" aria-labelledby="mapHeading">
@@ -64,6 +64,8 @@ export function renderMapSection(places = [], events = []) {
                 <small>GATI SHAKTI VISHWAVIDYALAYA · VADODARA</small>
               </div>
               <div class="tag" id="t1">Gati Shakti Vishwavidyalaya (current academic block)</div>
+              <div class="tag" id="t12">Sardar Patel Sabhagrah</div>
+              <div class="tag a" id="t13">Pahune Hostel</div>
               <div class="tag r" id="t3">Current hostel (NHSRCL)</div>
               <div class="tag g" id="t4">Proposed hostel block</div>
               <div class="tag a" id="t5">Atithi hostel</div>
@@ -112,15 +114,15 @@ export function renderMapSection(places = [], events = []) {
             <button type="button" class="vp-arrow" id="btnPinsScrollLeft" title="Scroll left" aria-label="Scroll venues left">‹</button>
             <div class="vp-list" id="pinsScrollList">
               ${places.map((place, i) => {
-                const isFest = place.id === 'oval-ground';
-                return `
+    const isFest = place.id === 'oval-ground';
+    return `
                   <button type="button" class="venue-pin-btn vp-chip ${isFest ? 'active' : ''}" data-place-id="${place.id}" data-category="${place.category}">
                     <span class="vp-no">${String(i + 1).padStart(2, '0')}</span>
                     <span class="vp-text"><b>${place.name}</b><small>${place.category}</small></span>
                     ${place.featured ? '<span class="vp-fest">Fest</span>' : ''}
                   </button>
                 `;
-              }).join('')}
+  }).join('')}
             </div>
             <button type="button" class="vp-arrow" id="btnPinsScrollRight" title="Scroll right" aria-label="Scroll venues right">›</button>
           </div>
@@ -249,9 +251,9 @@ function setupMapSectionInteractions() {
     const wrapper = document.getElementById('mapViewportWrapper');
     if (!wrapper) return;
     if (!document.fullscreenElement) {
-      wrapper.requestFullscreen().catch(() => {});
+      wrapper.requestFullscreen().catch(() => { });
     } else {
-      document.exitFullscreen().catch(() => {});
+      document.exitFullscreen().catch(() => { });
     }
   };
 

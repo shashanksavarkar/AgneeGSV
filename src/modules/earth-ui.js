@@ -71,7 +71,9 @@ function earthFlyTo(placeOrId) {
     FT.set(pos.x, pos.y || 6, pos.z);
     FR = place.pose?.distance || 120;
     focA = place.pose?.heading || 0;
+    if (typeof focTilt !== 'undefined') focTilt = place.pose?.tilt || 0.18;
     mode = 'focus';
+    modeT = typeof now !== 'undefined' ? now : performance.now() / 1000;
     if (typeof setOn === 'function') setOn(null);
   }
   earthShowCard(place);
