@@ -9954,8 +9954,8 @@ main > div:nth-of-type(even) .rangoli-big {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.65;
-  background: url('assets/palace_bg.svg') center bottom / auto 52% no-repeat;
+  opacity: 0.5;
+  background: url('assets/palace_bg.webp') center bottom / contain no-repeat;
   filter: drop-shadow(0 0 6px rgba(255, 190, 120, 0.45));
 }
 .sky-txt {
