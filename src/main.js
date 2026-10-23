@@ -23,6 +23,7 @@ import { renderFooter } from './ui/footer.js';
 import { renderToastContainer } from './ui/toast.js';
 import { initScrollRail } from './ui/scrollbar.js';
 import { initCursorFx } from './ui/cursor-fx.js';
+import { initLazyImages } from './ui/lazy.js';
 
 async function bootstrap() {
   try {
@@ -50,6 +51,7 @@ async function bootstrap() {
     document.querySelectorAll('.section').forEach(sec => sec.insertAdjacentHTML('beforeend', '<span class="rangoli-bl" aria-hidden="true"></span>'));
     initScrollRail();
     initCursorFx();
+    initLazyImages();
 
     // 4. Initialize client-side router
     router.init();

@@ -62,8 +62,8 @@ export const events = [
     id: 'youth-parliament',
     name: 'Youth Parliament',
     category: 'Debate & Quiz Club GSV',
-    tagline: 'Debate. Decide. Govern.',
-    description: 'Pre-Agnee mock parliament where participants debate current issues in the house.',
+    tagline: 'Where Voices Rise and Leaders Emerge.',
+    description: 'A dynamic platform where young minds engage in parliamentary debates, exchange perspectives, and experience the spirit of democracy and leadership.',
     teamSize: {
       min: 1,
       max: 1
@@ -79,15 +79,15 @@ export const events = [
     id: 'muscle-mania',
     name: 'Muscle Mania',
     category: 'Sports Committee GSV',
-    tagline: 'Strength. Stamina. Spotlight.',
-    description: 'Pre-Agnee fitness showdown where participants show off their strength and stamina.',
+    tagline: 'Ignite the Strength, Unleash the AGNEE!',
+    description: 'A thrilling test of strength, stamina, and teamwork to ignite the competitive spirit before AGNEE',
     teamSize: {
-      min: "",
+      min: "Solo / Duo / Team",
       max: "",
     },
     schedule: {
       day: 'Pre-Agnee',
-      venueName: 'To be announced'
+      venueName: 'Prastuti (Raja Baug)'
     },
     posterImage: 'assets/muscle-mania.webp',
     tags: ['Fitness', 'Pre-Agnee']
@@ -104,7 +104,7 @@ export const events = [
     },
     schedule: {
       day: 'Pre-Agnee',
-      venueName: 'Prastuti'
+      venueName: 'Prastuti (Darshan Front)'
     },
     posterImage: 'assets/treasure-hunt.webp',
     tags: ['Adventure', 'Pre-Agnee']
@@ -160,6 +160,23 @@ export const events = [
     },
     posterImage: 'assets/sur-sangram.webp',
     tags: ['Singing', 'Pre-Agnee']
+  },
+    {
+    id: 'ramp-walk',
+    name: 'Traditional & Modern Ramp Walk',
+    category: 'Event Management Club GSV',
+    tagline: 'Celebrate Culture. Unleash Creativity. Own the Ramp!',
+    description: 'Showcase your cultural heritage or bring your favourite fictional characters to life as you own the ramp and compete for exciting prizes!',
+    teamSize: {
+      min: 1,
+      max: 1
+    },
+    schedule: {
+      day: 'Agnee',
+      venueName: 'Agnee Stage'
+    },
+    posterImage: 'assets/sur-sangram.webp',
+    tags: ['Ramp Walk', 'Pre-Agnee']
   },
 ];
 

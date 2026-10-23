@@ -281,6 +281,7 @@ function renderEventCard(ev, i) {
   const teamText = teamLabel(ev.teamSize);
 
   return `
+    <div class="ev-hang" style="--d:${(i % 3) * -0.8}s"><span class="ev-string" aria-hidden="true"></span>
     <article class="event-card" data-id="${ev.id}" aria-label="${ev.name}" role="button" tabindex="0">
       ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
       <span class="ev-day">${ev.schedule?.day || 'Day TBA'}</span>
@@ -296,5 +297,6 @@ function renderEventCard(ev, i) {
         ${ev.tags?.length ? `<ul class="ev-tags">${ev.tags.map(tag => `<li>${tag}</li>`).join('')}</ul>` : ''}
       </div>
     </article>
+    </div>
   `;
 }
