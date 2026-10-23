@@ -415,8 +415,10 @@ const t1 = document.getElementById('t1'),
   t9 = document.getElementById('t9'),
   t12 = document.getElementById('t12'),
   t13 = document.getElementById('t13'),
-  t14 = document.getElementById('t14');
+  t14 = document.getElementById('t14'),
+  t15 = document.getElementById('t15');
 window.t14 = t14;
+window.t15 = t15;
 const TAG_PLACE_MAP = {
   t1: 'academic-block',
   t3: 'current-hostel',
@@ -430,15 +432,17 @@ const TAG_PLACE_MAP = {
   t11: 'main-gate',
   t12: 'sabhagrah',
   t13: 'pahune-hostel',
-  t14: 'rajabaug'
+  t14: 'rajabaug',
+  t15: 'mehman-hostel'
 };
 [
   ['t1', 357, 90.5, 54],
   ['t12', 425, 86.5, 48],
   ['t13', 476, 90, 48],
   ['t14', 256, 189, 110],
+  ['t15', 293.8, 51.5, 26],
   ['t4', 606.5, 100, 54],
-  ['t5', 516, 106, 48],
+  ['t5', 516, 105.8, 29],
   ['t6', 511.5, 131.5, 50],
   ['t7', 481, 274.5, 52],
   ['t8', 320, 189, 52],
@@ -455,10 +459,10 @@ const TAG_PLACE_MAP = {
     if (pid && typeof window.earthFlyTo === 'function') {
       window.earthFlyTo(pid);
     } else {
-      FT.set(x - W / 2, id === 't3' ? 4.8 : 6, z - H / 2);
-      FR = r;
-      focA = id === 't3' ? -Math.PI / 2 : 0;
-      focTilt = id === 't3' ? 0.08 : 0.15;
+      FT.set(x - W / 2, id === 't3' ? 4.8 : (id === 't5' ? 5.5 : (id === 't15' ? 3.6 : 6)), z - H / 2);
+      FR = id === 't5' ? 29 : (id === 't15' ? 26 : r);
+      focA = (id === 't3' || id === 't4') ? -Math.PI / 2 : (id === 't15' ? 0.60 : 0);
+      focTilt = id === 't3' ? 0.08 : (id === 't5' ? 0.11 : (id === 't15' ? 0.07 : 0.15));
       mode = 'focus';
       modeT = typeof now !== 'undefined' ? now : performance.now() / 1000;
       setOn(null);
@@ -1038,7 +1042,7 @@ const ST = [
   {
     chap: 'Hostels',
     n: 1,
-    of: 4,
+    of: 5,
     name: 'Pahune Hostel',
     sub: 'Hostel',
     tag: 'Existing',
@@ -1050,19 +1054,31 @@ const ST = [
   {
     chap: 'Hostels',
     n: 2,
-    of: 4,
+    of: 5,
     name: 'Atithi Hostel',
     sub: 'Hostel',
     tag: 'Existing',
-    x: 530,
-    y: 80,
-    R: 84,
-    Hc: 52
+    x: 516,
+    y: 105.8,
+    R: 29,
+    Hc: 6
   },
   {
     chap: 'Hostels',
     n: 3,
-    of: 4,
+    of: 5,
+    name: "Mehman Boy's Hostel",
+    sub: 'Hostel',
+    tag: 'Existing',
+    x: 295,
+    y: 54,
+    R: 30,
+    Hc: 8
+  },
+  {
+    chap: 'Hostels',
+    n: 4,
+    of: 5,
     name: 'Proposed Hostel Block',
     sub: 'Hostel',
     tag: 'Proposed',
@@ -1073,8 +1089,8 @@ const ST = [
   },
   {
     chap: 'Hostels',
-    n: 4,
-    of: 4,
+    n: 5,
+    of: 5,
     name: 'Current Hostel (NHSRCL)',
     sub: 'Hostel',
     tag: 'Existing',

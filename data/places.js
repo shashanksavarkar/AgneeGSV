@@ -115,15 +115,33 @@ export const places = [
     "category": "Hostel",
     "mapCoords": {
       "x": 516,
-      "y": 106
+      "y": 105.8
     },
     "walkTimeMinutes": 3,
-    "description": "Guest and delegate residence near the campus arterial road, providing hospitality for judges, VIPs, and external faculty with south-facing entrance.",
+    "description": "Atithi Hostel featuring the iconic 2-story entrance portico with classical pillars, triangular pediment, bilingual signage, and forecourt.",
     "directionsFromGate": "Head east along the inner loop road from the academic sector.",
     "pose": {
-      "distance": 48,
-      "tilt": 0.15,
+      "distance": 29,
+      "tilt": 0.11,
       "heading": 0
+    },
+    "featured": true
+  },
+  {
+    "id": "mehman-hostel",
+    "name": "Mehman Boy's Hostel",
+    "category": "Hostel",
+    "mapCoords": {
+      "x": 293.8,
+      "y": 51.5
+    },
+    "walkTimeMinutes": 2,
+    "description": "Mehman Boy's Hostel, 3-story student residence situated before GSV Academic Block, featuring private room balconies, entrance canopy portico, enquiry office, and shaded forecourt.",
+    "directionsFromGate": "Follow the western perimeter road towards the hostel sector situated immediately before the GSV Academic Block.",
+    "pose": {
+      "distance": 26,
+      "tilt": 0.07,
+      "heading": 0.60
     },
     "featured": true
   },
