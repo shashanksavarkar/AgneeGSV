@@ -48,7 +48,10 @@ async function bootstrap() {
     renderFooter(data.site);
     renderToastContainer();
     // Rangoli in each section's bottom-left corner (the top-right one is .section::after)
-    document.querySelectorAll('.section').forEach(sec => sec.insertAdjacentHTML('beforeend', '<span class="rangoli-bl" aria-hidden="true"></span>'));
+    document.querySelectorAll('.section').forEach(sec => {
+      sec.insertAdjacentHTML('beforeend', '<span class="rangoli-bl" aria-hidden="true"></span>');
+      sec.insertAdjacentHTML('afterbegin', '<span class="rangoli-big" aria-hidden="true"></span>'); // big slow-turning rangoli behind the content
+    });
     initScrollRail();
     initCursorFx();
     initLazyImages();

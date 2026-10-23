@@ -9,6 +9,16 @@ export const site = {
   "venue": "Oval Ground, Gati Shakti Vishwavidyalaya Campus, Vadodara",
   "dates": "Agnee Week: 26-31 October 2026 · Pre-Agnee: 30 October · Agnee: 31 October",
   "datesConfigured": null,
+  "vc": {
+    "name": "Prof. Manoj Choudhary",
+    "title": "Vice-Chancellor, Gati Shakti Vishwavidyalaya",
+    "message": [
+      "Replace this paragraph with the Vice-Chancellor's message to the participants of Agnee 2026.",
+      "Add more paragraphs here, one string per paragraph."
+    ],
+    "photo": "",
+    "videoId": ""
+  },
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
   "description": "Agnee is the flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Bringing together talents in music, dance, theater, literature, art, and creative expression from across India.",
   "announcements": [

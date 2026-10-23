@@ -25,7 +25,6 @@ export function renderLineup(guests = []) {
         <div class="lu-grid" style="--cols: ${row.length}">
           ${row.map(guest => `
             <article class="lu-card" data-id="${guest.id}">
-              <span class="lu-bells" aria-hidden="true"></span>
               <div class="lu-info">
                 ${guest.category ? `<span class="lu-cat">${guest.category}</span>` : ''}
                 <h3 class="lu-name">${guest.name}</h3>
