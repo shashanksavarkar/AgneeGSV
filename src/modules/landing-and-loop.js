@@ -1,4 +1,4 @@
-const _sV1=new V(),_sV12=new V(425-W/2,16,83-H/2),_sV13=new V(476-W/2,14,86-H/2),_sV3=new V(605-W/2,24,148-H/2),_sV4=new V(648-W/2,62,98-H/2),_sV5=new V(516-W/2,16,105.5-H/2),_sV6=new V(511-W/2,46,158-H/2),_sV7=new V(496-W/2,44,277-H/2),_sV8=new V(331-W/2,44,189-H/2),_sV9=new V(435-W/2,24,201-H/2),_sV10=new V(240-W/2,58,270-H/2),_sV11=new V(577-W/2,19,46-H/2),_sV14=new V(256-W/2,22,189-H/2),_sV15=new V(293.8-W/2,12,51.5-H/2);
+const _sV1=new V(),_sV12=new V(425-W/2,16,83-H/2),_sV13=new V(476-W/2,14,86-H/2),_sV3=new V(605-W/2,24,148-H/2),_sV4=new V(648-W/2,62,98-H/2),_sV5=new V(516-W/2,16,105.5-H/2),_sV6=new V(511-W/2,46,158-H/2),_sV7=new V(496-W/2,44,277-H/2),_sV8=new V(331-W/2,44,189-H/2),_sV9=new V(435-W/2,24,201-H/2),_sV10=new V(240-W/2,58,270-H/2),_sV11=new V(577-W/2,19,46-H/2),_sV14=new V(256-W/2,22,189-H/2),_sV15=new V(293.8-W/2,12,51.5-H/2),_sV16=new V(434-W/2,14,145-H/2),_sV17=new V(394-W/2,18,198-H/2),_sV18=new V(388-W/2,10,146-H/2),_sV19=new V(285.4-W/2,16,314.4-H/2);
 // landing
 
 let perfSamples=0,perfElapsed=0,perfAdjusted=false;
@@ -955,7 +955,7 @@ if(!bldsDone){if(RM||t>=3.6){blds.forEach(b=>{b.m.scale.y=1;});bldsDone=true;}el
  if(AF.fly||TOUR.direct){camPos.copy(dp);camTgt.copy(dt2);camV.set(0,0,0);tgtV.set(0,0,0);}else{sd(camPos,camV,dp,st,dt);sd(camTgt,tgtV,dt2,st*.8,dt);}
 
  const fv=AF.fly?(RM?41:34+17*Math.pow(Math.sin(Math.PI*AF.u),1.4)-5*Math.pow(clamp((AF.u-.8)/.2),2)):(mode==='tour'?TOUR.fov:mode==='stage'?STG.fov:mode==='ground'?GRD.fov:mode==='rajabaug'?RB_NAV.fov:mode==='explore'?38:41);if(Math.abs(cam.fov-fv)>.02){cam.fov+=(fv-cam.fov)*(1-Math.exp(-dt*(AF.fly||mode==='tour'||mode==='stage'||mode==='ground'?5:2)));cam.updateProjectionMatrix();}cam.position.copy(camPos);cam.lookAt(camTgt);cinematic.camFx(dt);
-_sV1.set(pin.position.x,pin.position.y+30,pin.position.z);place(t1,_sV1);if(typeof t12!=='undefined'&&t12)place(t12,_sV12);if(typeof t13!=='undefined'&&t13)place(t13,_sV13);if(typeof t15!=='undefined'&&t15)place(t15,_sV15);place(t3,_sV3);place(t4,_sV4);place(t5,_sV5);place(t6,_sV6);place(t7,_sV7);place(t8,_sV8);place(t9,_sV9);place(t10,_sV10);place(t11,_sV11);if(typeof t14!=='undefined'&&t14)place(t14,_sV14);
+_sV1.set(pin.position.x,pin.position.y+30,pin.position.z);place(t1,_sV1);if(typeof t12!=='undefined'&&t12)place(t12,_sV12);if(typeof t13!=='undefined'&&t13)place(t13,_sV13);if(typeof t15!=='undefined'&&t15)place(t15,_sV15);if(typeof t16!=='undefined'&&t16)place(t16,_sV16);if(typeof t17!=='undefined'&&t17)place(t17,_sV17);if(typeof t18!=='undefined'&&t18)place(t18,_sV18);if(typeof t19!=='undefined'&&t19)place(t19,_sV19);place(t3,_sV3);place(t4,_sV4);place(t5,_sV5);place(t6,_sV6);place(t7,_sV7);place(t8,_sV8);place(t9,_sV9);place(t10,_sV10);place(t11,_sV11);if(typeof t14!=='undefined'&&t14)place(t14,_sV14);
 
  festAnim(now);cinematic.update(dt);TOUR.ui();STG.ui();renderer.render(scene,cam);cinematic.post();
 
