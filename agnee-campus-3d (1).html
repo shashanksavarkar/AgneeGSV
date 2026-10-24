@@ -7,7 +7,9 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1618;--ink:#e6efed;--panel:rgba(16,24,26,.8);--btn:#8fb7c9;--btnink:#0f1618}}
 :root[data-theme="dark"]{--bg:#0f1618;--ink:#e6efed;--panel:rgba(16,24,26,.8);--btn:#8fb7c9;--btnink:#0f1618}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+:root{--cur-hover:url('assets/elements/golden-butterfly-cursor-hover.svg') 7 7,pointer}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;cursor:url('assets/elements/golden-butterfly-cursor.svg') 7 7,auto}
+button,a,[role='button'],.tbtn,.fbtn,.ch.tr button,.land .go,.enterfest,.fnav button,.fx,.stl button,.ovui button,.stgui button{cursor:var(--cur-hover)}
 body{margin:0;padding:0;height:100vh;height:100dvh;overflow:hidden;display:block}
 .view{position:fixed;inset:0;width:100%;height:100%;border-radius:0;overflow:hidden;background:#cfe0ea}
 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
@@ -299,8 +301,8 @@ const px=cx.getImageData(0,0,W,H).data;
 const lumAt=(x,y)=>{const i=((y|0)*W+(x|0))*4;return [px[i],px[i+1],px[i+2]]};
 
 const canvas=document.getElementById('c'),view=document.getElementById('view');
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 renderer.outputEncoding=THREE.sRGBEncoding;
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xcfe0ea);scene.fog=new THREE.Fog(0xcfe0ea,900,2200);
@@ -476,9 +478,84 @@ A(new THREE.ConeGeometry(.5,3,8),dk,331,36.5,189);
 // small roof domes
 [[345,176],[345,202],[352,189]].forEach(([x,z])=>A(Dm(2.5,12),gst,x,15,z));
 // lawn: sign, path, conifer, bushes
-const nc=document.createElement('canvas');nc.width=512;nc.height=128;const ng=nc.getContext('2d');ng.fillStyle='#fff';ng.font='700 96px Arial,sans-serif';ng.textAlign='center';ng.textBaseline='middle';ng.fillText('I',50,68);ng.fillStyle='#d62d2d';ng.fillText('\u2665',140,68);ng.fillStyle='#fff';ng.fillText('GSV',330,68);
-const ntx=new THREE.CanvasTexture(nc);ntx.encoding=THREE.sRGBEncoding;
-const nsn=new THREE.Mesh(new THREE.PlaneGeometry(12,3),new THREE.MeshBasicMaterial({map:ntx,transparent:true}));nsn.position.set(309-W/2,2,206-H/2);nsn.rotation.y=-Math.PI/2;scene.add(nsn);
+// Monumental 3D "I love GSV ❤️" Stand placed on the Rajabaug lawn facing Pratap Vilas Palace
+(function(){
+  const gsvStand = new THREE.Group();
+  gsvStand.position.set(288.5 - W / 2, 0.08, 200.5 - H / 2);
+
+  const plinthGranite = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.40, 14.0), new THREE.MeshLambertMaterial({ color: 0x22252a }));
+  plinthGranite.position.y = 0.20; gsvStand.add(plinthGranite);
+  const plinthMarble = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.32, 13.4), new THREE.MeshLambertMaterial({ color: 0xf5f2e9 }));
+  plinthMarble.position.y = 0.54; gsvStand.add(plinthMarble);
+
+  const pqCanvas = document.createElement('canvas'); pqCanvas.width = 1024; pqCanvas.height = 128;
+  const pq = pqCanvas.getContext('2d');
+  pq.fillStyle = '#0f224a'; pq.fillRect(0, 0, 1024, 128);
+  pq.strokeStyle = '#d4af37'; pq.lineWidth = 6; pq.strokeRect(6, 6, 1012, 116);
+  pq.fillStyle = '#ffcf40'; pq.font = '700 50px Arial,sans-serif'; pq.textAlign = 'center'; pq.textBaseline = 'middle';
+  pq.fillText('I  LOVE  GSV  \u2764\uFE0F', 512, 44);
+  pq.fillStyle = '#ffffff'; pq.font = '700 24px Arial,sans-serif'; pq.fillText('GATI SHAKTI VISHWAVIDYALAYA \u00B7 VADODARA', 512, 92);
+  const pqTex = new THREE.CanvasTexture(pqCanvas); pqTex.encoding = THREE.sRGBEncoding;
+
+  const pqF = new THREE.Mesh(new THREE.PlaneGeometry(12.8, 0.28), new THREE.MeshBasicMaterial({ map: pqTex }));
+  pqF.position.set(1.06, 0.54, 0); pqF.rotation.y = Math.PI / 2; gsvStand.add(pqF);
+  const pqB = new THREE.Mesh(new THREE.PlaneGeometry(12.8, 0.28), new THREE.MeshBasicMaterial({ map: pqTex }));
+  pqB.position.set(-1.06, 0.54, 0); pqB.rotation.y = -Math.PI / 2; gsvStand.add(pqB);
+
+  const lWhite = new THREE.MeshLambertMaterial({ color: 0xffffff });
+  const lRuby = new THREE.MeshLambertMaterial({ color: 0xdf162c, emissive: 0x420008 });
+
+  // Letter I
+  const lI = new THREE.Group(); lI.position.set(0, 0.70 + 1.1, 4.8);
+  lI.add(new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.6, 0.48), lWhite));
+  [-0.92, 0.92].forEach(y => { const c = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.28, 1.15), lWhite); c.position.y = y; lI.add(c); });
+  gsvStand.add(lI);
+
+  // Heart
+  const hS = new THREE.Shape();
+  hS.moveTo(0, -1.05); hS.bezierCurveTo(0.7, -0.5, 1.32, 0.3, 1.32, 0.9); hS.bezierCurveTo(1.32, 1.45, 0.78, 1.45, 0.22, 1.05);
+  hS.bezierCurveTo(0.06, 0.9, 0, 0.7, 0, 0.7); hS.bezierCurveTo(0, 0.7, -0.06, 0.9, -0.22, 1.05);
+  hS.bezierCurveTo(-0.78, 1.45, -1.32, 1.45, -1.32, 0.9); hS.bezierCurveTo(-1.32, 0.3, -0.7, -0.5, 0, -1.05);
+  const hG = new THREE.ExtrudeGeometry(hS, { depth: 0.54, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.08, bevelThickness: 0.08 });
+  hG.center(); hG.rotateY(Math.PI / 2);
+  const hM = new THREE.Mesh(hG, lRuby); hM.position.set(0, 0.70 + 1.25, 2.4); gsvStand.add(hM);
+
+  // Letter G
+  const lG = new THREE.Group(); lG.position.set(0, 0.70 + 1.1, -0.5);
+  const gB = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.55, 0.44), lWhite); gB.position.set(0, 0, 0.58); lG.add(gB);
+  const gT = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.35, 1.42), lWhite); gT.position.set(0, 0.92, 0.09); lG.add(gT);
+  const gBt = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.35, 1.42), lWhite); gBt.position.set(0, -0.92, 0.09); lG.add(gBt);
+  const gS = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.92, 0.44), lWhite); gS.position.set(0, -0.46, -0.44); lG.add(gS);
+  const gBr = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.32, 0.76), lWhite); gBr.position.set(0, 0.0, -0.22); lG.add(gBr);
+  gsvStand.add(lG);
+
+  // Letter S
+  const lS = new THREE.Group(); lS.position.set(0, 0.70 + 1.1, -2.7);
+  const sT = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.35, 1.36), lWhite); sT.position.set(0, 0.92, 0); lS.add(sT);
+  const sTL = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.72, 0.44), lWhite); sTL.position.set(0, 0.52, 0.46); lS.add(sTL);
+  const sM = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.32, 1.36), lWhite); sM.position.set(0, 0.02, 0); lS.add(sM);
+  const sBR = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.72, 0.44), lWhite); sBR.position.set(0, -0.52, -0.46); lS.add(sBR);
+  const sB = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.35, 1.36), lWhite); sB.position.set(0, -0.92, 0); lS.add(sB);
+  gsvStand.add(lS);
+
+  // Letter V
+  const lV = new THREE.Group(); lV.position.set(0, 0.70 + 1.1, -4.8);
+  const vL = new THREE.Mesh(new THREE.BoxGeometry(0.42, 2.18, 0.44), lWhite); vL.position.set(0, 0.08, 0.38); vL.rotation.x = 0.32; lV.add(vL);
+  const vR = new THREE.Mesh(new THREE.BoxGeometry(0.42, 2.18, 0.44), lWhite); vR.position.set(0, 0.08, -0.38); vR.rotation.x = -0.32; lV.add(vR);
+  const vA = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.36, 0.62), lWhite); vA.position.set(0, -0.94, 0); lV.add(vA);
+  gsvStand.add(lV);
+
+  // Uplights
+  const dMetal = new THREE.MeshLambertMaterial({ color: 0x1c1e22 });
+  const uGlow = new THREE.MeshBasicMaterial({ color: 0xfff0c8, transparent: true, opacity: 0.85 });
+  [4.8, 2.4, -0.5, -2.7, -4.8].forEach(lz => {
+    const cs = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.12, 10), dMetal); cs.position.set(0.85, 0.72, lz); cs.rotation.z = -0.28; gsvStand.add(cs);
+    const ln = new THREE.Mesh(new THREE.CircleGeometry(0.14, 10), uGlow); ln.position.set(0.83, 0.78, lz); ln.rotation.y = Math.PI / 2; ln.rotation.x = -0.28; gsvStand.add(ln);
+  });
+
+  const sLight = new THREE.PointLight(0xfff0d8, 1.0, 16); sLight.position.set(2.2, 2.4, 0); gsvStand.add(sLight);
+  scene.add(gsvStand);
+})();
 flat(296,185,316,193,.35,0xcdb8a0);
 const co=new THREE.Mesh(new THREE.ConeGeometry(3.8,14,12),new THREE.MeshLambertMaterial({color:0x2f5a34}));co.position.set(306-W/2,7,178-H/2);co.castShadow=true;scene.add(co);
 [[309,168,3],[309,210,3],[304,198,2.6]].forEach(([x,z,r])=>{const bs=new THREE.Mesh(new THREE.IcosahedronGeometry(r,1),new THREE.MeshLambertMaterial({color:0x4a8a3a}));bs.position.set(x-W/2,r*.9,z-H/2);bs.castShadow=true;scene.add(bs);});
@@ -1349,7 +1426,7 @@ const rings=[0,1].map(()=>{const r=new THREE.Mesh(new THREE.RingGeometry(.92,1,6
 
 // ---- Oval Ground: Agnee cultural fest venue (bare field SW of the palace)
 const t10=document.getElementById('t10');
-const OV=new THREE.Group();OV.position.set(240-W/2,0,270-H/2);OV.rotation.y=Math.PI/4;OV.userData.e=0;scene.add(OV);
+const OV=new THREE.Group();OV.position.set(240-W/2,0,270-H/2);OV.rotation.y=Math.PI/4;OV.scale.set(1.30,1.0,1.30);OV.userData.e=0;scene.add(OV);
 const bx=(w,h,d,col,x,y,z,p=OV)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),col.isMaterial?col:new THREE.MeshLambertMaterial({color:col}));m.position.set(x,y,z);m.castShadow=true;p.add(m);return m;};
 const cyl=(r,h,col,x,y,z,p=OV)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r*1.1,h,8),new THREE.MeshLambertMaterial({color:col}));m.position.set(x,y,z);m.castShadow=true;p.add(m);return m;};
 // running track: clay ring + white lane lines
@@ -1838,7 +1915,7 @@ const FEST={name:'AGNEE',tag:'The Cultural Fest',host:'Gati Shakti Vishwavidyala
  about:'Agnee is the cultural fest of Gati Shakti Vishwavidyalaya \u2014 and it happens on the Oval Ground you just flew into. This page will carry the full programme as it is announced.',
  events:[['Music','Live bands, solos and open-mic nights'],['Dance','Group and solo performances on the main stage'],['Drama','Stage plays, street plays and mime'],['Art & Design','Exhibitions, live painting and installations'],['Literary','Debates, quizzes and creative writing'],['Fashion','Showcases and styling contests']],
  steps:[['Dates','Announcing soon'],['Line-up','Announcing soon'],['Registrations','Opening soon']]};
-const SPON={tiers:[{t:'Title Sponsor',s:['To be announced']},{t:'Powered By',s:['To be announced']},{t:'Associate Sponsors',s:['Announcing soon','Announcing soon','Announcing soon','Announcing soon']},{t:'Partners',s:['Food Partner','Media Partner','Tech Partner','Gifting Partner','Radio Partner','Travel Partner']}]};
+const SPON={tiers:[{t:'Title Sponsor',s:['State Bank of India'],logo:'assets/State_Bank_of_India-removebg-preview.webp'},{t:'Powered By',s:['Union Bank of India'],logo:'assets/Union_Bank_of_India_Logo-removebg-preview.webp'},{t:'Associate Sponsors',s:['Announcing soon','Announcing soon','Announcing soon','Announcing soon']},{t:'Partners',s:['Food Partner','Media Partner','Tech Partner','Gifting Partner','Radio Partner','Travel Partner']}]};
 const sponTxt=t=>t.s.length>1&&new Set(t.s).size===1?t.s.length+' slots \u00B7 '+t.s[0]:t.s.join(' \u00B7 ');
 const wp=(x,y,h)=>new V(x-W/2,h,y-H/2);
 const ST=[
@@ -1870,7 +1947,7 @@ festEl.innerHTML='<div class="fhd"><b><img class="wmi" style="height:30px" alt="
  '<section class="fsec" id="fa"><h3>About</h3><p>'+FEST.about+'</p></section>'+
  '<section class="fsec" id="fe"><h3>Events</h3><p>The programme will be published here. These are the categories planned for the fest.</p><div class="fgrid">'+FEST.events.map(e=>'<div class="fc"><em>Details soon</em><b>'+e[0]+'</b><span>'+e[1]+'</span></div>').join('')+'</div></section>'+
  '<section class="fsec" id="fs"><h3>Stay tuned</h3><div class="fgrid">'+FEST.steps.map(e=>'<div class="fc big"><span>'+e[0]+'</span><b>'+e[1]+'</b></div>').join('')+'</div></section>'+
- '<section class="fsec" id="fp"><h3>Sponsors</h3><p>'+FEST.name+' 2026 \u2014 the cultural fest of '+FEST.host+' \u2014 is made possible by its sponsors. Names and logos will appear here and on the sponsor wall at the Oval Ground as they are confirmed.</p><div class="fgrid">'+SPON.tiers.map(t=>'<div class="fc"><em>'+t.t+'</em><b>'+sponTxt(t)+'</b></div>').join('')+'</div></section>'+
+ '<section class="fsec" id="fp"><h3>Sponsors</h3><p>'+FEST.name+' 2026 \u2014 the cultural fest of '+FEST.host+' \u2014 is made possible by its sponsors. State Bank of India (Title Sponsor) and Union Bank of India (Powered By) lead our official festival partners.</p><div class="fgrid">'+SPON.tiers.map(t=>'<div class="fc"><em>'+t.t+'</em><b>'+sponTxt(t)+'</b></div>').join('')+'</div></section>'+
  '<section class="fsec" id="fv"><h3>Venue</h3><p>'+FEST.venue+', '+FEST.host+'. Fly back for another look, or retrace the whole campus journey.</p><div class="frow"><button class="fbtn" data-a="back" type="button">Back to the venue</button><button class="fbtn ghost" data-a="replay" type="button">Replay the journey</button><button class="fbtn ghost" data-a="free" type="button">Explore the campus</button></div></section></div>';
 const fest={isOpen:false,
  open(){this.isOpen=true;festEl.classList.add('on');view.classList.add('festopen');enterBtn.classList.remove('on');setTimeout(()=>festEl.querySelector('.fx').focus({preventScroll:true}),50);},
@@ -1978,7 +2055,69 @@ STALLS.forEach(S=>{const c=document.createElement('canvas');c.width=320;c.height
  const tg=g.createLinearGradient(0,110,0,260);tg.addColorStop(0,'#ffffff');tg.addColorStop(.6,'#ffe2a8');tg.addColorStop(1,'#ff9a5a');g.fillStyle=tg;g.font='900 215px Arial,sans-serif';g.shadowColor='rgba(0,0,0,.45)';g.shadowBlur=24;if(WMI.naturalWidth)g.drawImage(WMI,1024-290,70,580,189);else g.fillText('AGNEE',1024,262);g.shadowBlur=0;
  g.fillStyle='#ffc233';g.font='800 56px Arial,sans-serif';g.fillText((WMI.naturalWidth?'':'2026 · ')+'THE CULTURAL FEST OF GSV',1024,322);
  g.fillStyle='rgba(255,255,255,.16)';rr(704,338,640,40,20);g.fill();g.fillStyle='#fff';g.font='700 22px Arial,sans-serif';g.fillText('OVAL GROUND · DATES ANNOUNCING SOON',1024,366);
- slot(44,60,360,250,'Title Sponsor','To be announced',34);slot(1644,60,360,250,'Powered By','To be announced',34);
+ const sbiImg = new Image();
+ sbiImg.src = 'assets/State_Bank_of_India-removebg-preview.webp';
+ const ubiImg = new Image();
+ ubiImg.src = 'assets/Union_Bank_of_India_Logo-removebg-preview.webp';
+
+ const drawHeroSponsor = (x, y, w, h, tierLabel, brandName, img, brandColor) => {
+   g.fillStyle = 'rgba(20, 8, 42, 0.78)';
+   rr(x, y, w, h, 20);
+   g.fill();
+   g.strokeStyle = '#ffd166';
+   g.lineWidth = 3.5;
+   rr(x, y, w, h, 20);
+   g.stroke();
+
+   g.fillStyle = 'rgba(255, 209, 102, 0.22)';
+   rr(x + 16, y + 12, w - 32, 40, 10);
+   g.fill();
+   g.strokeStyle = 'rgba(255, 209, 102, 0.85)';
+   g.lineWidth = 1.5;
+   rr(x + 16, y + 12, w - 32, 40, 10);
+   g.stroke();
+   g.textAlign = 'center';
+   g.fillStyle = '#ffdf7a';
+   g.font = '800 20px Arial,sans-serif';
+   g.fillText(tierLabel.toUpperCase(), x + w / 2, y + 38);
+
+   const plateX = x + 16;
+   const plateY = y + 62;
+   const plateW = w - 32;
+   const plateH = h - 74;
+   g.fillStyle = '#ffffff';
+   rr(plateX, plateY, plateW, plateH, 16);
+   g.fill();
+   g.strokeStyle = 'rgba(0, 0, 0, 0.12)';
+   g.lineWidth = 2;
+   rr(plateX, plateY, plateW, plateH, 16);
+   g.stroke();
+
+   if (img && img.complete && img.naturalWidth > 0) {
+     const pad = 16;
+     const maxW = plateW - pad * 2;
+     const maxH = plateH - pad * 2;
+     const scale = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight);
+     const dw = img.naturalWidth * scale;
+     const dh = img.naturalHeight * scale;
+     const dx = plateX + (plateW - dw) / 2;
+     const dy = plateY + (plateH - dh) / 2;
+     g.drawImage(img, dx, dy, dw, dh);
+   } else {
+     g.textAlign = 'center';
+     g.fillStyle = brandColor || '#002868';
+     g.font = '900 30px Arial,sans-serif';
+     g.fillText(brandName, plateX + plateW / 2, plateY + plateH / 2 + 10);
+   }
+ };
+
+ const renderHeroSponsors = () => {
+   drawHeroSponsor(44, 56, 380, 260, 'Title Sponsor', 'State Bank of India', sbiImg, '#002868');
+   drawHeroSponsor(1624, 56, 380, 260, 'Powered By', 'Union Bank of India', ubiImg, '#ce1126');
+ };
+ renderHeroSponsors();
+ sbiImg.onload = () => { renderHeroSponsors(); if (typeof tx !== 'undefined') tx.needsUpdate = true; };
+ ubiImg.onload = () => { renderHeroSponsors(); if (typeof tx !== 'undefined') tx.needsUpdate = true; };
  g.textAlign='left';g.fillStyle='#ffcf8a';g.font='700 26px Arial,sans-serif';g.fillText('ASSOCIATE SPONSORS',44,414);
  for(let i=0;i<4;i++)slot(44+i*500,428,470,100,'Associate Sponsor','Announcing soon',30);
  g.textAlign='left';g.fillStyle='#ffcf8a';g.font='700 26px Arial,sans-serif';g.fillText('PARTNERS',44,566);
@@ -2010,7 +2149,7 @@ stl.querySelector('[data-s=stage]').onclick=()=>STG.enter(false);
 stl.querySelector('[data-s=gate]').onclick=()=>STG.enter(true);
 stl.querySelector('[data-s=free]').onclick=()=>enterOF();
 stl.querySelector('[data-s=wall]').onclick=()=>GRD.wall();
-const spw=dm('stl stW','<div class="sk">Sponsor wall</div><div class="sn"><img class="wmi" style="height:34px" alt="Agnee" src="'+WMURI+'"></div><em class="st">Cultural Fest of GSV</em><p class="sd">'+FEST.name+' 2026 is the cultural fest of '+FEST.host+', held at the '+FEST.venue+'. The sponsors below make it happen. Names and logos will go on the wall as they are confirmed.</p>'+SPON.tiers.map(t=>'<div class="spt"><b>'+t.t+'</b><span>'+sponTxt(t)+'</span></div>').join('')+'<div class="srow"><button data-s="stalls" type="button">Stalls</button><button data-s="stage" type="button">Stage</button><button data-s="free" type="button">Free roam</button></div>');
+const spw=dm('stl stW','<div class="sk">Sponsor wall</div><div class="sn"><img class="wmi" style="height:34px" alt="Agnee" src="'+WMURI+'"></div><em class="st">Cultural Fest of GSV</em><p class="sd">'+FEST.name+' 2026 is the cultural fest of '+FEST.host+', held at the '+FEST.venue+'. The sponsors below make it happen. State Bank of India (Title Sponsor) and Union Bank of India (Powered By) lead our official fest partners.</p>'+SPON.tiers.map(t=>'<div class="spt"><b>'+t.t+'</b><span>'+sponTxt(t)+'</span></div>').join('')+'<div class="srow"><button data-s="stalls" type="button">Stalls</button><button data-s="stage" type="button">Stage</button><button data-s="free" type="button">Free roam</button></div>');
 spw.querySelector('[data-s=stalls]').onclick=()=>GRD.enter(0);spw.querySelector('[data-s=stage]').onclick=()=>STG.enter(false);spw.querySelector('[data-s=free]').onclick=()=>enterOF();
 stl.querySelectorAll('.sdots i').forEach(e=>e.onclick=()=>GRD.go(+e.dataset.i));
 document.addEventListener('keydown',e=>{if(mode!=='ground'||fest.isOpen)return;if(GRD.kind==='wall'){if(e.key==='Escape'){mode='oval';setOn(bOval);}return;}if(e.key==='ArrowRight')GRD.go(GRD.i+1);else if(e.key==='ArrowLeft')GRD.go(GRD.i-1);else if(e.key==='Escape'){mode='oval';setOn(bOval);}});
@@ -2101,7 +2240,7 @@ function frame(ms){
  else if(mode==='tour'){TOUR.step();dp=TOUR.cp;dt2=TOUR.lk;}
  else if(mode==='stage'){STG.step();dp=STG.cp;dt2=STG.lk;}
  else if(mode==='ground'){GRD.step();dp=GRD.cp;dt2=GRD.lk;}
- else if(mode==='oval'){const el=now-AF.t0,u=clamp(el/AF.D),oR=q=>95+14*Math.sin(q*.31),oH=q=>62+9*Math.sin(q*.23),oT=new V(240-W/2-4,6,270-H/2+4),P3=orbAt(AF.a0,oR(AF.D),oH(AF.D));
+ else if(mode==='oval'){const el=now-AF.t0,u=clamp(el/AF.D),oR=q=>120+18*Math.sin(q*.31),oH=q=>62+9*Math.sin(q*.23),oT=new V(240-W/2-4,6,270-H/2+4),P3=orbAt(AF.a0,oR(AF.D),oH(AF.D));
   if(u<1){AF.fly=true;AF.u=u;const e=ease5(u),P0=AF.P0,dist=P0.distanceTo(P3),yHi=Math.max(P0.y,P3.y,Math.min(150,70+dist*.2)),
    P1=AFarc(P0,P3,.3,yHi,1),P2=AFarc(P0,P3,.72,Math.max(yHi*.75,P3.y+35),-.55),
    k1=1-e,b0=k1*k1*k1,b1=3*k1*k1*e,b2=3*k1*e*e,b3=e*e*e;

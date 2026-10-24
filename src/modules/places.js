@@ -1,4 +1,4 @@
-  // Campus places use the same map-pixel origin as campus-scene.js:
+// Campus places use the same map-pixel origin as campus-scene.js:
 // world x = map x - W / 2 and world z = map y - H / 2.
 const PLACES = [
   {

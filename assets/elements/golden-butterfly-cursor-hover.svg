@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
+  <defs>
+    <!-- Soft Warm Ambient Golden Halo -->
+    <radialGradient id="ambGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFB300" stop-opacity="0.75"/>
+      <stop offset="60%" stop-color="#FF8F00" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF6F00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Smooth Upper Wing Gradient -->
+    <linearGradient id="foreWingGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="25%" stop-color="#FFE082"/>
+      <stop offset="70%" stop-color="#FFA726"/>
+      <stop offset="100%" stop-color="#FB8C00"/>
+    </linearGradient>
+
+    <!-- Smooth Lower Wing Gradient -->
+    <linearGradient id="hindWingGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF9C4"/>
+      <stop offset="60%" stop-color="#FFB74D"/>
+      <stop offset="100%" stop-color="#FF9800"/>
+    </linearGradient>
+
+    <!-- Slender Dark Amber Body Gradient -->
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2D1202"/>
+      <stop offset="45%" stop-color="#4E2004"/>
+      <stop offset="100%" stop-color="#230D01"/>
+    </linearGradient>
+
+    <!-- Glowing Wing Pearl Spots (matching user reference) -->
+    <radialGradient id="pearlSpot" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#FFFDE7" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#FFE082" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFCA28" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Smooth Drop Shadow for crisp separation on light or dark backgrounds -->
+    <filter id="smoothShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0.5" dy="0.8" stdDeviation="0.7" flood-color="#140600" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Golden Halo -->
+  <circle cx="19" cy="19" r="18" fill="url(#ambGlow)"/>
+
+  <!-- Butterfly Group (Tilted gracefully at -24 deg so left antenna points cleanly to hotspot at 6, 4) -->
+  <g transform="translate(18.5, 16) rotate(-24)" filter="url(#smoothShadow)">
+
+    <!-- Left Forewing (Pillowy rounded petal shape matching user reference) -->
+    <path d="M-0.5 -3 C-4.5 -8.5, -11.5 -13.5, -16.5 -9 C-20 -5.5, -17.5 2, -10.5 2.5 C-5.5 3, -2.2 0.5, -0.5 -1 Z"
+          fill="url(#foreWingGrad)" stroke="#8A3E00" stroke-width="0.5" stroke-linejoin="round"/>
+    <!-- Subtle radiating wing veins -->
+    <path d="M-1.5 -2.5 Q-8 -4.5, -14.5 -7 M-1.5 -2 Q-7.5 -0.5, -12 1.2"
+          stroke="#B35400" stroke-width="0.45" stroke-linecap="round" fill="none" opacity="0.6"/>
+    <!-- Luminous white-gold glowing pearl spot (as in reference image) -->
+    <circle cx="-10.8" cy="-5.2" r="2.2" fill="url(#pearlSpot)"/>
+    <circle cx="-10.8" cy="-5.2" r="0.9" fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- Right Forewing (Symmetrical smooth petal matching user reference) -->
+    <path d="M0.5 -3 C4.5 -8.5, 11.5 -13.5, 16.5 -9 C20 -5.5, 17.5 2, 10.5 2.5 C5.5 3, 2.2 0.5, 0.5 -1 Z"
+          fill="url(#foreWingGrad)" stroke="#8A3E00" stroke-width="0.5" stroke-linejoin="round"/>
+    <!-- Subtle radiating wing veins -->
+    <path d="M1.5 -2.5 Q8 -4.5, 14.5 -7 M1.5 -2 Q7.5 -0.5, 12 1.2"
+          stroke="#B35400" stroke-width="0.45" stroke-linecap="round" fill="none" opacity="0.6"/>
+    <!-- Luminous white-gold glowing pearl spot -->
+    <circle cx="10.8" cy="-5.2" r="2.2" fill="url(#pearlSpot)"/>
+    <circle cx="10.8" cy="-5.2" r="0.9" fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- Left Hindwing (Smooth rounded teardrop lobe) -->
+    <path d="M-1 0.5 C-4.5 2, -10.5 3.5, -10.5 8 C-10.5 12, -5.5 12.8, -2 8.5 C-1 6.8, -0.8 3.5, -0.8 1.5 Z"
+          fill="url(#hindWingGrad)" stroke="#8A3E00" stroke-width="0.45" stroke-linejoin="round"/>
+
+    <!-- Right Hindwing (Smooth rounded teardrop lobe) -->
+    <path d="M1 0.5 C4.5 2, 10.5 3.5, 10.5 8 C10.5 12, 5.5 12.8, 2 8.5 C1 6.8, 0.8 3.5, 0.8 1.5 Z"
+          fill="url(#hindWingGrad)" stroke="#8A3E00" stroke-width="0.45" stroke-linejoin="round"/>
+
+    <!-- Center Body (Smooth Slender Espresso-Bronze Capsule) -->
+    <ellipse cx="0" cy="2.2" rx="1.15" ry="5.8" fill="url(#bodyGrad)"/>
+    <circle cx="0" cy="-4.2" r="1.25" fill="#260E02"/>
+
+    <!-- Antennae (Graceful curved strokes matching reference) -->
+    <!-- Left Antenna pointing towards hotspot tip -->
+    <path d="M-0.4 -5.2 Q-3.8 -9.5, -6.6 -12.8" stroke="#2D1202" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    <circle cx="-6.6" cy="-12.8" r="0.75" fill="#FFE082" stroke="#4E2004" stroke-width="0.3"/>
+
+    <!-- Right Antenna -->
+    <path d="M0.4 -5.2 Q3.8 -9.5, 6.6 -12.4" stroke="#2D1202" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    <circle cx="6.6" cy="-12.4" r="0.65" fill="#FFE082" stroke="#4E2004" stroke-width="0.3"/>
+
+    
+    <!-- Extra subtle star sparkles on hover -->
+    <path d="M-6.6 -15 L-6 -13.5 L-4.5 -12.8 L-6 -12.1 L-6.6 -10.6 L-7.2 -12.1 L-8.7 -12.8 L-7.2 -13.5 Z" fill="#FFFFFF"/>
+    <circle cx="16" cy="-8" r="0.8" fill="#FFFFFF"/>
+    <circle cx="-16" cy="-8" r="0.8" fill="#FFFFFF"/>
+    
+  </g>
+</svg>

@@ -111,15 +111,23 @@ function setupNavInteractions() {
   });
 
   // Hide the navbar (and mobile dock) while the hero is on screen; it appears from the 2nd section
+  let cachedHeroHeight = 0;
+  let lastOnHero = null;
+  const updateHeroHeight = () => {
+    const hero = document.getElementById('home');
+    cachedHeroHeight = hero ? hero.offsetHeight - 80 : 500;
+  };
   const toggleBars = () => {
-    const hero = document.getElementById('home'); // rendered after the navbar, so look it up lazily
-    const onHero = hero && window.scrollY < hero.offsetHeight - 80;
-    document.body.classList.toggle('on-hero', !!onHero);
+    const onHero = window.scrollY < cachedHeroHeight;
+    if (onHero !== lastOnHero) {
+      lastOnHero = onHero;
+      document.body.classList.toggle('on-hero', onHero);
+    }
   };
   window.addEventListener('scroll', toggleBars, { passive: true });
-  window.addEventListener('resize', toggleBars);
-  window.addEventListener('load', toggleBars);
-  setTimeout(toggleBars, 0);
+  window.addEventListener('resize', () => { updateHeroHeight(); toggleBars(); }, { passive: true });
+  window.addEventListener('load', () => { updateHeroHeight(); toggleBars(); }, { passive: true });
+  setTimeout(() => { updateHeroHeight(); toggleBars(); }, 50);
 
   // Highlight active nav links on route changes
   router.subscribe((currentRoute) => {

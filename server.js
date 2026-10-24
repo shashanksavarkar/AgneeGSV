@@ -72,11 +72,23 @@ const server = http.createServer((req, res) => {
 
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const mtime = stats.mtime.toUTCString();
 
+    if (req.headers['if-modified-since'] === mtime) {
+      res.writeHead(304, {
+        'Access-Control-Allow-Origin': '*',
+        'Last-Modified': mtime
+      });
+      res.end();
+      return;
+    }
+
+    const isMedia = /\.(png|webp|jpg|jpeg|svg|ico|woff2?)$/i.test(ext);
     res.writeHead(200, {
       'Content-Type': contentType,
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'no-cache'
+      'Last-Modified': mtime,
+      'Cache-Control': isMedia ? 'public, max-age=3600' : 'no-cache'
     });
 
     if (ext === '.html') {
