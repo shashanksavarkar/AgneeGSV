@@ -51,6 +51,7 @@ export function renderMapSection(places = [], events = []) {
               <div class="tag" id="t1">Gati Shakti Vishwavidyalaya (current academic block)</div>
               <div class="tag" id="t12">Sardar Patel Sabhagrah</div>
               <div class="tag a" id="t13">Pahune Hostel</div>
+              <div class="tag m" id="t16">GSV-MESS</div>
               <div class="tag r" id="t3">Current hostel (NHSRCL)</div>
               <div class="tag g" id="t4">Proposed hostel block</div>
               <div class="tag a" id="t5">Atithi hostel</div>
@@ -59,6 +60,9 @@ export function renderMapSection(places = [], events = []) {
               <div class="tag o" id="t7">Proposed academic block</div>
               <div class="tag" id="t8">Pratap Vilas Palace</div>
               <div class="tag f" id="t14">★ Rajabaug · Pre-Agnee Stalls</div>
+              <div class="tag" id="t17">Darshan building</div>
+              <div class="tag a" id="t18">Giriraj (Guest House)</div>
+              <div class="tag" id="t19">Sports Complex</div>
               <div class="tag" id="t9">Manthan building</div>
               <div class="tag p" id="t10">AGNEE · The Cultural Fest — Oval Ground</div>
               <div class="tag e" id="t11">Main entrance gate</div>
@@ -119,6 +123,7 @@ export function renderMapSection(places = [], events = []) {
               <div class="map-gesture-hint" id="mapGestureHint" aria-hidden="true">
                 <span>🖱️ Drag to orbit · Scroll to zoom · Click any tag to visit</span>
               </div>
+              </div>
               <button id="shareBtn" class="share-btn" type="button" aria-label="Share Agnee 2026">↗ <span>Share</span></button>
               
               <!-- Rajabaug Pre-Agnee Stalls Interactive Counter Navigator -->
@@ -143,7 +148,7 @@ export function renderMapSection(places = [], events = []) {
                 <div class="rb-controls">
                   <button type="button" class="rb-btn prev" id="rbPrevBtn">‹ Prev</button>
                   <div class="rb-dots" id="rbDots">
-                    <button type="button" class="rb-dot active" data-idx="0">1</button><button type="button" class="rb-dot " data-idx="1">2</button><button type="button" class="rb-dot " data-idx="2">3</button><button type="button" class="rb-dot " data-idx="3">4</button><button type="button" class="rb-dot " data-idx="4">5</button><button type="button" class="rb-dot " data-idx="5">6</button><button type="button" class="rb-dot " data-idx="7">7</button><button type="button" class="rb-dot " data-idx="8">8</button><button type="button" class="rb-dot " data-idx="9">9</button><button type="button" class="rb-dot " data-idx="10">10</button>
+                    <button type="button" class="rb-dot active" data-idx="0">1</button><button type="button" class="rb-dot " data-idx="1">2</button><button type="button" class="rb-dot " data-idx="2">3</button><button type="button" class="rb-dot " data-idx="3">4</button><button type="button" class="rb-dot " data-idx="4">5</button><button type="button" class="rb-dot " data-idx="5">6</button><button type="button" class="rb-dot " data-idx="6">7</button><button type="button" class="rb-dot " data-idx="7">8</button><button type="button" class="rb-dot " data-idx="8">9</button><button type="button" class="rb-dot " data-idx="9">10</button>
                   </div>
                   <button type="button" class="rb-btn next" id="rbNextBtn">Next ›</button>
                 </div>
@@ -261,6 +266,10 @@ function setupMapSectionInteractions() {
       t6: 'proposed-lab',
       t7: 'proposed-academic',
       t8: 'palace',
+      t16: 'gsv-mess',
+      t17: 'darshan',
+      t18: 'giriraj',
+      t19: 'sports-complex',
       t9: 'manthan',
       t10: 'oval-ground',
       t11: 'main-gate',

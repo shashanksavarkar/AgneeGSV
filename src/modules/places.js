@@ -60,6 +60,15 @@ const PLACES = [
     featured: true
   },
   {
+    id: 'gsv-mess',
+    name: 'GSV-MESS',
+    category: 'dining',
+    position: { x: 434 - W / 2, y: 5.5, z: 145.0 - H / 2 },
+    description: 'GSV-MESS building situated in front of Pahune Hostel and Manthan, featuring the GSV-MESS south gate facing Manthan and the Officer Mess north gate facing Pahune Hostel, complete with extensive rooftop solar power generation.',
+    pose: { distance: 54, tilt: 0.16, heading: 0 },
+    featured: true
+  },
+  {
     id: 'atithi-hostel',
     name: 'Atithi Hostel',
     category: 'hostel',
@@ -118,12 +127,40 @@ const PLACES = [
     featured: true
   },
   {
+    id: 'darshan',
+    name: 'Darshan',
+    category: 'academic',
+    position: { x: 394 - W / 2, y: 5.5, z: 180.0 - H / 2 },
+    description: 'Darshan building, landmark academic and seminar facility situated between Pratap Vilas Palace and Manthan, featuring the Prastuti north entrance forecourt, classical colonnade portico, and dual-language signage.',
+    pose: { distance: 46, tilt: 0.15, heading: Math.PI },
+    featured: true
+  },
+  {
+    id: 'giriraj',
+    name: 'Giriraj',
+    category: 'residence',
+    position: { x: 388 - W / 2, y: 4.5, z: 147.0 - H / 2 },
+    description: 'Giriraj Grih, distinguished VIP guest house and executive residence situated directly in front of Darshan building and adjacent to GSV-MESS, featuring octagonal architecture, a pillared portico with blue slate stone mosaic entrance, and suites named after Indian mountain ranges.',
+    pose: { distance: 42, tilt: 0.16, heading: 0 },
+    featured: true
+  },
+  {
     id: 'manthan',
     name: 'Manthan',
     category: 'landmark',
     position: { x: 435 - W / 2, y: 5.0, z: 183.6 - H / 2 },
     description: 'Manthan building, sandstone landmark with north pediment entrance porch, maroon columns, and dome.',
     pose: { distance: 48, tilt: 0.15, heading: Math.PI },
+    featured: true
+  },
+  {
+    id: 'sports-complex',
+    name: 'Sports Complex',
+    category: 'venue',
+    position: { x: 285.4 - W / 2, y: 6.5, z: 314.4 - H / 2 },
+    description:
+      'Gati Shakti Vishwavidyalaya Sports Complex featuring dual indoor halls (Sports Complex - 1 and Main Sports Complex), grand entrance porticos, bilingual signage, badminton & athletics facilities, and landscaped forecourt.',
+    pose: { distance: 46, tilt: 0.14, heading: 0.15 },
     featured: true
   },
   {

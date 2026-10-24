@@ -835,11 +835,27 @@ const t1 = document.getElementById('t1'),
 
   t14 = document.getElementById('t14'),
 
-  t15 = document.getElementById('t15');
+  t15 = document.getElementById('t15'),
+
+  t16 = document.getElementById('t16'),
+
+  t17 = document.getElementById('t17'),
+
+  t18 = document.getElementById('t18'),
+
+  t19 = document.getElementById('t19');
 
 window.t14 = t14;
 
 window.t15 = t15;
+
+window.t16 = t16;
+
+window.t17 = t17;
+
+window.t18 = t18;
+
+window.t19 = t19;
 
 const TAG_PLACE_MAP = {
 
@@ -869,7 +885,15 @@ const TAG_PLACE_MAP = {
 
   t14: 'rajabaug',
 
-  t15: 'mehman-hostel'
+  t15: 'mehman-hostel',
+
+  t16: 'gsv-mess',
+
+  t17: 'darshan',
+
+  t18: 'giriraj',
+
+  t19: 'sports-complex'
 
 };
 
@@ -885,6 +909,8 @@ const TAG_PLACE_MAP = {
 
   ['t15', 293.8, 51.5, 26],
 
+  ['t16', 434, 145, 52],
+
   ['t4', 606.5, 100, 54],
 
   ['t5', 516, 105.8, 29],
@@ -894,6 +920,12 @@ const TAG_PLACE_MAP = {
   ['t7', 481, 274.5, 52],
 
   ['t8', 320, 189, 52],
+
+  ['t17', 394, 180, 46],
+
+  ['t18', 388, 146, 40],
+
+  ['t19', 285.4, 314.4, 48],
 
   ['t9', 435, 183.6, 48],
 

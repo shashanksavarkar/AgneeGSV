@@ -110,6 +110,24 @@ export const places = [
     "featured": true
   },
   {
+    "id": "gsv-mess",
+    "name": "GSV-MESS",
+    "category": "Dining",
+    "mapCoords": {
+      "x": 434,
+      "y": 145
+    },
+    "walkTimeMinutes": 2,
+    "description": "GSV-MESS central dining building situated in front of Pahune Hostel and Manthan, featuring the GSV-MESS south gate opening toward Manthan and the Officer Mess north gate opening toward Pahune Hostel, complete with extensive rooftop solar power generation.",
+    "directionsFromGate": "Follow the south corridor past Sabhagrah or head north from Manthan building.",
+    "pose": {
+      "distance": 54,
+      "tilt": 0.16,
+      "heading": 0
+    },
+    "featured": true
+  },
+  {
     "id": "atithi-hostel",
     "name": "Atithi Hostel",
     "category": "Hostel",
@@ -214,6 +232,42 @@ export const places = [
       "distance": 85,
       "tilt": 0.22,
       "heading": 1.57
+    },
+    "featured": true
+  },
+  {
+    "id": "darshan",
+    "name": "Darshan Building",
+    "category": "Academic",
+    "mapCoords": {
+      "x": 394,
+      "y": 180
+    },
+    "walkTimeMinutes": 3,
+    "description": "Darshan building, landmark academic and seminar facility situated between Pratap Vilas Palace and Manthan, featuring the Prastuti north entrance forecourt, classical colonnade portico, and dual-language signage.",
+    "directionsFromGate": "Proceed past the Central Academic Block and turn south towards the Pratap Vilas Palace East Loop.",
+    "pose": {
+      "distance": 46,
+      "tilt": 0.15,
+      "heading": 3.14159
+    },
+    "featured": true
+  },
+  {
+    "id": "giriraj",
+    "name": "Giriraj Grih",
+    "category": "Residence",
+    "mapCoords": {
+      "x": 388,
+      "y": 147
+    },
+    "walkTimeMinutes": 2,
+    "description": "Giriraj Grih, distinguished VIP guest house and executive residence situated directly in front of Darshan building and adjacent to GSV-MESS, featuring octagonal architecture, a pillared portico with blue slate stone mosaic entrance, and suites named after Indian mountain ranges.",
+    "directionsFromGate": "Follow the North Central Cross Avenue west from GSV-MESS or head north directly from the Darshan Prastuti forecourt.",
+    "pose": {
+      "distance": 42,
+      "tilt": 0.16,
+      "heading": 0
     },
     "featured": true
   },
