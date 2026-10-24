@@ -22,9 +22,9 @@ export function renderAbout(siteData = {}) {
               Named after the primordial element of fire and energy, Agnee stands as a beacon of youth expression, celebrating diverse cultural traditions from classical Indian arts to raw urban street cyphers. For three unforgettable days and nights, the campus comes alive with rhythm, theatre, debate, and music.
             </p>
             <ul class="ab-tags">
-              <li>3 Days</li>
-              <li>8 Event Categories</li>
-              <li>Pan-India Colleges</li>
+              <li>2 Days</li>
+              <li>Agnee</li>
+              <li>Pre-Agnee</li>
             </ul>
           </article>
 
@@ -37,8 +37,8 @@ export function renderAbout(siteData = {}) {
             </p>
             <ul class="ab-tags">
               <li>Central University</li>
-              <li>Vadodara, Gujarat</li>
-              <li>Pratap Vilas Palace</li>
+              <li>Railways</li>
+              <li>Transportation & Logistics</li>
             </ul>
           </article>
         </div>

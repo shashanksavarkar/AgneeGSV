@@ -16,31 +16,11 @@ export const site = {
       "Replace this paragraph with the Vice-Chancellor's message to the participants of Agnee 2026.",
       "Add more paragraphs here, one string per paragraph."
     ],
-    "photo": "",
+    "photo": "assets/vc_sir.webp",
     "videoId": ""
   },
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
   "description": "Agnee is the flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Bringing together talents in music, dance, theater, literature, art, and creative expression from across India.",
-  "announcements": [
-    {
-      "id": "ann-1",
-      "text": "Agnee Week starts 26 October. Pre-Agnee on 30 October, Agnee on 31 October!",
-      "badge": "Update",
-      "link": "#about"
-    },
-    {
-      "id": "ann-2",
-      "text": "Campus Ambassador Programme registrations opening shortly.",
-      "badge": "Ambassadors",
-      "link": "#register"
-    },
-    {
-      "id": "ann-3",
-      "text": "Explore the 3D campus map and plan your festival journey.",
-      "badge": "Interactive",
-      "link": "#map"
-    }
-  ],
   "socials": [
     {
       "platform": "Instagram",
@@ -191,6 +171,7 @@ export const events = [
 ];
 
 // Timeline section: the Performances card.
+
 export const schedule = {
   // Performances program, in running order; each inner list is one block of the show; mins is the slot length in minutes
   "program": [
@@ -226,11 +207,6 @@ export const schedule = {
 };
 
 // buyUrl: link to the order form / payment page. Leave it empty until sales open.
-export const merch = [
-  { id: 'tshirt', name: 'Inferno Red', price: '₹499/- + Extra Delivery Charges', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'hoodie', name: 'Eclipse Black', price: '₹499/- + Extra Delivery Charges', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'tote', name: 'Ethereal White', price: '₹499/- + Extra Delivery Charges', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
-];
 
 export const guests = [
   {
@@ -320,6 +296,31 @@ export const sponsors = {
   ]
 };
 
+export const gallery = {
+  trailerId: 'Vlz_zyzHYcw', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
+  top: [
+    { title: "Oval Ground Stage at Dusk", tag: "Stage", color: "#5b1a8f", src: "/assets/1.webp" },
+    { title: "Street Theatre (Nukkad Natak)", tag: "Culture", color: "#d6246e", src: "/assets/2.webp" },
+    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/3.webp" },
+    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/4.webp" },
+    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/9.webp" }
+  ],
+  bottom: [
+    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
+    { title: "Crowd Energy at Battle of the Bands", tag: "Energy", color: "#ff9a2e", src: "/assets/6.webp" },
+    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
+    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/8.webp" },
+    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
+    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
+  ]
+};
+
+export const merch = [
+  { id: 'tshirt', name: 'Inferno Red', price: '₹499/- + Extra Delivery Charges', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'hoodie', name: 'Eclipse Black', price: '₹499/- + Extra Delivery Charges', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
+  { id: 'tote', name: 'Ethereal White', price: '₹499/- + Extra Delivery Charges', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
+];
+
 export const team = {
   facultyAdvisors: [
     {
@@ -348,10 +349,10 @@ export const team = {
     }
   ],
   creativeTeam: [
-    { name: 'Ravi Panchal', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/ravixpanchal/', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
-    { name: 'Rishav Kumar', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/rkgsv/', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
-    { name: 'Shashank Savarkar', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/shashanksavarkar/', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
-    { name: 'Abhinav Kesarwani', role: '', team: 'Creative Team', email: '', linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/', github: 'https://github.com/AbhiKesarwani', avatar: 'assets/abhinav.webp' }
+    { name: 'Ravi Panchal', role: '', team: 'DevelopmentTeam', email: 'ravi.panchal_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/ravixpanchal/', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
+    { name: 'Rishav Kumar', role: '', team: 'DevelopmentTeam', email: 'rishav.kumar_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/rkgsv/', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
+    { name: 'Shashank Savarkar', role: '', team: 'DevelopmentTeam', email: 'savarkar.shashank_btech24@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/shashanksavarkar/', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
+    { name: 'Abhinav Kesarwani', role: '', team: 'DevelopmentTeam', email: 'abhinav.kesarwani_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/', github: 'https://github.com/AbhiKesarwani', avatar: 'assets/abhinav.webp' }
   ],
   coreTeam: [
     {
@@ -444,22 +445,3 @@ export const faqs = [
 
 // Gallery marquee. top scrolls right-to-left, bottom scrolls left-to-right.
 // Put the photo path in src (e.g. "assets/gallery/stage.webp"); while src is "" a coloured placeholder tile is shown.
-export const gallery = {
-  trailerId: 'Vlz_zyzHYcw', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
-  top: [
-    { title: "Oval Ground Stage at Dusk", tag: "Stage", color: "#5b1a8f", src: "/assets/1.webp" },
-    { title: "Street Theatre (Nukkad Natak)", tag: "Culture", color: "#d6246e", src: "/assets/2.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/3.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/4.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/9.webp" }
-  ],
-  bottom: [
-    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
-    { title: "Crowd Energy at Battle of the Bands", tag: "Energy", color: "#ff9a2e", src: "/assets/6.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/8.webp" },
-    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
-  ]
-};
-

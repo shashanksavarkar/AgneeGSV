@@ -22,12 +22,11 @@ data/
 ## 2. File Schemas & Guidelines
 
 ### `data/site.json`
-Controls the overarching website branding, dates, announcements ticker, and global links.
+Controls the overarching website branding, dates, and global links.
 - `festName` (string): Full festival name (e.g., `"Agnee 2026"`).
 - `dates` (string): Display date range. Keep as `"To be announced"` until official.
 - `datesConfigured` (ISO string or null): e.g. `"2026-11-06T09:00:00+05:30"`. When non-null, activates the live countdown on the hero. When `null`, the countdown automatically hides and displays the "Dates Announcing Soon" status badge.
 - `tagline` (string): Festival tagline.
-- `announcements` (array): Objects containing `{ id, text, badge, link }` rendered in the announcement ticker.
 - `registrationUrl` (string): Global registration / portal URL.
 
 ### `data/events.json`
