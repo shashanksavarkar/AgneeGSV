@@ -21,7 +21,8 @@ export function initScrollRail() {
   const fill = rail.firstChild;
   const knob = rail.querySelector('.scroll-rail-knob');
 
-  const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
+  let cachedMaxScroll = 0;
+  const markData = marks.map(([a, id]) => ({ a, id, el: null, top: 0 }));
 
   let idle;
   function wake() {
@@ -30,32 +31,57 @@ export function initScrollRail() {
     idle = setTimeout(() => rail.classList.remove('awake'), 2000);
   }
 
-  function update() {
+  function layoutMarks() {
+    cachedMaxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    rail.hidden = cachedMaxScroll <= 0;
+    if (cachedMaxScroll <= 0) return;
+
+    for (const m of markData) {
+      if (!m.el) m.el = document.getElementById(m.id);
+      if (!m.el) {
+        m.a.hidden = true;
+        continue;
+      }
+      m.a.hidden = false;
+      m.top = m.el.getBoundingClientRect().top + scrollY;
+      m.a.style.top = `${Math.min(100, (m.top / cachedMaxScroll) * 100)}%`;
+    }
+  }
+
+  let scrollTicking = false;
+  function updateScroll() {
     wake();
-    const pct = maxScroll() > 0 ? (scrollY / maxScroll()) * 100 : 0;
+    const max = cachedMaxScroll || Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    const y = window.scrollY;
+    const pct = max > 0 ? (y / max) * 100 : 0;
     fill.style.height = knob.style.top = `${pct}%`;
-    rail.hidden = maxScroll() <= 0;
+
     let current = null;
-    for (const [a, id] of marks) {
-      const el = document.getElementById(id);
-      if (!el) { a.hidden = true; continue; }
-      a.hidden = false;
-      const top = el.getBoundingClientRect().top + scrollY;
-      a.style.top = `${Math.min(100, (top / maxScroll()) * 100)}%`;
-      if (top - innerHeight * 0.4 <= scrollY) current = a;
-      a.classList.remove('active');
+    const thresh = y + innerHeight * 0.4;
+    for (const m of markData) {
+      if (m.top <= thresh) current = m.a;
+      m.a.classList.remove('active');
     }
     current?.classList.add('active');
+    scrollTicking = false;
+  }
+
+  function onScroll() {
+    if (!scrollTicking) {
+      requestAnimationFrame(updateScroll);
+      scrollTicking = true;
+    }
   }
 
   function scrollToPointer(e) {
     const r = rail.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
-    scrollTo({ top: ratio * maxScroll(), behavior: 'instant' }); // instant: dragging must not lag behind smooth scrolling
+    const max = cachedMaxScroll || (document.documentElement.scrollHeight - innerHeight);
+    scrollTo({ top: ratio * max, behavior: 'instant' });
   }
 
   rail.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('.scroll-rail-mark')) return; // let the tick's link navigate
+    if (e.target.closest('.scroll-rail-mark')) return;
     rail.setPointerCapture(e.pointerId);
     rail.classList.add('dragging');
     scrollToPointer(e);
@@ -63,8 +89,20 @@ export function initScrollRail() {
   rail.addEventListener('pointermove', (e) => { if (rail.classList.contains('dragging')) scrollToPointer(e); });
   rail.addEventListener('pointerup', () => rail.classList.remove('dragging'));
 
-  addEventListener('scroll', update, { passive: true });
-  addEventListener('resize', update);
-  new ResizeObserver(update).observe(document.body); // page height changes as sections render
-  update();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => {
+    layoutMarks();
+    updateScroll();
+  }, { passive: true });
+
+  const ro = new ResizeObserver(() => {
+    layoutMarks();
+    updateScroll();
+  });
+  ro.observe(document.body);
+
+  setTimeout(() => {
+    layoutMarks();
+    updateScroll();
+  }, 100);
 }

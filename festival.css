@@ -8977,12 +8977,12 @@ a.merch-buy:active {
    Links and buttons get the brighter variant; text fields keep the browser's I-beam.
    ========================================================================== */
 :root {
-  --cur-hover: url('assets/elements/veena-cursor-hover.svg') 4 4, pointer;
+  --cur-hover: url('assets/elements/golden-butterfly-cursor-hover.svg') 7 7, pointer;
 }
 html,
 body {
   cursor:
-    url('assets/elements/veena-cursor.svg') 4 4,
+    url('assets/elements/golden-butterfly-cursor.svg') 7 7,
     auto;
 }
 a,

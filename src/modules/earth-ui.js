@@ -1,3 +1,15 @@
+
+window.setCampusAtmosphere = (k) => {
+  if (typeof duskT !== 'undefined') {
+    duskT = k;
+    if (typeof AF !== 'undefined') AF.touched = true;
+  }
+  document.querySelectorAll('.hud-light-btn').forEach(btn => {
+    const mode = btn.dataset.light;
+    const match = (mode === 'day' && k < 0.2) || (mode === 'golden' && k >= 0.2 && k <= 0.7) || (mode === 'dusk' && k > 0.7);
+    btn.classList.toggle('active', match);
+  });
+};
 // Google Earth-inspired map chrome: search, layers, compass, view mode and shareable state.
 const EARTH_DEFAULT_LAYERS = {
   buildings: true,
@@ -80,6 +92,15 @@ function earthFlyTo(placeOrId) {
   earthHashUpdate();
 }
 window.earthFlyTo = earthFlyTo;
+const VENUE_EVENTS = {
+  'oval-ground': ['🔥 Agnee Pro-Shows & Grand Finale', '🎸 Battle of the Bands', '👗 Fashion Night · DJ Arena'],
+  'rajabaug': ['🎪 10 Pre-Agnee Carnival Stalls', '🎭 Street Plays & Nukkad Natak', '🏆 Games & Agnee Merch'],
+  'sabhagrah': ['🎭 Classical Dance & Dramatics', '🎤 Solo & Duet Vocals', '🏆 Cultural Inauguration'],
+  'manthan': ['♟️ Chess Championship', '🗣️ Youth Parliament & Debates', '📚 Creative Writing'],
+  'academic-block': ['🎨 Fine Arts, Rangoli & Sketching', '💻 Tech Innovation Exhibits', '🎯 Hackathon Hub'],
+  'palace': ['🏛️ Historic Landmark Tours', '📸 Heritage Photo Walk', '🌳 Garden Promenade']
+};
+
 function earthShowCard(place) {
   let card = document.querySelector('.earth-place-card');
   if (!card) {
@@ -90,37 +111,43 @@ function earthShowCard(place) {
   }
   card.classList.remove('route');
   const walkMins = place.walkTimeMinutes || 3;
-  const kicker =
-    (place.featured ? '★ FEATURED · ' : '') + (place.category || 'VENUE').toUpperCase();
+  const kicker = (place.featured ? '★ FEATURED · ' : '') + (place.category || 'VENUE').toUpperCase();
+  const events = VENUE_EVENTS[place.id] || [];
+  const eventsHtml = events.length
+    ? '<div class="earth-card-events">' + events.map(ev => '<span class="ev-chip">' + ev + '</span>').join('') + '</div>'
+    : '';
+
   card.innerHTML =
     '<button class="earth-card-close" type="button" aria-label="Close place card">✕</button>' +
-    '<div class="earth-card-meta"><span class="earth-card-kicker">' +
-    kicker +
-    '</span><span class="earth-card-badge">⏱ ~' +
-    walkMins +
-    ' min walk</span></div>' +
-    '<h2>' +
-    (place.name || 'Venue') +
-    '</h2>' +
-    '<p>' +
-    (place.description || '') +
-    '</p>' +
+    '<div class="earth-card-meta">' +
+      '<span class="earth-card-kicker">' + kicker + '</span>' +
+      '<span class="earth-card-badge">⏱ ~' + walkMins + ' min walk</span>' +
+    '</div>' +
+    '<h2>' + (place.name || 'Venue') + '</h2>' +
+    '<p>' + (place.description || '') + '</p>' +
+    eventsHtml +
     '<div class="earth-card-actions">' +
-    '<button type="button" data-card-route>🚶 Directions</button>' +
-    '<button type="button" data-card-tour>★ Agnee Fest Tour</button>' +
-    '<button type="button" data-card-share>↗ Share</button>' +
+      '<button type="button" data-card-route class="btn-route">🚶 Walking Route</button>' +
+      '<button type="button" data-card-tour>★ 3D Focus</button>' +
+      '<button type="button" data-card-share>↗ Share</button>' +
     '</div>';
+
   card.querySelector('.earth-card-close').onclick = () => card.classList.remove('on');
   card.querySelector('[data-card-route]').onclick = () => {
     if (typeof window.toggleMapDirections === 'function') window.toggleMapDirections(place.id);
   };
   card.querySelector('[data-card-tour]').onclick = () => {
-    card.classList.remove('on');
-    if (typeof TOUR !== 'undefined' && typeof TOUR.start === 'function') TOUR.start();
+    if (place.id === 'oval-ground') {
+      if (typeof TOUR !== 'undefined' && typeof TOUR.start === 'function') TOUR.start();
+    } else if (place.id === 'rajabaug') {
+      if (window.RB_NAV) window.RB_NAV.enter(0);
+    } else {
+      earthFlyTo(place);
+    }
   };
   card.querySelector('[data-card-share]').onclick = () => {
     if (navigator.share)
-      navigator.share({ title: place.name, text: place.description, url: location.href });
+      navigator.share({ title: place.name + " · Agnee '26", text: place.description, url: location.href });
     else navigator.clipboard?.writeText(location.href);
   };
   requestAnimationFrame(() => card.classList.add('on'));
@@ -480,6 +507,8 @@ function earthBuildUI() {
     if (typeof orb !== 'undefined') {
       const needle = document.querySelector('.esp-compass-needle');
       if (needle) needle.style.transform = 'rotate(' + (-orb.theta * 180 / Math.PI).toFixed(1) + 'deg)';
+      const topDial = document.querySelector('#hudCompassBtn .compass-dial');
+      if (topDial) topDial.style.transform = 'rotate(' + (-orb.theta * 180 / Math.PI).toFixed(1) + 'deg)';
       const fill = document.getElementById('espZoomBarFill');
       const badge = document.getElementById('espZoomBadge');
       if (fill || badge) {
