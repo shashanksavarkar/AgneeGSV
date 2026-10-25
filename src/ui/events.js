@@ -263,7 +263,7 @@ function teamLabel({ min, max }) {
 function renderEventModal(ev) {
   const day = ev.schedule?.day || 'TBA';
   return `
-    ${ev.posterImage ? `<img class="event-modal-poster" src="${ev.posterImage}" alt="${ev.name} poster">` : `<div class="event-modal-poster event-modal-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
+    ${ev.posterImage ? `<img class="event-modal-poster" src="${ev.posterImage}" alt="${ev.name} poster">` : `<div class="event-modal-poster event-modal-poster--empty" aria-hidden="true"><img src="assets/logos/logo.webp" alt=""></div>`}
     <div class="event-modal-info">
       <span class="ev-club">${ev.category}</span>
       <h3 class="event-modal-name">${ev.name}</h3>
@@ -283,7 +283,7 @@ function renderEventCard(ev, i) {
   return `
     <div class="ev-hang" style="--d:${(i % 3) * -0.8}s"><span class="ev-string" aria-hidden="true"></span>
     <article class="event-card" data-id="${ev.id}" aria-label="${ev.name}" role="button" tabindex="0">
-      ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logo.webp" alt=""></div>`}
+      ${ev.posterImage ? `<img class="ev-poster" src="${ev.posterImage}" alt="${ev.name} poster" loading="lazy">` : `<div class="ev-poster ev-poster--empty" aria-hidden="true"><img src="assets/logos/logo.webp" alt=""></div>`}
       <span class="ev-day">${ev.schedule?.day || 'Day TBA'}</span>
 
       <div class="ev-body">

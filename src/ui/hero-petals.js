@@ -1,6 +1,6 @@
 // Hero wordmark built from tiny petals: they scatter and spin away from the pointer, then settle back.
 
-const SRC = 'assets/logo-crop.webp'; // logo cropped to its lettering (assets/logo.webp has a lot of empty margin)
+const SRC = 'assets/logos/logo-crop.webp'; // logo cropped to its lettering (assets/logos/logo.webp has a lot of empty margin)
 const STEP = 4; // pixel grid for one petal at 640px wide; smaller = denser and slower
 
 export function initHeroPetals(section) {

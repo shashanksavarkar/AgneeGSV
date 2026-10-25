@@ -2360,7 +2360,7 @@ bx(23, 0.5, 2.8, EST, 0, 11.35, 0, EGG);
 bx(6, 1.4, 2.6, ETC, 0, 12.3, 0, EGG);
 
 const bannerLoader = new THREE.TextureLoader();
-const egt = bannerLoader.load('assets/main-gate-banner.png');
+const egt = bannerLoader.load('assets/mics/main-gate-banner.png');
 egt.encoding = THREE.sRGBEncoding;
 if (typeof renderer !== 'undefined' && renderer.capabilities) {
   egt.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());

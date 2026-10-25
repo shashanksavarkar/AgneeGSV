@@ -16,7 +16,7 @@ export const site = {
       "Replace this paragraph with the Vice-Chancellor's message to the participants of Agnee 2026.",
       "Add more paragraphs here, one string per paragraph."
     ],
-    "photo": "assets/vc_sir.webp",
+    "photo": "assets/oc/vc_sir.webp",
     "videoId": ""
   },
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
@@ -62,7 +62,7 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    posterImage: 'assets/DNQ.webp',
+    posterImage: 'assets/events/DNQ.webp',
     tags: ['Debating', 'Pre-Agnee']
   },
   {
@@ -79,7 +79,7 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'Prastuti (Raja Baug)'
     },
-    posterImage: 'assets/muscle-mania.webp',
+    posterImage: 'assets/events/muscle-mania.webp',
     tags: ['Fitness', 'Pre-Agnee']
   },
   {
@@ -96,7 +96,7 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'Prastuti (Darshan Front)'
     },
-    posterImage: 'assets/treasure-hunt.webp',
+    posterImage: 'assets/events/treasure-hunt.webp',
     tags: ['Adventure', 'Pre-Agnee']
   },
   {
@@ -113,7 +113,7 @@ export const events = [
       day: 'Agnee',
       venueName: 'Multi Purpose Hall'
     },
-    posterImage: 'assets/bow.webp',
+    posterImage: 'assets/events/bow.webp',
     tags: ['Quiz', 'Pre-Agnee']
   },
   {
@@ -131,7 +131,7 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'Manthan'
     },
-    posterImage: 'assets/BCLUB.webp',
+    posterImage: 'assets/events/BCLUB.webp',
     tags: ['Marketing', 'Pre-Agnee']
   },
   {
@@ -148,7 +148,7 @@ export const events = [
       day: 'Pre-Agnee',
       venueName: 'To be announced'
     },
-    posterImage: 'assets/sur-sangram.webp',
+    posterImage: 'assets/events/sur-sangram.webp',
     tags: ['Singing', 'Pre-Agnee']
   },
     {
@@ -165,7 +165,7 @@ export const events = [
       day: 'Agnee',
       venueName: 'Agnee Stage'
     },
-    posterImage: 'assets/ramp-walk.webp',
+    posterImage: 'assets/events/ramp-walk.webp',
     tags: ['Ramp Walk', 'Pre-Agnee']
   },
 ];

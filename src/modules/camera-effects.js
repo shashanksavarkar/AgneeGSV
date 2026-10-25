@@ -2048,8 +2048,8 @@ const FEST = {
 };
 const SPON = {
   tiers: [
-    { t: 'Title Sponsor', s: ['State Bank of India'], logo: 'assets/State_Bank_of_India-removebg-preview.webp' },
-    { t: 'Powered By', s: ['Union Bank of India'], logo: 'assets/Union_Bank_of_India_Logo-removebg-preview.webp' },
+    { t: 'Title Sponsor', s: ['State Bank of India'], logo: 'assets/sponsors/sbi.webp' },
+    { t: 'Powered By', s: ['Union Bank of India'], logo: 'assets/sponsors/ubi.webp' },
 
     {
 

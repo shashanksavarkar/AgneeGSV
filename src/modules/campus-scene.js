@@ -5017,7 +5017,7 @@ portico.add(pediment);
 
 // ---- Official Gati Shakti Vishwavidyalaya Name Board with Blue Background and White Text & Logo
 const nameboardLoader = new THREE.TextureLoader();
-const nameTex = nameboardLoader.load('assets/gsv-nameboard-blue.png');
+const nameTex = nameboardLoader.load('assets/mics/gsv-nameboard-blue.png');
 nameTex.encoding = THREE.sRGBEncoding;
 if (typeof renderer !== 'undefined' && renderer.capabilities) {
   nameTex.anisotropy = renderer.capabilities.getMaxAnisotropy();

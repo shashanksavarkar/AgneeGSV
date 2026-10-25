@@ -1,4 +1,4 @@
-var WMURI = window.WMURI || 'assets/logo.webp';
+var WMURI = window.WMURI || 'assets/logos/logo.webp';
 window.WMURI = WMURI;
 if (!window.__AGNEE_BOOTED__) {
   window.__AGNEE_BOOTED__ = true;

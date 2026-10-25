@@ -454,7 +454,7 @@ function loadThreeAndBoot() {
     document.head.appendChild(l);
   });
   const mapImg = document.createElement('link');
-  mapImg.rel = 'preload'; mapImg.as = 'image'; mapImg.href = 'assets/campus-map.webp';
+  mapImg.rel = 'preload'; mapImg.as = 'image'; mapImg.href = 'assets/mics/campus-map.webp';
   document.head.appendChild(mapImg);
   const scriptThree = document.createElement('script');
   scriptThree.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';

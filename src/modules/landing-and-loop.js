@@ -3,7 +3,7 @@ const _sV1=new V(),_sV12=new V(425-W/2,16,83-H/2),_sV13=new V(476-W/2,14,86-H/2)
 
 let perfSamples=0,perfElapsed=0,perfAdjusted=false;
 
-const land=dm('land','<div class="in"><span class="pre">Gati Shakti Vishwavidyalaya presents</span><div class="logo"><img src="assets/landing-logo.webp" alt="Agnee 2026"></div><div class="orn"><i></i>\u25C6<i></i></div><div class="tl">The Cultural Fest \u00B7 Campus in 3D</div><p>Step through the main gate and travel the campus \u2014 hostels, the academic core and the palace \u2014 all the way to the Oval Ground.</p><button class="go" id="goFest" type="button">Enter Agnee 2026</button><span class="sub">Begin the journey</span><button class="lk" id="goFree" type="button">or explore freely</button></div>');
+const land=dm('land','<div class="in"><span class="pre">Gati Shakti Vishwavidyalaya presents</span><div class="logo"><img src="assets/logos/landing-logo.webp" alt="Agnee 2026"></div><div class="orn"><i></i>\u25C6<i></i></div><div class="tl">The Cultural Fest \u00B7 Campus in 3D</div><p>Step through the main gate and travel the campus \u2014 hostels, the academic core and the palace \u2014 all the way to the Oval Ground.</p><button class="go" id="goFest" type="button">Enter Agnee 2026</button><span class="sub">Begin the journey</span><button class="lk" id="goFree" type="button">or explore freely</button></div>');
 
 hint.style.display='none';
 
@@ -247,9 +247,9 @@ STALLS.forEach(S=>{const c=document.createElement('canvas');c.width=320;c.height
 
  g.fillStyle='rgba(255,255,255,.16)';rr(704,338,640,40,20);g.fill();g.fillStyle='#fff';g.font='700 22px Arial,sans-serif';g.fillText('OVAL GROUND · DATES ANNOUNCING SOON',1024,366);
 const sbiImg = new Image();
-sbiImg.src = 'assets/State_Bank_of_India-removebg-preview.webp';
+sbiImg.src = 'assets/sponsors/sbi.webp';
 const ubiImg = new Image();
-ubiImg.src = 'assets/Union_Bank_of_India_Logo-removebg-preview.webp';
+ubiImg.src = 'assets/sponsors/ubi.webp';
 let sbiLoaded = false, ubiLoaded = false;
 sbiImg.onload = () => { sbiLoaded = true; drawSponsors(); };
 ubiImg.onload = () => { ubiLoaded = true; drawSponsors(); };
