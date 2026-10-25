@@ -203,30 +203,16 @@ export const schedule = {
     [
       { "time": "21:10", "mins": "", "name": "DJ NIGHT" }
     ]
+  ],
+  // Pre-Agnee events, in running order; same shape as a program entry
+  "preAgnee": [
+    { "time": "19:00", "mins": "30", "name": "Malhar - Music Club GSV" },
+    { "time": "19:30", "mins": "30", "name": "Nritya - Dance Club GSV" }
   ]
 };
 
-// buyUrl: link to the order form / payment page. Leave it empty until sales open.
 
 export const guests = [
-  {
-    "id": "guest-proshow-day1",
-    "name": "",
-    "role": "",
-    "bank": "",
-    "place": "",
-    "category": "",
-    "bio": ""
-  },
-  {
-    "id": "TOP",
-    "name": "Mr. Guest Name",
-    "role": "Designation",
-    "bank": "Organisation",
-    "place": "",
-    "category": "",
-    "bio": "Designation, Organisation"
-  },
   {
     "id": "SBI",
     "name": "Mr. Saleem Ahmad",

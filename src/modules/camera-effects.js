@@ -542,6 +542,9 @@ canvas.addEventListener('pointermove', (e) => {
 
   p.y = e.clientY;
 
+  // touch: one finger belongs to page scroll, only two fingers drive the map
+  if (e.pointerType === 'touch' && ptrs.size < 2) return;
+
   toFree();
 
   if (Math.abs(dx) + Math.abs(dy) > 6) tapMoved = true;
@@ -555,6 +558,11 @@ canvas.addEventListener('pointermove', (e) => {
       angle = Math.atan2(b.y - a.y, b.x - a.x);
 
     if (lastPD) orb.rt = clamp((orb.rt * lastPD) / d, rMin(), rMax());
+
+    if (e.pointerType === 'touch') {
+      lastPD = d;
+      return;
+    }
 
     if (window.AGNEE_RUNTIME.touchAngle != null) {
 

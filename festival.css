@@ -10008,6 +10008,63 @@ main > div:nth-of-type(even) .rangoli-big {
   min-width: 0;
   accent-color: #ff7a1a;
 }
+.sky-2 {
+  margin-top: 22px;
+  background: linear-gradient(180deg, #ff7a1a 0%, #8a283c 55%, #ffbe5a 100%);
+}
+.stage-tl {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(50%, 580px);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  background: rgba(7, 5, 10, 0.55);
+  color: #fff;
+}
+.stage-tl.pre {
+  right: auto;
+  left: 0;
+}
+.stage-tl.pre .stage-tl-head {
+  text-align: left;
+}
+.stage-tl-head {
+  margin: 0 0 8px;
+  text-align: right;
+  font: 900 clamp(24px, 4vw, 36px) / 1 var(--font-heading);
+  text-transform: uppercase;
+  color: #fff1d2;
+}
+.stage-tl ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  font: 600 clamp(12px, 1.5vw, 15px) / 1.2 var(--font-sans);
+}
+.stage-tl li {
+  flex: 1 0 auto;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stage-tl b {
+  color: #ffd27a;
+}
+.stage-tl li span {
+  margin-left: auto;
+  opacity: 0.7;
+  white-space: nowrap;
+}
 .sky-list {
   position: absolute;
   width: 1px;
@@ -10599,4 +10656,56 @@ main > div:nth-of-type(even) .rangoli-big {
 .ab-vc {
   grid-template-columns: minmax(0, 720px);
   justify-content: center;
+}
+
+/* Sponsor cards: identical size regardless of logo/name width */
+.sponsor-card {
+  flex: 0 0 auto;
+  width: min(420px, 100%);
+  box-sizing: border-box;
+}
+
+/* Letter text: justified gaps look broken on narrow screens, so left-align */
+@media (max-width: 600px) {
+  .ab-body {
+    text-align: left;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+  }
+}
+
+/* Campus map: the search box is gone */
+.esp-search-container {
+  display: none !important;
+}
+
+/* Phones: one finger scrolls the page (browser), two fingers pinch-zoom the map (camera-effects.js) */
+@media (pointer: coarse) {
+  #view canvas,
+  canvas#c {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* Phones: camera dock fits the screen instead of clipping its labels */
+@media (max-width: 600px) {
+  #view .bar {
+    width: calc(100% - 24px);
+    max-width: 420px;
+    box-sizing: border-box;
+    gap: 4px;
+    padding: 5px;
+  }
+  #view .bar button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 4px;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-align: center;
+  }
+  #view .bar button#bOval {
+    margin-left: 0;
+  }
 }
