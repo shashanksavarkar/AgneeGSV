@@ -212,53 +212,80 @@ export const guests = [
   {
     "id": "guest-proshow-day1",
     "name": "",
+    "role": "",
+    "bank": "",
+    "place": "",
     "category": "",
     "bio": ""
   },
   {
     "id": "TOP",
     "name": "Mr. Guest Name",
+    "role": "Designation",
+    "bank": "Organisation",
+    "place": "",
     "category": "",
     "bio": "Designation, Organisation"
   },
   {
     "id": "SBI",
     "name": "Mr. Saleem Ahmad",
+    "role": "Deputy General Manager (B&O)",
+    "bank": "State Bank of India",
+    "place": "Administrative Office, Vadodara",
     "category": "",
-    "bio": "Deputy General Manager (B&O), SBI, Vadodara Administrative Office"
+    "bio": "Deputy General Manager (B&O), State Bank of India, Administrative Office, Vadodara"
   },
   {
     "id": "SBI",
     "name": "Mr. Neeraj Kumar Sinha",
+    "role": "AGM",
+    "bank": "State Bank of India",
+    "place": "Regional Business Office-1, Vadodara",
     "category": "",
-    "bio": "AGM, SBI, Regional Business Office-1, Vadodara "
+    "bio": "AGM, State Bank of India, Regional Business Office-1, Vadodara "
   },
   {
     "id": "SBI",
     "name": "Ms. Meenakshi Sinha",
+    "role": "AGM, Deposit & VAS",
+    "bank": "State Bank of India",
+    "place": "Vadodara Administrative Office",
     "category": "",
-    "bio": "AGM, Deposit & VAS, Vadodara Administrative Office"
+    "bio": "AGM, Deposit & VAS, State Bank of India, Vadodara Administrative Office"
   },
   {
     "id": "SBI",
     "name": "Mr. Vikash Kumar",
+    "role": "Chief Manager",
+    "bank": "State Bank of India",
+    "place": "Lalbaug, Vadodara",
     "category": "",
-    "bio": "Chief Manager, Lalbaug, Vadodara"
+    "bio": "Chief Manager, State Bank of India, Lalbaug, Vadodara"
   },  {
     "id": "UBI",
     "name": "Mr.Aashish Suwalka ",
+    "role": "Regional Head",
+    "bank": "Union Bank of India",
+    "place": "Vadodara, Gujarat",
     "category": "",
     "bio": "Regional Head, Union Bank of India"
   },
   {
     "id": "UBI",
     "name": "Mr. Samir Ranjan Mishra",
+    "role": "Dy. Regional Head",
+    "bank": "Union Bank of India",
+    "place": "Vadodara, Gujarat",
     "category": "",
     "bio": "Dy. Regional Head, Union Bank of India"
   },
   {
     "id": "UBI",
     "name": "Mr. Manish Kumar",
+    "role": "Dy. Regional Head",
+    "bank": "Union Bank of India",
+    "place": "Vadodara, Gujarat",
     "category": "",
     "bio": "Dy. Regional Head, Union Bank of India"
   }
@@ -276,19 +303,18 @@ export const sponsors = {
       "sponsors": [
         {
           "name": "State Bank of India",
-          "logo": "assets/State_Bank_of_India-removebg-preview.webp",
+          "logo": "assets/sponsors/sbi.webp",
           "website": "https://sbi.co.in"
         }
       ]
     },
     {
       "tierName": "Sponsored By",
-      "tierKey": "powered-by",
       "description": "",
       "sponsors": [
         {
           "name": "Union Bank of India",
-          "logo": "assets/Union_Bank_of_India_Logo-removebg-preview.webp",
+          "logo": "assets/sponsors/ubi.webp",
           "website": "https://www.unionbankofindia.co.in"
         }
       ]
@@ -298,61 +324,102 @@ export const sponsors = {
 
 export const gallery = {
   trailerId: 'Vlz_zyzHYcw', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
-  top: [
-    { title: "Oval Ground Stage at Dusk", tag: "Stage", color: "#5b1a8f", src: "/assets/1.webp" },
-    { title: "Street Theatre (Nukkad Natak)", tag: "Culture", color: "#d6246e", src: "/assets/2.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/3.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/4.webp" },
-    { title: "Classical Dance Abhinaya", tag: "Dance", color: "#7bc62d", src: "/assets/9.webp" }
-  ],
-  bottom: [
-    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
-    { title: "Crowd Energy at Battle of the Bands", tag: "Energy", color: "#ff9a2e", src: "/assets/6.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/8.webp" },
-    { title: "Pratap Vilas Palace Facade", tag: "Campus", color: "#1f6fd6", src: "/assets/5.webp" },
-    { title: "Campus Night Illuminations", tag: "Atmosphere", color: "#2b2f3a", src: "/assets/7.webp" },
+  photos: [
+    { title: 'Oval Ground Stage at Dusk', src: 'assets/gallery/1.webp' },
+    { title: 'Street Theatre (Nukkad Natak)', src: 'assets/gallery/2.webp' },
+    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/3.webp' },
+    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/4.webp' },
+    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/9.webp' },
+    { title: 'Pratap Vilas Palace Facade', src: 'assets/gallery/5.webp' },
+    { title: 'Crowd Energy at Battle of the Bands', src: 'assets/gallery/6.webp' },
+    { title: 'Campus Night Illuminations', src: 'assets/gallery/7.webp' },
+    { title: 'Campus Night Illuminations', src: 'assets/gallery/8.webp' }
   ]
 };
 
 export const merch = [
-  { id: 'tshirt', name: 'Inferno Red', price: '₹499/- + Extra Delivery Charges', image: 'assets/red.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'hoodie', name: 'Eclipse Black', price: '₹499/- + Extra Delivery Charges', image: 'assets/black.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' },
-  { id: 'tote', name: 'Ethereal White', price: '₹499/- + Extra Delivery Charges', image: 'assets/white.webp', buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7', state: 'Available' }
+  {
+    id: 'tshirt',
+    name: 'Inferno Red',
+    price: '₹499/- + Extra Delivery Charges',
+    image: 'assets/merch/red.webp',
+    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Available'
+  },
+  {
+    id: 'hoodie',
+    name: 'Eclipse Black',
+    price: '₹499/- + Extra Delivery Charges',
+    image: 'assets/merch/black.webp',
+    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Available'
+  },
+  {
+    id: 'tote',
+    name: 'Ethereal White',
+    price: '₹499/- + Extra Delivery Charges',
+    image: 'assets/merch/white.webp',
+    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Available'
+  }
 ];
 
 export const team = {
   facultyAdvisors: [
     {
-      name: 'Dr. R. Edwin Raj',
+      name: 'Prof. R. Edwin Raj',
       role: "Dean (Students' Welfare)",
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'dean.sw@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/dr-r-edwin-raj-21b00628/',
-      avatar: 'assets/edwin_sir.webp'
+      avatar: 'assets/oc/edwin_sir.webp'
     },
     {
-      name: 'Dr. Ram Upadhyay',
+      name: 'Dr. Ram K. Upadhyay',
       role: 'Faculty In-Charge',
       // "department": "Gati Shakti Vishwavidyalaya",
       email: 'ram.upadhyay@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ram-krishna-upadhyay-13767b2b8/',
-      avatar: 'assets/ram_sir.webp'
-    },
-    {
-      name: 'Dr. Prasiddh K Trivedi',
-      role: 'Faculty In-Charge',
-      // "department": "Gati Shakti Vishwavidyalaya",
-      email: 'prasiddh.trivedi@gsv.ac.in',
-      linkedin: 'https://www.linkedin.com/in/prasiddh-trivedi-2b212a3b/',
-      avatar: 'assets/prasiddh_sir.webp'
+      avatar: 'assets/oc/ram_sir.webp'
     }
   ],
   creativeTeam: [
-    { name: 'Ravi Panchal', role: '', team: 'DevelopmentTeam', email: 'ravi.panchal_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/ravixpanchal/', github: 'https://github.com/ravixpanchal', avatar: 'assets/ravi.webp' },
-    { name: 'Rishav Kumar', role: '', team: 'DevelopmentTeam', email: 'rishav.kumar_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/rkgsv/', github: 'https://github.com/rishavgsv', avatar: 'assets/rishav.webp' },
-    { name: 'Shashank Savarkar', role: '', team: 'DevelopmentTeam', email: 'savarkar.shashank_btech24@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/shashanksavarkar/', github: 'https://github.com/shashanksavarkar', avatar: 'assets/shashank.webp' },
-    { name: 'Abhinav Kesarwani', role: '', team: 'DevelopmentTeam', email: 'abhinav.kesarwani_btech23@gsv.ac.in', linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/', github: 'https://github.com/AbhiKesarwani', avatar: 'assets/abhinav.webp' }
+    {
+      name: 'Ravi Panchal',
+      role: '',
+      team: 'DevelopmentTeam',
+      email: 'ravi.panchal_btech23@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/ravixpanchal/',
+      github: 'https://github.com/ravixpanchal',
+      avatar: 'assets/oc/ravi.webp'
+    },
+    {
+      name: 'Rishav Kumar',
+      role: '',
+      team: 'DevelopmentTeam',
+      email: 'rishav.kumar_btech23@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/rkgsv/',
+      github: 'https://github.com/rishavgsv',
+      avatar: 'assets/oc/rishav.webp'
+    },
+    {
+      name: 'Shashank Savarkar',
+      role: '',
+      team: 'DevelopmentTeam',
+      email: 'savarkar.shashank_btech24@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/shashanksavarkar/',
+      github: 'https://github.com/shashanksavarkar',
+      avatar: 'assets/oc/shashank.webp'
+    },
+    {
+      name: 'Abhinav Kesarwani',
+      role: '',
+      team: 'DevelopmentTeam',
+      email: 'abhinav.kesarwani_btech23@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/',
+      github: 'https://github.com/AbhiKesarwani',
+      avatar: 'assets/oc/abhinav.webp'
+    }
   ],
   coreTeam: [
     {
@@ -361,7 +428,7 @@ export const team = {
       team: 'President - Student Cell GSV',
       email: 'himanshu.yadav_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/himanshu-kumar-yadav-0b792a2ba/',
-      avatar: 'assets/himanshu.webp'
+      avatar: 'assets/oc/himanshu.webp'
     },
     {
       name: 'Rishav Kumar',
@@ -369,7 +436,7 @@ export const team = {
       team: 'Vice-President',
       email: 'rishav.kumar_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/rkgsv/',
-      avatar: 'assets/rishav.webp'
+      avatar: 'assets/oc/rishav.webp'
     },
     {
       name: 'Atulya Bharat',
@@ -377,7 +444,7 @@ export const team = {
       team: 'Overall Coordinator',
       email: 'atulya.bharat_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/atulyabharat/',
-      avatar: 'assets/atulya.webp'
+      avatar: 'assets/oc/atulya.webp'
     },
     {
       name: 'Harshit Verma',
@@ -385,7 +452,7 @@ export const team = {
       team: 'Cultural Secretary',
       email: 'harshit.verma_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/harshit-verma-1a6558418/',
-      avatar: 'assets/harshit.webp'
+      avatar: 'assets/oc/harshit.webp'
     },
     ,
     {
@@ -394,7 +461,7 @@ export const team = {
       team: 'External Secretary',
       email: 'soumya.banerjee_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/soumya04banerjee/',
-      avatar: 'assets/soumya.webp'
+      avatar: 'assets/oc/soumya.webp'
     },
     {
       name: 'Ananya Kasaudhan',
@@ -402,7 +469,7 @@ export const team = {
       team: 'External Secretary',
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ananya-kasaudhan-617531328/',
-      avatar: 'assets/ananya.webp'
+      avatar: 'assets/oc/ananya.webp'
     },
     {
       name: 'Rupesh Kumar',
@@ -410,7 +477,7 @@ export const team = {
       team: 'Sports Secretary',
       email: 'rupesh.kumar_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/rupesh-kumar-2627772a4/',
-      avatar: 'assets/rupesh.webp'
+      avatar: 'assets/oc/rupesh.webp'
     }
   ]
 };

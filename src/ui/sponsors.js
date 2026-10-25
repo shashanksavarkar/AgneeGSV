@@ -67,6 +67,6 @@ export function renderSponsors(sponsorsData = { tiers: [] }) {
   `;
 
   document.getElementById('btnDownloadDeck')?.addEventListener('click', () => {
-    alert('The official Agnee 2026 corporate sponsorship deck will be released shortly. For immediate proposals, please reach out directly to sponsorship@gsv.ac.in.');
+    alert('The official Agnee 2026 corporate sponsorship deck will be released shortly. For immediate proposals, please reach out directly to student.cell@gsv.ac.in.');
   });
 }

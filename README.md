@@ -71,7 +71,6 @@ Then visit: **[http://localhost:8000/](http://localhost:8000/)**
 - **Lazy-Loaded Three.js**: Initial page load does not download or block on Three.js; launches seamlessly on user opt-in or scroll intersection.
 - **Google Earth-Style Navigation**: Camera fly-tos, smooth orbital controls, landmark cards, search, and layer toggles.
 - **Event Pins Overlay**: Tapping pins on stages flies the 3D camera to the landmark and opens the competition sheet.
-- **Walking Directions**: Calculates approximate walking duration and step-by-step route preview from the Main Gate to any campus landmark.
 - **Capture Poster**: High-resolution screenshot export tool with Agnee branding watermark.
 - **Accessibility Fallback**: Full textual landmark directory for screen readers and low-bandwidth networks.
 
@@ -103,7 +102,7 @@ Then visit: **[http://localhost:8000/](http://localhost:8000/)**
 - **Styling**: Vanilla CSS custom properties (Design tokens for dark + gold theme, glassmorphism, 12-col desktop / 4-col mobile grid, GPU animations).
 - **3D Engine**: Three.js (r128) isolated in `src/modules/` and lazy-loaded on demand.
 - **Data Layer**: Fully decoupled in `/data/*.json` (`site.json`, `events.json`, `schedule.json`, `guests.json`, `sponsors.json`, `team.json`, `faqs.json`, `places.json`).
-- **PWA & Offline**: Web App Manifest (`manifest.webmanifest`), Service Worker (`sw.js`) with cache-first and stale-while-revalidate strategies, and dedicated `offline.html` page.
+- **PWA & Offline**: Web App Manifest (`manifest.webmanifest`) and Service Worker (`sw.js`) with cache-first and stale-while-revalidate strategies.
 
 ---
 
@@ -132,7 +131,6 @@ Agnee/
 ├── manifest.webmanifest         # PWA web app manifest
 ├── sw.js                        # Offline service worker
 ├── 404.html                     # 404 error page
-├── offline.html                 # Offline fallback page
 ├── styleguide.html              # Internal component & tokens style guide
 ├── server.js                    # Zero-dependency local Node.js HTTP server
 ├── data/                        # Decoupled festival data layer

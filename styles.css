@@ -1261,3 +1261,7 @@ button{min-width:44px;min-height:44px;touch-action:manipulation;-webkit-tap-high
     display: none;
   }
 }
+
+/* Keep the side panel clear of the top HUD pills */
+.earth-side-panel{top:84px;max-height:calc(100% - 102px)}
+@media (max-width:768px){.earth-side-panel{top:62px;max-height:calc(100% - 72px)}}

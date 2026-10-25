@@ -65,22 +65,9 @@ export function renderAbout(siteData = {}) {
             </footer>
           </article>
 
-          <article class="ab-card ab-video-card">
-            <span class="ab-label">ENCLOSED: A VIDEO MESSAGE</span>
-            <div class="ab-video" id="vcVideo">
-              ${vc.videoId
-                ? `<button type="button" class="ab-video-play" id="vcPlay" aria-label="Play the Vice-Chancellor's message"><span aria-hidden="true">&#9654;</span></button>`
-                : `<span class="ab-video-soon">Video message coming soon</span>`}
-            </div>
-            <p class="ab-video-note">In his own words, for everyone joining Agnee 2026.</p>
-          </article>
         </div>
       </div>
     </section>
   `;
 
-  // Nothing from YouTube loads until the visitor presses play
-  document.getElementById('vcPlay')?.addEventListener('click', () => {
-    document.getElementById('vcVideo').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${vc.videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Message from the Vice-Chancellor" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  });
 }

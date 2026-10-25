@@ -727,6 +727,9 @@ canvas.addEventListener(
 
   (e) => {
 
+    // plain scroll passes through to the page; Ctrl (or trackpad pinch) zooms the map
+    if (!e.ctrlKey) return;
+
     e.preventDefault();
 
     toFree();
@@ -1020,6 +1023,7 @@ function place(el, v) {
   const d = cam.position.distanceTo(v);
   const scale = clamp(1.25 - d / 1400, 0.72, 1.05);
   const zIdx = Math.round(3000 - d);
+  el._px = x; el._py = y; el._ps = scale; el._pz = zIdx;
   el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-100%) scale(' + scale + ')';
   if (el.dataset.z !== '' + zIdx) {
     el.style.zIndex = zIdx;
@@ -1028,6 +1032,31 @@ function place(el, v) {
 }
 
 
+// Hide pills that overlap a nearer/higher-priority one (t10 = fest pill wins)
+window.declutterTags = function () {
+  const els = [...document.querySelectorAll('.tag')].filter(e => e._px !== undefined && e.style.display === 'block');
+  els.sort((a, b) => (b.id === 't10') - (a.id === 't10') || b._pz - a._pz);
+  const kept = [];
+  // pills must not draw over the open side panel
+  const sp = document.getElementById('earthSidePanel');
+  if (sp && getComputedStyle(sp).opacity !== '0') {
+    const pr = sp.getBoundingClientRect(), vr = view.getBoundingClientRect();
+    kept.push({ l: pr.left - vr.left, r: pr.right - vr.left, t: pr.top - vr.top, b: pr.bottom - vr.top });
+  }
+  // ...nor under the top HUD pills
+  document.querySelectorAll('.hud-brand-pill, .hud-guide-btn, .hud-lighting-dock, .hud-top-right').forEach(h => {
+    const hr = h.getBoundingClientRect(), vr = view.getBoundingClientRect();
+    if (hr.width) kept.push({ l: hr.left - vr.left, r: hr.right - vr.left, t: hr.top - vr.top, b: hr.bottom - vr.top });
+  });
+  els.forEach(e => {
+    const w = e.offsetWidth * e._ps, h = e.offsetHeight * e._ps;
+    const r = { l: e._px - w / 2, r: e._px + w / 2, t: e._py - h, b: e._py };
+    const hit = kept.some(k => r.l < k.r && r.r > k.l && r.t < k.b && r.b > k.t);
+    if (!hit) kept.push(r);
+    const v = hit ? '0' : '';
+    if (e.style.opacity !== v) { e.style.opacity = v; e.style.pointerEvents = hit ? 'none' : 'auto'; }
+  });
+};
 
 // ---- Cinematic "simulation" transition to Agnee: HUD, warp streaks, holo grid, shockwaves, camera bank/FOV, title reveal
 

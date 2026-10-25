@@ -1,13 +1,10 @@
 // Gallery and aftermovie showcase with privacy-friendly click-to-load video embed
 
-export function renderGallery(gallery = { top: [], bottom: [] }) {
+export function renderGallery(gallery = { photos: [] }) {
   const mount = document.getElementById('gallery-mount');
   if (!mount) return;
 
-  // top + bottom rows merged, each photo once
-  const photos = [...gallery.top, ...gallery.bottom].filter(
-    (item, i, all) => !item.src || all.findIndex((o) => o.src === item.src) === i
-  );
+  const photos = gallery.photos;
 
   mount.innerHTML = `
     <section class="section gallery-section" id="gallery" aria-labelledby="galleryHeading">
@@ -36,12 +33,8 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
           ${photos
             .map(
               (item, index) => `
-            <figure class="gf-it" data-index="${index}" style="--accent: ${item.color}" aria-label="${item.title}">
-              ${
-                item.src
-                  ? `<img src="${item.src}" alt="${item.title}" loading="lazy" draggable="false">`
-                  : `<div class="thumb-ambient-art" aria-hidden="true"><span class="ambient-tag">${item.tag}</span><span class="ambient-num">0${index + 1}</span></div>`
-              }
+            <figure class="gf-it" data-index="${index}" aria-label="${item.title}">
+              <img src="${item.src}" alt="${item.title}" loading="lazy" draggable="false">
             </figure>`
             )
             .join('')}
@@ -115,12 +108,10 @@ export function renderGallery(gallery = { top: [], bottom: [] }) {
       play();
       return;
     }
-    const { title, tag, color, src } = photos[index];
+    const { title, src } = photos[index];
     const art = box.querySelector('#lightboxArt');
-    art.style.background = src ? '#000' : `linear-gradient(135deg, ${color}99, #0a0514)`;
-    art.innerHTML = src
-      ? `<img src="${src}" alt="${title}">`
-      : `<span class="ambient-tag">${tag}</span><span class="ambient-num">0${index + 1}</span>`;
+    art.style.background = '#000';
+    art.innerHTML = `<img src="${src}" alt="${title}">`;
     box.showModal();
   });
   box.addEventListener('click', (e) => {

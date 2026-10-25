@@ -390,7 +390,6 @@ Performance caps: ≤ 7 bats, fog = 2 layers, no `backdrop-filter` except header
 ## 25. Satellite Pages (reskin only, same tokens)
 
 - `404.html` — a large tombstone "404 · Here lies this page" (existing text unchanged where tested), bats, lantern, `.btn-primary` home link.
-- `offline.html` — "The spirits have cut the connection" visual only; keep cached schedule/directions content and structure.
 - `styleguide.html` — update swatches/tokens to this spec and add material samples (§2 table), button states, badges, typography ladder. This becomes the visual QA page.
 
 ---
