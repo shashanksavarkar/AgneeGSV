@@ -62,7 +62,7 @@ Transform "Agnee 2026 · Campus in 3D" from an isolated 3D campus viewer into an
 ### Phase 7: SEO, PWA, Styleguide & Fallbacks
 - Rich metadata in `index.html` (Open Graph, Twitter Cards, Schema.org JSON-LD Event, Organization, Breadcrumbs).
 - `manifest.webmanifest`, `sw.js` service worker (offline caching for assets and schedule).
-- Offline fallback page (`offline.html`) and custom 404 page (`404.html`).
+- Custom 404 page (`404.html`).
 - Internal style guide page (`styleguide.html`).
 - Privacy-friendly analytics hook (`src/core/analytics.js`).
 
@@ -114,7 +114,6 @@ Transform "Agnee 2026 · Campus in 3D" from an isolated 3D campus viewer into an
   - `src/main.js` (application entry point coordinating UI and lazy-loaded 3D runtime)
   - `styleguide.html`
   - `404.html`
-  - `offline.html`
   - `manifest.webmanifest`
   - `sw.js`
   - `robots.txt`

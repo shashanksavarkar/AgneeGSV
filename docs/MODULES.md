@@ -14,7 +14,6 @@ Agnee/
 ├── manifest.webmanifest         # PWA web app manifest
 ├── sw.js                        # Service worker with offline caching & stale-while-revalidate
 ├── 404.html                     # Branded 404 error page
-├── offline.html                 # Offline fallback page with cached schedule & directions
 ├── styleguide.html              # Internal design system tokens & component showcase
 ├── data/                        # Static JSON data layer
 │   ├── site.json                # Festival metadata, branding, announcements, social links

@@ -18,10 +18,12 @@ export function renderMapSection(places = [], events = []) {
 
   mount.innerHTML = `
     <section class="section map-section" id="map" aria-labelledby="mapHeading">
-      <div class="container">
+      <div class="map-runway" id="mapRunway"><div class="map-stage" id="mapStage">
+      <div class="container map-head">
         <div class="section-header">
           <h2 class="section-title" id="mapHeading">Explore the Venue & Campus</h2>
         </div>
+      </div>
 
         <!-- 3D Interactive Canvas Wrapper -->
         <div class="map-viewport-wrapper glass-panel" id="mapViewportWrapper">
@@ -42,7 +44,7 @@ export function renderMapSection(places = [], events = []) {
           <!-- Canvas Mount -->
           <div class="canvas-container" id="canvasMount">
             <div class="view" id="view">
-              <canvas id="c" aria-label="Interactive 3D model of the campus. Drag to rotate, scroll to zoom."></canvas>
+              <canvas id="c" aria-label="Interactive 3D model of the campus. Drag to rotate, hold Ctrl and scroll to zoom."></canvas>
               <div class="earth-intro" aria-hidden="true">
                 <div class="earth-stars"></div>
                 <div class="earth-globe"><span></span></div>
@@ -94,13 +96,6 @@ export function renderMapSection(places = [], events = []) {
                 </div>
 
                 <div class="hud-top-right">
-                  <button type="button" class="hud-jewel-compass" id="hudCompassBtn" title="Reset North" aria-label="North Compass">
-                    <svg class="compass-dial" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <polygon points="12 2 15 11 12 9 9 11 12 2" fill="#ff7a1a"/>
-                      <polygon points="12 22 15 13 12 15 9 13 12 22" fill="rgba(255,255,255,0.45)"/>
-                    </svg>
-                    <span class="compass-n">N</span>
-                  </button>
                   <button type="button" class="hud-icon-btn" id="hudSnapBtn" title="Capture HD Poster" aria-label="Capture Poster">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                   </button>
@@ -121,10 +116,9 @@ export function renderMapSection(places = [], events = []) {
 
               <!-- Interactive Gesture Hint -->
               <div class="map-gesture-hint" id="mapGestureHint" aria-hidden="true">
-                <span>🖱️ Drag to orbit · Scroll to zoom · Click any tag to visit</span>
+                <span>Drag to orbit · Ctrl + scroll to zoom · Click any tag to visit</span>
               </div>
               </div>
-              <button id="shareBtn" class="share-btn" type="button" aria-label="Share Agnee 2026">↗ <span>Share</span></button>
               
               <!-- Rajabaug Pre-Agnee Stalls Interactive Counter Navigator -->
               <div class="rb-nav glass-panel" id="rbNav" hidden>
@@ -139,8 +133,8 @@ export function renderMapSection(places = [], events = []) {
                     <span class="rb-tag" id="rbStallTag">Carnival Game</span>
                   </div>
                   <div class="rb-meta-row">
-                    <span class="rb-meta-chip" id="rbStallPrice">🎟️ ₹30 / 5 Rings</span>
-                    <span class="rb-meta-chip highlight" id="rbStallReward">🏆 Agnee Badges</span>
+                    <span class="rb-meta-chip" id="rbStallPrice">₹30 / 5 Rings</span>
+                    <span class="rb-meta-chip highlight" id="rbStallReward">Agnee Badges</span>
                   </div>
                   <p class="rb-desc" id="rbStallDesc">Toss rings onto colored glass bottles to win official Agnee badges & prizes!</p>
                   <div class="rb-action-box" id="rbStallAction"></div>
@@ -153,7 +147,7 @@ export function renderMapSection(places = [], events = []) {
                   <button type="button" class="rb-btn next" id="rbNextBtn">Next ›</button>
                 </div>
                 <div class="rb-actions">
-                  <button type="button" class="rb-view-btn" id="rbOverviewBtn">🎪 Garden Overview</button>
+                  <button type="button" class="rb-view-btn" id="rbOverviewBtn">Garden Overview</button>
                 </div>
               </div>
   
@@ -161,28 +155,10 @@ export function renderMapSection(places = [], events = []) {
             </div>
           </div>
 
-          <!-- Directions Drawer / Flyout -->
-          <div class="map-directions-drawer glass-panel" id="mapDirectionsDrawer" hidden>
-            <div class="drawer-top">
-              <h4>🚶 Campus Walking Directions</h4>
-              <button type="button" class="drawer-close-btn" id="closeDirectionsBtn" aria-label="Close directions">✕</button>
-            </div>
-            <div class="directions-selector">
-              <label for="directionsDestinationSelect">Destination from Main Gate:</label>
-              <select id="directionsDestinationSelect" class="form-select">
-                ${places.filter(p => p.id !== 'main-gate').map(p => `
-                  <option value="${p.id}" ${p.id === 'oval-ground' ? 'selected' : ''}>
-                    ${p.name} (~${p.walkTimeMinutes} mins)
-                  </option>
-                `).join('')}
-              </select>
-            </div>
-            <div class="directions-result" id="directionsResult">
-              <!-- Injected dynamically -->
-            </div>
-          </div>
         </div>
 
+      </div></div>
+      <div class="container">
         <!-- Venue quick selector -->
         <div class="vp-bar" aria-label="Campus Landmarks Selector">
           <div class="vp-nav">
@@ -207,6 +183,45 @@ export function renderMapSection(places = [], events = []) {
   `;
 
   setupMapSectionInteractions();
+  initMapScrollExpand();
+}
+
+// Pins the map stage while scrolling; the map clip grows from the top corners to fill the screen
+function initMapScrollExpand() {
+  const runway = document.getElementById('mapRunway');
+  const stage = document.getElementById('mapStage');
+  const wrap = document.getElementById('mapViewportWrapper');
+  const head = stage?.querySelector('.map-head');
+  if (!runway || !wrap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.getElementById('map').classList.add('map-scrollfx');
+
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp01 = (v) => Math.min(1, Math.max(0, v));
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const navH = document.querySelector('.site-header')?.offsetHeight || 0;
+    const box = head.querySelector('.section-header').getBoundingClientRect();
+    const st = stage.getBoundingClientRect();
+    const c = document.querySelector('#map .container').getBoundingClientRect();
+    const sT = box.bottom - st.top + 18, sB = H - 24, sL = c.left, sR = c.right;
+    const p = clamp01(-runway.getBoundingClientRect().top / (runway.offsetHeight - H));
+    const pt = ease(clamp01(p * 1.35)), pb = ease(clamp01(p * 1.35 - 0.35));
+    const pt_ = (x0, y0, x1, y1, k) => lerp(x0, x1, k) + 'px ' + lerp(y0, y1, k) + 'px';
+    wrap.style.clipPath = 'polygon(' + [
+      pt_(sL, sT, 0, navH, pt), pt_(sR, sT, W, navH, pt),
+      pt_(sR, sB, W, H, pb), pt_(sL, sB, 0, H, pb)
+    ].join(',') + ')';
+    head.style.opacity = 1 - clamp01(p * 2.5);
+    head.style.transform = 'translateY(' + -p * 40 + 'px)';
+  }
+  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  update();
 }
 
 function setupMapSectionInteractions() {
@@ -223,9 +238,6 @@ function setupMapSectionInteractions() {
         const panel = document.getElementById('earthSidePanel');
         if (panel) {
           panel.classList.toggle('collapsed');
-          const isCollapsed = panel.classList.contains('collapsed');
-          const reopenPill = document.getElementById('espReopenPill');
-          if (reopenPill) reopenPill.hidden = !isCollapsed;
         }
       };
     }
@@ -394,39 +406,6 @@ function setupMapSectionInteractions() {
     pinsList?.scrollBy({ left: 240, behavior: 'smooth' });
   });
 
-  // Directions drawer interactions
-  const dirDrawer = document.getElementById('mapDirectionsDrawer');
-  const closeDirBtn = document.getElementById('closeDirectionsBtn');
-  const destSelect = document.getElementById('directionsDestinationSelect');
-
-  closeDirBtn?.addEventListener('click', () => {
-    if (dirDrawer) dirDrawer.hidden = true;
-  });
-
-  destSelect?.addEventListener('change', updateDirectionsDisplay);
-
-  function updateDirectionsDisplay() {
-    const destId = destSelect?.value || 'oval-ground';
-    const place = placesData.find(p => p.id === destId);
-    const resultEl = document.getElementById('directionsResult');
-    if (!resultEl || !place) return;
-
-    resultEl.innerHTML = `
-      <div class="dir-summary">
-        <span class="dir-time">⏱ Approx. ${place.walkTimeMinutes} mins walk</span>
-        <span class="dir-dist">· ~${place.walkTimeMinutes * 80} metres</span>
-      </div>
-      <p class="dir-text">${place.directionsFromGate}</p>
-      <button type="button" class="btn-secondary btn-sm" id="btnFocusVenueIn3D">
-        Focus Venue in 3D Map
-      </button>
-    `;
-
-    resultEl.querySelector('#btnFocusVenueIn3D')?.addEventListener('click', () => {
-      flyToPlace(place.id);
-    });
-  }
-
   // Global methods for Earth 3D HUD integration
   window.captureMapPoster = captureMapPoster;
 
@@ -437,18 +416,6 @@ function setupMapSectionInteractions() {
       wrapper.requestFullscreen().catch(() => { });
     } else {
       document.exitFullscreen().catch(() => { });
-    }
-  };
-
-  window.toggleMapDirections = (destId) => {
-    if (!dirDrawer) return;
-    if (destId && destSelect) {
-      destSelect.value = destId;
-      updateDirectionsDisplay();
-      dirDrawer.hidden = false;
-    } else {
-      dirDrawer.hidden = !dirDrawer.hidden;
-      if (!dirDrawer.hidden) updateDirectionsDisplay();
     }
   };
 
@@ -480,6 +447,15 @@ function flyToPlace(placeId, attempts = 0) {
 function loadThreeAndBoot() {
   if (window.THREE || window.__AGNEE_BOOTED__ || document.querySelector('script[src*="boot.js"]')) return;
   threeLoaded = true;
+  // Download the runtime modules in parallel with three.js (app.js reuses them from the HTTP cache)
+  ['runtime-context', 'campus-geo', 'campus-scene', 'festival-scene', 'camera-effects', 'places', 'earth-ui', 'landing-and-loop'].forEach((m) => {
+    const l = document.createElement('link');
+    l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'anonymous'; l.href = `src/modules/${m}.js`;
+    document.head.appendChild(l);
+  });
+  const mapImg = document.createElement('link');
+  mapImg.rel = 'preload'; mapImg.as = 'image'; mapImg.href = 'assets/campus-map.webp';
+  document.head.appendChild(mapImg);
   const scriptThree = document.createElement('script');
   scriptThree.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
   scriptThree.onload = () => {

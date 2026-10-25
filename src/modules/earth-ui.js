@@ -127,15 +127,10 @@ function earthShowCard(place) {
     '<p>' + (place.description || '') + '</p>' +
     eventsHtml +
     '<div class="earth-card-actions">' +
-      '<button type="button" data-card-route class="btn-route">🚶 Walking Route</button>' +
       '<button type="button" data-card-tour>★ 3D Focus</button>' +
-      '<button type="button" data-card-share>↗ Share</button>' +
     '</div>';
 
   card.querySelector('.earth-card-close').onclick = () => card.classList.remove('on');
-  card.querySelector('[data-card-route]').onclick = () => {
-    if (typeof window.toggleMapDirections === 'function') window.toggleMapDirections(place.id);
-  };
   card.querySelector('[data-card-tour]').onclick = () => {
     if (place.id === 'oval-ground') {
       if (typeof TOUR !== 'undefined' && typeof TOUR.start === 'function') TOUR.start();
@@ -144,11 +139,6 @@ function earthShowCard(place) {
     } else {
       earthFlyTo(place);
     }
-  };
-  card.querySelector('[data-card-share]').onclick = () => {
-    if (navigator.share)
-      navigator.share({ title: place.name + " · Agnee '26", text: place.description, url: location.href });
-    else navigator.clipboard?.writeText(location.href);
   };
   requestAnimationFrame(() => card.classList.add('on'));
 }
@@ -207,7 +197,7 @@ function earthBuildUI() {
   const shell = document.createElement('div');
   shell.className = 'earth-ui';
   shell.innerHTML =
-    '<aside class="earth-side-panel" id="earthSidePanel" aria-label="Campus 3D Explorer Controls">' +
+    '<aside class="earth-side-panel collapsed" id="earthSidePanel" aria-label="Campus 3D Explorer Controls">' +
       '<div class="esp-header">' +
         '<div class="esp-brand">' +
           '<div class="esp-badge">GSV</div>' +
@@ -238,10 +228,6 @@ function earthBuildUI() {
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' +
           '<span>Home</span>' +
         '</button>' +
-        '<button type="button" data-earth-directions title="Walking Directions" aria-label="Walking Directions">' +
-          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M10 22v-6l-2-2.5 1.5-3.5 3 2 3-1.5-1 3"/><path d="M14 22v-6l2.5-3"/></svg>' +
-          '<span>Walk</span>' +
-        '</button>' +
         '<button type="button" data-earth-layers title="Map Layers" aria-label="Map Layers">' +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>' +
           '<span>Layers</span>' +
@@ -249,10 +235,6 @@ function earthBuildUI() {
         '<button type="button" data-earth-flat aria-pressed="false" title="Toggle 2D / 3D Tilt" aria-label="Switch 2D/3D">' +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' +
           '<span>3D Tilt</span>' +
-        '</button>' +
-        '<button type="button" data-earth-compass title="Reset North" aria-label="Reset North">' +
-          '<svg class="esp-compass-needle" width="15" height="15" viewBox="0 0 24 24" fill="none"><polygon points="12 2 15 11 12 9 9 11 12 2" fill="#ff7a1a"/><polygon points="12 22 15 13 12 15 9 13 12 22" fill="rgba(255,255,255,0.4)"/></svg>' +
-          '<span>North</span>' +
         '</button>' +
         '<button type="button" data-earth-ground title="Ground Cam" aria-label="Ground Cam">' +
           '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/></svg>' +
@@ -292,10 +274,6 @@ function earthBuildUI() {
       '<div class="esp-section-heading"><span>CAMPUS LANDMARKS</span><span class="esp-badge-count">10</span></div>' +
       '<div class="esp-landmarks-scroll" id="espLandmarksContainer"></div>' +
     '</aside>' +
-    '<button type="button" class="esp-reopen-pill" id="espReopenPill" title="Open Campus Controls" hidden>' +
-      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' +
-      '<span>Campus Map Controls</span>' +
-    '</button>' +
     '<div class="earth-floating-zoom" role="group" aria-label="Campus Zoom Dock">' +
       '<button type="button" class="efz-btn efz-max" data-floating-zoom-in title="Zoom In / Max (Double-click for full zoom)" aria-label="Max Zoom In">' +
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
@@ -343,17 +321,7 @@ function earthBuildUI() {
   // Collapse / Expand toggle
   const panel = shell.querySelector('#earthSidePanel');
   const toggleBtn = shell.querySelector('#espToggleBtn');
-  const reopenPill = shell.querySelector('#espReopenPill');
-  if (toggleBtn && panel && reopenPill) {
-    toggleBtn.onclick = () => {
-      panel.classList.add('collapsed');
-      reopenPill.hidden = false;
-    };
-    reopenPill.onclick = () => {
-      panel.classList.remove('collapsed');
-      reopenPill.hidden = true;
-    };
-  }
+  if (toggleBtn && panel) toggleBtn.onclick = () => panel.classList.add('collapsed');
 
   const list = shell.querySelector('.earth-layer-list');
   Object.entries(EARTH_LAYER_LABELS).forEach(([key, label]) => {
@@ -428,12 +396,6 @@ function earthBuildUI() {
     shell.querySelector('[data-earth-layers]').classList.remove('on');
   });
   shell.querySelector('[data-earth-flat]').onclick = () => earthSetFlat(!EARTH_STATE.flat);
-  shell.querySelector('[data-earth-compass]').onclick = () => {
-    EARTH_STATE.heading = 0;
-    if (typeof orb !== 'undefined') orb.theta = 0;
-    shell.querySelector('[data-earth-compass]').style.transform = 'rotate(0deg)';
-    earthHashUpdate();
-  };
   shell.querySelector('[data-earth-home]').onclick = () => {
     EARTH_STATE.selected = null;
     if (typeof goFree === 'function') goFree();
@@ -444,9 +406,6 @@ function earthBuildUI() {
     viewEl.classList.toggle('ground-view', EARTH_STATE.ground);
     shell.querySelector('[data-earth-ground]').classList.toggle('on', EARTH_STATE.ground);
     earthHashUpdate();
-  };
-  shell.querySelector('[data-earth-directions]').onclick = () => {
-    if (typeof window.toggleMapDirections === 'function') window.toggleMapDirections();
   };
   shell.querySelector('[data-earth-capture]').onclick = () => {
     if (typeof window.captureMapPoster === 'function') window.captureMapPoster();

@@ -28,7 +28,7 @@ export function renderLineup(guests = []) {
               <div class="lu-info">
                 ${guest.category ? `<span class="lu-cat">${guest.category}</span>` : ''}
                 <h3 class="lu-name">${guest.name}</h3>
-                <p class="lu-bio">${guest.bio}</p>
+                <p class="lu-bio">${[guest.role, guest.bank, guest.place].filter(Boolean).map(v => `<span>${v}</span>`).join('') || guest.bio}</p>
               </div>
             </article>
           `).join('')}

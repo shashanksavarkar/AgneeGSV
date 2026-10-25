@@ -11,7 +11,7 @@ export function renderHero() {
   heroContainer.innerHTML = `
     <section class="hero-section" id="home" aria-label="Agnee 2026">
       <!-- Drop the festival video at assets/hero.mp4 -->
-      <video class="hero-video" src="assets/hero_bg.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <video class="hero-video" src="assets/gallery/hero_bg.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
 
       ${particleField('petals', 14)}
 

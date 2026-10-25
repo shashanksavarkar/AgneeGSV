@@ -69,7 +69,6 @@ In short: a **framework-free, build-step-free static web app** (vanilla JavaScri
 
 ### 2.6 Assets
 - Images are mostly **WebP** (logo, team, sponsors, gallery); PNG for PWA icons and the Open Graph image.
-- Standalone demo page: `agnee-campus-3d (1).html`.
 
 ---
 
@@ -77,11 +76,11 @@ In short: a **framework-free, build-step-free static web app** (vanilla JavaScri
 
 - **Service Worker** (`sw.js`, cache `agnee-2026-v72`):
   - `data/` requests: stale-while-revalidate.
-  - Same-origin HTML/JS/CSS: network-first with cache fallback, and `offline.html` for failed navigations.
+  - Same-origin HTML/JS/CSS: network-first with cache fallback, falling back to the cached `index.html` for failed navigations.
   - External resources (CDN scripts, fonts): cache-first.
   - Old caches are deleted on activate; `controllerchange` handled in `main.js`.
 - **Web App Manifest** (`manifest.webmanifest`): standalone display, theme/background `#07050a`, 192 and 512 px icons.
-- `offline.html` and `404.html` are provided as fallback pages.
+- `404.html` is provided as a fallback page.
 
 ---
 

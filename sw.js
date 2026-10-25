@@ -7,7 +7,6 @@ const STATIC_ASSETS = [
   './styles.css',
   './festival.css',
   './manifest.webmanifest',
-  './offline.html',
   './src/boot.js',
   './assets/logo.webp',
   './src/main.js',
@@ -101,7 +100,7 @@ self.addEventListener('fetch', (event) => {
         return caches.match(event.request).then((cached) => {
           if (cached) return cached;
           if (event.request.mode === 'navigate') {
-            return caches.match('./offline.html');
+            return caches.match('./index.html');
           }
         });
       })

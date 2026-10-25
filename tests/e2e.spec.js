@@ -59,37 +59,10 @@ test.describe('Agnee 2026 Core Suite', () => {
     await expect(page.locator('.phase-events li').first()).toBeVisible();
   });
 
-  test('3D Campus Map: launch button and directions drawer', async ({ page }) => {
-    await page.goto('/#map');
-
-    // Activate 3D map
-    const activateBtn = page.locator('#btnActivate3D');
-    if (await activateBtn.isVisible()) {
-      await activateBtn.click();
-    }
-
-    // Directions drawer test
-    const dirBtn = page.locator('#btnMapDirections');
-    await expect(dirBtn).toBeVisible();
-    await dirBtn.click();
-
-    const dirDrawer = page.locator('#mapDirectionsDrawer');
-    await expect(dirDrawer).toBeVisible();
-
-    // Select Oval Ground and verify directions preview
-    const destSelect = page.locator('#directionsDestinationSelect');
-    await destSelect.selectOption('oval-ground');
-    await expect(page.locator('#directionsResult')).toContainText('approx');
-  });
-
-  test('Offline and 404 pages render without errors', async ({ page }) => {
+  test('404 page renders without errors', async ({ page }) => {
     // 404 page
     await page.goto('/404.html');
     await expect(page.locator('.notfound-code')).toContainText('404');
-
-    // Offline page
-    await page.goto('/offline.html');
-    await expect(page.locator('.offline-title')).toContainText('offline');
   });
 
   test('Accessibility: keyboard tab navigation and focus indicators', async ({ page }) => {

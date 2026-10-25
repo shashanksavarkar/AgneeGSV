@@ -7326,7 +7326,8 @@ main > div:nth-of-type(even) > .section > .container::before {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  padding: 52px 22px 30px 28px;
+  padding: 26px 22px 26px 28px;
+  justify-content: center;
   text-align: center;
   border-radius: 16px;
   border: 1px solid #3a2a14;
@@ -9453,7 +9454,7 @@ img.skel {
     padding-right: 30px;
   }
   .lu-card {
-    padding: 48px 18px 26px 24px;
+    padding: 24px 18px 24px 24px;
   }
   .lu-name {
     font-size: 17px;
@@ -9913,11 +9914,18 @@ main > div:nth-of-type(even) .rangoli-big {
   border-radius: 18px;
   border: 1px solid #3a2a14;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, #05030a 0%, #0c0618 55%, #180a28 100%);
+}
+.sky-day {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ff7a1a 0%, #8a283c 55%, #ffbe5a 100%);
+  will-change: opacity;
 }
 .sky-stars {
   position: absolute;
   inset: 0;
-  filter: blur(var(--sky-blur));
+  will-change: opacity;
 }
 .sky-stars i {
   position: absolute;
@@ -9935,6 +9943,9 @@ main > div:nth-of-type(even) .rangoli-big {
 .sky-orb {
   filter: blur(var(--sky-blur));
   position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
   width: clamp(54px, 9vw, 74px);
   aspect-ratio: 1;
   margin: calc(clamp(54px, 9vw, 74px) / -2) 0 0 calc(clamp(54px, 9vw, 74px) / -2);
@@ -9955,7 +9966,7 @@ main > div:nth-of-type(even) .rangoli-big {
   inset: 0;
   pointer-events: none;
   opacity: 0.5;
-  background: url('assets/palace_bg.webp') center bottom / contain no-repeat;
+  background: url('assets/mics/palace_bg.svg') center bottom / contain no-repeat;
   filter: drop-shadow(0 0 6px rgba(255, 190, 120, 0.45));
 }
 .sky-txt {
@@ -9997,20 +10008,6 @@ main > div:nth-of-type(even) .rangoli-big {
   min-width: 0;
   accent-color: #ff7a1a;
 }
-.sky-play {
-  flex: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 179, 71, 0.5);
-  background: transparent;
-  color: var(--gold-primary);
-  cursor: var(--cur-hover);
-}
-.sky-play:hover {
-  background: #ff7a1a;
-  color: #1a0c02;
-}
 .sky-list {
   position: absolute;
   width: 1px;
@@ -10023,4 +10020,583 @@ main > div:nth-of-type(even) .rangoli-big {
   .sky-stars i {
     animation: none;
   }
+}
+
+/* ===== 3D map UI: simplified controls, site palette (oak panels, brass trim, pumpkin accent) ===== */
+/* Fewer controls: the landmark list, orbit/top/fest presets, compass and fullscreen are enough */
+.map-hud-top .hud-top-center,
+#hudSnapBtn,
+.earth-actions,
+.esp-zoom-container,
+.esp-section-heading:has(+ .earth-actions),
+.esp-section-heading:has(+ .esp-zoom-container),
+.earth-floating-zoom,
+.bar #bHos,
+.bar #bRaj,
+.bar .bar-icon {
+  display: none !important;
+}
+
+.earth-side-panel,
+.hud-brand-pill,
+.hud-guide-btn,
+.hud-jewel-compass,
+.hud-icon-btn {
+  background: rgba(27, 19, 16, 0.92);
+  border: 1px solid rgba(201, 160, 90, 0.35);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 220, 160, 0.08);
+}
+.earth-side-panel {
+  border-radius: 16px;
+}
+.hud-guide-btn:hover,
+.hud-jewel-compass:hover,
+.hud-icon-btn:hover {
+  border-color: #ff7a1a;
+  color: #ffa23d;
+}
+
+.esp-main-title,
+.hud-brand-text {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 0.08em;
+}
+.esp-sub-title {
+  font-family: 'Spectral', serif;
+  font-style: italic;
+}
+.esp-badge {
+  background: linear-gradient(135deg, #c9a05a, #8a6a32);
+  color: #1a0c02;
+}
+.esp-badge-count {
+  background: rgba(255, 122, 26, 0.14);
+  color: #ffa23d;
+}
+.esp-section-heading {
+  color: #c9a05a;
+}
+
+.esp-landmark-item {
+  background: rgba(255, 180, 90, 0.04);
+  border-color: rgba(201, 160, 90, 0.14);
+}
+.esp-landmark-item:hover {
+  background: rgba(255, 140, 40, 0.09);
+  border-color: rgba(255, 122, 26, 0.45);
+}
+.esp-landmark-item.active {
+  background: rgba(255, 122, 26, 0.16);
+  border-color: #ff7a1a;
+  box-shadow: 0 0 14px rgba(255, 122, 26, 0.25);
+}
+.esp-landmark-item.fest-highlight {
+  background: rgba(179, 20, 31, 0.14);
+  border-color: rgba(179, 20, 31, 0.5);
+}
+.esp-lm-index {
+  color: #c9a05a;
+}
+
+.bar {
+  background: rgba(27, 19, 16, 0.92);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(201, 160, 90, 0.35);
+}
+.bar button {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.bar button.on {
+  background: #ff7a1a;
+  color: #1a0c02;
+}
+.bar button#bOval,
+.bar button#bOval.on {
+  background: linear-gradient(135deg, #8e0f1c, #ff7a1a);
+  color: #fff;
+  box-shadow: none;
+}
+
+.tag {
+  background: rgba(27, 19, 16, 0.92);
+  border-color: rgba(201, 160, 90, 0.35);
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   Venue selector redesign: arched jharokha cards with gold numerals,
+   a diya-glow active state and a crest-style FEST badge
+   ========================================================================== */
+.vp-bar {
+  padding: 30px 22px 22px 30px;
+}
+.vp-list {
+  gap: 16px;
+  padding: 18px 4px 8px;
+}
+.vp-chip {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 148px;
+  padding: 26px 12px 16px;
+  text-align: center;
+  border-radius: 74px 74px 14px 14px;
+  border: 1px solid rgba(255, 190, 120, 0.22);
+  border-left: 1px solid rgba(255, 190, 120, 0.22);
+  border-bottom: 3px solid var(--cat);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 190, 110, 0.16), transparent 62%),
+    linear-gradient(180deg, #241a2a, #130d18);
+  box-shadow: inset 0 1px 0 rgba(255, 230, 190, 0.12);
+}
+.vp-chip::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 69px 69px 10px 10px;
+  border: 1px dashed rgba(255, 210, 122, 0.22);
+  pointer-events: none;
+}
+.vp-no {
+  font: 800 30px/1 'Cinzel Decorative', serif;
+  letter-spacing: 0;
+  background: linear-gradient(180deg, #ffe7a8, var(--cat) 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.vp-text {
+  justify-items: center;
+  gap: 4px;
+}
+.vp-text b {
+  font: 700 13px/1.25 var(--font-sans);
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.5em;
+}
+.vp-text small::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 6px;
+  border-radius: 50%;
+  vertical-align: middle;
+  background: var(--cat);
+  box-shadow: 0 0 6px var(--cat);
+}
+.vp-fest {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  color: #1a0c02;
+  background: linear-gradient(90deg, #ffd27a, #ff9a3c);
+  border: 0;
+  box-shadow: 0 4px 10px rgba(255, 122, 26, 0.45);
+}
+.vp-chip:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 179, 71, 0.25);
+}
+.vp-chip.active {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 240, 200, 0.55), transparent 65%),
+    linear-gradient(180deg, #ff9a3c, #c43a0a);
+  border-color: #ffd27a;
+  border-bottom-color: #ffd27a;
+  box-shadow: 0 0 26px rgba(255, 122, 26, 0.6), 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+.vp-chip.active::before {
+  border-color: rgba(26, 12, 2, 0.35);
+}
+.vp-chip.active .vp-no {
+  background: none;
+  color: #2a1004;
+}
+.vp-chip.active .vp-text b {
+  color: #1a0c02;
+}
+.vp-chip.active .vp-text small::before {
+  background: #1a0c02;
+  box-shadow: none;
+}
+.vp-chip.active .vp-fest {
+  color: #ffd27a;
+  background: #1a0c02;
+  border: 1px solid rgba(255, 210, 122, 0.6);
+}
+@media (max-width: 600px) {
+  .vp-chip {
+    width: 132px;
+  }
+}
+
+/* ==========================================================================
+   Building tags redesign: carved nameplates with a gold diamond jewel,
+   a double brass rule and a diamond pointer toward the building
+   ========================================================================== */
+.view .tag {
+  --tc: #e0b860;
+  padding: 7px 16px 7px 12px;
+  border-radius: 10px;
+  gap: 9px;
+  font: 700 11.5px/1.2 var(--font-sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(224, 184, 96, 0.45);
+  border-bottom: 2px solid var(--tc);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--tc) 22%, transparent), transparent 55%),
+    linear-gradient(180deg, rgba(34, 24, 40, 0.96), rgba(14, 9, 20, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 190, 0.14),
+    inset 0 0 0 3px rgba(14, 9, 20, 0.9),
+    inset 0 0 0 4px rgba(224, 184, 96, 0.18),
+    0 8px 20px rgba(0, 0, 0, 0.6);
+  color: #fdf1d6;
+}
+.view .tag::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #fff2c4, var(--tc));
+  box-shadow: 0 0 8px var(--tc);
+}
+.view .tag::after {
+  width: 9px;
+  height: 9px;
+  top: calc(100% - 5px);
+  margin-left: -4.5px;
+  background: rgba(14, 9, 20, 0.96);
+  border: 0;
+  border-right: 2px solid var(--tc);
+  border-bottom: 2px solid var(--tc);
+  transform: rotate(45deg);
+}
+.view .tag:hover {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--tc) 40%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(44, 30, 50, 0.98), rgba(20, 12, 28, 0.98));
+  border-color: var(--tc);
+  color: #fff;
+  box-shadow:
+    inset 0 0 0 3px rgba(14, 9, 20, 0.9),
+    inset 0 0 0 4px color-mix(in srgb, var(--tc) 45%, transparent),
+    0 10px 26px rgba(0, 0, 0, 0.75),
+    0 0 18px color-mix(in srgb, var(--tc) 55%, transparent);
+}
+.view .tag.r { --tc: #e5485a; }
+.view .tag.g { --tc: #5ee09a; }
+.view .tag.a { --tc: #e0763c; }
+.view .tag.o { --tc: #ff7a1a; }
+.view .tag.p { --tc: #c26be0; }
+.view .tag.e { --tc: #5aa9ff; }
+.view .tag.f { --tc: #f5a524; }
+.view .tag.m { --tc: #f59e0b; }
+.view .tag.r, .view .tag.g, .view .tag.a, .view .tag.o,
+.view .tag.p, .view .tag.e, .view .tag.f, .view .tag.m {
+  border-left-width: 1px;
+}
+/* Fest tag keeps its festival gradient */
+.view #t10 {
+  background: linear-gradient(135deg, #5b1a8f, #d6246e 55%, #ff9a2e);
+  border-color: rgba(255, 215, 120, 0.85);
+  --tc: #ffd27a;
+}
+.view #t10::after {
+  background: #d6246e;
+}
+
+/* ==========================================================================
+   Place card redesign: palace plaque with a double gold frame, gradient
+   Cinzel title, ribbon kicker, diamond divider and brass action buttons
+   ========================================================================== */
+#view .earth-place-card {
+  padding: 22px 22px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(224, 184, 96, 0.5);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(255, 122, 26, 0.2), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(176, 107, 224, 0.14), transparent 55%),
+    linear-gradient(165deg, #231729, #0f0a14);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 230, 190, 0.16),
+    inset 0 0 0 5px #120c18,
+    inset 0 0 0 6px rgba(224, 184, 96, 0.22);
+}
+#view .earth-place-card::after {
+  content: '';
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 0;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, transparent, #ffd27a 25%, #ff7a1a 75%, transparent);
+  pointer-events: none;
+}
+#view .earth-card-meta {
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-right: 40px;
+}
+#view .earth-card-kicker {
+  padding: 4px 11px;
+  border-radius: 999px;
+  color: #1a0c02;
+  background: linear-gradient(90deg, #ffd27a, #ff9a3c);
+  font: 800 9.5px var(--font-sans);
+  letter-spacing: 0.16em;
+  box-shadow: 0 4px 12px rgba(255, 122, 26, 0.35);
+}
+#view .earth-card-badge {
+  margin-left: auto;
+  color: #ffd27a;
+  font: 700 11px var(--font-sans);
+}
+#view .earth-place-card h2 {
+  margin: 0 0 12px;
+  font: 700 21px/1.2 'Cinzel Decorative', serif;
+  letter-spacing: 0.03em;
+  background: linear-gradient(180deg, #fff3cf, #e0b860);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+#view .earth-place-card h2::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 7px;
+  margin-top: 10px;
+  background:
+    linear-gradient(45deg, transparent 38%, #e0b860 38% 62%, transparent 62%) center / 7px 7px no-repeat,
+    linear-gradient(90deg, transparent, rgba(224, 184, 96, 0.6)) left center / calc(50% - 10px) 1px no-repeat,
+    linear-gradient(270deg, transparent, rgba(224, 184, 96, 0.6)) right center / calc(50% - 10px) 1px no-repeat;
+}
+#view .earth-place-card p {
+  color: rgba(255, 244, 224, 0.82);
+  font: 400 13px/1.6 var(--font-sans);
+}
+#view .earth-card-close {
+  right: 16px;
+  top: 16px;
+  width: 30px;
+  height: 30px;
+  color: #ffd27a;
+  background: rgba(224, 184, 96, 0.08);
+  border: 1px solid rgba(224, 184, 96, 0.5);
+}
+#view .earth-card-close:hover {
+  color: #1a0c02;
+  background: #ffd27a;
+  border-color: #ffd27a;
+}
+#view .earth-card-actions button {
+  min-height: 38px;
+  border-radius: 10px;
+  color: #ffd27a;
+  background: transparent;
+  border: 1px solid rgba(224, 184, 96, 0.5);
+  font: 700 12px var(--font-sans);
+  letter-spacing: 0.04em;
+}
+#view .earth-card-actions button:hover {
+  background: rgba(224, 184, 96, 0.14);
+  border-color: #ffd27a;
+}
+#view .earth-card-actions button[data-card-route] {
+  color: #1a0c02;
+  border: 0;
+  background: linear-gradient(135deg, #ffd27a, #ff7a1a);
+  box-shadow: 0 6px 16px rgba(255, 122, 26, 0.4);
+}
+#view .earth-card-actions button[data-card-route]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(255, 122, 26, 0.6);
+}
+
+/* Place card sits at the bottom right on desktop */
+@media (min-width: 769px) {
+  #view .earth-place-card {
+    left: auto;
+    right: 24px;
+    bottom: 86px;
+    width: min(390px, calc(100% - 382px));
+  }
+}
+
+/* ==========================================================================
+   Top HUD redesign: opaque lacquered pills with gold rims, drawn above the
+   map tags so nothing shows through them
+   ========================================================================== */
+#view .map-hud-top {
+  z-index: 5000;
+}
+#view .hud-brand-pill,
+#view .hud-guide-btn,
+#view .hud-lighting-dock,
+#view .hud-icon-btn {
+  background:
+    linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 50%),
+    #17101d;
+  border: 1px solid rgba(224, 184, 96, 0.55);
+  box-shadow:
+    inset 0 0 0 3px #17101d,
+    inset 0 0 0 4px rgba(224, 184, 96, 0.2),
+    0 10px 24px rgba(0, 0, 0, 0.65);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+#view .hud-brand-pill {
+  padding: 9px 20px 9px 16px;
+  gap: 10px;
+}
+#view .hud-brand-text {
+  font: 700 12px 'Cinzel Decorative', serif;
+  letter-spacing: 0.1em;
+  background: linear-gradient(180deg, #fff3cf, #e0b860);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+#view .hud-guide-btn {
+  padding: 9px 18px 9px 14px;
+  color: #ffd27a;
+  font: 700 12px var(--font-sans);
+  letter-spacing: 0.05em;
+}
+#view .hud-guide-btn:hover {
+  color: #1a0c02;
+  background: linear-gradient(135deg, #ffd27a, #ff9a3c);
+  border-color: #ffd27a;
+  box-shadow: 0 10px 24px rgba(255, 122, 26, 0.45);
+}
+#view .hud-light-btn.active {
+  color: #1a0c02;
+  background: linear-gradient(135deg, #ffd27a, #ff9a3c);
+  border: 0;
+  box-shadow: 0 2px 10px rgba(255, 122, 26, 0.45);
+}
+#view .hud-icon-btn {
+  color: #ffd27a;
+}
+
+/* ==========================================================================
+   Camera dock redesign: lacquered plaque with a double gold rim, uppercase
+   tracked labels, gold active state and a festival-gradient Fest button
+   ========================================================================== */
+#view .bar {
+  gap: 4px;
+  padding: 6px;
+  border-radius: 18px;
+  border: 1px solid rgba(224, 184, 96, 0.55);
+  background:
+    linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 55%),
+    #17101d;
+  box-shadow:
+    inset 0 0 0 3px #17101d,
+    inset 0 0 0 4px rgba(224, 184, 96, 0.2),
+    0 14px 32px rgba(0, 0, 0, 0.7);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+#view .bar button {
+  position: relative;
+  border-radius: 12px;
+  padding: 10px 18px;
+  color: rgba(255, 244, 224, 0.78);
+  font: 700 11.5px var(--font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#view .bar button:hover {
+  color: #ffd27a;
+  background: rgba(224, 184, 96, 0.1);
+}
+#view .bar button.on {
+  color: #1a0c02;
+  background: linear-gradient(135deg, #ffd27a, #ff9a3c);
+  box-shadow: 0 4px 14px rgba(255, 122, 26, 0.45);
+}
+#view .bar button#bOval {
+  margin-left: 4px;
+  color: #fff;
+  background: linear-gradient(135deg, #5b1a8f, #d6246e 55%, #ff9a2e);
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 120, 0.7), 0 4px 16px rgba(214, 36, 110, 0.5);
+}
+#view .bar button#bOval:hover {
+  color: #fff;
+  box-shadow: inset 0 0 0 1px #ffd27a, 0 6px 22px rgba(214, 36, 110, 0.7);
+}
+
+/* ==========================================================================
+   Scroll-expand map: the section pins, then the map grows from the top
+   corners to fill the screen (clip-path is driven from map-section.js)
+   ========================================================================== */
+.map-scrollfx .map-runway {
+  height: 260vh;
+}
+.map-scrollfx .map-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  padding-top: calc(var(--header-height, 72px) + 24px);
+  overflow: hidden;
+}
+.map-scrollfx .map-head {
+  position: relative;
+  z-index: 1;
+  will-change: opacity, transform;
+}
+.map-scrollfx .map-viewport-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: auto;
+  height: auto;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  box-shadow: none;
+  will-change: clip-path;
+}
+.map-scrollfx .map-viewport-wrapper::before,
+.map-scrollfx .map-viewport-wrapper::after {
+  display: none;
+}
+
+/* Guest card: role, bank and place each on their own line */
+.lu-bio > span {
+  display: block;
+}
+
+/* Sponsor logos: no white plate; a soft white halo keeps dark marks legible on the dark card */
+.sponsor-logo-box:has(.sponsor-logo) {
+  background: transparent;
+}
+.sponsor-logo {
+  max-height: 92px;
+  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+}
+
+/* VC letter stands alone in its row, centred */
+.ab-vc {
+  grid-template-columns: minmax(0, 720px);
+  justify-content: center;
 }
