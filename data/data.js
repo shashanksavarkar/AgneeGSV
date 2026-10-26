@@ -196,8 +196,9 @@ export const schedule = {
   ],
   // Pre-Agnee events, in running order; same shape as a program entry
   "preAgnee": [
-    { "time": "19:00", "mins": "30", "name": "Malhar - Music Club GSV" },
-    { "time": "19:30", "mins": "30", "name": "Nritya - Dance Club GSV" }
+    // { "time": "19:00", "mins": "30", "name": "Malhar - Music Club GSV" },
+    { "time": "TBA", "mins": "TBA", "name": "TBA" },
+    // { "time": "19:30", "mins": "30", "name": "Nritya - Dance Club GSV" }
   ]
 };
 
@@ -269,7 +270,7 @@ export const guests = [
 
 export const sponsors = {
   "deckDownloadUrl": "#sponsors",
-  "contactEmail": "sponsorship@gsv.ac.in",
+  "contactEmail": "student.cell@gsv.ac.in",
   "brochureNote": "Download our comprehensive sponsorship deck to discover brand integration avenues, stage presence, and student outreach opportunities at Gati Shakti Vishwavidyalaya.",
   "tiers": [
     {
