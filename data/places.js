@@ -201,7 +201,7 @@ export const places = [
   },
   {
     "id": "palace",
-    "name": "Pratap Vilas Palace",
+    "name": "Prastuti",
     "category": "Landmark",
     "mapCoords": {
       "x": 320,

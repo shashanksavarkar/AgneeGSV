@@ -65,12 +65,14 @@ export function renderFooter(siteData = {}) {
 
         <div class="ft-bottom">
           <div class="ft-legal">
+            <!--
             <button type="button" id="linkPrivacyModal">Privacy Policy</button>
             <button type="button" id="linkTermsModal">Terms of Participation</button>
             <button type="button" id="linkCodeOfConduct">Code of Conduct</button>
+            -->
           </div>
           <a href="#home" class="ft-top">Back to top ↑</a>
-          <p class="ft-copy">© 2026 Agnee · Gati Shakti Vishwavidyalaya, Vadodara. All rights reserved.<span>Designed & Built with passion by the Agnee Web & Creative Tech Team</span></p>
+          <p class="ft-copy">© 2026 Agnee · Gati Shakti Vishwavidyalaya, Vadodara. All rights reserved.</p>
         </div>
       </div>
       <div class="ft-rangoli" aria-hidden="true"><img src="assets/logos/logo.webp" alt="" loading="lazy"></div>

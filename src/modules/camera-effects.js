@@ -2363,7 +2363,7 @@ const ST = [
 
     chap: 'Heritage',
 
-    name: 'Pratap Vilas Palace',
+    name: 'Prastuti',
 
     sub: 'Landmark',
 

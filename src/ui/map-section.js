@@ -60,7 +60,7 @@ export function renderMapSection(places = [], events = []) {
               <div class="tag a" id="t15">Mehman Boy's Hostel</div>
               <div class="tag o" id="t6">Proposed laboratory block</div>
               <div class="tag o" id="t7">Proposed academic block</div>
-              <div class="tag" id="t8">Pratap Vilas Palace</div>
+              <div class="tag" id="t8">Prastuti</div>
               <div class="tag f" id="t14">★ Rajabaug · Pre-Agnee Stalls</div>
               <div class="tag" id="t17">Darshan building</div>
               <div class="tag a" id="t18">Giriraj (Guest House)</div>

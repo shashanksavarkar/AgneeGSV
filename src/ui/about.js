@@ -4,8 +4,6 @@ export function renderAbout(siteData = {}) {
   const aboutContainer = document.getElementById('about-mount');
   if (!aboutContainer) return;
 
-  const vc = siteData.vc || {};
-
   aboutContainer.innerHTML = `
     <section class="section about-section" id="about" aria-labelledby="aboutHeading">
       <div class="container">
@@ -42,32 +40,7 @@ export function renderAbout(siteData = {}) {
             </ul>
           </article>
         </div>
-
-        <div class="ab-grid ab-vc">
-          <article class="ab-card ab-letter">
-            <header class="ab-letterhead">
-              <span class="ab-photo">
-                ${vc.photo
-                  ? `<img src="${vc.photo}" alt="${vc.name}" loading="lazy">`
-                  : `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M3.5 21c0-4.7 3.8-7.5 8.5-7.5s8.5 2.8 8.5 7.5z"/></svg>`}
-              </span>
-              <div class="ab-letterhead-text">
-                <span class="ab-label">OFFICE OF THE VICE-CHANCELLOR</span>
-                <span class="ab-letter-univ">Gati Shakti Vishwavidyalaya &middot; Vadodara</span>
-              </div>
-            </header>
-            <p class="ab-salute">Dear Participants,</p>
-            ${(vc.message || []).map((t) => `<p class="ab-body">${t}</p>`).join('')}
-            <footer class="ab-signoff">
-              <span>With warm regards,</span>
-              <strong class="ab-script">${vc.name}</strong>
-              <small>${vc.title}</small>
-            </footer>
-          </article>
-
-        </div>
       </div>
     </section>
   `;
-
 }

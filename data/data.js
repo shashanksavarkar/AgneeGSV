@@ -9,16 +9,6 @@ export const site = {
   "venue": "Oval Ground, Gati Shakti Vishwavidyalaya Campus, Vadodara",
   "dates": "Agnee Week: 26-31 October 2026 · Pre-Agnee: 30 October · Agnee: 31 October",
   "datesConfigured": null,
-  "vc": {
-    "name": "Prof. Manoj Choudhary",
-    "title": "Vice-Chancellor, Gati Shakti Vishwavidyalaya",
-    "message": [
-      "Replace this paragraph with the Vice-Chancellor's message to the participants of Agnee 2026.",
-      "Add more paragraphs here, one string per paragraph."
-    ],
-    "photo": "assets/oc/vc_sir.webp",
-    "videoId": ""
-  },
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
   "description": "Agnee is the flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Bringing together talents in music, dance, theater, literature, art, and creative expression from across India.",
   "socials": [
@@ -482,7 +472,7 @@ export const faqs = [
   {
     "category": "Competitions",
     "question": "What are the eligibility criteria for participating in competitions?",
-    "answer": "Participants must be enrolled college/university students with a valid college identity card. Specific rules, team size limits, and submission guidelines are listed on each event card in the Events section."
+    "answer": "Participants must be enrolled students of Gati Shakti Vishwavidyalaya and possess a valid college identity card. Specific rules, team size limits, and submission guidelines are provided on each event card in the Events section."
   },
   {
     "category": "Stay & Travel",

@@ -3072,7 +3072,7 @@ const P_INF = {
 
   t7: ['Proposed academic block', 'Academic', 'Proposed'],
 
-  t8: ['Pratap Vilas Palace', 'Landmark', 'Existing'],
+  t8: ['Prastuti', 'Landmark', 'Existing'],
   t17: ['Darshan building', 'Academic & Seminar Block (Prastuti Front)', 'Existing'],
   t18: ['Giriraj Grih', 'VIP Guest House & Executive Residence', 'Existing'],
   t19: ['Sports Complex', 'Dual Indoor Sports Halls & Arena', 'Existing'],
