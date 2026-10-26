@@ -318,26 +318,26 @@ export const merch = [
   {
     id: 'tshirt',
     name: 'Inferno Red',
-    price: '₹499/- + Extra Delivery Charges',
+    price: '',
     image: 'assets/merch/red.webp',
-    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
-    state: 'Available'
+    // buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Coming Soon!'
   },
   {
     id: 'hoodie',
     name: 'Eclipse Black',
-    price: '₹499/- + Extra Delivery Charges',
+    price: '',
     image: 'assets/merch/black.webp',
-    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
-    state: 'Available'
+    // buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Coming Soon!'
   },
   {
     id: 'tote',
     name: 'Ethereal White',
-    price: '₹499/- + Extra Delivery Charges',
+    price: '',
     image: 'assets/merch/white.webp',
-    buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
-    state: 'Available'
+    // buyUrl: 'https://forms.gle/fzC46cAi2thMU7Er7',
+    state: 'Coming Soon!'
   }
 ];
 
