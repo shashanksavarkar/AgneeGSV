@@ -402,6 +402,15 @@ export const team = {
       linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/',
       github: 'https://github.com/AbhiKesarwani',
       avatar: 'assets/oc/abhinav.webp'
+    },
+    {
+      name: 'Ajitesh Channa',
+      role: '',
+      team: 'DevelopmentTeam',
+      email: 'ajitesh.channa_btech23@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/ajiteshchanna/',
+      github: 'https://github.com/ajiteshchanna',
+      avatar: 'assets/oc/ajitesh.webp'
     }
   ],
   coreTeam: [

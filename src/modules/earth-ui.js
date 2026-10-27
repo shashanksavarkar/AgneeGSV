@@ -150,7 +150,10 @@ function earthShowCard(place) {
       '</div>' +
     '</div>';
 
-  card.querySelector('.earth-card-close').onclick = () => card.classList.remove('on');
+  card.querySelector('.earth-card-close').onclick = (e) => {
+    e.stopPropagation();
+    card.classList.remove('on');
+  };
   card.querySelector('[data-card-tour]').onclick = () => {
     if (place.id === 'oval-ground') {
       if (typeof TOUR !== 'undefined' && typeof TOUR.start === 'function') TOUR.start();

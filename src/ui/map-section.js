@@ -58,23 +58,23 @@ export function renderMapSection(places = [], events = []) {
                 <div class="earth-globe"><span></span></div>
                 <small>GATI SHAKTI VISHWAVIDYALAYA · VADODARA</small>
               </div>
-              <div class="tag" id="t1">Gati Shakti Vishwavidyalaya (current academic block)</div>
+              <div class="tag" id="t1">Gati Shakti Vishwavidyalaya<span class="tag-sub"> (current academic block)</span></div>
               <div class="tag" id="t12">Sardar Patel Sabhagrah</div>
               <div class="tag a" id="t13">Pahune Hostel</div>
               <div class="tag m" id="t16">GSV-MESS</div>
-              <div class="tag r" id="t3">Current hostel (NHSRCL)</div>
+              <div class="tag r" id="t3">Current hostel<span class="tag-sub"> (NHSRCL)</span></div>
               <div class="tag g" id="t4">Proposed hostel block</div>
               <div class="tag a" id="t5">Atithi hostel</div>
               <div class="tag a" id="t15">Mehman Boy's Hostel</div>
               <div class="tag o" id="t6">Proposed laboratory block</div>
               <div class="tag o" id="t7">Proposed academic block</div>
               <div class="tag" id="t8">Prastuti</div>
-              <div class="tag f" id="t14">★ Rajabaug · Pre-Agnee Stalls</div>
+              <div class="tag f" id="t14">★ Rajabaug<span class="tag-sub"> · Pre-Agnee Stalls</span></div>
               <div class="tag" id="t17">Darshan building</div>
-              <div class="tag a" id="t18">Giriraj (Guest House)</div>
+              <div class="tag a" id="t18">Giriraj<span class="tag-sub"> (Guest House)</span></div>
               <div class="tag" id="t19">Sports Complex</div>
               <div class="tag" id="t9">Manthan building</div>
-              <div class="tag p" id="t10">AGNEE · The Cultural Fest — Oval Ground</div>
+              <div class="tag p" id="t10">AGNEE<span class="tag-sub"> · The Cultural Fest</span> — Oval Ground</div>
               <div class="tag e" id="t11">Main entrance gate</div>
               <!-- Luxury Top Map Bar -->
               <div class="map-hud-top" id="mapHudTop">
@@ -121,7 +121,8 @@ export function renderMapSection(places = [], events = []) {
 
               <!-- Interactive Gesture Hint -->
               <div class="map-gesture-hint" id="mapGestureHint" aria-hidden="true">
-                <span>Drag to orbit · Ctrl + scroll to zoom · Click any tag to visit</span>
+                <span class="desktop-hint">Drag to orbit · Ctrl + scroll to zoom · Click any tag to visit</span>
+                <span class="mobile-hint">1 finger to navigate · 2 fingers to zoom</span>
               </div>
               </div>
               
@@ -170,12 +171,11 @@ export function renderMapSection(places = [], events = []) {
             <button type="button" class="vp-arrow" id="btnPinsScrollLeft" title="Scroll left" aria-label="Scroll venues left">‹</button>
             <div class="vp-list" id="pinsScrollList">
               ${places.map((place, i) => {
-    const isFest = place.id === 'oval-ground';
     return `
-                  <button type="button" class="venue-pin-btn vp-chip ${isFest ? 'active' : ''}" data-place-id="${place.id}" data-category="${place.category}">
+                  <button type="button" class="venue-pin-btn vp-chip" data-place-id="${place.id}" data-category="${place.category}">
                     <span class="vp-no">${String(i + 1).padStart(2, '0')}</span>
                     <span class="vp-text"><b>${place.name}</b><small>${place.category}</small></span>
-                    ${place.featured ? '<span class="vp-fest">Fest</span>' : ''}
+                    <span class="vp-fest">Fest</span>
                   </button>
                 `;
   }).join('')}
@@ -293,7 +293,7 @@ function initMapScrollExpand() {
   }
   const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   addEventListener('scroll', queue, { passive: true });
-  addEventListener('resize', queue);
+  addEventListener('resize', queue, { passive: true });
   update();
 }
 
@@ -472,6 +472,14 @@ function setupMapSectionInteractions() {
       openMapFs(true);
       const placeId = btn.dataset.placeId;
       flyToPlace(placeId);
+      // Smoothly bring the 3D map into view so user watches the front entry gate open
+      const stage = document.getElementById('mapViewportWrapper') || document.getElementById('mapStage');
+      if (stage) {
+        const rect = stage.getBoundingClientRect();
+        if (rect.top < -50 || rect.top > 140) {
+          stage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
     });
   });
 

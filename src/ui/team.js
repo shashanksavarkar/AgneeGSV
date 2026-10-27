@@ -87,7 +87,7 @@ export function renderTeam(teamData = { coreTeam: [], facultyAdvisors: [] }) {
           <div class="team-grid core-grid">${core.map(studentCard).join('')}</div>
         </div>
 
-        <!-- Creative Team: one row of four -->
+        <!-- Developer Team: five members -->
         ${
           creative.length
             ? `<div class="team-subgroup">

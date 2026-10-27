@@ -13,9 +13,9 @@ export const places = [
     "description": "Main campus entrance and primary security checkpoint. Features the iconic bilingual university archway, guard cabins, and reception gate.",
     "directionsFromGate": "Starting point. Proceed through the main archway along the campus road towards the Academic Block and Palaces.",
     "pose": {
-      "distance": 52,
-      "tilt": 0.14,
-      "heading": 3.0
+      "distance": 48,
+      "tilt": 0.12,
+      "heading": 3.14159
     },
     "featured": true
   },
@@ -67,11 +67,11 @@ export const places = [
     "description": "Planned multi-wing residential complex as part of the expanding GSV master plan, with an entrance portico canopy on the west corridor.",
     "directionsFromGate": "Situated in the eastern residential sector along the inner campus road.",
     "pose": {
-      "distance": 54,
-      "tilt": 0.16,
+      "distance": 52,
+      "tilt": 0.14,
       "heading": -1.57
     },
-    "featured": false
+    "featured": true
   },
   {
     "id": "sabhagrah",
@@ -114,16 +114,16 @@ export const places = [
     "name": "GSV-MESS",
     "category": "Dining",
     "mapCoords": {
-      "x": 434,
-      "y": 145
+      "x": 453,
+      "y": 118.5
     },
     "walkTimeMinutes": 2,
-    "description": "GSV-MESS central dining building situated in front of Pahune Hostel and Manthan, featuring the GSV-MESS south gate opening toward Manthan and the Officer Mess north gate opening toward Pahune Hostel, complete with extensive rooftop solar power generation.",
+    "description": "GSV-MESS central dining building situated in front of Pahune Hostel and Manthan, featuring the iconic front entrance portico with illuminated bilingual GSV-MESS signage, columns, ornamental lantern gateposts, and cascading entrance steps.",
     "directionsFromGate": "Follow the south corridor past Sabhagrah or head north from Manthan building.",
     "pose": {
-      "distance": 54,
-      "tilt": 0.16,
-      "heading": 0
+      "distance": 34,
+      "tilt": 0.12,
+      "heading": 3.14159
     },
     "featured": true
   },
@@ -175,11 +175,11 @@ export const places = [
     "description": "Future multi-disciplinary testing and research facility featuring grand north entrance archway and rooftop solar canopy.",
     "directionsFromGate": "South-east quadrant near the academic expansion corridor.",
     "pose": {
-      "distance": 50,
-      "tilt": 0.15,
+      "distance": 48,
+      "tilt": 0.14,
       "heading": 3.14
     },
-    "featured": false
+    "featured": true
   },
   {
     "id": "proposed-academic",
@@ -193,11 +193,11 @@ export const places = [
     "description": "Future academic expansion wing outlined in the master plan with a grand entrance arch and stepped courtyard plaza.",
     "directionsFromGate": "South corridor past Manthan building.",
     "pose": {
-      "distance": 52,
-      "tilt": 0.15,
+      "distance": 50,
+      "tilt": 0.14,
       "heading": 0
     },
-    "featured": false
+    "featured": true
   },
   {
     "id": "palace",
@@ -222,15 +222,15 @@ export const places = [
     "name": "Rajabaug (Pre-Agnee Stalls)",
     "category": "Festival",
     "mapCoords": {
-      "x": 256,
+      "x": 285,
       "y": 189
     },
     "walkTimeMinutes": 3,
     "description": "Historic royal palace gardens hosting the Pre-Agnee Fun Carnival with 10 interactive fun stalls (carnival games, VR, merch, food), central open-air performance arena, and western fountain plaza.",
     "directionsFromGate": "Follow the central avenue south to Pratap Vilas Palace; the Rajabaug carnival gateway is directly across the road on the west (~230 metres).",
     "pose": {
-      "distance": 85,
-      "tilt": 0.22,
+      "distance": 58,
+      "tilt": 0.16,
       "heading": 1.57
     },
     "featured": true
@@ -259,14 +259,14 @@ export const places = [
     "category": "Residence",
     "mapCoords": {
       "x": 388,
-      "y": 147
+      "y": 157.0
     },
     "walkTimeMinutes": 2,
     "description": "Giriraj Grih, distinguished VIP guest house and executive residence situated directly in front of Darshan building and adjacent to GSV-MESS, featuring octagonal architecture, a pillared portico with blue slate stone mosaic entrance, and suites named after Indian mountain ranges.",
     "directionsFromGate": "Follow the North Central Cross Avenue west from GSV-MESS or head north directly from the Darshan Prastuti forecourt.",
     "pose": {
-      "distance": 42,
-      "tilt": 0.16,
+      "distance": 38,
+      "tilt": 0.13,
       "heading": 0
     },
     "featured": true
@@ -341,7 +341,7 @@ export const places = [
       "tilt": 0.14,
       "heading": -0.785
     },
-    "featured": false
+    "featured": true
   },
   {
     "id": "sponsor-wall",
@@ -359,6 +359,6 @@ export const places = [
       "tilt": 0.12,
       "heading": 0
     },
-    "featured": false
+    "featured": true
   }
 ];

@@ -8,7 +8,7 @@ const PLACES = [
     position: { x: 577 - W / 2, y: 5.5, z: 46 - H / 2 },
     description:
       'Main campus entrance and primary security checkpoint. Features the iconic bilingual university archway, guard cabins, and reception gate.',
-    pose: { distance: 52, tilt: 0.14, heading: 3.0 },
+    pose: { distance: 48, tilt: 0.12, heading: Math.PI },
     featured: true
   },
   {
@@ -38,7 +38,7 @@ const PLACES = [
     position: { x: 606.5 - W / 2, y: 6.0, z: 100 - H / 2 },
     description:
       'Proposed hostel development with west entrance canopy portico.',
-    pose: { distance: 54, tilt: 0.16, heading: -Math.PI / 2 },
+    pose: { distance: 52, tilt: 0.14, heading: -Math.PI / 2 },
     featured: true
   },
   {
@@ -63,9 +63,9 @@ const PLACES = [
     id: 'gsv-mess',
     name: 'GSV-MESS',
     category: 'dining',
-    position: { x: 434 - W / 2, y: 5.5, z: 145.0 - H / 2 },
-    description: 'GSV-MESS building situated in front of Pahune Hostel and Manthan, featuring the GSV-MESS south gate facing Manthan and the Officer Mess north gate facing Pahune Hostel, complete with extensive rooftop solar power generation.',
-    pose: { distance: 54, tilt: 0.16, heading: 0 },
+    position: { x: 453 - W / 2, y: 4.8, z: 118.5 - H / 2 },
+    description: 'GSV-MESS central dining building situated in front of Pahune Hostel and Manthan, featuring the iconic front entrance portico with illuminated bilingual GSV-MESS signage, columns, ornamental lantern gateposts, and cascading entrance steps.',
+    pose: { distance: 34, tilt: 0.12, heading: Math.PI },
     featured: true
   },
   {
@@ -95,8 +95,8 @@ const PLACES = [
     position: { x: 511.5 - W / 2, y: 5.5, z: 131.5 - H / 2 },
     description:
       'Proposed laboratory block with grand north entrance archway and rooftop solar panels.',
-    pose: { distance: 50, tilt: 0.15, heading: Math.PI },
-    featured: false
+    pose: { distance: 48, tilt: 0.14, heading: Math.PI },
+    featured: true
   },
   {
     id: 'proposed-academic',
@@ -105,8 +105,8 @@ const PLACES = [
     position: { x: 481 - W / 2, y: 5.5, z: 274.5 - H / 2 },
     description:
       'Proposed academic block with south grand entrance arch and courtyard amphitheatre.',
-    pose: { distance: 52, tilt: 0.15, heading: 0 },
-    featured: false
+    pose: { distance: 50, tilt: 0.14, heading: 0 },
+    featured: true
   },
   {
     id: 'palace',
@@ -121,9 +121,9 @@ const PLACES = [
     id: 'rajabaug',
     name: 'Rajabaug (Pre-Agnee Stalls)',
     category: 'festival',
-    position: { x: 256 - W / 2, y: 0, z: 189 - H / 2 },
-    description: 'Historic royal palace gardens hosting the Pre-Agnee Fun Carnival with 10 interactive fun stalls, central performance arena, and western fountain plaza.',
-    pose: { distance: 85, tilt: 0.22, heading: Math.PI / 2 },
+    position: { x: 285 - W / 2, y: 0, z: 189 - H / 2 },
+    description: 'Historic royal palace gardens hosting the Pre-Agnee Fun Carnival entered through the ceremonial gateway with 10 interactive stalls, central performance arena, and western fountain plaza.',
+    pose: { distance: 58, tilt: 0.16, heading: Math.PI / 2 },
     featured: true
   },
   {
@@ -139,9 +139,9 @@ const PLACES = [
     id: 'giriraj',
     name: 'Giriraj',
     category: 'residence',
-    position: { x: 388 - W / 2, y: 4.5, z: 147.0 - H / 2 },
-    description: 'Giriraj Grih, distinguished VIP guest house and executive residence situated directly in front of Darshan building and adjacent to GSV-MESS, featuring octagonal architecture, a pillared portico with blue slate stone mosaic entrance, and suites named after Indian mountain ranges.',
-    pose: { distance: 42, tilt: 0.16, heading: 0 },
+    position: { x: 388 - W / 2, y: 4.5, z: 157.0 - H / 2 },
+    description: 'Giriraj Grih, distinguished VIP guest house and executive residence situated directly in front of Darshan building and adjacent to GSV-MESS, featuring octagonal architecture, front entrance portico with blue slate stone mosaic entrance, polished black granite steps, flower pots, double glass doors, and bronze bilingual plaque.',
+    pose: { distance: 38, tilt: 0.13, heading: 0 },
     featured: true
   },
   {
@@ -188,7 +188,7 @@ const PLACES = [
     position: { x: 259.1 - W / 2, y: 3.5, z: 250.9 - H / 2 },
     description: 'Food, games, art, music, and activity stalls along the east promenade.',
     pose: { distance: 42, tilt: 0.14, heading: -Math.PI / 4 },
-    featured: false
+    featured: true
   },
   {
     id: 'sponsor-wall',
@@ -198,6 +198,6 @@ const PLACES = [
     description:
       'Agnee sponsor wall on the north edge of Oval Ground.',
     pose: { distance: 44, tilt: 0.12, heading: 0 },
-    featured: false
+    featured: true
   }
 ];
