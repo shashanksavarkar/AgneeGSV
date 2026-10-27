@@ -39,21 +39,12 @@ jobs:
           [ -n "$TOKEN" ] && [ "$TOKEN" != null ] || { echo "Login failed"; exit 1; }
           echo "::add-mask::$TOKEN"
           BASE="${SFTP_PATH%/}"
-          # one curl config entry per file: a raw-body POST to /api/v2/user/files/upload (it overwrites and creates folders)
-          : > curl.conf
-          first=1
+          # one POST per file to /api/v2/user/files/upload (overwrites, creates folders); any non-2xx answer is printed and fails the run
+          fail=0
           while IFS= read -r f; do
             enc=$(jq -rn --arg p "$BASE/$f" '$p|@uri')
-            [ -z "$first" ] && echo "next" >> curl.conf # "next" goes between entries, not after the last one
-            first=
-            {
-              echo "url = \"$SFTPGO_URL/api/v2/user/files/upload?path=$enc&mkdir_parents=true\""
-              echo "request = POST"
-              echo "data-binary = \"@${f//\"/\\\"}\""
-              echo "header = \"Authorization: Bearer $TOKEN\""
-              echo "header = \"Content-Type: application/octet-stream\""
-              echo "output = /dev/null"
-            } >> curl.conf
+            code=$(curl -sS --retry 2 -o resp.txt -w '%{http_code}' -X POST --data-binary "@$f"               -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/octet-stream"               "$SFTPGO_URL/api/v2/user/files/upload?path=$enc&mkdir_parents=true") || code=curl-error
+            case "$code" in 2*) ;; *) echo "FAILED $code  $f  $(head -c 300 resp.txt)"; fail=1 ;; esac
           done < files.txt
-          curl -sS --fail-with-body --retry 2 --parallel --parallel-max 4 --config curl.conf
+          [ "$fail" = 0 ] || { echo "Some files failed, see FAILED lines above"; exit 1; }
           echo "Uploaded $(wc -l < files.txt) files"
