@@ -12,7 +12,7 @@ const PORT = 8002;
 const clients = new Set();
 let reloadTimer;
 fs.watch(__dirname, { recursive: true }, (_, name) => {
-  if (!name || /node_modules|\.git|test-results|playwright-report/.test(name)) return;
+  if (!name || /node_modules|\.git/.test(name)) return;
   clearTimeout(reloadTimer);
   reloadTimer = setTimeout(() => clients.forEach((c) => c.write('data: reload\n\n')), 80);
 });

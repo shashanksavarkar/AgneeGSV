@@ -6,8 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "npx playwright test",
-    "test:ui": "npx playwright test --ui",
     "lint": "npx eslint src/**/*.js",
     "format": "npx prettier --write \"**/*.{js,json,css,html,md}\""
   },
@@ -19,8 +17,5 @@
     "vadodara"
   ],
   "author": "Agnee Web Team · Gati Shakti Vishwavidyalaya",
-  "license": "MIT",
-  "devDependencies": {
-    "@playwright/test": "^1.64.0"
-  }
+  "license": "MIT"
 }
