@@ -10065,6 +10065,25 @@ main > div:nth-of-type(even) .rangoli-big {
   opacity: 0.7;
   white-space: nowrap;
 }
+/* mobile: Pre-Agnee list, then Agnee list, stacked */
+@media (max-width: 720px) {
+  .sky-2 {
+    height: auto;
+  }
+  .stage-tl,
+  .stage-tl.pre {
+    position: relative;
+    width: auto;
+    padding: 16px;
+  }
+  .stage-tl li {
+    padding: 6px 0;
+  }
+  .stage-tl-head,
+  .stage-tl.pre .stage-tl-head {
+    text-align: left;
+  }
+}
 .sky-list {
   position: absolute;
   width: 1px;
@@ -10219,7 +10238,9 @@ main > div:nth-of-type(even) .rangoli-big {
   pointer-events: none;
 }
 .vp-no {
-  font: 800 30px/1 'Cinzel Decorative', serif;
+  font:
+    800 30px/1 'Cinzel Decorative',
+    serif;
   letter-spacing: 0;
   background: linear-gradient(180deg, #ffe7a8, var(--cat) 80%);
   -webkit-background-clip: text;
@@ -10263,7 +10284,9 @@ main > div:nth-of-type(even) .rangoli-big {
 }
 .vp-chip:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 179, 71, 0.25);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(255, 179, 71, 0.25);
 }
 .vp-chip.active {
   background:
@@ -10271,7 +10294,9 @@ main > div:nth-of-type(even) .rangoli-big {
     linear-gradient(180deg, #ff9a3c, #c43a0a);
   border-color: #ffd27a;
   border-bottom-color: #ffd27a;
-  box-shadow: 0 0 26px rgba(255, 122, 26, 0.6), 0 10px 24px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 0 26px rgba(255, 122, 26, 0.6),
+    0 10px 24px rgba(0, 0, 0, 0.5);
 }
 .vp-chip.active::before {
   border-color: rgba(26, 12, 2, 0.35);
@@ -10353,16 +10378,38 @@ main > div:nth-of-type(even) .rangoli-big {
     0 10px 26px rgba(0, 0, 0, 0.75),
     0 0 18px color-mix(in srgb, var(--tc) 55%, transparent);
 }
-.view .tag.r { --tc: #e5485a; }
-.view .tag.g { --tc: #5ee09a; }
-.view .tag.a { --tc: #e0763c; }
-.view .tag.o { --tc: #ff7a1a; }
-.view .tag.p { --tc: #c26be0; }
-.view .tag.e { --tc: #5aa9ff; }
-.view .tag.f { --tc: #f5a524; }
-.view .tag.m { --tc: #f59e0b; }
-.view .tag.r, .view .tag.g, .view .tag.a, .view .tag.o,
-.view .tag.p, .view .tag.e, .view .tag.f, .view .tag.m {
+.view .tag.r {
+  --tc: #e5485a;
+}
+.view .tag.g {
+  --tc: #5ee09a;
+}
+.view .tag.a {
+  --tc: #e0763c;
+}
+.view .tag.o {
+  --tc: #ff7a1a;
+}
+.view .tag.p {
+  --tc: #c26be0;
+}
+.view .tag.e {
+  --tc: #5aa9ff;
+}
+.view .tag.f {
+  --tc: #f5a524;
+}
+.view .tag.m {
+  --tc: #f59e0b;
+}
+.view .tag.r,
+.view .tag.g,
+.view .tag.a,
+.view .tag.o,
+.view .tag.p,
+.view .tag.e,
+.view .tag.f,
+.view .tag.m {
   border-left-width: 1px;
 }
 /* Fest tag keeps its festival gradient */
@@ -10426,7 +10473,9 @@ main > div:nth-of-type(even) .rangoli-big {
 }
 #view .earth-place-card h2 {
   margin: 0 0 12px;
-  font: 700 21px/1.2 'Cinzel Decorative', serif;
+  font:
+    700 21px/1.2 'Cinzel Decorative',
+    serif;
   letter-spacing: 0.03em;
   background: linear-gradient(180deg, #fff3cf, #e0b860);
   -webkit-background-clip: text;
@@ -10440,9 +10489,12 @@ main > div:nth-of-type(even) .rangoli-big {
   height: 7px;
   margin-top: 10px;
   background:
-    linear-gradient(45deg, transparent 38%, #e0b860 38% 62%, transparent 62%) center / 7px 7px no-repeat,
-    linear-gradient(90deg, transparent, rgba(224, 184, 96, 0.6)) left center / calc(50% - 10px) 1px no-repeat,
-    linear-gradient(270deg, transparent, rgba(224, 184, 96, 0.6)) right center / calc(50% - 10px) 1px no-repeat;
+    linear-gradient(45deg, transparent 38%, #e0b860 38% 62%, transparent 62%) center / 7px 7px
+      no-repeat,
+    linear-gradient(90deg, transparent, rgba(224, 184, 96, 0.6)) left center / calc(50% - 10px) 1px
+      no-repeat,
+    linear-gradient(270deg, transparent, rgba(224, 184, 96, 0.6)) right center / calc(50% - 10px)
+      1px no-repeat;
 }
 #view .earth-place-card p {
   color: rgba(255, 244, 224, 0.82);
@@ -10507,9 +10559,7 @@ main > div:nth-of-type(even) .rangoli-big {
 #view .hud-guide-btn,
 #view .hud-lighting-dock,
 #view .hud-icon-btn {
-  background:
-    linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 50%),
-    #17101d;
+  background: linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 50%), #17101d;
   border: 1px solid rgba(224, 184, 96, 0.55);
   box-shadow:
     inset 0 0 0 3px #17101d,
@@ -10523,7 +10573,9 @@ main > div:nth-of-type(even) .rangoli-big {
   gap: 10px;
 }
 #view .hud-brand-text {
-  font: 700 12px 'Cinzel Decorative', serif;
+  font:
+    700 12px 'Cinzel Decorative',
+    serif;
   letter-spacing: 0.1em;
   background: linear-gradient(180deg, #fff3cf, #e0b860);
   -webkit-background-clip: text;
@@ -10561,9 +10613,7 @@ main > div:nth-of-type(even) .rangoli-big {
   padding: 6px;
   border-radius: 18px;
   border: 1px solid rgba(224, 184, 96, 0.55);
-  background:
-    linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 55%),
-    #17101d;
+  background: linear-gradient(180deg, rgba(255, 230, 190, 0.08), transparent 55%), #17101d;
   box-shadow:
     inset 0 0 0 3px #17101d,
     inset 0 0 0 4px rgba(224, 184, 96, 0.2),
@@ -10593,11 +10643,15 @@ main > div:nth-of-type(even) .rangoli-big {
   margin-left: 4px;
   color: #fff;
   background: linear-gradient(135deg, #5b1a8f, #d6246e 55%, #ff9a2e);
-  box-shadow: inset 0 0 0 1px rgba(255, 215, 120, 0.7), 0 4px 16px rgba(214, 36, 110, 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 215, 120, 0.7),
+    0 4px 16px rgba(214, 36, 110, 0.5);
 }
 #view .bar button#bOval:hover {
   color: #fff;
-  box-shadow: inset 0 0 0 1px #ffd27a, 0 6px 22px rgba(214, 36, 110, 0.7);
+  box-shadow:
+    inset 0 0 0 1px #ffd27a,
+    0 6px 22px rgba(214, 36, 110, 0.7);
 }
 
 /* ==========================================================================
@@ -10649,7 +10703,8 @@ main > div:nth-of-type(even) .rangoli-big {
 }
 .sponsor-logo {
   max-height: 92px;
-  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
 }
 
 /* VC letter stands alone in its row, centred */
@@ -10708,4 +10763,399 @@ main > div:nth-of-type(even) .rangoli-big {
   #view .bar button#bOval {
     margin-left: 0;
   }
+}
+
+/* Phones: map is a poster in the page; "Open Map" shows it full screen with a close button */
+.map-fs-cover,
+.map-fs-close {
+  display: none;
+}
+@media (max-width: 820px) and (pointer: coarse) {
+  .map-viewport-wrapper {
+    height: min(60vh, 460px);
+    isolation: isolate; /* keeps the poster above the map tags and HUD without leaving the section */
+  }
+  .map-fs-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: 0;
+    padding: 24px;
+    color: #fff;
+    background:
+      linear-gradient(rgba(8, 4, 14, 0.55), rgba(8, 4, 14, 0.7)),
+      url('assets/mics/campus-map.webp') center / cover;
+  }
+  .map-fs-cover strong {
+    font: 800 24px / 1.1 var(--font-heading);
+  }
+  .map-viewport-wrapper.map-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    clip-path: none;
+  }
+  .map-fs .map-fs-cover {
+    display: none;
+  }
+  .map-fs .map-fs-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10001;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(224, 184, 96, 0.5);
+    background: rgba(10, 5, 20, 0.85);
+    color: #fff;
+    font-size: 18px;
+  }
+  .map-viewport-wrapper.map-fs #view canvas,
+  .map-viewport-wrapper.map-fs canvas#c {
+    touch-action: none;
+  }
+}
+
+/* Desktop: once the map is fully open it holds the scroll; Esc hands the page back */
+.map-esc-hint {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--header-height, 72px) + 14px); /* the open map is clipped below the site header */
+  z-index: 60;
+  transform: translateX(-50%);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(10, 5, 20, 0.85);
+  border: 1px solid rgba(224, 184, 96, 0.5);
+  color: #fff1d2;
+  font:
+    600 12px system-ui,
+    sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.map-locked .map-esc-hint {
+  opacity: 1;
+}
+.map-esc-hint.alert {
+  background: #ff7a1a;
+  color: #1a0c02;
+  border-color: #fff1d2;
+  font-size: 14px;
+}
+/* Browser full screen: the scroll-expand clip must not cut the top strip */
+.map-scrollfx .map-viewport-wrapper:fullscreen {
+  clip-path: none !important;
+}
+
+/* ==========================================================================
+   Map UI: venue drawer, photo-card landmarks, camera dial
+   ========================================================================== */
+
+/* Venue card: photo header, fact rows, actions. Desktop = full-height drawer on the right */
+.ec-hero {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  background-color: #1a1220;
+  border-radius: 14px 14px 0 0;
+}
+.ec-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 45%, rgba(15, 10, 20, 0.95));
+}
+.ec-kicker {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 1;
+  padding: 4px 11px;
+  border-radius: 999px;
+  color: #1a0c02;
+  background: linear-gradient(90deg, #ffd27a, #ff9a3c);
+  font: 800 9.5px var(--font-sans);
+  letter-spacing: 0.14em;
+}
+.ec-body {
+  padding: 4px 18px 18px;
+}
+.ec-facts {
+  margin: 12px 0;
+}
+.ec-facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(224, 184, 96, 0.18);
+  font: 500 12px var(--font-sans);
+}
+.ec-facts span {
+  color: rgba(255, 244, 224, 0.55);
+}
+.ec-facts b {
+  text-align: right;
+  font-weight: 600;
+  color: #fff1d2;
+  text-transform: capitalize;
+}
+.earth-card-actions {
+  display: flex;
+  gap: 8px;
+}
+.earth-card-actions button {
+  flex: 1;
+}
+#view .earth-place-card {
+  padding: 0;
+}
+@media (min-width: 769px) {
+  #view .earth-place-card {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 340px;
+    max-height: none;
+    border-radius: 0;
+    border-width: 0 0 0 1px;
+    transform: translateX(24px);
+  }
+  #view .earth-place-card.on {
+    transform: none;
+  }
+  #view .ec-hero {
+    border-radius: 0;
+  }
+  /* the dial moves out of the drawer's way */
+  #mapStage #view:has(.earth-place-card.on) .bar {
+    right: 364px;
+  }
+}
+@media (max-width: 768px) {
+  .ec-hero {
+    display: none;
+  }
+  .ec-body {
+    padding-top: 18px;
+  }
+}
+
+/* Landmarks: two-column photo cards (an aerial crop of the map at each place) */
+.earth-side-panel .esp-landmarks-scroll {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-content: start;
+}
+.esp-landmarks-scroll .esp-landmark-item {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.esp-landmarks-scroll .esp-landmark-item:hover {
+  transform: translateY(-2px);
+}
+.esp-landmarks-scroll .esp-lm-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 3;
+  background-color: #1a1220;
+}
+.esp-landmarks-scroll .esp-lm-thumb .esp-lm-index {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  min-width: 0;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(10, 5, 20, 0.8);
+}
+.esp-landmarks-scroll .esp-lm-thumb .esp-lm-fest {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.esp-landmarks-scroll .esp-lm-details {
+  padding: 6px 8px 8px;
+}
+
+/* Camera dial: Agnee Fest in the centre, 3D Orbit above, Top View below */
+#mapStage #view .bar {
+  left: auto;
+  right: 28px;
+  bottom: 52px;
+  width: 128px;
+  height: 128px;
+  max-width: none;
+  padding: 0;
+  gap: 0;
+  transform: none;
+  border-radius: 50%;
+  overflow: visible;
+  display: block;
+  background: rgba(27, 19, 16, 0.92);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(201, 160, 90, 0.35),
+    inset 0 0 0 9px rgba(20, 12, 28, 0.9),
+    inset 0 0 0 10px rgba(224, 184, 96, 0.22);
+}
+#mapStage #view .bar button {
+  position: absolute;
+  flex: none;
+  margin: 0;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+#mapStage #view .bar #bFree,
+#mapStage #view .bar #bTop {
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 14px;
+  border: 1px solid rgba(224, 184, 96, 0.4);
+  background: rgba(27, 19, 16, 0.96);
+  font-size: 11px;
+}
+#mapStage #view .bar #bFree {
+  top: -18px;
+}
+#mapStage #view .bar #bTop {
+  bottom: -18px;
+}
+#mapStage #view .bar #bFree.on,
+#mapStage #view .bar #bTop.on {
+  background: #e0b860;
+  border-color: #e0b860;
+  color: #1a1006;
+}
+#mapStage #view .bar #bOval {
+  left: 50%;
+  top: 50%;
+  width: 70px;
+  height: 70px;
+  min-width: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  white-space: normal;
+  line-height: 1.15;
+  font-size: 10px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(255, 122, 26, 0.55);
+}
+#view .earth-card-close {
+  z-index: 3;
+}
+
+/* Dial icons: drawn with masks so they take the button colour (replaces the emoji and text glyphs) */
+#mapStage #view .bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+#mapStage #view .bar button::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 14px;
+  opacity: 1;
+  background: currentColor;
+  -webkit-mask: var(--ic) center / contain no-repeat;
+  mask: var(--ic) center / contain no-repeat;
+}
+#mapStage #view .bar #bFree {
+  --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4.5' transform='rotate%28-30 12 12%29'/%3E%3C/svg%3E");
+}
+#mapStage #view .bar #bTop {
+  --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='M3 9h18M3 15h18M9 3v18M15 3v18'/%3E%3C/svg%3E");
+}
+#mapStage #view .bar #bOval {
+  --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z'/%3E%3C/svg%3E");
+  flex-direction: column;
+  gap: 3px;
+}
+#mapStage #view .bar #bOval::before {
+  width: 22px;
+  height: 22px;
+}
+
+/* Gesture hint: top centre, clear of the camera dial in the bottom-right corner */
+#view .map-gesture-hint {
+  top: 76px;
+  bottom: auto;
+  max-width: calc(100% - 32px);
+  text-align: center;
+}
+
+/* Video coverflow (same stack as the photos): cards show a thumbnail or a branded tile, a play badge and the title */
+.gf-video {
+  margin-top: 28px;
+}
+.gv-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 20%, #4a1f6e, #1a0c24 70%) center / cover;
+}
+.gv-play {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  padding-left: 4px;
+  border-radius: 50%;
+  background: rgba(255, 122, 26, 0.92);
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.gv-card figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 24px 14px 12px;
+  background: linear-gradient(transparent, rgba(8, 4, 14, 0.92));
+  color: #fff1d2;
+  font: 700 14px var(--font-sans);
+}
+
+/* Local video files: same 16:9 frame as the YouTube player, and a first-frame preview on stack cards */
+.video-embed-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.gv-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.gv-play,
+.gv-card figcaption {
+  z-index: 1;
 }

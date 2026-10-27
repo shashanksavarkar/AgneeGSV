@@ -30,6 +30,9 @@ const MIME_TYPES = {
   '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
+  '.webp': 'image/webp',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
@@ -80,6 +83,26 @@ const server = http.createServer((req, res) => {
         'Last-Modified': mtime
       });
       res.end();
+      return;
+    }
+
+    // video seeking: browsers ask for byte ranges
+    const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+    if (range && /\.(mp4|webm)$/i.test(ext)) {
+      const start = range[1] ? +range[1] : Math.max(0, stats.size - +range[2]);
+      const end = range[1] && range[2] ? Math.min(+range[2], stats.size - 1) : stats.size - 1;
+      if (start > end || start >= stats.size) {
+        res.writeHead(416, { 'Content-Range': `bytes */${stats.size}` });
+        res.end();
+        return;
+      }
+      res.writeHead(206, {
+        'Content-Type': contentType,
+        'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': end - start + 1
+      });
+      fs.createReadStream(filePath, { start, end }).pipe(res);
       return;
     }
 

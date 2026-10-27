@@ -300,17 +300,23 @@ export const sponsors = {
 };
 
 export const gallery = {
-  trailerId: 'Vlz_zyzHYcw', // YouTube video ID of the Agnee'26 trailer (the part after youtu.be/)
+  // Videos: the first one is the default and autoplays in the player; any more appear as a stack below it.
+  // id = YouTube ID (the part after youtu.be/), or src = a video file in assets/ (mp4 or webm); thumb (optional) = local image for the card, so nothing loads from YouTube until a video is played.
+  videos: [
+    { id: 'Vlz_zyzHYcw', title: "Agnee'26 Trailer", thumb: 'assets/gallery/trailer_thumbnail.webp' }
+    // YouTube:    { id: 'XXXXXXXXXXX', title: 'Agnee 2025 Aftermovie', thumb: 'assets/gallery/video-2025.webp' },
+    // From assets: { src: 'assets/videos/aftermovie.mp4', title: 'Aftermovie', thumb: '' },  (thumb optional: the card shows the video's first frame)
+  ],
   photos: [
-    { title: 'Oval Ground Stage at Dusk', src: 'assets/gallery/1.webp' },
-    { title: 'Street Theatre (Nukkad Natak)', src: 'assets/gallery/2.webp' },
-    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/3.webp' },
-    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/4.webp' },
-    { title: 'Classical Dance Abhinaya', src: 'assets/gallery/9.webp' },
-    { title: 'Pratap Vilas Palace Facade', src: 'assets/gallery/5.webp' },
-    { title: 'Crowd Energy at Battle of the Bands', src: 'assets/gallery/6.webp' },
-    { title: 'Campus Night Illuminations', src: 'assets/gallery/7.webp' },
-    { title: 'Campus Night Illuminations', src: 'assets/gallery/8.webp' }
+    { src: 'assets/gallery/1.webp' },
+    { src: 'assets/gallery/2.webp' },
+    { src: 'assets/gallery/3.webp' },
+    { src: 'assets/gallery/4.webp' },
+    { src: 'assets/gallery/9.webp' },
+    { src: 'assets/gallery/5.webp' },
+    { src: 'assets/gallery/6.webp' },
+    { src: 'assets/gallery/7.webp' },
+    { src: 'assets/gallery/8.webp' }
   ]
 };
 

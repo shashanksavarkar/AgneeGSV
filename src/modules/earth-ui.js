@@ -101,6 +101,16 @@ const VENUE_EVENTS = {
   'palace': ['🏛️ Historic Landmark Tours', '📸 Heritage Photo Walk', '🌳 Garden Promenade']
 };
 
+// Aerial crop of the campus map centred on a place, used as its photo (there are no per-place photos)
+function earthThumb(place, w = 170) {
+  const p = place.position;
+  if (!p || typeof W === 'undefined') return '';
+  const h = w * 0.6, cx = p.x + W / 2, cy = p.z + H / 2;
+  const pc = (v) => Math.max(0, Math.min(100, v)).toFixed(1);
+  return 'background-image:url(assets/mics/campus-map.webp);background-size:' + (W / w * 100).toFixed(1) + '% auto;' +
+    'background-position:' + pc((cx - w / 2) / (W - w) * 100) + '% ' + pc((cy - h / 2) / (H - h) * 100) + '%';
+}
+
 function earthShowCard(place) {
   let card = document.querySelector('.earth-place-card');
   if (!card) {
@@ -116,18 +126,28 @@ function earthShowCard(place) {
   const eventsHtml = events.length
     ? '<div class="earth-card-events">' + events.map(ev => '<span class="ev-chip">' + ev + '</span>').join('') + '</div>'
     : '';
+  const here = place.position;
+  const nearby = here ? earthPlaceList()
+    .filter((o) => o.id !== place.id && o.position)
+    .map((o) => ({ name: o.name, d: Math.hypot(o.position.x - here.x, o.position.z - here.z) }))
+    .sort((x, y) => x.d - y.d).slice(0, 3).map((o) => o.name).join(', ') : '';
 
   card.innerHTML =
     '<button class="earth-card-close" type="button" aria-label="Close place card">✕</button>' +
-    '<div class="earth-card-meta">' +
-      '<span class="earth-card-kicker">' + kicker + '</span>' +
-      '<span class="earth-card-badge">⏱ ~' + walkMins + ' min walk</span>' +
-    '</div>' +
-    '<h2>' + (place.name || 'Venue') + '</h2>' +
-    '<p>' + (place.description || '') + '</p>' +
-    eventsHtml +
-    '<div class="earth-card-actions">' +
-      '<button type="button" data-card-tour>★ 3D Focus</button>' +
+    '<div class="ec-hero" style="' + earthThumb(place, 150) + '"><span class="ec-kicker">' + kicker + '</span></div>' +
+    '<div class="ec-body">' +
+      '<h2>' + (place.name || 'Venue') + '</h2>' +
+      '<p>' + (place.description || '') + '</p>' +
+      '<div class="ec-facts">' +
+        '<div><span>Category</span><b>' + (place.category || 'venue') + '</b></div>' +
+        '<div><span>Walk</span><b>~' + walkMins + ' min</b></div>' +
+        (nearby ? '<div><span>Nearby</span><b>' + nearby + '</b></div>' : '') +
+      '</div>' +
+      eventsHtml +
+      '<div class="earth-card-actions">' +
+        '<button type="button" data-card-tour>★ 3D Focus</button>' +
+        '<button type="button" data-card-share>Share</button>' +
+      '</div>' +
     '</div>';
 
   card.querySelector('.earth-card-close').onclick = () => card.classList.remove('on');
@@ -139,6 +159,11 @@ function earthShowCard(place) {
     } else {
       earthFlyTo(place);
     }
+  };
+  card.querySelector('[data-card-share]').onclick = (e) => {
+    navigator.clipboard?.writeText(location.href).catch(() => {});
+    e.target.textContent = 'Link copied';
+    setTimeout(() => { e.target.textContent = 'Share'; }, 1600);
   };
   requestAnimationFrame(() => card.classList.add('on'));
 }
@@ -271,7 +296,7 @@ function earthBuildUI() {
         '<div class="earth-layer-list"></div>' +
       '</div>' +
 
-      '<div class="esp-section-heading"><span>CAMPUS LANDMARKS</span><span class="esp-badge-count">10</span></div>' +
+      '<div class="esp-section-heading"><span>CAMPUS LANDMARKS</span><span class="esp-badge-count">' + earthPlaceList().length + '</span></div>' +
       '<div class="esp-landmarks-scroll" id="espLandmarksContainer"></div>' +
     '</aside>' +
     '<div class="earth-floating-zoom" role="group" aria-label="Campus Zoom Dock">' +
@@ -297,12 +322,14 @@ function earthBuildUI() {
     landmarksBox.innerHTML = places.map((p, i) => {
       const isFest = p.id === 'oval-ground';
       return '<button type="button" class="esp-landmark-item ' + (isFest ? 'fest-highlight' : '') + '" data-landmark-id="' + p.id + '">' +
-        '<span class="esp-lm-index">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="esp-lm-thumb" style="' + earthThumb(p, 130) + '">' +
+          '<span class="esp-lm-index">' + String(i + 1).padStart(2, '0') + '</span>' +
+          (isFest ? '<span class="esp-lm-fest">FEST</span>' : '') +
+        '</span>' +
         '<div class="esp-lm-details">' +
           '<strong>' + p.name + '</strong>' +
           '<small>' + (p.category || 'venue').toUpperCase() + ' · ~' + (p.walkTimeMinutes || 3) + 'm</small>' +
         '</div>' +
-        (isFest ? '<span class="esp-lm-fest">FEST</span>' : '<span class="esp-lm-arrow">↗</span>') +
       '</button>';
     }).join('');
 

@@ -41,6 +41,14 @@ export function renderMapSection(places = [], events = []) {
             </div>
           </div>
 
+          <!-- Phones: poster that opens the map full screen (one finger would otherwise scroll the page) -->
+          <button type="button" class="map-fs-cover" id="mapOpenFs">
+            <span class="poster-badge">3D CAMPUS</span>
+            <strong>Explore the campus</strong>
+            <span class="btn-primary">Open Map</span>
+          </button>
+          <button type="button" class="map-fs-close" id="mapCloseFs" aria-label="Close map">&#10005;</button>
+
           <!-- Canvas Mount -->
           <div class="canvas-container" id="canvasMount">
             <div class="view" id="view">
@@ -99,19 +107,16 @@ export function renderMapSection(places = [], events = []) {
                   <button type="button" class="hud-icon-btn" id="hudSnapBtn" title="Capture HD Poster" aria-label="Capture Poster">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                   </button>
-                  <button type="button" class="hud-icon-btn" id="hudFullscreenBtn" title="Toggle Fullscreen" aria-label="Fullscreen">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-                  </button>
                 </div>
               </div>
 
               <!-- Floating Director Dock -->
               <div class="bar" role="group" aria-label="Camera Presets">
-                <button id="bFree" type="button" class="on" title="Free Camera Orbit"><span class="bar-icon">🌐</span><span>3D Orbit</span></button>
-                <button id="bTop" type="button" title="Architectural Top-Down View"><span class="bar-icon">📐</span><span>Top View</span></button>
+                <button id="bFree" type="button" class="on" title="Free Camera Orbit"><span>3D Orbit</span></button>
+                <button id="bTop" type="button" title="Architectural Top-Down View"><span>Top View</span></button>
                 <button id="bHos" type="button" title="Hostels & Residences"><span class="bar-icon">🏨</span><span>Hostels</span></button>
                 <button id="bRaj" type="button" title="Rajabaug Pre-Agnee Stalls"><span class="bar-icon">🎪</span><span>Rajabaug</span></button>
-                <button id="bOval" type="button" title="Agnee Festival Arena"><span class="bar-icon">✨</span><span>★ Agnee Fest</span></button>
+                <button id="bOval" type="button" title="Agnee Festival Arena"><span>Fest</span></button>
               </div>
 
               <!-- Interactive Gesture Hint -->
@@ -186,19 +191,80 @@ export function renderMapSection(places = [], events = []) {
   initMapScrollExpand();
 }
 
+// Same query as the phone block in festival.css
+const isPhone = () => matchMedia('(max-width: 820px) and (pointer: coarse)').matches;
+
+// Phones: the map sits as a poster; tapping opens it full screen, the close button returns to the page
+function openMapFs(open = true) {
+  const wrap = document.getElementById('mapViewportWrapper');
+  if (!wrap || !isPhone() || wrap.classList.contains('map-fs') === open) return;
+  wrap.classList.toggle('map-fs', open);
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+  window.dispatchEvent(new Event('resize'));
+}
+
 // Pins the map stage while scrolling; the map clip grows from the top corners to fill the screen
 function initMapScrollExpand() {
   const runway = document.getElementById('mapRunway');
   const stage = document.getElementById('mapStage');
   const wrap = document.getElementById('mapViewportWrapper');
   const head = stage?.querySelector('.map-head');
-  if (!runway || !wrap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!runway || !wrap || isPhone() || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.getElementById('map').classList.add('map-scrollfx');
 
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   const lerp = (a, b, t) => a + (b - a) * t;
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
   let ticking = false;
+  let locked = false;   // map has taken control: page scroll is frozen until Esc
+  let released = false; // Esc was pressed: stay unlocked until the visitor leaves and comes back
+
+  const hint = document.createElement('div');
+  hint.className = 'map-esc-hint';
+  const HINT = 'Hold Ctrl + scroll to zoom in / out  |  Press ESC to exit map mode';
+  const ALERT = 'Press ESC to exit map mode and continue to the next section';
+  hint.textContent = HINT;
+  wrap.appendChild(hint);
+  let hintTimer = 0;
+  // plain scrolling is frozen while the map is open: say why, and how to carry on
+  addEventListener('wheel', (e) => {
+    if (!locked || e.ctrlKey) return;
+    e.preventDefault(); // overflow:hidden alone does not stop every scroller (full screen, smooth-scroll, the side rail)
+    hint.textContent = ALERT;
+    hint.classList.add('alert');
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => { hint.textContent = HINT; hint.classList.remove('alert'); }, 2200);
+  }, { passive: false });
+
+  // belt and braces: whatever moves the page while locked (keys, scrollbar, side rail), put it back
+  let lockY = 0;
+  addEventListener('scroll', () => { if (locked && Math.abs(scrollY - lockY) > 1) scrollTo({ top: lockY, behavior: 'instant' }); }, { passive: true });
+  addEventListener('keydown', (e) => {
+    if (locked && [' ', 'PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', 'End', 'Home'].includes(e.key) && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) e.preventDefault();
+  });
+
+  const setLock = (on) => {
+    locked = on;
+    // no overflow:hidden here: body is overflow-y:auto, so it would become the scroll container, break the sticky stage and show a blank page
+    wrap.classList.toggle('map-locked', on);
+    // browsers only allow full screen after a click or key press, so a scroll alone may be refused: the next click retries
+    if (on) tryFullscreen();
+  };
+  const tryFullscreen = () => { if (!document.fullscreenElement) wrap.requestFullscreen?.().catch(() => {}); };
+  wrap.addEventListener('pointerdown', () => { if (locked) tryFullscreen(); });
+  // scrollY at which the map is fully open (progress 1) plus a fraction of the runway
+  const scrollAt = (k) => scrollY + runway.getBoundingClientRect().top + k * (runway.offsetHeight - stage.clientHeight);
+
+  // leave map mode: Esc on the page, or Esc while in full screen (the browser eats that key and just exits full screen)
+  const exitMapMode = () => {
+    if (!locked) return;
+    released = true;
+    setLock(false);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    scrollTo({ top: scrollAt(1.25) }); // step past the map so the page continues below it
+  };
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') exitMapMode(); });
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) exitMapMode(); });
 
   function update() {
     ticking = false;
@@ -208,7 +274,14 @@ function initMapScrollExpand() {
     const st = stage.getBoundingClientRect();
     const c = document.querySelector('#map .container').getBoundingClientRect();
     const sT = box.bottom - st.top + 18, sB = H - 24, sL = c.left, sR = c.right;
-    const p = clamp01(-runway.getBoundingClientRect().top / (runway.offsetHeight - H));
+    const raw = -runway.getBoundingClientRect().top / (runway.offsetHeight - H);
+    const p = clamp01(raw);
+    if (released && (raw < 0.9 || raw > 1.3)) released = false;
+    if (!locked && !released && raw >= 0.98 && raw <= 1.3) {
+      scrollTo({ top: scrollAt(1), behavior: 'instant' }); // snap to fully open, then take control
+      lockY = scrollY;
+      setLock(true);
+    }
     const pt = ease(clamp01(p * 1.35)), pb = ease(clamp01(p * 1.35 - 0.35));
     const pt_ = (x0, y0, x1, y1, k) => lerp(x0, x1, k) + 'px ' + lerp(y0, y1, k) + 'px';
     wrap.style.clipPath = 'polygon(' + [
@@ -356,6 +429,9 @@ function setupMapSectionInteractions() {
   }
 
   activateBtn?.addEventListener('click', activate3D);
+  document.getElementById('mapOpenFs')?.addEventListener('click', () => openMapFs(true));
+  document.getElementById('mapCloseFs')?.addEventListener('click', () => openMapFs(false));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') openMapFs(false); });
 
   // Auto-activate on intersection if device is not low-data
   if ('IntersectionObserver' in window) {
@@ -369,7 +445,7 @@ function setupMapSectionInteractions() {
           observer.disconnect();
         }
       });
-    }, { rootMargin: '100px' });
+    }, { rootMargin: '1500px 0px' }); // start about two screens early so the map is ready when it arrives
 
     const wrapper = document.getElementById('mapViewportWrapper');
     if (wrapper) observer.observe(wrapper);
@@ -378,6 +454,7 @@ function setupMapSectionInteractions() {
   // Handle external event fly-to requests
   window.addEventListener('agnee:fly-to-place', (e) => {
     activate3D();
+    openMapFs(true);
     const placeId = e.detail?.placeId;
     if (placeId) {
       flyToPlace(placeId);
@@ -392,6 +469,7 @@ function setupMapSectionInteractions() {
   document.querySelectorAll('.venue-pin-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       activate3D();
+      openMapFs(true);
       const placeId = btn.dataset.placeId;
       flyToPlace(placeId);
     });
@@ -429,8 +507,7 @@ function setupMapSectionInteractions() {
     });
   };
 
-  // Automatically activate 3D map
-  activate3D();
+  // The 3D map is no longer started on page load: the observer above starts it shortly before the map comes into view
 }
 
 function flyToPlace(placeId, attempts = 0) {
