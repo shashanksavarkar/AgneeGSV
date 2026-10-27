@@ -431,7 +431,14 @@ export const team = {
       linkedin: 'https://www.linkedin.com/in/harshit-verma-1a6558418/',
       avatar: 'assets/oc/harshit.webp'
     },
-    ,
+    {
+      name: 'Rupesh Kumar',
+      role: 'Operations Lead',
+      team: 'Sports Secretary',
+      email: 'rupesh.kumar_btech24@gsv.ac.in',
+      linkedin: 'https://www.linkedin.com/in/rupesh-kumar-2627772a4/',
+      avatar: 'assets/oc/rupesh.webp'
+    },
     {
       name: 'Soumya Banerjee',
       role: 'Media \& Publicity',
@@ -447,14 +454,6 @@ export const team = {
       email: 'ananya.kasaudhan_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ananya-kasaudhan-617531328/',
       avatar: 'assets/oc/ananya.webp'
-    },
-    {
-      name: 'Rupesh Kumar',
-      role: 'Operations Lead',
-      team: 'Sports Secretary',
-      email: 'rupesh.kumar_btech24@gsv.ac.in',
-      linkedin: 'https://www.linkedin.com/in/rupesh-kumar-2627772a4/',
-      avatar: 'assets/oc/rupesh.webp'
     }
   ]
 };
