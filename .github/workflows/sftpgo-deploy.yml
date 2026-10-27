@@ -1,0 +1,57 @@
+name: deploy-sftpgo
+
+# Uploads the site through the SFTPGo web API (the same service as the :8080 web client).
+# Manual only: Actions tab > Run workflow. Leave "dry run" ticked to list the files without uploading anything.
+# To deploy on every push to main, add:  push: { branches: [main] }  under "on:".
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (list files only)'
+        type: boolean
+        default: true
+
+concurrency: deploy-sftpgo # never two uploads at once
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SFTPGO_URL: ${{ secrets.SFTPGO_URL }} # e.g. http://www.gsv.ac.in:8080
+      SFTP_USER: ${{ secrets.SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+      SFTP_PATH: ${{ secrets.SFTP_PATH }} # folder that is served as /agnee/, for example /agnee
+      DRY: ${{ inputs.dry_run }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List files to upload
+        run: |
+          # tracked files only (so .gitignore is respected), minus dotfiles, docs, tools and dev-only files
+          git ls-files | grep -Ev '^\.|^docs/|^tools/|^server\.js$|^package(-lock)?\.json$|\.md$' > files.txt
+          echo "$(wc -l < files.txt) files"
+          cat files.txt
+
+      - name: Upload
+        if: env.DRY != 'true'
+        run: |
+          TOKEN=$(curl -sS --fail -u "$SFTP_USER:$SFTP_PASSWORD" "$SFTPGO_URL/api/v2/user/token" | jq -r .access_token)
+          [ -n "$TOKEN" ] && [ "$TOKEN" != null ] || { echo "Login failed"; exit 1; }
+          echo "::add-mask::$TOKEN"
+          BASE="${SFTP_PATH%/}"
+          # one curl config entry per file: a raw-body POST to /api/v2/user/files/upload (it overwrites and creates folders)
+          : > curl.conf
+          while IFS= read -r f; do
+            enc=$(jq -rn --arg p "$BASE/$f" '$p|@uri')
+            {
+              echo "url = \"$SFTPGO_URL/api/v2/user/files/upload?path=$enc&mkdir_parents=true\""
+              echo "request = POST"
+              echo "data-binary = \"@${f//\"/\\\"}\""
+              echo "header = \"Authorization: Bearer $TOKEN\""
+              echo "header = \"Content-Type: application/octet-stream\""
+              echo "output = /dev/null"
+              echo "next"
+            } >> curl.conf
+          done < files.txt
+          curl -sS --fail-with-body --retry 2 --parallel --parallel-max 4 --config curl.conf
+          echo "Uploaded $(wc -l < files.txt) files"
