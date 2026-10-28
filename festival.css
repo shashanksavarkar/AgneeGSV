@@ -1737,31 +1737,41 @@ body {
 }
 .poster-overlay {
   text-align: center;
-  padding: 24px;
+  padding: 32px 24px;
   max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 .poster-badge {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: var(--gold-primary);
+  color: #ff7a1a;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  background: rgba(255, 122, 26, 0.1);
+  border: 1px solid rgba(255, 122, 26, 0.3);
+  border-radius: 20px;
+  display: inline-block;
 }
 .poster-title {
-  font-size: clamp(24px, 4vw, 36px);
+  font-size: clamp(26px, 5vw, 40px);
   color: #fff;
-  margin: 8px 0 14px;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fff, #f6dfae);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .poster-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin: 0 0 24px;
+  display: none;
 }
 .poster-hint {
-  display: block;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 14px;
+  display: none;
 }
 
 .canvas-container {
@@ -4213,16 +4223,25 @@ body.on-hero .scroll-rail {
 
 /* --- Poster: haunted-campus blueprint --------------------------------- */
 .map-poster-placeholder {
-  background:
-    linear-gradient(rgba(125, 255, 176, 0.05) 1px, transparent 1px) 0 0 / 32px 32px,
-    linear-gradient(90deg, rgba(125, 255, 176, 0.05) 1px, transparent 1px) 0 0 / 32px 32px,
-    radial-gradient(circle at 50% 45%, #2a1240, #0a0612 70%);
+  background: radial-gradient(circle at 50% 45%, #2a1240, #0a0612 70%);
+  overflow: hidden;
+}
+.map-poster-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, transparent 48%, rgba(140, 90, 30, 0.12) 50%, transparent 52%);
+  pointer-events: none;
 }
 .poster-badge {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 4px 14px;
   border-radius: var(--radius-full);
   font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: #ffe9cf;
   background: radial-gradient(circle at 35% 30%, var(--wax-red-hi), var(--wax-red) 60%, #4a0610);
   box-shadow:
@@ -4230,21 +4249,37 @@ body.on-hero .scroll-rail {
     0 3px 6px rgba(0, 0, 0, 0.6);
 }
 .poster-title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--gold-primary);
+  font-size: clamp(26px, 5vw, 40px);
+  margin: 0;
+  line-height: 1.25;
+  white-space: nowrap;
   text-shadow:
     0 2px 0 #000,
     0 0 18px var(--gold-glow);
 }
 .poster-desc {
-  font-family: var(--font-body);
-  font-size: 16px;
+  display: none;
 }
 .poster-hint {
-  font-family: var(--font-sans);
-  color: var(--text-secondary);
+  display: none;
+}
+#btnActivate3D {
+  background: linear-gradient(180deg, var(--brass-1), var(--brass-2));
+  color: #1a0c02;
+  border: 1px solid var(--brass-3);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 220, 170, 0.3),
+    0 4px 10px rgba(0, 0, 0, 0.6);
+}
+#btnActivate3D:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 220, 170, 0.3),
+    0 6px 18px rgba(0, 0, 0, 0.7);
 }
 
 /* --- Directions drawer: parchment map --------------------------------- */

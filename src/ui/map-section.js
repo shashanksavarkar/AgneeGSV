@@ -31,13 +31,12 @@ export function renderMapSection(places = [], events = []) {
           <div class="map-poster-placeholder" id="mapPosterPlaceholder">
             <div class="poster-overlay">
               <span class="poster-badge">3D INTERACTIVE CAMPUS</span>
-              <h3 class="poster-title">Gati Shakti Vishwavidyalaya in 3D</h3>
-              <p class="poster-desc">Full 3D campus model with camera presets, event pins, walking navigation, and lighting simulations.</p>
+              <h3 class="poster-title">Gati Shakti Vishwavidyalaya</h3>
               <button type="button" class="btn-primary btn-lg" id="btnActivate3D">
                 <span>Launch 3D Campus Map</span>
                 <span class="btn-arrow" aria-hidden="true">↗</span>
               </button>
-              <span class="poster-hint" id="mapLoadHint">The 3D map may take some time to load. Click to start loading.</span>
+              <span class="poster-hint" id="mapLoadHint" hidden>The 3D map may take some time to load. Click to start loading.</span>
               <div class="map-load" id="mapLoad" hidden>
                 <div class="map-load-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading 3D campus map"><i id="mapLoadFill"></i></div>
                 <span class="map-load-pct" id="mapLoadPct" aria-live="polite">0%</span>
