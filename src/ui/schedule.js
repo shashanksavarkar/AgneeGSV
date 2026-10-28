@@ -17,8 +17,6 @@ export function renderSchedule(scheduleData = { program: [] }) {
   const program = scheduleData.program || [];
   const acts = program.flat().map(({ time, mins, name }) => ({ time, name, start: toMin(time), dur: durOf(mins), label: mins ? `${mins} min` : 'Late night' }));
   if (!acts.length) return;
-  // Pre-Agnee list (schedule.preAgnee in data.js): flat [{ time, mins, name }], same shape as program entries
-  const pre = (scheduleData.preAgnee || []).map(({ time, mins, name }) => ({ time, name, label: mins ? `${mins} min` : '' }));
   const rows = (list) => list.map((a) => `<li><b>${a.time}</b> ${a.name}<span>${a.label}</span></li>`).join('');
   const N = acts.length;
   const T0 = acts[0].start - 10;
@@ -50,10 +48,6 @@ export function renderSchedule(scheduleData = { program: [] }) {
 
         <div class="sky sky-2" id="skyBox2">
           <div class="sky-palace" aria-hidden="true"></div>
-          <div class="stage-tl pre">
-            <h3 class="stage-tl-head">Pre-Agnee</h3>
-            <ul>${rows(pre)}</ul>
-          </div>
           <div class="stage-tl">
             <h3 class="stage-tl-head">Agnee</h3>
             <ul>${rows(acts)}</ul>

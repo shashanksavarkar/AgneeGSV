@@ -187,18 +187,12 @@ export const schedule = {
       { "time": "20:10", "mins": "20", "name": "MALHAAR - ROCK" }
     ],
     [
-      { "time": "20:30", "mins": "5", "name": "INDEPENDENT PERFORMANCE - HARDIK" },
+      { "time": "20:30", "mins": "5", "name": "गांडीव-गर्जना - THE THUNDER OF KURUKSHETRA  ~by Hardik Singh" },
       { "time": "20:35", "mins": "20-25", "name": "FASHION SHOW - WESTERN" }
     ],
     [
       { "time": "21:10", "mins": "", "name": "DJ NIGHT" }
     ]
-  ],
-  // Pre-Agnee events, in running order; same shape as a program entry
-  "preAgnee": [
-    // { "time": "19:00", "mins": "30", "name": "Malhar - Music Club GSV" },
-    { "time": "TBA", "mins": "TBA", "name": "TBA" },
-    // { "time": "19:30", "mins": "30", "name": "Nritya - Dance Club GSV" }
   ]
 };
 

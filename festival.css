@@ -10022,25 +10022,19 @@ main > div:nth-of-type(even) .rangoli-big {
   z-index: 2;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
-  width: min(50%, 580px);
+  width: min(94%, 760px);
   display: flex;
   flex-direction: column;
   padding: 18px 20px;
-  background: rgba(7, 5, 10, 0.55);
   color: #fff;
-}
-.stage-tl.pre {
-  right: auto;
-  left: 0;
-}
-.stage-tl.pre .stage-tl-head {
-  text-align: left;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 .stage-tl-head {
   margin: 0 0 8px;
-  text-align: right;
+  text-align: center;
   font: 900 clamp(24px, 4vw, 36px) / 1 var(--font-heading);
   text-transform: uppercase;
   color: #fff1d2;
@@ -10058,10 +10052,14 @@ main > div:nth-of-type(even) .rangoli-big {
 }
 .stage-tl li {
   flex: 1 0 auto;
-  white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  padding: 3px 0;
+}
+.stage-tl b {
+  flex: none;
+  min-width: 3.4em;
 }
 .stage-tl b {
   color: #ffd27a;
@@ -10071,23 +10069,20 @@ main > div:nth-of-type(even) .rangoli-big {
   opacity: 0.7;
   white-space: nowrap;
 }
-/* mobile: Pre-Agnee list, then Agnee list, stacked */
+/* mobile: list fills the width */
 @media (max-width: 720px) {
   .sky-2 {
     height: auto;
   }
-  .stage-tl,
-  .stage-tl.pre {
+  .stage-tl {
     position: relative;
+    left: auto;
+    transform: none;
     width: auto;
     padding: 16px;
   }
   .stage-tl li {
     padding: 6px 0;
-  }
-  .stage-tl-head,
-  .stage-tl.pre .stage-tl-head {
-    text-align: left;
   }
 }
 .sky-list {
