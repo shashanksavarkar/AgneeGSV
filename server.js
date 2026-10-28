@@ -34,6 +34,7 @@ const MIME_TYPES = {
   '.mp4': 'video/mp4',
   '.webm': 'video/webm',
   '.ico': 'image/x-icon',
+  '.webp': 'image/webp',
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
   '.ics': 'text/calendar; charset=utf-8'

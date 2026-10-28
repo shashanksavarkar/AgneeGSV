@@ -16,9 +16,10 @@ const canvas = document.getElementById('c'),
 // Mobile quality profile: keep the first interaction responsive on mid-range phones.
 const isMobileDevice = matchMedia('(max-width: 767px)').matches || navigator.maxTouchPoints > 0;
 const isLowEndDevice = isMobileDevice && (navigator.hardwareConcurrency || 4) <= 4;
-window.AGNEE_RUNTIME = { isMobileDevice, isLowEndDevice, paused: false };
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, isLowEndDevice ? 1.5 : 2));
+window.AGNEE_RUNTIME = { isMobileDevice, isLowEndDevice, paused: false, panVx: 0, panVz: 0 };
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+const initialDpr = isMobileDevice ? Math.min(window.devicePixelRatio || 1, isLowEndDevice ? 1.0 : 1.25) : Math.min(window.devicePixelRatio || 1, 2);
+renderer.setPixelRatio(initialDpr);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = !isMobileDevice;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -2292,51 +2293,63 @@ const offCrown = new THREE.Mesh(new THREE.BoxGeometry(4.6, 0.85, 0.45), messCrea
 offCrown.position.set(453 - W / 2, 5.0, 119.2 - H / 2);
 messM.add(offCrown);
 
-// Authentic Signboard: OFFICER MESS
+// Authentic Signboard: GSV-MESS (North Entrance facing Pahune Hostel & Main Avenue)
 const offSignC = document.createElement('canvas');
 offSignC.width = 512;
 offSignC.height = 160;
 const offSg = offSignC.getContext('2d');
-offSg.fillStyle = '#faf6ed';
+offSg.fillStyle = '#0c2340';
 offSg.fillRect(0, 0, 512, 160);
-offSg.strokeStyle = '#1b5e20';
+offSg.strokeStyle = '#cda250';
 offSg.lineWidth = 6;
 offSg.strokeRect(6, 6, 500, 148);
-offSg.strokeStyle = '#c5a059';
+offSg.strokeStyle = '#e6c875';
 offSg.lineWidth = 2;
 offSg.strokeRect(12, 12, 488, 136);
 
-offSg.fillStyle = '#1b5e20';
+offSg.fillStyle = '#f3e5ab';
 offSg.textAlign = 'center';
 offSg.textBaseline = 'middle';
-offSg.font = '700 34px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
-offSg.fillText('अधिकारी मेस', 256, 42);
+offSg.font = '700 28px "Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+offSg.fillText('गति शक्ति विश्वविद्यालय मेस', 256, 38);
 
-offSg.fillStyle = '#1b5e20';
-offSg.font = '900 32px Arial,sans-serif';
-offSg.fillText('OFFICER MESS', 256, 88);
-
-offSg.fillStyle = '#1b5e20';
-offSg.fillRect(80, 116, 352, 30);
 offSg.fillStyle = '#ffffff';
-offSg.font = '700 17px Arial,sans-serif';
-offSg.fillText("GSV FACULTY & OFFICERS' DINING", 256, 131);
+offSg.font = '900 44px Arial,sans-serif';
+offSg.fillText('GSV-MESS', 256, 88);
+
+offSg.fillStyle = '#d89e28';
+offSg.fillRect(60, 118, 392, 28);
+offSg.fillStyle = '#0a192f';
+offSg.font = '700 16px Arial,sans-serif';
+offSg.fillText('CENTRAL DINING & OFFICERS MESS', 256, 132);
 
 const offSignTx = new THREE.CanvasTexture(offSignC);
 offSignTx.encoding = THREE.sRGBEncoding;
 const offSignM = new THREE.Mesh(
-  new THREE.PlaneGeometry(7.2, 1.9),
-  new THREE.MeshBasicMaterial({ map: offSignTx })
+  new THREE.PlaneGeometry(7.6, 2.0),
+  new THREE.MeshBasicMaterial({ map: offSignTx, side: THREE.DoubleSide })
 );
-offSignM.position.set(453 - W / 2, 3.5, 119.1 - H / 2);
+offSignM.position.set(453 - W / 2, 3.5, 119.05 - H / 2);
+offSignM.rotation.y = Math.PI;
 messM.add(offSignM);
 
 const offDoor = new THREE.Mesh(
-  new THREE.PlaneGeometry(3.2, 2.4),
-  new THREE.MeshBasicMaterial({ color: 0x1f2a36 })
+  new THREE.PlaneGeometry(3.6, 2.6),
+  new THREE.MeshBasicMaterial({ color: 0x1f2a36, side: THREE.DoubleSide })
 );
-offDoor.position.set(453 - W / 2, 1.3, 119.12 - H / 2);
+offDoor.position.set(453 - W / 2, 1.3, 119.1 - H / 2);
+offDoor.rotation.y = Math.PI;
 messM.add(offDoor);
+
+// Brass door handles
+[-0.25, 0.25].forEach((hx) => {
+  const hnd = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.04, 0.04, 0.7, 8),
+    new THREE.MeshLambertMaterial({ color: 0xd4a040 })
+  );
+  hnd.position.set(453 + hx - W / 2, 1.3, 118.9 - H / 2);
+  messM.add(hnd);
+});
 
 [
   [6.8, 0.35, 1.2, 118.6, 0.18],
@@ -2438,14 +2451,14 @@ const messSignTx = new THREE.CanvasTexture(messSignC);
 messSignTx.encoding = THREE.sRGBEncoding;
 const messSignM = new THREE.Mesh(
   new THREE.PlaneGeometry(10.2, 2.3),
-  new THREE.MeshBasicMaterial({ map: messSignTx })
+  new THREE.MeshBasicMaterial({ map: messSignTx, side: THREE.DoubleSide })
 );
 messSignM.position.set(435 - W / 2, 4.0, 169.45 - H / 2);
 messM.add(messSignM);
 
 const messDoor = new THREE.Mesh(
   new THREE.PlaneGeometry(5.8, 2.6),
-  new THREE.MeshBasicMaterial({ color: 0x1a2634 })
+  new THREE.MeshBasicMaterial({ color: 0x1a2634, side: THREE.DoubleSide })
 );
 messDoor.position.set(435 - W / 2, 1.4, 169.4 - H / 2);
 messM.add(messDoor);

@@ -1,4 +1,4 @@
-const _sV1=new V(),_sV12=new V(425-W/2,16,83-H/2),_sV13=new V(476-W/2,14,86-H/2),_sV3=new V(605-W/2,24,148-H/2),_sV4=new V(648-W/2,62,98-H/2),_sV5=new V(516-W/2,16,105.5-H/2),_sV6=new V(511-W/2,46,158-H/2),_sV7=new V(496-W/2,44,277-H/2),_sV8=new V(331-W/2,44,189-H/2),_sV9=new V(435-W/2,24,201-H/2),_sV10=new V(240-W/2,58,270-H/2),_sV11=new V(577-W/2,19,46-H/2),_sV14=new V(256-W/2,22,189-H/2),_sV15=new V(293.8-W/2,12,51.5-H/2),_sV16=new V(434-W/2,14,145-H/2),_sV17=new V(394-W/2,18,198-H/2),_sV18=new V(388-W/2,10,146-H/2),_sV19=new V(285.4-W/2,16,314.4-H/2);
+const _sV1=new V(),_sV12=new V(425-W/2,16,83-H/2),_sV13=new V(476-W/2,14,86-H/2),_sV3=new V(605-W/2,24,148-H/2),_sV4=new V(648-W/2,62,98-H/2),_sV5=new V(516-W/2,16,105.5-H/2),_sV6=new V(511-W/2,46,158-H/2),_sV7=new V(496-W/2,44,277-H/2),_sV8=new V(331-W/2,44,189-H/2),_sV9=new V(435-W/2,24,201-H/2),_sV10=new V(240-W/2,58,270-H/2),_sV11=new V(577-W/2,19,46-H/2),_sV14=new V(256-W/2,22,189-H/2),_sV15=new V(293.8-W/2,12,51.5-H/2),_sV16=new V(453-W/2,12,118.5-H/2),_sV17=new V(394-W/2,18,198-H/2),_sV18=new V(388-W/2,10,146-H/2),_sV19=new V(285.4-W/2,16,314.4-H/2);
 // landing
 
 let perfSamples=0,perfElapsed=0,perfAdjusted=false;
@@ -898,7 +898,7 @@ function frame(ms){
 
  const dt=Math.min(.05,now-last);last=now;const t=now-t0;
 let bldsDone = false;
-if(!perfAdjusted&&t>0){perfElapsed+=dt;perfSamples++;if(perfElapsed>=2){const fps=perfSamples/perfElapsed;if(fps<40){renderer.setPixelRatio(1);window.AGNEE_RUNTIME.lite=true;}else if(!isLowEndDevice){renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));}renderer.setSize(view.clientWidth,view.clientHeight,false);perfAdjusted=true;}}
+if(!perfAdjusted&&t>0){perfElapsed+=dt;perfSamples++;if(perfElapsed>=2){const fps=perfSamples/perfElapsed;if(fps<40){renderer.setPixelRatio(1);window.AGNEE_RUNTIME.lite=true;}else if(!isLowEndDevice){renderer.setPixelRatio(isMobileDevice ? Math.min(devicePixelRatio, 1.25) : Math.min(devicePixelRatio,1.5));}renderer.setSize(view.clientWidth,view.clientHeight,false);perfAdjusted=true;}}
 
  // rise
 if(!bldsDone){if(RM||t>=3.6){blds.forEach(b=>{b.m.scale.y=1;});bldsDone=true;}else{blds.forEach(b=>{b.m.scale.y=Math.max(.001,back(clamp((t-b.d)/1.3)));});}}
@@ -947,7 +947,7 @@ if(!bldsDone){if(RM||t>=3.6){blds.forEach(b=>{b.m.scale.y=1;});bldsDone=true;}el
 
  else if(mode==='hostels'){const a=.55+Math.sin(now*.18)*.45;dp=new V(645-W/2+Math.sin(a)*120,58,108-H/2+Math.cos(a)*120);dt2=new V(645-W/2,14,108-H/2);}
 
- else{if(mode==='ovfree'){OV.userData.target=1;clampOV();}orb.r+=(orb.rt-orb.r)*(1-Math.exp(-dt*9));if(!ptrs.size){orb.theta+=orb.vt*dt;orb.phi=clamp(orb.phi+orb.vp*dt,.03,pMax());const dm=Math.exp(-dt*2.8);orb.vt*=dm;orb.vp*=dm;}dp=oPos(orb);}
+ else{if(mode==='ovfree'){OV.userData.target=1;clampOV();}orb.r+=(orb.rt-orb.r)*(1-Math.exp(-dt*9));if(!ptrs.size){if(window.AGNEE_RUNTIME&&(Math.abs(window.AGNEE_RUNTIME.panVx||0)>0.05||Math.abs(window.AGNEE_RUNTIME.panVz||0)>0.05)){T0.x=clamp(T0.x+window.AGNEE_RUNTIME.panVx*dt,-W*.45,W*.45);T0.z=clamp(T0.z+window.AGNEE_RUNTIME.panVz*dt,-H*.45,H*.45);const dmP=Math.exp(-dt*6.5);window.AGNEE_RUNTIME.panVx*=dmP;window.AGNEE_RUNTIME.panVz*=dmP;clampOV();}orb.theta+=orb.vt*dt;orb.phi=clamp(orb.phi+orb.vp*dt,.03,pMax());const dm=Math.exp(-dt*2.8);orb.vt*=dm;orb.vp*=dm;}dp=oPos(orb);}
 
  if(mode!==pMode){const inO=m=>m==='oval'||m==='stage'||m==='ovfree'||m==='ground';if(mode==='oval'&&!inO(pMode))AFstart();else if(inO(pMode)&&!inO(mode))agLeave();pMode=mode;modeT=now;}if(mode!=='focus')hideInfo();
 

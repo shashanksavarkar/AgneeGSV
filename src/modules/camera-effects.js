@@ -480,6 +480,12 @@ const clampOV = () => {
 
 };
 
+let panVx = 0, panVz = 0;
+if (window.AGNEE_RUNTIME) {
+  window.AGNEE_RUNTIME.panVx = 0;
+  window.AGNEE_RUNTIME.panVz = 0;
+}
+
 const pan = (dx, dy) => {
 
   const k = orb.r * 0.0016,
@@ -506,11 +512,16 @@ canvas.addEventListener('pointerdown', (e) => {
 
   ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-  canvas.setPointerCapture(e.pointerId);
+  try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
 
   canvas.focus({ preventScroll: true });
 
   orb.vt = orb.vp = 0;
+  panVx = panVz = 0;
+  if (window.AGNEE_RUNTIME) {
+    window.AGNEE_RUNTIME.panVx = 0;
+    window.AGNEE_RUNTIME.panVz = 0;
+  }
 
   lastT = e.timeStamp;
 
@@ -542,47 +553,49 @@ canvas.addEventListener('pointermove', (e) => {
 
   p.y = e.clientY;
 
-  // touch: one finger belongs to page scroll, only two fingers drive the map
-  if (e.pointerType === 'touch' && ptrs.size < 2) return;
-
   toFree();
 
-  if (Math.abs(dx) + Math.abs(dy) > 6) tapMoved = true;
+  if (Math.abs(dx) + Math.abs(dy) > 3) tapMoved = true;
 
   if (ptrs.size >= 2) {
 
+    // Two fingers: zoom in and zoom out smoothly
     const [a, b] = [...ptrs.values()],
 
-      d = Math.hypot(a.x - b.x, a.y - b.y),
+      d = Math.hypot(a.x - b.x, a.y - b.y);
 
-      angle = Math.atan2(b.y - a.y, b.x - a.x);
-
-    if (lastPD) orb.rt = clamp((orb.rt * lastPD) / d, rMin(), rMax());
-
-    if (e.pointerType === 'touch') {
-      lastPD = d;
-      return;
+    if (lastPD && d > 0) {
+      const zoomRatio = lastPD / d;
+      orb.rt = clamp(orb.rt * Math.pow(zoomRatio, 1.15), rMin(), rMax());
     }
-
-    if (window.AGNEE_RUNTIME.touchAngle != null) {
-
-      let delta = angle - window.AGNEE_RUNTIME.touchAngle;
-
-      if (delta > Math.PI) delta -= Math.PI * 2;
-
-      if (delta < -Math.PI) delta += Math.PI * 2;
-
-      orb.theta -= delta * 0.35;
-
-    }
-
-    window.AGNEE_RUNTIME.touchAngle = angle;
 
     lastPD = d;
 
-    pan(dx / 2, dy / 2);
+    return;
 
-    orb.phi = clamp(orb.phi + dy * 0.003, 0.03, pMax());
+  }
+
+  // One finger navigation (touch) or primary mouse drag
+  if (e.pointerType === 'touch' || !(e.buttons & 2 || e.shiftKey || e.ctrlKey)) {
+
+    const dtMove = Math.max(0.008, (e.timeStamp - lastT) / 1000);
+
+    lastT = e.timeStamp;
+
+    pan(dx, dy);
+
+    // Track kinetic glide velocity for silky smooth momentum
+    const k = orb.r * 0.0016;
+    const c = Math.cos(orb.theta),
+      n = Math.sin(orb.theta);
+    const vx = ((-c * dx - n * dy) * k) / dtMove;
+    const vz = ((n * dx - c * dy) * k) / dtMove;
+    panVx = lerp(panVx, clamp(vx, -850, 850), 0.35);
+    panVz = lerp(panVz, clamp(vz, -850, 850), 0.35);
+    if (window.AGNEE_RUNTIME) {
+      window.AGNEE_RUNTIME.panVx = panVx;
+      window.AGNEE_RUNTIME.panVz = panVz;
+    }
 
   } else if (e.buttons & 2 || e.shiftKey || e.ctrlKey) {
 
@@ -598,7 +611,7 @@ canvas.addEventListener('pointermove', (e) => {
 
     orb.vp = lerp(orb.vp, clamp((-dy * 0.005) / h, -2.5, 2.5), 0.5);
 
-  } else pan(dx, dy);
+  }
 
 });
 
@@ -607,6 +620,8 @@ const up = (e) => {
   const wasTwo = twoFingerTap;
 
   ptrs.delete(e.pointerId);
+
+  try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
 
   if (ptrs.size < 2) {
 
@@ -626,6 +641,15 @@ const up = (e) => {
 
     twoFingerTap = true;
 
+  }
+
+  // If drag rested before release, clear glide momentum
+  if (e.timeStamp - lastT > 85) {
+    panVx = panVz = 0;
+    if (window.AGNEE_RUNTIME) {
+      window.AGNEE_RUNTIME.panVx = 0;
+      window.AGNEE_RUNTIME.panVz = 0;
+    }
   }
 
   if (!tapMoved && !wasTwo) {
@@ -786,7 +810,9 @@ canvas.addEventListener('keydown', (e) => {
 
 const hint = document.createElement('div');
 
-hint.textContent = 'Drag to look around · pinch to zoom · tap a label to inspect';
+hint.textContent = (window.AGNEE_RUNTIME && window.AGNEE_RUNTIME.isMobileDevice)
+  ? '1 finger to navigate · 2 fingers to zoom'
+  : 'Drag to look around · pinch to zoom · tap a label to inspect';
 
 hint.style.cssText =
 
@@ -916,11 +942,11 @@ const TAG_PLACE_MAP = {
 
   ['t13', 476, 90, 48],
 
-  ['t14', 256, 189, 110],
+  ['t14', 285, 189, 58],
 
   ['t15', 293.8, 51.5, 26],
 
-  ['t16', 434, 145, 52],
+  ['t16', 453, 118.5, 34],
 
   ['t4', 606.5, 100, 54],
 
@@ -934,7 +960,7 @@ const TAG_PLACE_MAP = {
 
   ['t17', 394, 180, 46],
 
-  ['t18', 388, 146, 40],
+  ['t18', 388, 157.0, 38],
 
   ['t19', 285.4, 314.4, 48],
 
@@ -1040,24 +1066,56 @@ function place(el, v) {
 }
 
 
+let _tagFrameCount = 0;
+let _cachedHudRects = null;
+let _cachedVr = null;
+function invalidateHudRects() {
+  _cachedHudRects = null;
+  _cachedVr = null;
+}
+window.addEventListener('resize', invalidateHudRects, { passive: true });
+window.addEventListener('scroll', invalidateHudRects, { passive: true });
+
 // Hide pills that overlap a nearer/higher-priority one (t10 = fest pill wins)
 window.declutterTags = function () {
+  _tagFrameCount++;
+  // On mobile devices, declutter every 2nd frame to preserve 60fps and eliminate layout thrashing
+  if (window.AGNEE_RUNTIME && window.AGNEE_RUNTIME.isMobileDevice && (_tagFrameCount % 2 !== 0)) {
+    return;
+  }
+
   const els = [...document.querySelectorAll('.tag')].filter(e => e._px !== undefined && e.style.display === 'block');
   els.sort((a, b) => (b.id === 't10') - (a.id === 't10') || b._pz - a._pz);
   const kept = [];
+
+  if (!_cachedVr) {
+    _cachedVr = view.getBoundingClientRect();
+  }
+  const vr = _cachedVr;
+
   // pills must not draw over the open side panel
   const sp = document.getElementById('earthSidePanel');
-  if (sp && getComputedStyle(sp).opacity !== '0') {
-    const pr = sp.getBoundingClientRect(), vr = view.getBoundingClientRect();
+  if (sp && sp.classList && !sp.classList.contains('collapsed')) {
+    const pr = sp.getBoundingClientRect();
     kept.push({ l: pr.left - vr.left, r: pr.right - vr.left, t: pr.top - vr.top, b: pr.bottom - vr.top });
   }
+
   // ...nor under the top HUD pills
-  document.querySelectorAll('.hud-brand-pill, .hud-guide-btn, .hud-lighting-dock, .hud-top-right').forEach(h => {
-    const hr = h.getBoundingClientRect(), vr = view.getBoundingClientRect();
-    if (hr.width) kept.push({ l: hr.left - vr.left, r: hr.right - vr.left, t: hr.top - vr.top, b: hr.bottom - vr.top });
-  });
+  if (!_cachedHudRects) {
+    _cachedHudRects = [];
+    document.querySelectorAll('.hud-brand-pill, .hud-guide-btn, .hud-lighting-dock, .hud-top-right').forEach(h => {
+      const hr = h.getBoundingClientRect();
+      if (hr.width) _cachedHudRects.push({ l: hr.left - vr.left, r: hr.right - vr.left, t: hr.top - vr.top, b: hr.bottom - vr.top });
+    });
+  }
+  _cachedHudRects.forEach(r => kept.push(r));
+
   els.forEach(e => {
-    const w = e.offsetWidth * e._ps, h = e.offsetHeight * e._ps;
+    if (!e._baseW) {
+      e._baseW = e.offsetWidth || 120;
+      e._baseH = e.offsetHeight || 28;
+    }
+    const w = e._baseW * e._ps, h = e._baseH * e._ps;
     const r = { l: e._px - w / 2, r: e._px + w / 2, t: e._py - h, b: e._py };
     const hit = kept.some(k => r.l < k.r && r.r > k.l && r.t < k.b && r.b > k.t);
     if (!hit) kept.push(r);
