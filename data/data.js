@@ -7,7 +7,7 @@ export const site = {
   "institutionShort": "GSV",
   "location": "Vadodara, Gujarat, India",
   "venue": "Oval Ground, Gati Shakti Vishwavidyalaya Campus, Vadodara",
-  "dates": "Agnee Week: 26-31 October 2026 · Pre-Agnee: 30 October · Agnee: 31 October",
+  "dates": "31 October 2026",
   "datesConfigured": null,
   "tagline": "Igniting the Spirit of Expression · The Annual Cultural Fest of GSV",
   "description": "Agnee is the flagship annual cultural festival of Gati Shakti Vishwavidyalaya, Vadodara. Bringing together talents in music, dance, theater, literature, art, and creative expression from across India.",
@@ -303,9 +303,11 @@ export const gallery = {
   // Videos: the first one is the default and autoplays in the player; any more appear as a stack below it.
   // id = YouTube ID (the part after youtu.be/), or src = a video file in assets/ (mp4 or webm); thumb (optional) = local image for the card, so nothing loads from YouTube until a video is played.
   videos: [
-    { id: 'Vlz_zyzHYcw', title: "Agnee'26 Trailer", thumb: 'assets/gallery/trailer_thumbnail.webp' }
+    { id: 'Vlz_zyzHYcw', title: "Agnee'26 Trailer", thumb: 'assets/gallery/trailer_thumbnail.webp' },
     // YouTube:    { id: 'XXXXXXXXXXX', title: 'Agnee 2025 Aftermovie', thumb: 'assets/gallery/video-2025.webp' },
     // From assets: { src: 'assets/videos/aftermovie.mp4', title: 'Aftermovie', thumb: '' },  (thumb optional: the card shows the video's first frame)
+    // { src: 'assets/videos/treasure_hunt_1.mp4', title: 'Treasure Hunt', thumb: 'assets/events/treasure-hunt.webp' },
+    // { src: 'assets/videos/treasure_hunt_2.mp4', title: 'Treasure Hunt', thumb: 'assets/events/treasure-hunt.webp' },
   ],
   photos: [
     { src: 'assets/gallery/1.webp' },
@@ -370,7 +372,7 @@ export const team = {
     {
       name: 'Ravi Panchal',
       role: '',
-      team: 'DevelopmentTeam',
+      team: 'Development Team',
       email: 'ravi.panchal_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ravixpanchal/',
       github: 'https://github.com/ravixpanchal',
@@ -379,7 +381,7 @@ export const team = {
     {
       name: 'Rishav Kumar',
       role: '',
-      team: 'DevelopmentTeam',
+      team: 'Development Team',
       email: 'rishav.kumar_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/rkgsv/',
       github: 'https://github.com/rishavgsv',
@@ -388,7 +390,7 @@ export const team = {
     {
       name: 'Shashank Savarkar',
       role: '',
-      team: 'DevelopmentTeam',
+      team: 'Development Team',
       email: 'savarkar.shashank_btech24@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/shashanksavarkar/',
       github: 'https://github.com/shashanksavarkar',
@@ -397,7 +399,7 @@ export const team = {
     {
       name: 'Abhinav Kesarwani',
       role: '',
-      team: 'DevelopmentTeam',
+      team: 'Development Team',
       email: 'abhinav.kesarwani_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/abhinav-kesarwani/',
       github: 'https://github.com/AbhiKesarwani',
@@ -406,7 +408,7 @@ export const team = {
     {
       name: 'Ajitesh Channa',
       role: '',
-      team: 'DevelopmentTeam',
+      team: 'Development Team',
       email: 'ajitesh.channa_btech23@gsv.ac.in',
       linkedin: 'https://www.linkedin.com/in/ajiteshchanna/',
       github: 'https://github.com/ajiteshchanna',
@@ -477,12 +479,12 @@ export const faqs = [
   {
     "category": "General",
     "question": "What is Agnee 2026?",
-    "answer": "Agnee is the annual cultural festival of Gati Shakti Vishwavidyalaya (GSV), Vadodara. It brings together college students from across the country for three days of music, dance, theatre, arts, fashion, and literary competitions."
+    "answer": "Agnee is the annual cultural festival of Gati Shakti Vishwavidyalaya (GSV), Vadodara. It brings together college students from across the country for one day of music, dance, theatre, arts, fashion, and literary competitions."
   },
   {
     "category": "General",
     "question": "When and where will Agnee 2026 take place?",
-    "answer": "Agnee 2026 will be held at the Gati Shakti Vishwavidyalaya campus in Vadodara, Gujarat. Agnee Week runs from 26 to 31 October 2026, with Pre-Agnee on 30 October and the main Agnee day on 31 October."
+    "answer": "Agnee 2026 will be held at the Gati Shakti Vishwavidyalaya campus in Vadodara, Gujarat. Agnee is a one-day festival on 31 October 2026."
   },
   {
     "category": "Competitions",

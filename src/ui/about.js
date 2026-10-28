@@ -17,10 +17,10 @@ export function renderAbout(siteData = {}) {
             <span class="ab-label">THE STORY</span>
             <h3 class="ab-title">Igniting the Creative Spirit</h3>
             <p class="ab-body">
-              Named after the primordial element of fire and energy, Agnee stands as a beacon of youth expression, celebrating diverse cultural traditions from classical Indian arts to raw urban street cyphers. For three unforgettable days and nights, the campus comes alive with rhythm, theatre, debate, and music.
+              Named after the primordial element of fire and energy, Agnee stands as a beacon of youth expression, celebrating diverse cultural traditions from classical Indian arts to raw urban street cyphers. For one unforgettable day and night, the campus comes alive with rhythm, theatre, debate, and music.
             </p>
             <ul class="ab-tags">
-              <li>2 Days</li>
+              <li>1 Day</li>
               <li>Agnee</li>
               <li>Pre-Agnee</li>
             </ul>

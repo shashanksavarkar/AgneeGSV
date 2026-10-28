@@ -960,7 +960,7 @@ _sV1.set(pin.position.x,pin.position.y+30,pin.position.z);place(t1,_sV1);if(type
 
  festAnim(now);cinematic.update(dt);TOUR.ui();STG.ui();renderer.render(scene,cam);cinematic.post();
 
- const ld=document.getElementById('load');if(ld&&t>.2){ld.style.opacity=0;setTimeout(()=>ld.remove(),700);}
+ const ld=document.getElementById('load');if(ld&&t>.2){window.dispatchEvent(new CustomEvent('agnee:map-progress',{detail:100}));ld.style.opacity=0;setTimeout(()=>ld.remove(),700);}
 
  window.AGNEE_RUNTIME.raf=requestAnimationFrame(frame);
 

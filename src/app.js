@@ -9,12 +9,18 @@ const MODULES = [
   'modules/landing-and-loop.js'
 ];
 
+// Drives the progress bar in the map poster (see map-section.js)
+const mapProgress = (pct) => window.dispatchEvent(new CustomEvent('agnee:map-progress', { detail: pct }));
+
 async function loadApplication() {
   try {
+    let fetched = 0;
     const sources = await Promise.all(MODULES.map(async path => {
       const response = await fetch(`src/${path}`);
       if (!response.ok) throw new Error(`Unable to load ${path} (${response.status})`);
-      return response.text();
+      const text = await response.text();
+      mapProgress(35 + 40 * ++fetched / MODULES.length);
+      return text;
     }));
     const runApplication = new Function(
       'const WMURI = window.WMURI; const WMI = window.WMI;\n' + sources.join('\n\n')
@@ -28,7 +34,9 @@ async function loadApplication() {
     if (!document.getElementById('c')) {
       throw new Error('Canvas element #c not found in DOM');
     }
+    mapProgress(80);
     runApplication();
+    mapProgress(92);
   } catch (error) {
     console.error('Agnee application failed to load.', error);
     const loader = document.getElementById('load');
