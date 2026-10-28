@@ -172,19 +172,19 @@ export const schedule = {
       { "time": "17:55", "mins": "10", "name": "WELCOMING OF GUESTS" }
     ],
     [
-      { "time": "18:05", "mins": "15", "name": "MALHAAR - CLASSICAL" },
-      { "time": "18:20", "mins": "30", "name": "DRAMA + NRITYA - CLASSICAL" },
+      { "time": "18:05", "mins": "15", "name": "SWARSUDHA (स्वर - सुधा) - CLASSICAL" },
+      { "time": "18:20", "mins": "30", "name": "SITA SWAYAMVAR (सीता स्वयंवर) - CLASSICAL" },
       { "time": "18:50", "mins": "20-25", "name": "FASHION SHOW - CLASSICAL" }
     ],
     [
-      { "time": "19:15", "mins": "15", "name": "MALHAAR - BOLLYWOOD" },
-      { "time": "19:30", "mins": "20", "name": "NRITYA - FOLK" },
+      { "time": "19:15", "mins": "15", "name": "EUPHONIA - BOLLYWOOD" },
+      { "time": "19:30", "mins": "20", "name": "INDIA UNPLUGGED - FOLK" },
       { "time": "19:35", "mins": "5", "name": "STUDENT FELICITATION" },
       { "time": "19:40", "mins": "20", "name": "DRAMA - COURT ROOM" }
     ],
     [
-      { "time": "20:00", "mins": "10", "name": "NRITYA - REELS" },
-      { "time": "20:10", "mins": "20", "name": "MALHAAR - ROCK" }
+      { "time": "20:00", "mins": "10", "name": "SWIPE & SLAY" },
+      { "time": "20:10", "mins": "20", "name": "TARANG (तरंग) - MALHAAR - ROCK" }
     ],
     [
       { "time": "20:30", "mins": "5", "name": "गांडीव-गर्जना - THE THUNDER OF KURUKSHETRA  ~by Hardik Singh" },
