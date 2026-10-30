@@ -17,7 +17,7 @@ export function renderEvents(events = []) {
     <section class="section events-section" id="events" aria-labelledby="eventsHeading">
       <div class="container">
         <div class="section-header">
-          <img class="sec-icon" src="assets/elements/mask.svg" alt="" aria-hidden="true">
+          <img class="sec-icon" src="assets/elements/music.svg" alt="" aria-hidden="true">
           <h2 class="section-title" id="eventsHeading">${t('events.title')}</h2>
           <p class="section-subtitle">${t('events.subtitle')}</p>
         </div>

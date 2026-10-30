@@ -28,7 +28,7 @@ export function renderLineup(guests = []) {
               <div class="lu-photo">
                 ${guest.photo
                   ? `<img src="${guest.photo}" alt="${guest.name}" loading="lazy">`
-                  : `<span class="lu-ph" aria-hidden="true"><img src="assets/elements/mask.svg" alt=""></span>`}
+                  : `<span class="lu-ph" aria-hidden="true"><img src="assets/elements/music.svg" alt=""></span>`}
               </div>
               <div class="lu-info">
                 ${guest.category ? `<span class="lu-cat">${guest.category}</span>` : ''}
