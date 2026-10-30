@@ -225,7 +225,7 @@ export const guests = [
     bank: 'Union Bank of India',
     place: 'Vadodara, Gujarat',
     category: '',
-    photo: '',
+    photo: '/assets/guests/aashish-suwalka.webp',
     bio: 'Regional Head, Union Bank of India'
   },
   {
@@ -235,25 +235,13 @@ export const guests = [
     bank: 'Union Bank of India',
     place: 'Vadodara, Gujarat',
     category: '',
-    photo: '',
-    bio: 'Dy. Regional Head, Union Bank of India'
-  },
-  {
-    id: 'UBI',
-    name: 'Mr. Manish Kumar',
-    role: 'Dy. Regional Head',
-    bank: 'Union Bank of India',
-    place: 'Vadodara, Gujarat',
-    category: '',
-    photo: '',
+    photo: '/assets/guests/samir-ranjan.webp',
     bio: 'Dy. Regional Head, Union Bank of India'
   }
 ];
 
 export const sponsors = {
-  "deckDownloadUrl": "#sponsors",
   "contactEmail": "student.cell@gsv.ac.in",
-  "brochureNote": "Download our comprehensive sponsorship deck to discover brand integration avenues, stage presence, and student outreach opportunities at Gati Shakti Vishwavidyalaya.",
   "tiers": [
     {
       "tierName": "Sponsored By",
@@ -262,8 +250,7 @@ export const sponsors = {
       "sponsors": [
         {
           "name": "State Bank of India",
-          "logo": "assets/sponsors/sbi.webp",
-          "website": "https://sbi.co.in"
+          "logo": "assets/sponsors/sbi.webp"
         }
       ]
     },
@@ -273,8 +260,7 @@ export const sponsors = {
       "sponsors": [
         {
           "name": "Union Bank of India",
-          "logo": "assets/sponsors/ubi.webp",
-          "website": "https://www.unionbankofindia.co.in"
+          "logo": "assets/sponsors/ubi.webp"
         }
       ]
     }
