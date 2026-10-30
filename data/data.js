@@ -205,7 +205,7 @@ export const guests = [
     bank: 'State Bank of India',
     place: 'Administrative Office, Vadodara',
     category: '',
-    photo: '/assets/guests/Saleem.webp',
+    photo: 'assets/guests/Saleem.webp',
     bio: 'Deputy General Manager (B&O), State Bank of India, Administrative Office, Vadodara'
   },
   {
@@ -215,7 +215,7 @@ export const guests = [
     bank: 'State Bank of India',
     place: 'Vadodara Administrative Office',
     category: '',
-    photo: '/assets/guests/Meenakshi.webp',
+    photo: 'assets/guests/Meenakshi.webp',
     bio: 'AGM, Deposit & VAS, State Bank of India, Vadodara Administrative Office'
   },
   {
@@ -225,7 +225,7 @@ export const guests = [
     bank: 'Union Bank of India',
     place: 'Vadodara, Gujarat',
     category: '',
-    photo: '/assets/guests/aashish-suwalka.webp',
+    photo: 'assets/guests/aashish-suwalka.webp',
     bio: 'Regional Head, Union Bank of India'
   },
   {
@@ -235,7 +235,7 @@ export const guests = [
     bank: 'Union Bank of India',
     place: 'Vadodara, Gujarat',
     category: '',
-    photo: '/assets/guests/samir-ranjan.webp',
+    photo: 'assets/guests/samir-ranjan.webp',
     bio: 'Dy. Regional Head, Union Bank of India'
   }
 ];
