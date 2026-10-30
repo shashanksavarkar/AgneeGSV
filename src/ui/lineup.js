@@ -18,7 +18,7 @@ export function renderLineup(guests = []) {
       <div class="container">
         <div class="section-header">
           <img class="sec-icon" src="assets/elements/mic.svg" alt="" aria-hidden="true">
-          <h2 class="section-title" id="lineupHeading">Guest of Honor</h2>
+          <h2 class="section-title" id="lineupHeading">Guest of Honour</h2>
         </div>
 
         ${rows.map(row => `
