@@ -18,13 +18,18 @@ export function renderLineup(guests = []) {
       <div class="container">
         <div class="section-header">
           <img class="sec-icon" src="assets/elements/mic.svg" alt="" aria-hidden="true">
-          <h2 class="section-title" id="lineupHeading">Headliners & Renowned Guests</h2>
+          <h2 class="section-title" id="lineupHeading">Guest of Honor</h2>
         </div>
 
         ${rows.map(row => `
         <div class="lu-grid" style="--cols: ${row.length}">
           ${row.map(guest => `
             <article class="lu-card" data-id="${guest.id}">
+              <div class="lu-photo">
+                ${guest.photo
+                  ? `<img src="${guest.photo}" alt="${guest.name}" loading="lazy">`
+                  : `<span class="lu-ph" aria-hidden="true"><img src="assets/elements/mask.svg" alt=""></span>`}
+              </div>
               <div class="lu-info">
                 ${guest.category ? `<span class="lu-cat">${guest.category}</span>` : ''}
                 <h3 class="lu-name">${guest.name}</h3>

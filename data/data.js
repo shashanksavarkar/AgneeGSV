@@ -199,66 +199,54 @@ export const schedule = {
 
 export const guests = [
   {
-    "id": "SBI",
-    "name": "Mr. Saleem Ahmad",
-    "role": "Deputy General Manager (B&O)",
-    "bank": "State Bank of India",
-    "place": "Administrative Office, Vadodara",
-    "category": "",
-    "bio": "Deputy General Manager (B&O), State Bank of India, Administrative Office, Vadodara"
+    id: 'SBI',
+    name: 'Mr. Saleem Ahmad',
+    role: 'Deputy General Manager (B&O)',
+    bank: 'State Bank of India',
+    place: 'Administrative Office, Vadodara',
+    category: '',
+    photo: '/assets/guests/Saleem.webp',
+    bio: 'Deputy General Manager (B&O), State Bank of India, Administrative Office, Vadodara'
   },
   {
-    "id": "SBI",
-    "name": "Mr. Neeraj Kumar Sinha",
-    "role": "AGM",
-    "bank": "State Bank of India",
-    "place": "Regional Business Office-1, Vadodara",
-    "category": "",
-    "bio": "AGM, State Bank of India, Regional Business Office-1, Vadodara "
+    id: 'SBI',
+    name: 'Ms. Meenakshi Sinha',
+    role: 'AGM, Deposit & VAS',
+    bank: 'State Bank of India',
+    place: 'Vadodara Administrative Office',
+    category: '',
+    photo: '/assets/guests/Meenakshi.webp',
+    bio: 'AGM, Deposit & VAS, State Bank of India, Vadodara Administrative Office'
   },
   {
-    "id": "SBI",
-    "name": "Ms. Meenakshi Sinha",
-    "role": "AGM, Deposit & VAS",
-    "bank": "State Bank of India",
-    "place": "Vadodara Administrative Office",
-    "category": "",
-    "bio": "AGM, Deposit & VAS, State Bank of India, Vadodara Administrative Office"
+    id: 'UBI',
+    name: 'Mr.Aashish Suwalka ',
+    role: 'Regional Head',
+    bank: 'Union Bank of India',
+    place: 'Vadodara, Gujarat',
+    category: '',
+    photo: '',
+    bio: 'Regional Head, Union Bank of India'
   },
   {
-    "id": "SBI",
-    "name": "Mr. Vikash Kumar",
-    "role": "Chief Manager",
-    "bank": "State Bank of India",
-    "place": "Lalbaug, Vadodara",
-    "category": "",
-    "bio": "Chief Manager, State Bank of India, Lalbaug, Vadodara"
-  },  {
-    "id": "UBI",
-    "name": "Mr.Aashish Suwalka ",
-    "role": "Regional Head",
-    "bank": "Union Bank of India",
-    "place": "Vadodara, Gujarat",
-    "category": "",
-    "bio": "Regional Head, Union Bank of India"
+    id: 'UBI',
+    name: 'Mr. Samir Ranjan Mishra',
+    role: 'Dy. Regional Head',
+    bank: 'Union Bank of India',
+    place: 'Vadodara, Gujarat',
+    category: '',
+    photo: '',
+    bio: 'Dy. Regional Head, Union Bank of India'
   },
   {
-    "id": "UBI",
-    "name": "Mr. Samir Ranjan Mishra",
-    "role": "Dy. Regional Head",
-    "bank": "Union Bank of India",
-    "place": "Vadodara, Gujarat",
-    "category": "",
-    "bio": "Dy. Regional Head, Union Bank of India"
-  },
-  {
-    "id": "UBI",
-    "name": "Mr. Manish Kumar",
-    "role": "Dy. Regional Head",
-    "bank": "Union Bank of India",
-    "place": "Vadodara, Gujarat",
-    "category": "",
-    "bio": "Dy. Regional Head, Union Bank of India"
+    id: 'UBI',
+    name: 'Mr. Manish Kumar',
+    role: 'Dy. Regional Head',
+    bank: 'Union Bank of India',
+    place: 'Vadodara, Gujarat',
+    category: '',
+    photo: '',
+    bio: 'Dy. Regional Head, Union Bank of India'
   }
 ];
 
